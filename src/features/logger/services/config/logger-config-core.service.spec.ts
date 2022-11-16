@@ -53,7 +53,7 @@ describe(`LoggerConfigCoreService`, (): void => {
 
     service = LoggerConfigCoreService.getInstance();
 
-    expect(service.isEnabled).toStrictEqual(true);
+    expect(service.isEnabled).toBe(true);
   });
 
   it(`should have a debug level`, (): void => {
@@ -69,6 +69,6 @@ describe(`LoggerConfigCoreService`, (): void => {
 
     service = LoggerConfigCoreService.getInstance();
 
-    expect(service.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+    expect(service.shouldDisplayMoreDebugLogs).toBe(false);
   });
 });

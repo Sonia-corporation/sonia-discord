@@ -89,7 +89,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.isEnabled();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -103,7 +103,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.isEnabled();
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
   });
@@ -139,7 +139,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.shouldDisplayMoreDebugLogs();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -153,7 +153,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.shouldDisplayMoreDebugLogs();
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
   });

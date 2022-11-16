@@ -89,7 +89,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
         service = new QuoteConfigMutatorService(config);
 
-        expect(quoteConfigCoreService.apiKey).toStrictEqual(`apiKey`);
+        expect(quoteConfigCoreService.apiKey).toBe(`apiKey`);
       });
 
       it(`should not update the current author icon url`, (): void => {
@@ -136,7 +136,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
         service = new QuoteConfigMutatorService(config);
 
-        expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+        expect(quoteConfigCoreService.apiKey).toBe(`dummy-api-key`);
       });
 
       it(`should override the author icon url`, (): void => {
@@ -229,7 +229,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+      expect(quoteConfigCoreService.apiKey).toBe(`dummy-api-key`);
       expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
       expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
       expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
@@ -253,7 +253,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
         service.updateConfig();
 
-        expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+        expect(quoteConfigCoreService.apiKey).toBe(`dummy-api-key`);
         expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
         expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
         expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
@@ -283,7 +283,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(quoteConfigCoreService.apiKey).toStrictEqual(`apiKey`);
+        expect(quoteConfigCoreService.apiKey).toBe(`apiKey`);
       });
 
       it(`should update the config author icon url`, (): void => {
@@ -356,7 +356,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.updateApiKey(apiKey);
 
-      expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+      expect(quoteConfigCoreService.apiKey).toBe(`dummy-api-key`);
     });
   });
 

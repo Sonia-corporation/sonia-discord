@@ -4,7 +4,7 @@ import { DiscordCommandFirstArguments } from '../../../../classes/commands/argum
 import { DiscordMessageCommandFeatureNameEnum } from '../enums/discord-message-command-feature-name.enum';
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NAMES: DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum> =
-  new DiscordCommandFirstArguments([
+  new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>([
     DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
     DISCORD_MESSAGE_COMMAND_FEATURE_NAME_RELEASE_NOTES,
   ]);

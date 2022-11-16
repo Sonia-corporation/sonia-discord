@@ -1,7 +1,7 @@
 import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
 import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelFeatureReleaseNotesState } from '../../../../../../../../firebase/types/guilds/channels/features/firebase-guild-channel-feature-release-notes-state';
 import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
@@ -48,7 +48,7 @@ export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
       return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
 
-    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreQuery.getInstance().getEntity(
+    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreService.getInstance().getEntity(
       anyDiscordMessage.guild.id
     );
 
@@ -56,9 +56,11 @@ export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
       return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
     }
 
-    return Promise.resolve({
+    const state: IFirebaseGuildChannelFeatureReleaseNotesState = {
       isEnabled: this._isReleaseNotesEnabled(firebaseGuild, anyDiscordMessage.channel.id),
-    });
+    };
+
+    return Promise.resolve(state);
   }
 
   public getMessageResponse(
@@ -66,18 +68,16 @@ export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
-      .then(
-        (helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge({}, helpMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(state),
-                split: false,
-              },
-              response: ``,
-            })
-          )
-      );
+      .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          content: ``,
+          options: {
+            embeds: [this._getMessageEmbed(state)],
+          },
+        };
+
+        return Promise.resolve(_.merge({}, helpMessageResponse, message));
+      });
   }
 
   private _isReleaseNotesEnabled(

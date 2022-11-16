@@ -28,9 +28,7 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
    *
    * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
    * Like it is really her mentioned and she has the rights to respond, etc
-   *
    * @param {Readonly<string>} message The message to check if a response to any question is possible
-   *
    * @returns {boolean} Return true when she can respond to any question
    */
   public hasCriteria(message: Readonly<string>): boolean {
@@ -47,12 +45,12 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
       return Promise.reject(new Error(`No content`));
     }
 
-    return Promise.resolve({
-      options: {
-        split: false,
-      },
-      response: getReplyWithEnvPrefix(`Do you like pineapple pizza?`),
-    });
+    const message: IDiscordMessageResponse = {
+      content: getReplyWithEnvPrefix(`Do you like pineapple pizza?`),
+      options: {},
+    };
+
+    return Promise.resolve(message);
   }
 
   private _getMessageWithoutFirstMention(message: Readonly<string>): string {

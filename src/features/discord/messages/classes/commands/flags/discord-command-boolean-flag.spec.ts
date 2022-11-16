@@ -46,7 +46,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
           })
         );
 
-        expect(discordCommandFlag.getDescription()).toStrictEqual(`dummy-description`);
+        expect(discordCommandFlag.getDescription()).toBe(`dummy-description`);
       });
     });
 
@@ -147,7 +147,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
       const result = discordCommandFlag.getDescription();
 
-      expect(result).toStrictEqual(`dummy-description`);
+      expect(result).toBe(`dummy-description`);
     });
   });
 
@@ -163,7 +163,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
       discordCommandFlag.setDescription(`dummy-description`);
 
-      expect(discordCommandFlag.getDescription()).toStrictEqual(`dummy-description`);
+      expect(discordCommandFlag.getDescription()).toBe(`dummy-description`);
     });
   });
 
@@ -197,7 +197,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
       const result = discordCommandFlag.getLowerCaseName();
 
-      expect(result).toStrictEqual(`alpha-flag`);
+      expect(result).toBe(`alpha-flag`);
     });
   });
 
@@ -214,7 +214,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
       const result = discordCommandFlag.getHumanizedName();
 
-      expect(result).toStrictEqual(`Alpha-flag`);
+      expect(result).toBe(`Alpha-flag`);
     });
   });
 
@@ -369,7 +369,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--alpha-flag`);
+        expect(result).toBe(`--alpha-flag`);
       });
     });
 
@@ -383,7 +383,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--alpha-flag`);
+        expect(result).toBe(`--alpha-flag`);
       });
     });
 
@@ -397,7 +397,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--alpha-flag (or -beta-flag)`);
+        expect(result).toBe(`--alpha-flag (or -beta-flag)`);
       });
     });
 
@@ -411,7 +411,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--alpha-flag (or -beta-flag, -charlie-flag)`);
+        expect(result).toBe(`--alpha-flag (or -beta-flag, -charlie-flag)`);
       });
     });
   });
@@ -437,7 +437,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -451,7 +451,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -465,7 +465,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -479,7 +479,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -493,7 +493,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -507,7 +507,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });

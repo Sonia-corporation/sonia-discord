@@ -31,7 +31,7 @@ describe(`getReplyWithEnvPrefix()`, (): void => {
 
       const result = getReplyWithEnvPrefix(response);
 
-      expect(result).toStrictEqual(`dummy-response`);
+      expect(result).toBe(`dummy-response`);
     });
   });
 
@@ -50,7 +50,7 @@ describe(`getReplyWithEnvPrefix()`, (): void => {
 
         const result = getReplyWithEnvPrefix(response);
 
-        expect(result).toStrictEqual(`**[dev]** dummy-response`);
+        expect(result).toBe(`**[dev]** dummy-response`);
       });
     });
 
@@ -69,7 +69,7 @@ describe(`getReplyWithEnvPrefix()`, (): void => {
 
           const result = getReplyWithEnvPrefix(response);
 
-          expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** dummy-response`);
+          expect(result).toBe(`**[dev - <@!dummy-discord-id>]** dummy-response`);
         });
       });
 
@@ -83,7 +83,7 @@ describe(`getReplyWithEnvPrefix()`, (): void => {
 
           const result = getReplyWithEnvPrefix(response);
 
-          expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** dummy-response`);
+          expect(result).toBe(`**[dev - <@!dummy-discord-id>]** dummy-response`);
         });
       });
     });
@@ -98,7 +98,7 @@ describe(`getReplyWithEnvPrefix()`, (): void => {
 
         const result = getReplyWithEnvPrefix(response);
 
-        expect(result).toStrictEqual(`**[dev - dummy-nickname]** dummy-response`);
+        expect(result).toBe(`**[dev - dummy-nickname]** dummy-response`);
       });
     });
   });

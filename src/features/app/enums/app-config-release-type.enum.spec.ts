@@ -5,36 +5,36 @@ describe(`AppConfigReleaseTypeEnum`, (): void => {
   it(`should have 5 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(AppConfigReleaseTypeEnum)).toStrictEqual(5);
+    expect(getEnumLength(AppConfigReleaseTypeEnum)).toBe(5);
   });
 
   it(`should have a member "UNKNOWN"`, (): void => {
     expect.assertions(1);
 
-    expect(AppConfigReleaseTypeEnum.UNKNOWN).toStrictEqual(`unknown`);
+    expect(AppConfigReleaseTypeEnum.UNKNOWN).toBe(`unknown`);
   });
 
   it(`should have a member "MIXED"`, (): void => {
     expect.assertions(1);
 
-    expect(AppConfigReleaseTypeEnum.MIXED).toStrictEqual(`mixed`);
+    expect(AppConfigReleaseTypeEnum.MIXED).toBe(`mixed`);
   });
 
   it(`should have a member "BUG_FIXES"`, (): void => {
     expect.assertions(1);
 
-    expect(AppConfigReleaseTypeEnum.BUG_FIXES).toStrictEqual(`bug fixes`);
+    expect(AppConfigReleaseTypeEnum.BUG_FIXES).toBe(`bug fixes`);
   });
 
   it(`should have a member "FEATURES"`, (): void => {
     expect.assertions(1);
 
-    expect(AppConfigReleaseTypeEnum.FEATURES).toStrictEqual(`features`);
+    expect(AppConfigReleaseTypeEnum.FEATURES).toBe(`features`);
   });
 
   it(`should have a member "PERFORMANCE_IMPROVEMENTS"`, (): void => {
     expect.assertions(1);
 
-    expect(AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS).toStrictEqual(`performance improvements`);
+    expect(AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS).toBe(`performance improvements`);
   });
 });

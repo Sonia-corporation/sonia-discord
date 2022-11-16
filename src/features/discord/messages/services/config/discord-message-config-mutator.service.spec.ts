@@ -251,7 +251,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service = new DiscordMessageConfigMutatorService(config);
 
-        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(`prefix`);
+        expect(discordMessageConfigCoreService.command.prefix).toBe(`prefix`);
       });
 
       it(`should not update the current command release notes bug fixes image color`, (): void => {
@@ -564,7 +564,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service = new DiscordMessageConfigMutatorService(config);
 
-        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(`dummy-prefix`);
+        expect(discordMessageConfigCoreService.command.prefix).toBe(`dummy-prefix`);
       });
 
       it(`should override the command release notes bug fixes image color`, (): void => {
@@ -1668,7 +1668,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateMessageCommand(config);
 
-        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(`prefix`);
+        expect(discordMessageConfigCoreService.command.prefix).toBe(`prefix`);
       });
     });
 
@@ -2458,7 +2458,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateMessageCommandPrefix(prefix);
 
-        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(`dummy-prefix`);
+        expect(discordMessageConfigCoreService.command.prefix).toBe(`dummy-prefix`);
       });
     });
 

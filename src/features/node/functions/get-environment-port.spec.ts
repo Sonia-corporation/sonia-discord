@@ -41,7 +41,7 @@ describe(`getEnvironmentPort()`, (): void => {
 
       const result = getEnvironmentPort();
 
-      expect(result).toStrictEqual(8);
+      expect(result).toBe(8);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`getEnvironmentPort()`, (): void => {
 
       const result = getEnvironmentPort();
 
-      expect(result).toStrictEqual(88);
+      expect(result).toBe(88);
     });
   });
 });

@@ -13,7 +13,7 @@ describe(`getArgumentIndex()`, (): void => {
 
       const result = getArgumentIndex(name);
 
-      expect(result).toStrictEqual(-1);
+      expect(result).toBe(-1);
     });
   });
 
@@ -32,7 +32,7 @@ describe(`getArgumentIndex()`, (): void => {
 
         const result = getArgumentIndex(name);
 
-        expect(result).toStrictEqual(-1);
+        expect(result).toBe(-1);
       });
     });
 
@@ -47,7 +47,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(-1);
+          expect(result).toBe(-1);
         });
       });
 
@@ -61,7 +61,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(-1);
+          expect(result).toBe(-1);
         });
       });
 
@@ -75,7 +75,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(-1);
+          expect(result).toBe(-1);
         });
       });
     });
@@ -91,7 +91,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(0);
+          expect(result).toBe(0);
         });
       });
 
@@ -105,7 +105,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(1);
+          expect(result).toBe(1);
         });
       });
 
@@ -119,7 +119,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(2);
+          expect(result).toBe(2);
         });
       });
     });
@@ -135,7 +135,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(0);
+          expect(result).toBe(0);
         });
       });
 
@@ -149,7 +149,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(1);
+          expect(result).toBe(1);
         });
       });
 
@@ -163,7 +163,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(2);
+          expect(result).toBe(2);
         });
       });
     });
@@ -184,7 +184,7 @@ describe(`getArgumentIndex()`, (): void => {
 
         const result = getArgumentIndex(name);
 
-        expect(result).toStrictEqual(-1);
+        expect(result).toBe(-1);
       });
     });
 
@@ -199,7 +199,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(-1);
+          expect(result).toBe(-1);
         });
       });
 
@@ -213,7 +213,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(-1);
+          expect(result).toBe(-1);
         });
       });
 
@@ -227,7 +227,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(-1);
+          expect(result).toBe(-1);
         });
       });
     });
@@ -243,7 +243,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(0);
+          expect(result).toBe(0);
         });
       });
 
@@ -257,7 +257,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(1);
+          expect(result).toBe(1);
         });
       });
 
@@ -271,7 +271,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(2);
+          expect(result).toBe(2);
         });
       });
     });
@@ -287,7 +287,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(0);
+          expect(result).toBe(0);
         });
       });
 
@@ -301,7 +301,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(1);
+          expect(result).toBe(1);
         });
       });
 
@@ -315,7 +315,7 @@ describe(`getArgumentIndex()`, (): void => {
 
           const result = getArgumentIndex(name);
 
-          expect(result).toStrictEqual(2);
+          expect(result).toBe(2);
         });
       });
     });

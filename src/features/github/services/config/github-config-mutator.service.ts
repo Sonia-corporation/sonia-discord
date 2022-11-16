@@ -8,6 +8,7 @@ import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { GithubConfigValueNameEnum } from '../../enums/github-config-value-name.enum';
 import { IGithubConfig } from '../../interfaces/github-config';
+import { IPersonalAccessToken } from '../../types/personal-access-token';
 import _ from 'lodash';
 
 export class GithubConfigMutatorService extends AbstractConfigService<IGithubConfig> {
@@ -52,7 +53,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
     });
   }
 
-  public updatePersonalAccessToken(personalAccessToken?: Readonly<string>): void {
+  public updatePersonalAccessToken(personalAccessToken?: Readonly<IPersonalAccessToken>): void {
     GithubConfigCoreService.getInstance().personalAccessToken = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueHidden: true,

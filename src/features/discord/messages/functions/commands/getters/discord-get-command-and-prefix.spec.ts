@@ -128,7 +128,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
 
@@ -184,7 +184,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
     });
@@ -316,7 +316,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
 
@@ -330,7 +330,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!cookie`);
+          expect(result).toBe(`!cookie`);
         });
       });
 
@@ -400,7 +400,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
 
@@ -414,7 +414,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!cookie`);
+          expect(result).toBe(`!cookie`);
         });
       });
     });
@@ -566,7 +566,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
 
@@ -580,7 +580,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`@feature`);
+          expect(result).toBe(`@feature`);
         });
       });
 
@@ -650,7 +650,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`@feature`);
+          expect(result).toBe(`@feature`);
         });
       });
     });
@@ -796,7 +796,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
 
@@ -810,7 +810,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!cookie`);
+          expect(result).toBe(`!cookie`);
         });
       });
 
@@ -838,7 +838,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`@feature`);
+          expect(result).toBe(`@feature`);
         });
       });
 
@@ -852,7 +852,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`@cookie`);
+          expect(result).toBe(`@cookie`);
         });
       });
 
@@ -922,7 +922,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!feature`);
+          expect(result).toBe(`!feature`);
         });
       });
 
@@ -936,7 +936,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`!cookie`);
+          expect(result).toBe(`!cookie`);
         });
       });
 
@@ -964,7 +964,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`@feature`);
+          expect(result).toBe(`@feature`);
         });
       });
 
@@ -978,7 +978,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
           const result = discordGetCommandAndPrefix(data);
 
-          expect(result).toStrictEqual(`@cookie`);
+          expect(result).toBe(`@cookie`);
         });
       });
     });

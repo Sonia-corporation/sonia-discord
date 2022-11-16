@@ -1,4 +1,10 @@
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
-import { EntityState } from '@datorama/akita';
+import { Snowflake } from 'discord.js';
 
-export type IFirebaseGuildState = EntityState<IFirebaseGuild, string>;
+export type IFirebaseGuildState = IFirebaseGuild & {
+  /**
+   * @description
+   * The Discord guild id
+   */
+  id: Snowflake;
+};

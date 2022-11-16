@@ -7,7 +7,7 @@ import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseGuildsStoreService } from '../stores/guilds/services/firebase-guilds-store.service';
-import admin from 'firebase-admin';
+import { WriteResult } from 'firebase-admin/firestore';
 import _ from 'lodash';
 
 export class FirebaseService extends AbstractService {
@@ -25,7 +25,7 @@ export class FirebaseService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_SERVICE);
   }
 
-  public init(): Promise<[number | void, admin.firestore.WriteResult[] | void]> {
+  public init(): Promise<[number | void, WriteResult[] | void]> {
     FirebaseAppService.getInstance().init();
     void FirebaseGuildsNewVersionService.getInstance().init();
     FirebaseGuildsStoreService.getInstance().init();
@@ -33,18 +33,22 @@ export class FirebaseService extends AbstractService {
     return Promise.all([
       FirebaseGuildsService.getInstance()
         .init()
-        .catch((): void => {
+        .catch((error: Error): never => {
           this._logFirebaseGuildsServiceInitError();
+
+          throw error;
         }),
       FirebaseGuildsBreakingChangeService.getInstance()
         .init()
-        .then((writeResults: admin.firestore.WriteResult[] | void): Promise<admin.firestore.WriteResult[] | void> => {
+        .then((writeResults: WriteResult[] | void): Promise<WriteResult[] | void> => {
           FirebaseGuildsService.getInstance().watchGuilds();
 
           return Promise.resolve(writeResults);
         })
-        .catch((): void => {
+        .catch((error: Error): never => {
           this._logFirebaseGuildsBreakingChangeServiceInitError();
+
+          throw error;
         }),
     ]);
   }

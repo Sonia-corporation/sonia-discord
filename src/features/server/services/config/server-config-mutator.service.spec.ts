@@ -84,7 +84,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
         service = new ServerConfigMutatorService(config);
 
-        expect(serverConfigCoreService.port).toStrictEqual(8888);
+        expect(serverConfigCoreService.port).toBe(8888);
       });
     });
 
@@ -101,7 +101,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
         service = new ServerConfigMutatorService(config);
 
-        expect(serverConfigCoreService.port).toStrictEqual(8888);
+        expect(serverConfigCoreService.port).toBe(8888);
       });
     });
   });
@@ -127,7 +127,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
         service.init();
 
-        expect(serverConfigCoreService.port).toStrictEqual(88);
+        expect(serverConfigCoreService.port).toBe(88);
       });
     });
 
@@ -143,7 +143,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
         service.init();
 
-        expect(serverConfigCoreService.port).toStrictEqual(8);
+        expect(serverConfigCoreService.port).toBe(8);
       });
     });
 
@@ -214,7 +214,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(serverConfigCoreService.port).toStrictEqual(8);
+      expect(serverConfigCoreService.port).toBe(8);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -235,7 +235,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(serverConfigCoreService.port).toStrictEqual(8);
+        expect(serverConfigCoreService.port).toBe(8);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -259,7 +259,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(serverConfigCoreService.port).toStrictEqual(88);
+        expect(serverConfigCoreService.port).toBe(88);
       });
 
       it(`should log about the config update`, (): void => {
@@ -293,13 +293,14 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.updatePort(port);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+      const configUpdateNumber: IConfigUpdateNumber = {
         context: `ServerConfigMutatorService`,
         newValue: 1234,
         oldValue: 8888,
         valueName: `port`,
-      } as IConfigUpdateNumber);
+      };
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith(configUpdateNumber);
     });
 
     it(`should update the server config port with the updated number`, (): void => {
@@ -307,7 +308,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.updatePort(port);
 
-      expect(serverConfigCoreService.port).toStrictEqual(1234);
+      expect(serverConfigCoreService.port).toBe(1234);
     });
   });
 });

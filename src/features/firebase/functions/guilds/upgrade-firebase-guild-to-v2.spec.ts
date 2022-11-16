@@ -23,7 +23,7 @@ describe(`upgradeFirebaseGuildToV2()`, (): void => {
 
     const result = upgradeFirebaseGuildToV2(firebaseGuild);
 
-    expect(result.lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
+    expect(result.lastReleaseNotesVersion).toBe(`0.0.0`);
   });
 
   it(`should return a v2 version`, (): void => {

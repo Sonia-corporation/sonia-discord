@@ -8,3 +8,4 @@ xregexp.install({
   astral: true,
   namespacing: true,
 });
+

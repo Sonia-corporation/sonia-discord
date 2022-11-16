@@ -81,13 +81,14 @@ describe(`GithubConfigService`, (): void => {
 
       const result = service.getBugReportUrl();
 
-      expect(result).toStrictEqual(`dummy-bug-report-url`);
+      expect(result).toBe(`dummy-bug-report-url`);
     });
   });
 
   describe(`getPersonalAccessToken()`, (): void => {
     beforeEach((): void => {
       service = GithubConfigService.getInstance();
+
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
     });
 
@@ -96,7 +97,7 @@ describe(`GithubConfigService`, (): void => {
 
       const result = service.getPersonalAccessToken();
 
-      expect(result).toStrictEqual(`dummy-personal-access-token`);
+      expect(result).toBe(`dummy-personal-access-token`);
     });
   });
 });

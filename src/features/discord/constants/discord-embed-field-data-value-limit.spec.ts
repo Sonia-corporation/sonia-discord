@@ -4,6 +4,6 @@ describe(`DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT`, (): void => {
   it(`should be 1024`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT).toStrictEqual(1024);
+    expect(DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT).toBe(1024);
   });
 });

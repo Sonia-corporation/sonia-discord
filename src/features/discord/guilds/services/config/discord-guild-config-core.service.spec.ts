@@ -54,7 +54,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldSendCookiesOnCreate).toStrictEqual(true);
+    expect(service.shouldSendCookiesOnCreate).toBe(true);
   });
 
   it(`should send noon message when it is noon`, (): void => {
@@ -62,7 +62,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldSendNoonMessage).toStrictEqual(true);
+    expect(service.shouldSendNoonMessage).toBe(true);
   });
 
   it(`should send a message when new members joins the current guild`, (): void => {
@@ -70,7 +70,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldWelcomeNewMembers).toStrictEqual(true);
+    expect(service.shouldWelcomeNewMembers).toBe(true);
   });
 
   it(`should have a Sonia guild id`, (): void => {
@@ -78,7 +78,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.soniaGuildId).toStrictEqual(`689833865279307782`);
+    expect(service.soniaGuildId).toBe(`689833865279307782`);
   });
 
   it(`should have a Sonia permanent invitation url to joins`, (): void => {
@@ -86,6 +86,6 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.soniaPermanentGuildInviteUrl).toStrictEqual(`https://discord.gg/PW4JSkv`);
+    expect(service.soniaPermanentGuildInviteUrl).toBe(`https://discord.gg/PW4JSkv`);
   });
 });

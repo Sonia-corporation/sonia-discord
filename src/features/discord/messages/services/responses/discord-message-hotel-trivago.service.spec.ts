@@ -73,7 +73,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -87,7 +87,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -101,7 +101,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -115,7 +115,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -129,7 +129,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -143,7 +143,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -157,7 +157,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -171,7 +171,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -185,7 +185,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -199,7 +199,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -250,14 +250,6 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
         discordMessageContentServiceHasContentSpy.mockReturnValue(true);
       });
 
-      it(`should return a Discord message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.reply(anyDiscordMessage);
-
-        expect(result.options.split).toStrictEqual(false);
-      });
-
       describe(`when the given Discord message contains a valid mention with HOTEL`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage.content = `<@!123> HOTEL`;
@@ -280,7 +272,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -306,7 +298,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -332,7 +324,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -358,7 +350,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
     });

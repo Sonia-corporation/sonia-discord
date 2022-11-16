@@ -14,7 +14,7 @@ describe(`isDiscordUser()`, (): void => {
 
       const result = isDiscordUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -28,7 +28,7 @@ describe(`isDiscordUser()`, (): void => {
 
       const result = isDiscordUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -42,7 +42,7 @@ describe(`isDiscordUser()`, (): void => {
 
       const result = isDiscordUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -58,7 +58,7 @@ describe(`isDiscordUser()`, (): void => {
 
       const result = isDiscordUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -72,7 +72,7 @@ describe(`isDiscordUser()`, (): void => {
 
       const result = isDiscordUser(user);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

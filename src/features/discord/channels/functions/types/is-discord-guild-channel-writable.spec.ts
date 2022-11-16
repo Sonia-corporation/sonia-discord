@@ -10,7 +10,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<TextChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -20,7 +20,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -28,7 +28,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<VoiceChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -38,7 +38,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -46,7 +46,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<CategoryChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -56,7 +56,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -64,7 +64,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<NewsChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -74,7 +74,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -82,7 +82,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<StoreChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -92,7 +92,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 });

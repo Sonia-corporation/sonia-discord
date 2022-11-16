@@ -24,7 +24,7 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.id).toStrictEqual(`dummy-id`);
+    expect(result.id).toBe(`dummy-id`);
   });
 
   it(`should return a last release notes version of 0.0.0`, (): void => {
@@ -32,7 +32,7 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
+    expect(result.lastReleaseNotesVersion).toBe(`0.0.0`);
   });
 
   it(`should return a Firebase guild with last possible version`, (): void => {
@@ -40,6 +40,6 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.version).toStrictEqual(5);
+    expect(result.version).toBe(5);
   });
 });

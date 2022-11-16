@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Check labels
         id: check_labels
-        uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+        uses: shioyang/check-pr-labels-on-push-action@97f03ff60697a69137058e0ec98f8aa809a08be9 # tag=v1.0.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           labels: '["merge-into-master"]'
@@ -30,7 +30,7 @@ jobs:
     needs: [HasLabel]
     steps:
       - name: Checkout master
-        uses: actions/checkout@v2
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
         with:
           ref: master
       - name: Reset branch
@@ -47,7 +47,7 @@ jobs:
         run: echo 'The PR should not be created'
       - name: Create PR from develop to master
         if: needs.HasLabel.outputs.HAS_LABEL == 'true'
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@b4d51739f96fca8047ad065eccef63442d8e99f7 # tag=v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'chore(master): merge develop into master'

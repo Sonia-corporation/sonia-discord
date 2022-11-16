@@ -5,24 +5,24 @@ describe(`DiscordGuildSoniaChannelNameEnum`, (): void => {
   it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordGuildSoniaChannelNameEnum)).toStrictEqual(3);
+    expect(getEnumLength(DiscordGuildSoniaChannelNameEnum)).toBe(3);
   });
 
   it(`should have a member "ERRORS"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordGuildSoniaChannelNameEnum.ERRORS).toStrictEqual(`errors`);
+    expect(DiscordGuildSoniaChannelNameEnum.ERRORS).toBe(`errors`);
   });
 
   it(`should have a member "LOGS"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordGuildSoniaChannelNameEnum.LOGS).toStrictEqual(`logs`);
+    expect(DiscordGuildSoniaChannelNameEnum.LOGS).toBe(`logs`);
   });
 
   it(`should have a member "WARNINGS"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordGuildSoniaChannelNameEnum.WARNINGS).toStrictEqual(`warnings`);
+    expect(DiscordGuildSoniaChannelNameEnum.WARNINGS).toBe(`warnings`);
   });
 });

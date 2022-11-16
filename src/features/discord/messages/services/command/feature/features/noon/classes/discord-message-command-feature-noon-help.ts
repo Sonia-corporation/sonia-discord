@@ -31,18 +31,16 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
-      .then(
-        (helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge({}, helpMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(anyDiscordMessage, discordCommandFlags),
-                split: false,
-              },
-              response: ``,
-            })
-          )
-      );
+      .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          content: ``,
+          options: {
+            embeds: [this._getMessageEmbed(anyDiscordMessage, discordCommandFlags)],
+          },
+        };
+
+        return Promise.resolve(_.merge({}, helpMessageResponse, message));
+      });
   }
 
   private _logExecuteAction(discordMessageId: Readonly<Snowflake>): void {

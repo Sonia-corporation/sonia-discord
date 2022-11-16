@@ -22,6 +22,9 @@ describe(`GithubConfigMutatorService`, (): void => {
     configService = ConfigService.getInstance();
     githubConfigCoreService = GithubConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
+
+    // Set it to avoid throwing due to the default value being 'unknown'
+    githubConfigCoreService.personalAccessToken = `personal-access-token`;
   });
 
   describe(`getInstance()`, (): void => {
@@ -84,7 +87,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service = new GithubConfigMutatorService(config);
 
-        expect(githubConfigCoreService.bugReportUrl).toStrictEqual(`bugReportUrl`);
+        expect(githubConfigCoreService.bugReportUrl).toBe(`bugReportUrl`);
       });
 
       it(`should not update the current personal access token`, (): void => {
@@ -93,7 +96,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service = new GithubConfigMutatorService(config);
 
-        expect(githubConfigCoreService.personalAccessToken).toStrictEqual(`personalAccessToken`);
+        expect(githubConfigCoreService.personalAccessToken).toBe(`personalAccessToken`);
       });
     });
 
@@ -111,7 +114,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service = new GithubConfigMutatorService(config);
 
-        expect(githubConfigCoreService.bugReportUrl).toStrictEqual(`dummy-bug-report-url`);
+        expect(githubConfigCoreService.bugReportUrl).toBe(`dummy-bug-report-url`);
       });
 
       it(`should override the personal access token`, (): void => {
@@ -120,7 +123,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service = new GithubConfigMutatorService(config);
 
-        expect(githubConfigCoreService.personalAccessToken).toStrictEqual(`dummy-personal-access-token`);
+        expect(githubConfigCoreService.personalAccessToken).toBe(`dummy-personal-access-token`);
       });
     });
   });
@@ -184,8 +187,8 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(githubConfigCoreService.bugReportUrl).toStrictEqual(`dummy-bug-report-url`);
-      expect(githubConfigCoreService.personalAccessToken).toStrictEqual(`dummy-personal-access-token`);
+      expect(githubConfigCoreService.bugReportUrl).toBe(`dummy-bug-report-url`);
+      expect(githubConfigCoreService.personalAccessToken).toBe(`dummy-personal-access-token`);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -206,8 +209,8 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(githubConfigCoreService.bugReportUrl).toStrictEqual(`dummy-bug-report-url`);
-        expect(githubConfigCoreService.personalAccessToken).toStrictEqual(`dummy-personal-access-token`);
+        expect(githubConfigCoreService.bugReportUrl).toBe(`dummy-bug-report-url`);
+        expect(githubConfigCoreService.personalAccessToken).toBe(`dummy-personal-access-token`);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -231,7 +234,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(githubConfigCoreService.bugReportUrl).toStrictEqual(`bug-report-url`);
+        expect(githubConfigCoreService.bugReportUrl).toBe(`bug-report-url`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -258,7 +261,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(githubConfigCoreService.personalAccessToken).toStrictEqual(`personal-access-token`);
+        expect(githubConfigCoreService.personalAccessToken).toBe(`personal-access-token`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -308,7 +311,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updateBugReportUrl(bugReportUrl);
 
-      expect(githubConfigCoreService.bugReportUrl).toStrictEqual(`bug-report-url`);
+      expect(githubConfigCoreService.bugReportUrl).toBe(`bug-report-url`);
     });
   });
 
@@ -347,7 +350,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updatePersonalAccessToken(personalAccessToken);
 
-      expect(githubConfigCoreService.personalAccessToken).toStrictEqual(`personal-access-token`);
+      expect(githubConfigCoreService.personalAccessToken).toBe(`personal-access-token`);
     });
   });
 });

@@ -13,7 +13,7 @@ describe(`isValidPort()`, (): void => {
 
       const result = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`isValidPort()`, (): void => {
 
       const result = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`isValidPort()`, (): void => {
 
       const result = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`isValidPort()`, (): void => {
 
       const result = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -69,7 +69,7 @@ describe(`isValidPort()`, (): void => {
 
       const result = isValidPort(port);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -83,7 +83,7 @@ describe(`isValidPort()`, (): void => {
 
       const result = isValidPort(port);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

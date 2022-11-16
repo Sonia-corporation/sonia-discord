@@ -3,15 +3,26 @@ import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { DiscordClientService } from '../../../discord/services/discord-client.service';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FirebaseCollectionEnum } from '../../enums/firebase-collection.enum';
 import { createFirebaseGuild } from '../../functions/guilds/create-firebase-guild';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { FirebaseAppService } from '../firebase-app.service';
 import { Guild, Snowflake } from 'discord.js';
-import admin, { firestore } from 'firebase-admin';
+import { App } from 'firebase-admin/app';
+import {
+  CollectionReference,
+  DocumentSnapshot,
+  Firestore,
+  getFirestore,
+  QueryDocumentSnapshot,
+  QuerySnapshot,
+  WriteBatch,
+  WriteResult,
+} from 'firebase-admin/firestore';
 import _ from 'lodash';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 const ONE_GUILD = 1;
@@ -29,7 +40,7 @@ export class FirebaseGuildsService extends AbstractService {
 
   private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _onGuildsChange$: BehaviorSubject<IFirebaseGuild[]> = new BehaviorSubject<IFirebaseGuild[]>([]);
-  private _store: admin.firestore.Firestore | undefined = undefined;
+  private _store: Firestore | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_SERVICE);
@@ -39,7 +50,7 @@ export class FirebaseGuildsService extends AbstractService {
     return this._setStore().then((): Promise<number> => this._logGuildCount());
   }
 
-  public getCollectionReference(): admin.firestore.CollectionReference<IFirebaseGuild> | undefined {
+  public getCollectionReference(): CollectionReference<IFirebaseGuild> | undefined {
     if (_.isNil(this._store)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
@@ -49,30 +60,53 @@ export class FirebaseGuildsService extends AbstractService {
       return undefined;
     }
 
-    return this._store.collection(`/${FirebaseCollectionEnum.GUILDS}`);
+    return this._store.collection(FirebaseCollectionEnum.GUILDS);
   }
 
-  public getGuilds(): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
-      this.getCollectionReference();
+  public getGuilds(): Promise<QuerySnapshot<IFirebaseGuild> | never> {
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
     }
 
-    return collectionReference.get();
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Collection reference ID: ${ChalkService.getInstance().value(collectionReference.id)}`
+        ),
+      });
+    }
+
+    return collectionReference.get().catch((error: Error): never => {
+      LoggerService.getInstance().error({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(error),
+      });
+
+      throw error;
+    });
   }
 
   public getGuildsCount(): Promise<number> {
-    return this.getGuilds().then(({ size }: Readonly<admin.firestore.QuerySnapshot<IFirebaseGuild>>): number => size);
+    return this.getGuilds().then(({ size }: Readonly<QuerySnapshot<IFirebaseGuild>>): number => size);
   }
 
   public hasGuild(guildId: Readonly<Snowflake>): Promise<boolean> {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
-      this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
+    }
+
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Collection reference ID: ${ChalkService.getInstance().value(collectionReference.id)}`
+        ),
+      });
     }
 
     return collectionReference
@@ -82,7 +116,7 @@ export class FirebaseGuildsService extends AbstractService {
         ({
           // eslint-disable-next-line @typescript-eslint/naming-convention
           exists,
-        }: Readonly<admin.firestore.DocumentSnapshot<IFirebaseGuild>>): Promise<boolean> => Promise.resolve(exists)
+        }: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<boolean> => Promise.resolve(exists)
       )
       .catch((): Promise<boolean> => {
         LoggerService.getInstance().error({
@@ -97,20 +131,26 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getGuild(guildId: Readonly<Snowflake>): Promise<IFirebaseGuild | null | undefined> {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
-      this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
+    }
+
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Collection reference ID: ${ChalkService.getInstance().value(collectionReference.id)}`
+        ),
+      });
     }
 
     return collectionReference
       .doc(guildId)
       .get()
       .then(
-        (
-          documentSnapshot: Readonly<admin.firestore.DocumentSnapshot<IFirebaseGuild>>
-        ): Promise<IFirebaseGuild | null | undefined> => {
+        (documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<IFirebaseGuild | null | undefined> => {
           if (!_.isEqual(documentSnapshot.exists, true)) {
             return Promise.resolve(null);
           }
@@ -130,12 +170,20 @@ export class FirebaseGuildsService extends AbstractService {
       });
   }
 
-  public addGuild({ id }: Readonly<Guild>): Promise<admin.firestore.WriteResult> {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
-      this.getCollectionReference();
+  public addGuild({ id }: Readonly<Guild>): Promise<WriteResult> {
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
+    }
+
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Collection reference ID: ${ChalkService.getInstance().value(collectionReference.id)}`
+        ),
+      });
     }
 
     LoggerService.getInstance().debug({
@@ -150,7 +198,7 @@ export class FirebaseGuildsService extends AbstractService {
           id,
         })
       )
-      .then((writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
+      .then((writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
         LoggerService.getInstance().success({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} created`),
@@ -165,13 +213,13 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public isReady(): Promise<true> {
-    return this.isReady$()
-      .pipe(
+    return firstValueFrom(
+      this.isReady$().pipe(
         filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 
   public notifyIsReady(): void {
@@ -186,7 +234,7 @@ export class FirebaseGuildsService extends AbstractService {
     this._onGuildsChange$.next(guilds);
   }
 
-  public getBatch(): admin.firestore.WriteBatch | undefined {
+  public getBatch(): WriteBatch | undefined {
     if (_.isNil(this._store)) {
       return undefined;
     }
@@ -195,11 +243,19 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public watchGuilds(): void {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
-      this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       throw new Error(`Collection not available`);
+    }
+
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Collection reference ID: ${ChalkService.getInstance().value(collectionReference.id)}`
+        ),
+      });
     }
 
     LoggerService.getInstance().debug({
@@ -208,12 +264,12 @@ export class FirebaseGuildsService extends AbstractService {
     });
 
     collectionReference.onSnapshot(
-      (querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>): void => {
+      (querySnapshot: QuerySnapshot<IFirebaseGuild>): void => {
         const firebaseGuilds: IFirebaseGuild[] = [];
 
         querySnapshot.forEach(
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          (queryDocumentSnapshot: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>): void => {
+          (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
             if (_.isEqual(queryDocumentSnapshot.exists, true)) {
               firebaseGuilds.push(queryDocumentSnapshot.data());
             }
@@ -239,7 +295,18 @@ export class FirebaseGuildsService extends AbstractService {
     return DiscordClientService.getInstance()
       .isReady()
       .then((): Promise<true> => {
-        this._store = firestore(FirebaseAppService.getInstance().getApp());
+        const app: App | undefined = FirebaseAppService.getInstance().getApp();
+
+        if (_.isNil(app)) {
+          LoggerService.getInstance().error({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(`app is unset`),
+          });
+
+          throw new Error(`app is unset`);
+        }
+
+        this._store = getFirestore(app);
 
         this._store.settings({
           ignoreUndefinedProperties: true,

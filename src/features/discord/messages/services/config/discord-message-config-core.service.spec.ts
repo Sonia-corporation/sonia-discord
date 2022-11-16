@@ -54,7 +54,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = new DiscordMessageConfigCoreService();
 
-    expect(service.command.cliError.imageColor).toStrictEqual(15562905);
+    expect(service.command.cliError.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the CLI error command`, (): void => {
@@ -62,7 +62,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = new DiscordMessageConfigCoreService();
 
-    expect(service.command.cliError.imageUrl).toStrictEqual(`https://i.ibb.co/cLM30Xb/icons8-cancel-512.png`);
+    expect(service.command.cliError.imageUrl).toBe(`https://i.ibb.co/cLM30Xb/icons8-cancel-512.png`);
   });
 
   it(`should have a specific color for the image of the cookie command`, (): void => {
@@ -70,7 +70,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.cookie.imageColor).toStrictEqual(16376750);
+    expect(service.command.cookie.imageColor).toBe(16376750);
   });
 
   it(`should have a specific url for the image of the cookie command`, (): void => {
@@ -78,7 +78,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.cookie.imageUrl).toStrictEqual(`https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`);
+    expect(service.command.cookie.imageUrl).toBe(`https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`);
   });
 
   it(`should have a specific color for the image of the error command`, (): void => {
@@ -86,7 +86,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.error.imageColor).toStrictEqual(15562905);
+    expect(service.command.error.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the error command`, (): void => {
@@ -94,7 +94,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.error.imageUrl).toStrictEqual(`https://i.ibb.co/5jZmzSB/icons8-error-512.png`);
+    expect(service.command.error.imageUrl).toBe(`https://i.ibb.co/5jZmzSB/icons8-error-512.png`);
   });
 
   it(`should have a specific color for the image of the help command`, (): void => {
@@ -102,7 +102,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.help.imageColor).toStrictEqual(7522991);
+    expect(service.command.help.imageColor).toBe(7522991);
   });
 
   it(`should have a specific url for the image of the help command`, (): void => {
@@ -110,7 +110,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.help.imageUrl).toStrictEqual(`https://i.ibb.co/vLSnVk6/icons8-information-512.png`);
+    expect(service.command.help.imageUrl).toBe(`https://i.ibb.co/vLSnVk6/icons8-information-512.png`);
   });
 
   it(`should have a specific color for the image of the lunch command`, (): void => {
@@ -118,7 +118,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.lunch.imageColor).toStrictEqual(14082034);
+    expect(service.command.lunch.imageColor).toBe(14082034);
   });
 
   it(`should have a specific url for the image of the lunch command`, (): void => {
@@ -126,7 +126,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.lunch.imageUrl).toStrictEqual(`https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`);
+    expect(service.command.lunch.imageUrl).toBe(`https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`);
   });
 
   it(`should have a "!" prefix for the commands`, (): void => {
@@ -134,7 +134,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.prefix).toStrictEqual(`!`);
+    expect(service.command.prefix).toBe(`!`);
   });
 
   it(`should have a specific color for the image of the release notes bug fixes command`, (): void => {
@@ -142,7 +142,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.bugFixes.imageColor).toStrictEqual(9146008);
+    expect(service.command.releaseNotes.bugFixes.imageColor).toBe(9146008);
   });
 
   it(`should have a specific url for the image of the release notes bug fixes command`, (): void => {
@@ -150,9 +150,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.bugFixes.imageUrl).toStrictEqual(
-      `https://i.ibb.co/CmxGZG1/icons8-deadbug-512.png`
-    );
+    expect(service.command.releaseNotes.bugFixes.imageUrl).toBe(`https://i.ibb.co/CmxGZG1/icons8-deadbug-512.png`);
   });
 
   it(`should have a specific color for the image of the release notes features command`, (): void => {
@@ -160,7 +158,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.features.imageColor).toStrictEqual(15562905);
+    expect(service.command.releaseNotes.features.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the release notes features command`, (): void => {
@@ -168,7 +166,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.features.imageUrl).toStrictEqual(`https://i.ibb.co/YjzVm0c/icons8-new-512.png`);
+    expect(service.command.releaseNotes.features.imageUrl).toBe(`https://i.ibb.co/YjzVm0c/icons8-new-512.png`);
   });
 
   it(`should have a specific color for the image of the release notes mixed command`, (): void => {
@@ -176,7 +174,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.mixed.imageColor).toStrictEqual(15718590);
+    expect(service.command.releaseNotes.mixed.imageColor).toBe(15718590);
   });
 
   it(`should have a specific url for the image of the release notes mixed command`, (): void => {
@@ -184,9 +182,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.mixed.imageUrl).toStrictEqual(
-      `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`
-    );
+    expect(service.command.releaseNotes.mixed.imageUrl).toBe(`https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`);
   });
 
   it(`should have a specific color for the image of the release notes performance improvements command`, (): void => {
@@ -194,7 +190,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.performanceImprovements.imageColor).toStrictEqual(15562905);
+    expect(service.command.releaseNotes.performanceImprovements.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the release notes performance improvements command`, (): void => {
@@ -202,7 +198,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.performanceImprovements.imageUrl).toStrictEqual(
+    expect(service.command.releaseNotes.performanceImprovements.imageUrl).toBe(
       `https://i.ibb.co/JkmQvS1/icons8-the-flash-sign-512.png`
     );
   });
@@ -212,7 +208,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.unknown.imageColor).toStrictEqual(15718590);
+    expect(service.command.releaseNotes.unknown.imageColor).toBe(15718590);
   });
 
   it(`should have a specific url for the image of the release notes unknown command`, (): void => {
@@ -220,9 +216,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.unknown.imageUrl).toStrictEqual(
-      `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`
-    );
+    expect(service.command.releaseNotes.unknown.imageUrl).toBe(`https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`);
   });
 
   it(`should have a specific color for the image of the version command`, (): void => {
@@ -230,7 +224,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.version.imageColor).toStrictEqual(11912416);
+    expect(service.command.version.imageColor).toBe(11912416);
   });
 
   it(`should have a specific url for the image of the version command`, (): void => {
@@ -238,9 +232,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.version.imageUrl).toStrictEqual(
-      `https://i.ibb.co/ph17BqP/icons8-artificial-intelligence-512.png`
-    );
+    expect(service.command.version.imageUrl).toBe(`https://i.ibb.co/ph17BqP/icons8-artificial-intelligence-512.png`);
   });
 
   it(`should have a specific color for the image of the error`, (): void => {
@@ -248,7 +240,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.error.imageColor).toStrictEqual(15562905);
+    expect(service.error.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the error`, (): void => {
@@ -256,7 +248,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.error.imageUrl).toStrictEqual(`https://i.ibb.co/r7PHJS1/icons8-bug-512.png`);
+    expect(service.error.imageUrl).toBe(`https://i.ibb.co/r7PHJS1/icons8-bug-512.png`);
   });
 
   it(`should have a specific color for the image of the warning`, (): void => {
@@ -264,7 +256,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.warning.imageColor).toStrictEqual(15562905);
+    expect(service.warning.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the warning`, (): void => {
@@ -272,6 +264,6 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.warning.imageUrl).toStrictEqual(`https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`);
+    expect(service.warning.imageUrl).toBe(`https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`);
   });
 });

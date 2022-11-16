@@ -2,6 +2,7 @@ import { GithubConfigCoreService } from './github-config-core.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IGithubConfig } from '../../interfaces/github-config';
+import { IPersonalAccessToken } from '../../types/personal-access-token';
 import _ from 'lodash';
 
 export class GithubConfigService extends AbstractService {
@@ -30,7 +31,7 @@ export class GithubConfigService extends AbstractService {
     return GithubConfigCoreService.getInstance().bugReportUrl;
   }
 
-  public getPersonalAccessToken(): string {
+  public getPersonalAccessToken(): IPersonalAccessToken | never {
     return GithubConfigCoreService.getInstance().personalAccessToken;
   }
 }

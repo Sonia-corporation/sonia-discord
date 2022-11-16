@@ -20,7 +20,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from '../../../logger/services/discord-logger-error.service';
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
-import { Guild, GuildChannel, Message } from 'discord.js';
+import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { Job, scheduleJob } from 'node-schedule';
@@ -92,9 +92,14 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
     this._logFirebaseGuildChannelNoonEnabled(guild, channel);
 
-    const guildChannel: GuildChannel | undefined = guild.channels.cache.get(channel.id as string);
+    if (_.isNil(channel.id)) {
+      return Promise.reject(new Error(`Guild channel id nil!`));
+    }
 
-    if (_.isNil(guildChannel)) {
+    // TODO add support for ThreadChannel
+    const guildOrThreadChannel: GuildChannel | ThreadChannel | undefined = guild.channels.cache.get(channel.id);
+
+    if (_.isNil(guildOrThreadChannel)) {
       this._logInValidDiscordGuildChannel(guild, channel);
 
       return Promise.reject(new Error(`Guild channel not found`));
@@ -102,7 +107,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
     this._logValidDiscordGuildChannel(guild, channel);
 
-    return this.sendMessageResponse(guildChannel);
+    return this.sendMessageResponse(guildOrThreadChannel);
   }
 
   public handleMessages(): Promise<((Message | void)[] | void)[] | void> {
@@ -127,26 +132,29 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return Promise.all(messagePromises);
   }
 
-  public sendMessageResponse(guildChannel: Readonly<GuildChannel>): Promise<Message | void> {
+  public sendMessageResponse(guildOrThreadChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
-    if (!isDiscordGuildChannelWritable(guildChannel)) {
-      this._logGuildChannelNotWritable(guildChannel);
+    if (!isDiscordGuildChannelWritable(guildOrThreadChannel)) {
+      this._logGuildChannelNotWritable(guildOrThreadChannel);
 
       return Promise.reject(new Error(`Guild channel not writable`));
     }
 
-    this._logSendingMessagesForNoon(guildChannel);
+    this._logSendingMessagesForNoon(guildOrThreadChannel);
 
-    return guildChannel
-      .send(messageResponse.response, messageResponse.options)
+    return guildOrThreadChannel
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.content,
+      })
       .then((message: Message): Promise<Message> => {
-        this._logNoonMessageSent(guildChannel);
+        this._logNoonMessageSent(guildOrThreadChannel);
 
         return Promise.resolve(message);
       })
       .catch((error: Readonly<string>): Promise<void> => {
-        this._onMessageError(error, guildChannel);
+        this._onMessageError(error, guildOrThreadChannel);
 
         return Promise.reject(error);
       });
@@ -295,10 +303,8 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
   private _getMessageResponse(): IDiscordMessageResponse {
     return {
-      options: {
-        split: false,
-      },
-      response: `Il est midi!`,
+      content: `Il est midi!`,
+      options: {},
     };
   }
 
@@ -354,7 +360,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel>): void {
+  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel | ThreadChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(

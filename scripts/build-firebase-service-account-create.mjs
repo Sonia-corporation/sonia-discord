@@ -1,7 +1,8 @@
-const FS = require(`fs-extra`);
-const CHALK = require(`./chalk`);
-const LOGGER = require(`./logger`);
-const APP_ROOT_PATH = require(`app-root-path`);
+import * as CHALK from './chalk.mjs';
+import * as LOGGER from './logger.mjs';
+import APP_ROOT_PATH from 'app-root-path';
+import FS from 'fs-extra';
+
 const CONTEXT = `build-firebase-service-account-create`;
 
 LOGGER.debug(CONTEXT, CHALK.text(`Create Firebase service account file into dist...`));
@@ -15,11 +16,11 @@ FS.createFile(`${APP_ROOT_PATH.path}/dist/firebase-service-account-file.json`)
       /* eslint-disable @typescript-eslint/naming-convention */
       auth_provider_x509_cert_url: `https://www.googleapis.com/oauth2/v1/certs`,
       auth_uri: `https://accounts.google.com/o/oauth2/auth`,
-      client_email: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL || `unknown`,
-      client_id: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_ID || `unknown`,
-      client_x509_cert_url: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_X509_CERT_URL || `unknown`,
-      private_key: process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY || `unknown`,
-      private_key_id: process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY_ID || `unknown`,
+      client_email: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL ?? `unknown`,
+      client_id: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_ID ?? `unknown`,
+      client_x509_cert_url: process.env.FIREBASE_SERVICE_ACCOUNT_CLIENT_X509_CERT_URL ?? `unknown`,
+      private_key: process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY ?? `unknown`,
+      private_key_id: process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY_ID ?? `unknown`,
       project_id: `sonia-il-est-midi-discord-api`,
       token_uri: `https://oauth2.googleapis.com/token`,
       type: `service_account`,

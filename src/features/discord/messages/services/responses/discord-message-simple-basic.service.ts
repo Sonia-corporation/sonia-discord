@@ -28,9 +28,7 @@ export class DiscordMessageSimpleBasicService extends AbstractService {
    *
    * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
    * Like it is really her mentioned and she has the rights to respond, etc
-   *
    * @param {Readonly<string>} message The message to check if a response to simple or basic is possible
-   *
    * @returns {boolean} Return true when she can respond to simple or basic
    */
   public hasCriteria(message: Readonly<string>): boolean {
@@ -60,12 +58,12 @@ export class DiscordMessageSimpleBasicService extends AbstractService {
       response = `Simple`;
     }
 
-    return Promise.resolve({
-      options: {
-        split: false,
-      },
-      response: getReplyWithEnvPrefix(response),
-    });
+    const message: IDiscordMessageResponse = {
+      content: getReplyWithEnvPrefix(response),
+      options: {},
+    };
+
+    return Promise.resolve(message);
   }
 
   private _getMessageWithoutFirstMention(message: Readonly<string>): string {

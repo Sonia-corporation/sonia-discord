@@ -43,7 +43,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`!`);
         });
 
         it(`should find "help" as command`, (): void => {
@@ -51,7 +51,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`help`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -59,7 +59,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "me" as argument 1`, (): void => {
@@ -67,7 +67,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`me`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`me`);
         });
       });
 
@@ -81,7 +81,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`!`);
         });
 
         it(`should find "help" as command`, (): void => {
@@ -89,7 +89,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`help`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -97,7 +97,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "me-in-kebab" as argument 1`, (): void => {
@@ -105,7 +105,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`me-in-kebab`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`me-in-kebab`);
         });
       });
 
@@ -192,7 +192,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`!`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -200,7 +200,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`cookie`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -208,7 +208,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "miam" as argument 1`, (): void => {
@@ -216,7 +216,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`miam`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`miam`);
         });
       });
 
@@ -230,7 +230,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`!`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -238,7 +238,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`cookie`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -246,7 +246,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "miam-in-kebab" as argument 1`, (): void => {
@@ -254,7 +254,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`miam-in-kebab`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`miam-in-kebab`);
         });
       });
 
@@ -347,7 +347,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`-`);
         });
 
         it(`should find "help" as command`, (): void => {
@@ -355,7 +355,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`help`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -363,7 +363,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "me" as argument 1`, (): void => {
@@ -371,7 +371,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`me`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`me`);
         });
       });
 
@@ -385,7 +385,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`-`);
         });
 
         it(`should find "help" as command`, (): void => {
@@ -393,7 +393,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`help`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -401,7 +401,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "me-in-kebab" as argument 1`, (): void => {
@@ -409,7 +409,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`me-in-kebab`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`me-in-kebab`);
         });
       });
 
@@ -496,7 +496,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`-`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -504,7 +504,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`cookie`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -512,7 +512,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "miam" as argument 1`, (): void => {
@@ -520,7 +520,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`miam`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`miam`);
         });
       });
 
@@ -534,7 +534,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`-`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -542,7 +542,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`cookie`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -550,7 +550,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "miam" as argument 1`, (): void => {
@@ -558,7 +558,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`miam`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`miam`);
         });
       });
 
@@ -572,7 +572,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
+          expect(xregexp.exec(message, result)?.groups?.prefix).toBe(`-`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -580,7 +580,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
+          expect(xregexp.exec(message, result)?.groups?.command).toBe(`cookie`);
         });
 
         it(`should find " " as separator`, (): void => {
@@ -588,7 +588,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+          expect(xregexp.exec(message, result)?.groups?.separator).toBe(` `);
         });
 
         it(`should find "miam-in-kebab" as argument 1`, (): void => {
@@ -596,7 +596,7 @@ describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
 
           const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`miam-in-kebab`);
+          expect(xregexp.exec(message, result)?.groups?.argument1).toBe(`miam-in-kebab`);
         });
       });
 

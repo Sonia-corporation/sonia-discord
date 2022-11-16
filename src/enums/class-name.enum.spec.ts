@@ -5,13 +5,13 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have 10 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ClassNameEnum)).toStrictEqual(10);
+    expect(getEnumLength(ClassNameEnum)).toBe(10);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED).toBe(
       `DiscordMessageCommandFeatureNoonDisabled`
     );
   });
@@ -19,23 +19,19 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED).toStrictEqual(
-      `DiscordMessageCommandFeatureNoonEnabled`
-    );
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED).toBe(`DiscordMessageCommandFeatureNoonEnabled`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HELP"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HELP).toStrictEqual(
-      `DiscordMessageCommandFeatureNoonHelp`
-    );
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HELP).toBe(`DiscordMessageCommandFeatureNoonHelp`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE).toBe(
       `DiscordMessageCommandFeatureNoonHumanize`
     );
   });
@@ -43,15 +39,13 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS).toStrictEqual(
-      `DiscordMessageCommandFeatureNoonStatus`
-    );
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS).toBe(`DiscordMessageCommandFeatureNoonStatus`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_DISABLED).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_DISABLED).toBe(
       `DiscordMessageCommandFeatureReleaseNotesDisabled`
     );
   });
@@ -59,7 +53,7 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED).toBe(
       `DiscordMessageCommandFeatureReleaseNotesEnabled`
     );
   });
@@ -67,7 +61,7 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HELP"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HELP).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HELP).toBe(
       `DiscordMessageCommandFeatureReleaseNotesHelp`
     );
   });
@@ -75,7 +69,7 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE).toBe(
       `DiscordMessageCommandFeatureReleaseNotesHumanize`
     );
   });
@@ -83,7 +77,7 @@ describe(`ClassNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_STATUS"`, (): void => {
     expect.assertions(1);
 
-    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_STATUS).toStrictEqual(
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_STATUS).toBe(
       `DiscordMessageCommandFeatureReleaseNotesStatus`
     );
   });

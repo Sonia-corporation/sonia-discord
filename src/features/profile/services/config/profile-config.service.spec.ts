@@ -81,7 +81,7 @@ describe(`ProfileConfigService`, (): void => {
 
       const result = service.getDiscordId();
 
-      expect(result).toStrictEqual(`dummy-discord-id`);
+      expect(result).toBe(`dummy-discord-id`);
     });
   });
 
@@ -96,7 +96,7 @@ describe(`ProfileConfigService`, (): void => {
 
       const result = service.getNickname();
 
-      expect(result).toStrictEqual(`dummy-nickname`);
+      expect(result).toBe(`dummy-nickname`);
     });
   });
 });

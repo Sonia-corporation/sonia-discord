@@ -114,7 +114,7 @@ describe(`TimeService`, (): void => {
 
         const result = service.fromNow(date);
 
-        expect(result).toStrictEqual(`Invalid date`);
+        expect(result).toBe(`Invalid date`);
       });
 
       describe(`when the given capitalized state is true`, (): void => {
@@ -127,7 +127,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`Invalid date`);
+          expect(result).toBe(`Invalid date`);
         });
       });
 
@@ -141,7 +141,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`Invalid date`);
+          expect(result).toBe(`Invalid date`);
         });
       });
     });
@@ -156,7 +156,7 @@ describe(`TimeService`, (): void => {
 
         const result = service.fromNow(date);
 
-        expect(result).toStrictEqual(`Invalid date`);
+        expect(result).toBe(`Invalid date`);
       });
 
       describe(`when the given capitalized state is true`, (): void => {
@@ -169,7 +169,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`Invalid date`);
+          expect(result).toBe(`Invalid date`);
         });
       });
 
@@ -183,7 +183,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`Invalid date`);
+          expect(result).toBe(`Invalid date`);
         });
       });
     });
@@ -198,7 +198,7 @@ describe(`TimeService`, (): void => {
 
         const result = service.fromNow(date);
 
-        expect(result).toStrictEqual(`A few seconds ago`);
+        expect(result).toBe(`A few seconds ago`);
       });
 
       describe(`when the given capitalized state is true`, (): void => {
@@ -211,7 +211,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`A few seconds ago`);
+          expect(result).toBe(`A few seconds ago`);
         });
       });
 
@@ -225,7 +225,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`a few seconds ago`);
+          expect(result).toBe(`a few seconds ago`);
         });
       });
     });
@@ -240,7 +240,7 @@ describe(`TimeService`, (): void => {
 
         const result = service.fromNow(date);
 
-        expect(result).toStrictEqual(`An hour ago`);
+        expect(result).toBe(`An hour ago`);
       });
 
       describe(`when the given capitalized state is true`, (): void => {
@@ -253,7 +253,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`An hour ago`);
+          expect(result).toBe(`An hour ago`);
         });
       });
 
@@ -267,7 +267,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`an hour ago`);
+          expect(result).toBe(`an hour ago`);
         });
       });
     });
@@ -282,7 +282,7 @@ describe(`TimeService`, (): void => {
 
         const result = service.fromNow(date);
 
-        expect(result).toStrictEqual(`2 hours ago`);
+        expect(result).toBe(`2 hours ago`);
       });
 
       describe(`when the given capitalized state is true`, (): void => {
@@ -295,7 +295,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`2 hours ago`);
+          expect(result).toBe(`2 hours ago`);
         });
       });
 
@@ -309,7 +309,7 @@ describe(`TimeService`, (): void => {
 
           const result = service.fromNow(date, isCapitalized);
 
-          expect(result).toStrictEqual(`2 hours ago`);
+          expect(result).toBe(`2 hours ago`);
         });
       });
     });

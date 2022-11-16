@@ -3,7 +3,9 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.service';
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
 import { FirebaseGuildsStore } from '../firebase-guilds-store';
-import { applyTransaction } from '@datorama/akita';
+import { emitOnce } from '@ngneat/elf';
+import { addEntities, deleteAllEntities, getEntity, upsertEntities } from '@ngneat/elf-entities';
+import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -28,19 +30,19 @@ export class FirebaseGuildsStoreService extends AbstractService {
   }
 
   public addOrUpdateEntities(entities: IFirebaseGuild[]): void {
-    FirebaseGuildsStore.getInstance().upsertMany(entities);
+    FirebaseGuildsStore.getInstance().update(upsertEntities(entities));
   }
 
   public addEntities(entities: IFirebaseGuild[]): void {
-    FirebaseGuildsStore.getInstance().add(entities);
+    FirebaseGuildsStore.getInstance().update(addEntities(entities));
   }
 
   public removeAllEntities(): void {
-    FirebaseGuildsStore.getInstance().remove();
+    FirebaseGuildsStore.getInstance().update(deleteAllEntities());
   }
 
-  public stopLoading(): void {
-    FirebaseGuildsStore.getInstance().setLoading(false);
+  public getEntity(id: Readonly<Snowflake>): IFirebaseGuild | undefined {
+    return FirebaseGuildsStore.getInstance().query(getEntity(id));
   }
 
   private _watchFirebaseGuilds$(): Observable<IFirebaseGuild[]> {
@@ -49,10 +51,9 @@ export class FirebaseGuildsStoreService extends AbstractService {
       .pipe(
         tap({
           next: (entities: IFirebaseGuild[]): void => {
-            applyTransaction((): void => {
+            emitOnce((): void => {
               this.removeAllEntities();
               this.addEntities(entities);
-              this.stopLoading();
             });
           },
         })

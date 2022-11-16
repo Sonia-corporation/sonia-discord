@@ -44,11 +44,10 @@ export class DiscordLoggerWarningService extends AbstractService {
 
   public getWarningMessageResponse(warning: Readonly<string>): IDiscordMessageResponse {
     return {
+      content: ``,
       options: {
-        embed: this._getMessageEmbed(warning),
-        split: false,
+        embeds: [this._getMessageEmbed(warning)],
       },
-      response: ``,
     };
   }
 

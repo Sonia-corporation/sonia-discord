@@ -5,7 +5,7 @@ import { FirebaseGuildVersionEnum } from '../../../../../../../../firebase/enums
 import { IFirebaseGuildV1 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1';
 import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelFeatureReleaseNotesState } from '../../../../../../../../firebase/types/guilds/channels/features/firebase-guild-channel-feature-release-notes-state';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
@@ -35,7 +35,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let discordMessageHelpService: DiscordMessageHelpService;
-  let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
+  let firebaseGuildsStoreService: FirebaseGuildsStoreService;
   let firebaseGuildsChannelsService: FirebaseGuildsChannelsService;
   let discordChannelService: DiscordChannelService;
 
@@ -44,7 +44,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     discordMessageHelpService = DiscordMessageHelpService.getInstance();
-    firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
+    firebaseGuildsStoreService = FirebaseGuildsStoreService.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
     discordChannelService = DiscordChannelService.getInstance();
   });
@@ -146,7 +146,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `news`,
+                type: `GUILD_NEWS`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -169,7 +169,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `dm`,
+                type: `DM`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -223,7 +223,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
             anyDiscordMessage = createMock<Message>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `text`,
+                type: `GUILD_TEXT`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -291,7 +291,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
-        .spyOn(firebaseGuildsStoreQuery, `getEntity`)
+        .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
       firebaseGuildsChannelsServiceIsValidSpy = jest
         .spyOn(firebaseGuildsChannelsService, `isValid`)
@@ -599,7 +599,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
                   const result = await service.getStates(anyDiscordMessage);
 
-                  expect(result.isEnabled).toStrictEqual(true);
+                  expect(result.isEnabled).toBe(true);
                 });
               });
 
@@ -627,7 +627,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
                   const result = await service.getStates(anyDiscordMessage);
 
-                  expect(result.isEnabled).toStrictEqual(false);
+                  expect(result.isEnabled).toBe(false);
                 });
               });
             });
@@ -706,7 +706,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -715,7 +715,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       describe(`when the enabled state is undefined`, (): void => {
@@ -731,7 +731,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -741,7 +741,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will not send a message containing the release notes when a new feature is deployed since it was never enabled on this channel.`
           );
         });
@@ -760,7 +760,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -770,7 +770,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will not send a message containing the release notes when a new feature is deployed since it was disabled on this channel.`
           );
         });
@@ -789,7 +789,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureReleaseNotesHumanizeEnabledMessagesEnum.I_LOVE_YOU
           );
         });
@@ -799,7 +799,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will send a message on this channel containing the release notes when a new feature is deployed.`
           );
         });
@@ -811,7 +811,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
         } as MessageEmbedFooter);
@@ -827,7 +827,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -844,7 +844,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -857,7 +857,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
         } as MessageEmbedThumbnail);
       });
@@ -867,16 +867,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
-      });
-
-      it(`should return a Discord message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(state);
-
-        expect(result.options.split).toStrictEqual(false);
+        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -884,7 +876,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.response).toStrictEqual(``);
+        expect(result.content).toBe(``);
       });
     });
   });

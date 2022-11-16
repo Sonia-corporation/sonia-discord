@@ -16,7 +16,7 @@ describe(`getEnumLength()`, (): void => {
 
       const result = getEnumLength(DummyEmptyEnum);
 
-      expect(result).toStrictEqual(0);
+      expect(result).toBe(0);
     });
   });
 
@@ -26,7 +26,7 @@ describe(`getEnumLength()`, (): void => {
 
       const result = getEnumLength(DummyOneMemberEnum);
 
-      expect(result).toStrictEqual(2);
+      expect(result).toBe(2);
     });
   });
 
@@ -36,7 +36,7 @@ describe(`getEnumLength()`, (): void => {
 
       const result = getEnumLength(DummyTwoMembersEnum);
 
-      expect(result).toStrictEqual(4);
+      expect(result).toBe(4);
     });
   });
 });

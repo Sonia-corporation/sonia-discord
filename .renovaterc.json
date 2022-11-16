@@ -30,7 +30,7 @@
   "separateMinorPatch": true,
   "branchPrefix": "dependencies/",
   "labels": ["dependencies"],
-  "rebaseWhen": "behind-base-branch",
+  "rebaseWhen": "conflicted",
   "baseBranches": ["develop"],
   "prCreation": "immediate",
   "prHourlyLimit": 5,
@@ -89,8 +89,9 @@
       "rangeStrategy": "pin"
     },
     {
-      "groupName": "Semantic release dependencies",
-      "matchPackagePatterns": ["^@semantic-release$", "^semantic-release$"],
+      "groupName": "Semantic release major dependencies",
+      "matchPackagePatterns": ["^@semantic-release/*"],
+      "matchPackageNames": ["semantic-release"],
       "matchUpdateTypes": ["major"]
     },
     {
@@ -99,8 +100,13 @@
       "matchUpdateTypes": ["major", "minor", "patch"]
     },
     {
-      "groupName": "Jest dependencies",
-      "matchPackagePatterns": ["^jest$", "^@types/jest$", "^ts-jest$"],
+      "groupName": "Jest major dependencies",
+      "matchPackageNames": ["jest", "@types/jest", "ts-jest"],
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "groupName": "ESLint major dependencies",
+      "matchPackageNames": ["@typescript-eslint/eslint-plugin", "@typescript-eslint/parser", "eslint"],
       "matchUpdateTypes": ["major"]
     }
   ]

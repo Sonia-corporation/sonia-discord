@@ -17,7 +17,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
           })
         );
 
-        expect(discordCommandFirstArgument.getDescription()).toStrictEqual(`dummy-description`);
+        expect(discordCommandFirstArgument.getDescription()).toBe(`dummy-description`);
       });
     });
 
@@ -79,7 +79,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
       const result = discordCommandFirstArgument.getDescription();
 
-      expect(result).toStrictEqual(`dummy-description`);
+      expect(result).toBe(`dummy-description`);
     });
   });
 
@@ -95,7 +95,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
       discordCommandFirstArgument.setDescription(`dummy-description`);
 
-      expect(discordCommandFirstArgument.getDescription()).toStrictEqual(`dummy-description`);
+      expect(discordCommandFirstArgument.getDescription()).toBe(`dummy-description`);
     });
   });
 
@@ -129,7 +129,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
       const result = discordCommandFirstArgument.getLowerCaseName();
 
-      expect(result).toStrictEqual(`noon`);
+      expect(result).toBe(`noon`);
     });
   });
 
@@ -221,7 +221,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
         const result = discordCommandFirstArgument.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`noon`);
+        expect(result).toBe(`noon`);
       });
     });
 
@@ -235,7 +235,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
         const result = discordCommandFirstArgument.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`noon`);
+        expect(result).toBe(`noon`);
       });
     });
 
@@ -249,7 +249,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
         const result = discordCommandFirstArgument.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`noon (or n)`);
+        expect(result).toBe(`noon (or n)`);
       });
     });
 
@@ -266,7 +266,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
         const result = discordCommandFirstArgument.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`noon (or n, n)`);
+        expect(result).toBe(`noon (or n, n)`);
       });
     });
   });

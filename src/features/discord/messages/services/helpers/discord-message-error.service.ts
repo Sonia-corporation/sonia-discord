@@ -42,11 +42,14 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
 
   private _sendMessageToOriginalChannel(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    { response, options }: Readonly<IDiscordMessageResponse>
+    { content, options }: Readonly<IDiscordMessageResponse>
   ): void {
     if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       anyDiscordMessage.channel
-        .send(response, options)
+        .send({
+          ...options,
+          content,
+        })
         .then((): void => {
           if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
             LoggerService.getInstance().log({
@@ -56,7 +59,7 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
             });
           }
         })
-        .catch((error: unknown): void => {
+        .catch((error: Error): void => {
           this._logOnError(error, anyDiscordMessage);
         });
     }
@@ -96,15 +99,16 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     error: unknown,
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
+    const options: MessageEmbedOptions = {
+      fields: this._getMessageEmbedFields(error, anyDiscordMessage),
+      title: this._getCustomMessageEmbedTitle(),
+    };
+
     return {
+      content: ``,
       options: {
-        embed: _.merge({}, this._getMessageEmbed(), {
-          fields: this._getMessageEmbedFields(error, anyDiscordMessage),
-          title: this._getCustomMessageEmbedTitle(),
-        } as MessageEmbedOptions),
-        split: false,
+        embeds: [_.merge({}, this._getMessageEmbed(), options)],
       },
-      response: ``,
     };
   }
 

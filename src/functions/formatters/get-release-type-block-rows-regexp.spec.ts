@@ -22,7 +22,7 @@ describe(`getReleaseTypeBlockRowsRegexp()`, (): void => {
 
       const result = getReleaseTypeBlockRowsRegexp();
 
-      expect(xregexp.test(text, result)).toStrictEqual(false);
+      expect(xregexp.test(text, result)).toBe(false);
     });
   });
 
@@ -36,7 +36,7 @@ describe(`getReleaseTypeBlockRowsRegexp()`, (): void => {
 
       const result = getReleaseTypeBlockRowsRegexp();
 
-      expect(xregexp.test(text, result)).toStrictEqual(true);
+      expect(xregexp.test(text, result)).toBe(true);
     });
   });
 
@@ -50,7 +50,7 @@ describe(`getReleaseTypeBlockRowsRegexp()`, (): void => {
 
       const result = getReleaseTypeBlockRowsRegexp();
 
-      expect(xregexp.test(text, result)).toStrictEqual(true);
+      expect(xregexp.test(text, result)).toBe(true);
     });
   });
 });

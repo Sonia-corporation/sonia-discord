@@ -4,6 +4,6 @@ describe(`FIREBASE_GUILD_CHANNEL_FEATURE_RELEASE_NOTES_CURRENT_VERSION`, (): voi
   it(`should be V1`, (): void => {
     expect.assertions(1);
 
-    expect(FIREBASE_GUILD_CHANNEL_FEATURE_RELEASE_NOTES_CURRENT_VERSION).toStrictEqual(1);
+    expect(FIREBASE_GUILD_CHANNEL_FEATURE_RELEASE_NOTES_CURRENT_VERSION).toBe(1);
   });
 });

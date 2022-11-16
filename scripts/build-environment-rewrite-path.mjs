@@ -1,16 +1,20 @@
-const FS = require(`fs-extra`);
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const _ = require(`lodash`);
-const CHALK = require(`./chalk`);
-const LOGGER = require(`./logger`);
-const APP_ROOT_PATH = require(`app-root-path`);
+import * as CHALK from './chalk.mjs';
+import * as LOGGER from './logger.mjs';
+import APP_ROOT_PATH from 'app-root-path';
+import FS from 'fs-extra';
+import _ from 'lodash';
+
 const CONTEXT = `build-environment-rewrite-path`;
 
 /**
  * @param index
  */
 function updateEnvironmentPath(index) {
-  const updatedIndex = _.replace(index, `/src/environment/secret-environment.json`, `/dist/environment.json`);
+  const updatedIndex = _.replace(
+    _.toString(index),
+    `/src/environment/secret-environment.json`,
+    `/dist/environment.json`
+  );
 
   if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
     LOGGER.warning(CONTEXT, CHALK.text(`Index file from dist was not updated`));

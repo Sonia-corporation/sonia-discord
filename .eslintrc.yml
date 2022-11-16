@@ -22,7 +22,8 @@ globals:
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
-  project: ./tsconfig.json
+  project:
+    - './tsconfig.*?.json'
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
@@ -36,14 +37,36 @@ plugins:
 settings:
   import/extensions:
     - .js
+    - .mjs
+    - .cjs
     - .ts
   import/parsers:
     '@typescript-eslint/parser':
       - .ts
   import/cache:
     lifetime: Infinity
+  import/resolver:
+    typescript:
+      alwaysTryTypes: true
+      project:
+        - './tsconfig.app.json'
+        - './tsconfig.spec.json'
 rules:
   progress/activate: 1
+  no-new-native-nonconstructor: error
+  no-empty-static-block: error
+  no-constant-binary-expression: error
+  import/no-named-default: error
+  import/no-default-export: error
+  import/no-relative-packages: error
+  import/prefer-default-export: off
+  import/no-named-export: off
+  no-restricted-imports:
+    - error
+    - patterns:
+        - message: 'Use instead firebase-admin/'
+          group:
+            - 'firebase-admin/lib/*'
   '@typescript-eslint/member-ordering':
     - error
     - default:
@@ -118,7 +141,8 @@ rules:
         order: asc
         caseInsensitive: false
   indent: off
-  no-duplicate-imports: error
+  # Prefer import/no-duplicates
+  no-duplicate-imports: off
   sort-imports: off
   new-cap:
     - error
@@ -204,6 +228,8 @@ rules:
         - PascalCase
       suffix:
         - Enum
+    - selector: objectLiteralProperty
+      format: null
   '@typescript-eslint/no-explicit-any':
     - error
     - fixToUnknown: false
@@ -252,10 +278,8 @@ rules:
   '@typescript-eslint/unified-signatures': error
   '@typescript-eslint/ban-ts-comment': error
   no-undef-init: error
-  no-magic-numbers:
-    - error
-    - enforceConst: true
-      detectObjects: false
+  no-magic-numbers: off
+  '@typescript-eslint/no-magic-numbers': error
   prettier/prettier:
     - error
     - printWidth: 120
@@ -289,6 +313,7 @@ rules:
     - error
     - checksConditionals: true
       checksVoidReturn: true
+      checksSpreads: true
   no-invalid-this: off
   '@typescript-eslint/no-invalid-this': error
   prefer-const:
@@ -408,9 +433,16 @@ rules:
   rxjs/no-unsafe-takeuntil: error
   rxjs/prefer-observer: error
   rxjs/throw-error: error
+  '@typescript-eslint/no-redundant-type-constituents': off
+  '@typescript-eslint/no-useless-empty-export': error
+  'space-before-blocks': off
+  '@typescript-eslint/space-before-blocks': error
+  '@typescript-eslint/no-duplicate-enum-values': error
+  '@typescript-eslint/consistent-generic-constructors': error
 overrides:
   - files:
       - '*.js'
+      - '*.cjs'
     rules:
       '@typescript-eslint/explicit-module-boundary-types': off
       import/no-commonjs: off
@@ -429,9 +461,19 @@ overrides:
       - 'plugin:jest/style'
       - 'plugin:jest/all'
     rules:
+      jest/max-nested-describe: off
+      jest/prefer-expect-resolves: error
+      jest/prefer-to-have-length: error
+      jest/no-identical-title: error
+      jest/prefer-to-be: error
+      jest/valid-expect-in-promise: error
+      jest/prefer-comparison-matcher: error
+      jest/prefer-equality-matcher: error
+      jest/valid-title: error
+      jest/require-hook: error
       jest/no-done-callback: error
       jest/no-disabled-tests: warn
-      jest/lowercase-name:
+      jest/prefer-lowercase-title:
         - error
         - ignore:
             - describe
@@ -443,6 +485,7 @@ overrides:
             - afterAll
             - afterEach
       no-magic-numbers: off
+      '@typescript-eslint/no-magic-numbers': off
       '@typescript-eslint/ban-types':
         - error
         - types:
@@ -515,6 +558,8 @@ overrides:
             - PascalCase
           suffix:
             - Enum
+        - selector: objectLiteralProperty
+          format: null
       '@typescript-eslint/no-explicit-any': off
       '@typescript-eslint/ban-ts-comment': off
       '@typescript-eslint/unbound-method': off # Disabled as expected by jest because it has it's own version
@@ -537,3 +582,11 @@ overrides:
             - block-like
           next: '*'
       rxjs/no-ignored-subscription: off
+      jest/no-conditional-in-test: error
+      jest/prefer-mock-promise-shorthand: error
+      jest/prefer-each: error
+      jest/prefer-hooks-in-order: error
+      jest/max-expects: off
+      jest/prefer-snapshot-hint:
+        - error
+        - always

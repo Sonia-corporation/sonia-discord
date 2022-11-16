@@ -13,7 +13,7 @@ describe(`getBearer()`, (): void => {
 
       const result = getBearer(token);
 
-      expect(result).toStrictEqual(`bearer `);
+      expect(result).toBe(`bearer `);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`getBearer()`, (): void => {
 
       const result = getBearer(token);
 
-      expect(result).toStrictEqual(`bearer dummy`);
+      expect(result).toBe(`bearer dummy`);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`getBearer()`, (): void => {
 
       const result = getBearer(token);
 
-      expect(result).toStrictEqual(`bearer token`);
+      expect(result).toBe(`bearer token`);
     });
   });
 });

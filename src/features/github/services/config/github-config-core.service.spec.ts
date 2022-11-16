@@ -52,7 +52,7 @@ describe(`GithubConfigCoreService`, (): void => {
 
     service = GithubConfigCoreService.getInstance();
 
-    expect(service.bugReportUrl).toStrictEqual(
+    expect(service.bugReportUrl).toBe(
       `https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=bug&template=bug_report.md&projects=sonia-corporation/sonia-discord/1&title=[BUG]%20`
     );
   });
@@ -62,6 +62,6 @@ describe(`GithubConfigCoreService`, (): void => {
 
     service = GithubConfigCoreService.getInstance();
 
-    expect(service.personalAccessToken).toStrictEqual(`unknown`);
+    expect(service.personalAccessToken).toBe(`unknown`);
   });
 });

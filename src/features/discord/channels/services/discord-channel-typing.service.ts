@@ -20,8 +20,8 @@ export class DiscordChannelTypingService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE);
   }
 
-  public addOneIndicator(channel: Readonly<TextChannel | DMChannel | NewsChannel>): Promise<void> {
-    return channel.startTyping().catch((error: Readonly<Error>): Promise<void> => {
+  public sendTyping(channel: Readonly<TextChannel | DMChannel | NewsChannel>): Promise<void> {
+    return channel.sendTyping().catch((error: Readonly<Error>): Promise<void> => {
       LoggerService.getInstance().error({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
@@ -35,9 +35,5 @@ export class DiscordChannelTypingService extends AbstractService {
 
       return Promise.reject(error);
     });
-  }
-
-  public removeOneIndicator(channel: Readonly<TextChannel | DMChannel | NewsChannel>): void {
-    channel.stopTyping();
   }
 }

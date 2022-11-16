@@ -1,6 +1,7 @@
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IGithubConfig } from '../../interfaces/github-config';
+import { IPersonalAccessToken } from '../../types/personal-access-token';
 import _ from 'lodash';
 
 export class GithubConfigCoreService extends AbstractService implements IGithubConfig {
@@ -15,7 +16,7 @@ export class GithubConfigCoreService extends AbstractService implements IGithubC
   }
 
   public bugReportUrl = `https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=bug&template=bug_report.md&projects=sonia-corporation/sonia-discord/1&title=[BUG]%20`;
-  public personalAccessToken = `unknown`;
+  public personalAccessToken: IPersonalAccessToken = `unknown`;
 
   public constructor() {
     super(ServiceNameEnum.GITHUB_CONFIG_CORE_SERVICE);

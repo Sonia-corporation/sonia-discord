@@ -5,7 +5,7 @@ describe(`GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT`, (): void => {
     expect.assertions(1);
 
     expect(GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT)
-      .toStrictEqual(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
+      .toBe(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
    releases(orderBy: {field: CREATED_AT, direction: DESC}, first: 1) {
       edges {
         node {

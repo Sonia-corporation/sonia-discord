@@ -56,10 +56,8 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
    *
    * It will trigger the action on flags
    * Then return a response
-   *
    * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage Original message
    * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
-   *
    * @returns {Promise<IDiscordMessageResponse[]>} Some embed message to respond
    */
   public getMessageResponse(
@@ -74,11 +72,10 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
 
         if (!_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)) {
           discordMessageResponses.unshift({
+            content: ``,
             options: {
-              embed: this._getMessageEmbed(discordCommandSplittedFlagsResponse.commandFlagsSuccess),
-              split: false,
+              embeds: [this._getMessageEmbed(discordCommandSplittedFlagsResponse.commandFlagsSuccess)],
             },
-            response: ``,
           });
         }
 

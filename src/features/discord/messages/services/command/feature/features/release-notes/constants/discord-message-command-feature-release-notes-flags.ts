@@ -10,7 +10,7 @@ import { DiscordMessageCommandFeatureReleaseNotesStatus } from '../classes/disco
 import { DiscordMessageCommandFeatureReleaseNotesFlagEnum } from '../enums/discord-message-command-feature-release-notes-flag.enum';
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureReleaseNotesFlagEnum> =
-  new DiscordCommandFlags({
+  new DiscordCommandFlags<DiscordMessageCommandFeatureReleaseNotesFlagEnum>({
     command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_RELEASE_NOTES,
     flags: [
       new DiscordCommandBooleanFlag<DiscordMessageCommandFeatureReleaseNotesFlagEnum>({

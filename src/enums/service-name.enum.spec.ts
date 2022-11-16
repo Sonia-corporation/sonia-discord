@@ -5,175 +5,175 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have 122 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(122);
+    expect(getEnumLength(ServiceNameEnum)).toBe(122);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.APP_CONFIG_CORE_SERVICE).toStrictEqual(`AppConfigCoreService`);
+    expect(ServiceNameEnum.APP_CONFIG_CORE_SERVICE).toBe(`AppConfigCoreService`);
   });
 
   it(`should have a member "APP_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE).toStrictEqual(`AppConfigMutatorService`);
+    expect(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE).toBe(`AppConfigMutatorService`);
   });
 
   it(`should have a member "APP_CONFIG_QUERY_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE).toStrictEqual(`AppConfigQueryService`);
+    expect(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE).toBe(`AppConfigQueryService`);
   });
 
   it(`should have a member "APP_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.APP_CONFIG_SERVICE).toStrictEqual(`AppConfigService`);
+    expect(ServiceNameEnum.APP_CONFIG_SERVICE).toBe(`AppConfigService`);
   });
 
   it(`should have a member "CHALK_COLOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.CHALK_COLOR_SERVICE).toStrictEqual(`ChalkColorService`);
+    expect(ServiceNameEnum.CHALK_COLOR_SERVICE).toBe(`ChalkColorService`);
   });
 
   it(`should have a member "CHALK_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.CHALK_SERVICE).toStrictEqual(`ChalkService`);
+    expect(ServiceNameEnum.CHALK_SERVICE).toBe(`ChalkService`);
   });
 
   it(`should have a member "CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.CONFIG_SERVICE).toStrictEqual(`ConfigService`);
+    expect(ServiceNameEnum.CONFIG_SERVICE).toBe(`ConfigService`);
   });
 
   it(`should have a member "CORE_EVENT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.CORE_EVENT_SERVICE).toStrictEqual(`CoreEventService`);
+    expect(ServiceNameEnum.CORE_EVENT_SERVICE).toBe(`CoreEventService`);
   });
 
   it(`should have a member "CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.CORE_SERVICE).toStrictEqual(`CoreService`);
+    expect(ServiceNameEnum.CORE_SERVICE).toBe(`CoreService`);
   });
 
   it(`should have a member "DISCORD_ACTIVITY_SONIA_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE).toStrictEqual(`DiscordActivitySoniaService`);
+    expect(ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE).toBe(`DiscordActivitySoniaService`);
   });
 
   it(`should have a member "DISCORD_AUTHENTICATION_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE).toStrictEqual(`DiscordAuthenticationService`);
+    expect(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE).toBe(`DiscordAuthenticationService`);
   });
 
   it(`should have a member "DISCORD_AUTHOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_AUTHOR_SERVICE).toStrictEqual(`DiscordAuthorService`);
+    expect(ServiceNameEnum.DISCORD_AUTHOR_SERVICE).toBe(`DiscordAuthorService`);
   });
 
   it(`should have a member "DISCORD_CHANNEL_GUILD_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE).toStrictEqual(`DiscordChannelGuildService`);
+    expect(ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE).toBe(`DiscordChannelGuildService`);
   });
 
   it(`should have a member "DISCORD_CHANNEL_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_CHANNEL_SERVICE).toStrictEqual(`DiscordChannelService`);
+    expect(ServiceNameEnum.DISCORD_CHANNEL_SERVICE).toBe(`DiscordChannelService`);
   });
 
   it(`should have a member "DISCORD_CHANNEL_TYPING_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE).toStrictEqual(`DiscordChannelTypingService`);
+    expect(ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE).toBe(`DiscordChannelTypingService`);
   });
 
   it(`should have a member "DISCORD_CLIENT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_CLIENT_SERVICE).toStrictEqual(`DiscordClientService`);
+    expect(ServiceNameEnum.DISCORD_CLIENT_SERVICE).toBe(`DiscordClientService`);
   });
 
   it(`should have a member "DISCORD_GUILD_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_CONFIG_CORE_SERVICE).toStrictEqual(`DiscordGuildConfigCoreService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_CONFIG_CORE_SERVICE).toBe(`DiscordGuildConfigCoreService`);
   });
 
   it(`should have a member "DISCORD_GUILD_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE).toStrictEqual(`DiscordGuildConfigMutatorService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE).toBe(`DiscordGuildConfigMutatorService`);
   });
 
   it(`should have a member "DISCORD_GUILD_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_CONFIG_SERVICE).toStrictEqual(`DiscordGuildConfigService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_CONFIG_SERVICE).toBe(`DiscordGuildConfigService`);
   });
 
   it(`should have a member "DISCORD_GUILD_CREATE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE).toStrictEqual(`DiscordGuildCreateService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE).toBe(`DiscordGuildCreateService`);
   });
 
   it(`should have a member "DISCORD_GUILD_MEMBER_ADD_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE).toStrictEqual(`DiscordGuildMemberAddService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE).toBe(`DiscordGuildMemberAddService`);
   });
 
   it(`should have a member "DISCORD_GUILD_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_SERVICE).toStrictEqual(`DiscordGuildService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_SERVICE).toBe(`DiscordGuildService`);
   });
 
   it(`should have a member "DISCORD_GUILD_SONIA_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE).toStrictEqual(`DiscordGuildSoniaService`);
+    expect(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE).toBe(`DiscordGuildSoniaService`);
   });
 
   it(`should have a member "DISCORD_LOGGER_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE).toStrictEqual(`DiscordLoggerErrorService`);
+    expect(ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE).toBe(`DiscordLoggerErrorService`);
   });
 
   it(`should have a member "DISCORD_LOGGER_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_LOGGER_SERVICE).toStrictEqual(`DiscordLoggerService`);
+    expect(ServiceNameEnum.DISCORD_LOGGER_SERVICE).toBe(`DiscordLoggerService`);
   });
 
   it(`should have a member "DISCORD_LOGGER_WARNING_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE).toStrictEqual(`DiscordLoggerWarningService`);
+    expect(ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE).toBe(`DiscordLoggerWarningService`);
   });
 
   it(`should have a member "DISCORD_MENTION_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MENTION_SERVICE).toStrictEqual(`DiscordMentionService`);
+    expect(ServiceNameEnum.DISCORD_MENTION_SERVICE).toBe(`DiscordMentionService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE).toBe(
       `DiscordMessageAnyQuestionPineapplePizzaService`
     );
   });
@@ -181,33 +181,31 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_AUTHOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE).toStrictEqual(`DiscordMessageAuthorService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE).toBe(`DiscordMessageAuthorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE).toStrictEqual(
-      `DiscordMessageCommandCliErrorService`
-    );
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE).toBe(`DiscordMessageCommandCliErrorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE).toStrictEqual(`DiscordMessageCommandCookieService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE).toBe(`DiscordMessageCommandCookieService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE).toStrictEqual(`DiscordMessageCommandErrorService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE).toBe(`DiscordMessageCommandErrorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_DUPLICATED_FLAGS_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_DUPLICATED_FLAGS_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_DUPLICATED_FLAGS_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureDuplicatedFlagsErrorService`
     );
   });
@@ -215,7 +213,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureEmptyContentErrorService`
     );
   });
@@ -223,7 +221,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureEmptyFeatureNameErrorService`
     );
   });
@@ -231,7 +229,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FLAGS_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FLAGS_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FLAGS_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureEmptyFlagsErrorService`
     );
   });
@@ -239,7 +237,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE).toBe(
       `DiscordMessageCommandFeatureNoonConfigCoreService`
     );
   });
@@ -247,7 +245,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE).toBe(
       `DiscordMessageCommandFeatureNoonConfigMutatorService`
     );
   });
@@ -255,7 +253,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE).toBe(
       `DiscordMessageCommandFeatureNoonConfigService`
     );
   });
@@ -263,7 +261,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE).toBe(
       `DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`
     );
   });
@@ -271,7 +269,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE).toBe(
       `DiscordMessageCommandFeatureNoonService`
     );
   });
@@ -279,7 +277,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_OPPOSITE_FLAGS_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_OPPOSITE_FLAGS_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_OPPOSITE_FLAGS_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureOppositeFlagsErrorService`
     );
   });
@@ -287,7 +285,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_CORE_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_CORE_SERVICE).toBe(
       `DiscordMessageCommandFeatureReleaseNotesConfigCoreService`
     );
   });
@@ -295,7 +293,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE).toBe(
       `DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`
     );
   });
@@ -303,7 +301,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_SERVICE).toBe(
       `DiscordMessageCommandFeatureReleaseNotesConfigService`
     );
   });
@@ -311,7 +309,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE).toBe(
       `DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService`
     );
   });
@@ -319,7 +317,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_SERVICE).toBe(
       `DiscordMessageCommandFeatureReleaseNotesService`
     );
   });
@@ -327,15 +325,13 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE).toStrictEqual(
-      `DiscordMessageCommandFeatureService`
-    );
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE).toBe(`DiscordMessageCommandFeatureService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureWrongFeatureNameErrorService`
     );
   });
@@ -343,7 +339,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE).toBe(
       `DiscordMessageCommandFeatureWrongFlagsErrorService`
     );
   });
@@ -351,25 +347,25 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_HELP_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE).toStrictEqual(`DiscordMessageCommandHelpService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE).toBe(`DiscordMessageCommandHelpService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE).toStrictEqual(`DiscordMessageCommandLunchService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE).toBe(`DiscordMessageCommandLunchService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE).toStrictEqual(`DiscordMessageCommandQuoteService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE).toBe(`DiscordMessageCommandQuoteService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE).toBe(
       `DiscordMessageCommandReleaseNotesService`
     );
   });
@@ -377,81 +373,79 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_COMMAND_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE).toStrictEqual(`DiscordMessageCommandService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE).toBe(`DiscordMessageCommandService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_VERSION_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE).toStrictEqual(
-      `DiscordMessageCommandVersionService`
-    );
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE).toBe(`DiscordMessageCommandVersionService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_CORE_SERVICE).toStrictEqual(`DiscordMessageConfigCoreService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_CORE_SERVICE).toBe(`DiscordMessageConfigCoreService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE).toStrictEqual(`DiscordMessageConfigMutatorService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE).toBe(`DiscordMessageConfigMutatorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE).toStrictEqual(`DiscordMessageConfigService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE).toBe(`DiscordMessageConfigService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_CONTENT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_CONTENT_SERVICE).toStrictEqual(`DiscordMessageContentService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_CONTENT_SERVICE).toBe(`DiscordMessageContentService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_DM_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE).toStrictEqual(`DiscordMessageDmService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE).toBe(`DiscordMessageDmService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE).toStrictEqual(`DiscordMessageErrorService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE).toBe(`DiscordMessageErrorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_HELP_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_HELP_SERVICE).toStrictEqual(`DiscordMessageHelpService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_HELP_SERVICE).toBe(`DiscordMessageHelpService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_HOTEL_TRIVAGO_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_HOTEL_TRIVAGO_SERVICE).toStrictEqual(`DiscordMessageHotelTrivagoService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_HOTEL_TRIVAGO_SERVICE).toBe(`DiscordMessageHotelTrivagoService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_PING_PONG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_PING_PONG_SERVICE).toStrictEqual(`DiscordMessagePingPongService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_PING_PONG_SERVICE).toBe(`DiscordMessagePingPongService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_RIGHTS_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_RIGHTS_SERVICE).toStrictEqual(`DiscordMessageRightsService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_RIGHTS_SERVICE).toBe(`DiscordMessageRightsService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE).toBe(
       `DiscordMessageScheduleNoonCountHumanizedService`
     );
   });
@@ -459,7 +453,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE).toBe(
       `DiscordMessageScheduleNoonCountMessageResponseService`
     );
   });
@@ -467,95 +461,91 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE).toStrictEqual(
-      `DiscordMessageScheduleNoonCountService`
-    );
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE).toBe(`DiscordMessageScheduleNoonCountService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE).toStrictEqual(`DiscordMessageScheduleNoonService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE).toBe(`DiscordMessageScheduleNoonService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_SERVICE).toStrictEqual(`DiscordMessageService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SERVICE).toBe(`DiscordMessageService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_SIMPLE_BASIC_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_SIMPLE_BASIC_SERVICE).toStrictEqual(`DiscordMessageSimpleBasicService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SIMPLE_BASIC_SERVICE).toBe(`DiscordMessageSimpleBasicService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_TEXT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_TEXT_SERVICE).toStrictEqual(`DiscordMessageTextService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_TEXT_SERVICE).toBe(`DiscordMessageTextService`);
   });
 
   it(`should have a member "DISCORD_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_SERVICE).toStrictEqual(`DiscordService`);
+    expect(ServiceNameEnum.DISCORD_SERVICE).toBe(`DiscordService`);
   });
 
   it(`should have a member "DISCORD_SONIA_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_CORE_SERVICE).toStrictEqual(`DiscordSoniaConfigCoreService`);
+    expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_CORE_SERVICE).toBe(`DiscordSoniaConfigCoreService`);
   });
 
   it(`should have a member "DISCORD_SONIA_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE).toStrictEqual(`DiscordSoniaConfigMutatorService`);
+    expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE).toBe(`DiscordSoniaConfigMutatorService`);
   });
 
   it(`should have a member "DISCORD_SONIA_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE).toStrictEqual(`DiscordSoniaConfigService`);
+    expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE).toBe(`DiscordSoniaConfigService`);
   });
 
   it(`should have a member "DISCORD_SONIA_EMOTIONAL_STATE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE).toStrictEqual(`DiscordSoniaEmotionalStateService`);
+    expect(ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE).toBe(`DiscordSoniaEmotionalStateService`);
   });
 
   it(`should have a member "DISCORD_SONIA_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_SONIA_SERVICE).toStrictEqual(`DiscordSoniaService`);
+    expect(ServiceNameEnum.DISCORD_SONIA_SERVICE).toBe(`DiscordSoniaService`);
   });
 
   it(`should have a member "ENVIRONMENT_VALIDITY_CHECK_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.ENVIRONMENT_VALIDITY_CHECK_SERVICE).toStrictEqual(`EnvironmentValidityCheckService`);
+    expect(ServiceNameEnum.ENVIRONMENT_VALIDITY_CHECK_SERVICE).toBe(`EnvironmentValidityCheckService`);
   });
 
   it(`should have a member "FIREBASE_APP_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_APP_SERVICE).toStrictEqual(`FirebaseAppService`);
+    expect(ServiceNameEnum.FIREBASE_APP_SERVICE).toBe(`FirebaseAppService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_BREAKING_CHANGES_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE).toStrictEqual(
-      `FirebaseGuildsBreakingChangeService`
-    );
+    expect(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE).toBe(`FirebaseGuildsBreakingChangeService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE).toBe(
       `FirebaseGuildsChannelsFeaturesNoonEnabledService`
     );
   });
@@ -563,7 +553,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE).toBe(
       `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`
     );
   });
@@ -571,7 +561,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE).toBe(
       `FirebaseGuildsChannelsFeaturesNoonService`
     );
   });
@@ -579,7 +569,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_COMMANDS_FEATURE_RELEASE_NOTES_ENABLED_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_SERVICE).toBe(
       `FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`
     );
   });
@@ -587,7 +577,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE).toBe(
       `FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService`
     );
   });
@@ -595,7 +585,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_SERVICE).toBe(
       `FirebaseGuildsChannelsFeaturesReleaseNotesService`
     );
   });
@@ -603,21 +593,19 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE).toStrictEqual(
-      `FirebaseGuildsChannelsFeaturesService`
-    );
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE).toBe(`FirebaseGuildsChannelsFeaturesService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_SERVICE).toStrictEqual(`FirebaseGuildsChannelsService`);
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_SERVICE).toBe(`FirebaseGuildsChannelsService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE).toBe(
       `FirebaseGuildsNewVersionCountHumanizedService`
     );
   });
@@ -625,7 +613,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE).toStrictEqual(
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE).toBe(
       `FirebaseGuildsNewVersionCountMessageResponseService`
     );
   });
@@ -633,182 +621,180 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE).toStrictEqual(
-      `FirebaseGuildsNewVersionCountService`
-    );
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE).toBe(`FirebaseGuildsNewVersionCountService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE).toStrictEqual(`FirebaseGuildsNewVersionService`);
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE).toBe(`FirebaseGuildsNewVersionService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_SERVICE).toStrictEqual(`FirebaseGuildsService`);
+    expect(ServiceNameEnum.FIREBASE_GUILDS_SERVICE).toBe(`FirebaseGuildsService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_STORE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE).toStrictEqual(`FirebaseGuildsStore`);
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE).toBe(`FirebaseGuildsStore`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_STORE_QUERY"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY).toStrictEqual(`FirebaseGuildsStoreQuery`);
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY).toBe(`FirebaseGuildsStoreQuery`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_STORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE).toStrictEqual(`FirebaseGuildsStoreService`);
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE).toBe(`FirebaseGuildsStoreService`);
   });
 
   it(`should have a member "FIREBASE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.FIREBASE_SERVICE).toStrictEqual(`FirebaseService`);
+    expect(ServiceNameEnum.FIREBASE_SERVICE).toBe(`FirebaseService`);
   });
 
   it(`should have a member "GITHUB_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.GITHUB_CONFIG_CORE_SERVICE).toStrictEqual(`GithubConfigCoreService`);
+    expect(ServiceNameEnum.GITHUB_CONFIG_CORE_SERVICE).toBe(`GithubConfigCoreService`);
   });
 
   it(`should have a member "GITHUB_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE).toStrictEqual(`GithubConfigMutatorService`);
+    expect(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE).toBe(`GithubConfigMutatorService`);
   });
 
   it(`should have a member "GITHUB_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.GITHUB_CONFIG_SERVICE).toStrictEqual(`GithubConfigService`);
+    expect(ServiceNameEnum.GITHUB_CONFIG_SERVICE).toBe(`GithubConfigService`);
   });
 
   it(`should have a member "INIT_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.INIT_SERVICE).toStrictEqual(`InitService`);
+    expect(ServiceNameEnum.INIT_SERVICE).toBe(`InitService`);
   });
 
   it(`should have a member "LOGGER_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.LOGGER_CONFIG_CORE_SERVICE).toStrictEqual(`LoggerConfigCoreService`);
+    expect(ServiceNameEnum.LOGGER_CONFIG_CORE_SERVICE).toBe(`LoggerConfigCoreService`);
   });
 
   it(`should have a member "LOGGER_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE).toStrictEqual(`LoggerConfigMutatorService`);
+    expect(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE).toBe(`LoggerConfigMutatorService`);
   });
 
   it(`should have a member "LOGGER_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.LOGGER_CONFIG_SERVICE).toStrictEqual(`LoggerConfigService`);
+    expect(ServiceNameEnum.LOGGER_CONFIG_SERVICE).toBe(`LoggerConfigService`);
   });
 
   it(`should have a member "LOGGER_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.LOGGER_SERVICE).toStrictEqual(`LoggerService`);
+    expect(ServiceNameEnum.LOGGER_SERVICE).toBe(`LoggerService`);
   });
 
   it(`should have a member "PROFILE_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.PROFILE_CONFIG_CORE_SERVICE).toStrictEqual(`ProfileConfigCoreService`);
+    expect(ServiceNameEnum.PROFILE_CONFIG_CORE_SERVICE).toBe(`ProfileConfigCoreService`);
   });
 
   it(`should have a member "PROFILE_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE).toStrictEqual(`ProfileConfigMutatorService`);
+    expect(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE).toBe(`ProfileConfigMutatorService`);
   });
 
   it(`should have a member "PROFILE_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.PROFILE_CONFIG_SERVICE).toStrictEqual(`ProfileConfigService`);
+    expect(ServiceNameEnum.PROFILE_CONFIG_SERVICE).toBe(`ProfileConfigService`);
   });
 
   it(`should have a member "QUOTE_API_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.QUOTE_API_SERVICE).toStrictEqual(`QuoteApiService`);
+    expect(ServiceNameEnum.QUOTE_API_SERVICE).toBe(`QuoteApiService`);
   });
 
   it(`should have a member "QUOTE_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.QUOTE_CONFIG_CORE_SERVICE).toStrictEqual(`QuoteConfigCoreService`);
+    expect(ServiceNameEnum.QUOTE_CONFIG_CORE_SERVICE).toBe(`QuoteConfigCoreService`);
   });
 
   it(`should have a member "QUOTE_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE).toStrictEqual(`QuoteConfigMutatorService`);
+    expect(ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE).toBe(`QuoteConfigMutatorService`);
   });
 
   it(`should have a member "QUOTE_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.QUOTE_CONFIG_SERVICE).toStrictEqual(`QuoteConfigService`);
+    expect(ServiceNameEnum.QUOTE_CONFIG_SERVICE).toBe(`QuoteConfigService`);
   });
 
   it(`should have a member "QUOTE_ERROR_API_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.QUOTE_ERROR_API_SERVICE).toStrictEqual(`QuoteErrorApiService`);
+    expect(ServiceNameEnum.QUOTE_ERROR_API_SERVICE).toBe(`QuoteErrorApiService`);
   });
 
   it(`should have a member "QUOTE_RANDOM_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.QUOTE_RANDOM_SERVICE).toStrictEqual(`QuoteRandomService`);
+    expect(ServiceNameEnum.QUOTE_RANDOM_SERVICE).toBe(`QuoteRandomService`);
   });
 
   it(`should have a member "RELEASE_TYPE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.RELEASE_TYPE_SERVICE).toStrictEqual(`ReleaseTypeService`);
+    expect(ServiceNameEnum.RELEASE_TYPE_SERVICE).toBe(`ReleaseTypeService`);
   });
 
   it(`should have a member "SERVER_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.SERVER_CONFIG_CORE_SERVICE).toStrictEqual(`ServerConfigCoreService`);
+    expect(ServiceNameEnum.SERVER_CONFIG_CORE_SERVICE).toBe(`ServerConfigCoreService`);
   });
 
   it(`should have a member "SERVER_CONFIG_MUTATOR_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE).toStrictEqual(`ServerConfigMutatorService`);
+    expect(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE).toBe(`ServerConfigMutatorService`);
   });
 
   it(`should have a member "SERVER_CONFIG_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.SERVER_CONFIG_SERVICE).toStrictEqual(`ServerConfigService`);
+    expect(ServiceNameEnum.SERVER_CONFIG_SERVICE).toBe(`ServerConfigService`);
   });
 
   it(`should have a member "SERVER_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.SERVER_SERVICE).toStrictEqual(`ServerService`);
+    expect(ServiceNameEnum.SERVER_SERVICE).toBe(`ServerService`);
   });
 
   it(`should have a member "TIME_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.TIME_SERVICE).toStrictEqual(`TimeService`);
+    expect(ServiceNameEnum.TIME_SERVICE).toBe(`TimeService`);
   });
 });

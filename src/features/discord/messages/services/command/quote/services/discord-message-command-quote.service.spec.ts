@@ -272,7 +272,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           expect(quoteConfigServiceGetAuthorIconUrlSpy).toHaveBeenCalledTimes(1);
           expect(quoteConfigServiceGetAuthorIconUrlSpy).toHaveBeenCalledWith();
-          expect(result.options.embed?.author).toStrictEqual({
+          expect(result.options.embeds?.[0]?.author).toStrictEqual({
             iconURL: IconEnum.ARTIFICIAL_INTELLIGENCE,
             name: quote.authorName,
             url: quote.quoteUrl,
@@ -287,7 +287,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           expect(quoteConfigServiceGetImageColorSpy).toHaveBeenCalledTimes(1);
           expect(quoteConfigServiceGetImageColorSpy).toHaveBeenCalledWith();
-          expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+          expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
         });
 
         it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -295,7 +295,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage);
 
-          expect(result.options.embed?.description).toStrictEqual(quote.quote);
+          expect(result.options.embeds?.[0]?.description).toStrictEqual(quote.quote);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -304,7 +304,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Enjoy my wisdom`,
           } as MessageEmbedFooter);
@@ -320,7 +320,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage);
 
-            expect(result.options.embed?.footer).toStrictEqual({
+            expect(result.options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Enjoy my wisdom`,
             } as MessageEmbedFooter);
@@ -337,7 +337,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage);
 
-            expect(result.options.embed?.footer).toStrictEqual({
+            expect(result.options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Enjoy my wisdom`,
             } as MessageEmbedFooter);
@@ -352,7 +352,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           expect(quoteConfigServiceGetImageUrlSpy).toHaveBeenCalledTimes(1);
           expect(quoteConfigServiceGetImageUrlSpy).toHaveBeenCalledWith();
-          expect(result.options.embed?.thumbnail).toStrictEqual({
+          expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.ARTIFICIAL_INTELLIGENCE,
           } as MessageEmbedThumbnail);
         });
@@ -362,8 +362,8 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage);
 
-          expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-          expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+          expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -371,15 +371,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage);
 
-          expect(result.options.embed?.title).toStrictEqual(`Random quote`);
-        });
-
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage);
-
-          expect(result.options.split).toStrictEqual(false);
+          expect(result.options.embeds?.[0]?.title).toBe(`Random quote`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -387,7 +379,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(``);
+          expect(result.content).toBe(``);
         });
       });
     });
@@ -422,7 +414,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -436,7 +428,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -450,7 +442,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -464,7 +456,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -478,7 +470,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -492,7 +484,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -506,7 +498,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -520,7 +512,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -534,7 +526,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -548,7 +540,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -562,7 +554,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -576,7 +568,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -590,7 +582,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -604,7 +596,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -618,7 +610,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -632,7 +624,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -646,7 +638,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -660,7 +652,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -674,7 +666,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -688,7 +680,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -702,7 +694,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -716,7 +708,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -730,7 +722,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -744,7 +736,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -758,7 +750,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -772,7 +764,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -786,7 +778,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -800,7 +792,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -814,7 +806,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -828,7 +820,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -842,7 +834,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -856,7 +848,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -870,7 +862,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -884,7 +876,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -898,7 +890,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -918,7 +910,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -932,7 +924,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -946,7 +938,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -960,7 +952,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -974,7 +966,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -988,7 +980,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1002,7 +994,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1016,7 +1008,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1030,7 +1022,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1044,7 +1036,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1058,7 +1050,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1072,7 +1064,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1086,7 +1078,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1100,7 +1092,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1114,7 +1106,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1128,7 +1120,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1142,7 +1134,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1156,7 +1148,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1170,7 +1162,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1184,7 +1176,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1198,7 +1190,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1212,7 +1204,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1226,7 +1218,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1240,7 +1232,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1254,7 +1246,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1268,7 +1260,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1282,7 +1274,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1296,7 +1288,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1310,7 +1302,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1324,7 +1316,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1338,7 +1330,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1352,7 +1344,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1366,7 +1358,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -1380,7 +1372,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -1394,7 +1386,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });

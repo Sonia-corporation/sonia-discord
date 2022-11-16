@@ -531,7 +531,7 @@ describe(`ChalkService`, (): void => {
 
         const result = service.getLevel();
 
-        expect(result).toStrictEqual(0);
+        expect(result).toBe(0);
       });
     });
 
@@ -545,7 +545,7 @@ describe(`ChalkService`, (): void => {
 
         const result = service.getLevel();
 
-        expect(result).toStrictEqual(1);
+        expect(result).toBe(1);
       });
     });
 
@@ -559,7 +559,7 @@ describe(`ChalkService`, (): void => {
 
         const result = service.getLevel();
 
-        expect(result).toStrictEqual(2);
+        expect(result).toBe(2);
       });
     });
 
@@ -573,7 +573,7 @@ describe(`ChalkService`, (): void => {
 
         const result = service.getLevel();
 
-        expect(result).toStrictEqual(3);
+        expect(result).toBe(3);
       });
     });
   });

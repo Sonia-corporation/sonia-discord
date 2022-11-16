@@ -14,8 +14,8 @@ import { DiscordMessageRightsService } from '../../messages/services/rights/disc
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
-import { Client, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
-import * as admin from 'firebase-admin';
+import { Client, Guild, GuildChannel, Message, MessageOptions, MessagePayload, TextChannel } from 'discord.js';
+import { WriteResult } from 'firebase-admin/firestore';
 import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
@@ -398,7 +398,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         describe(`when the primary guild channel is not writable`, (): void => {
           beforeEach((): void => {
             primaryGuildChannel = createMock<GuildChannel>({
-              type: `voice`,
+              type: `GUILD_VOICE`,
             });
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
@@ -432,7 +432,7 @@ describe(`DiscordGuildCreateService`, (): void => {
                 return true;
               },
               send: guildChannelSendMock,
-              type: `text`,
+              type: `GUILD_TEXT`,
             });
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
@@ -464,11 +464,11 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
+            const message: string | MessagePayload | MessageOptions = {
+              content: discordMessageResponse.content,
+            };
             expect(guildChannelSendMock).toHaveBeenCalledTimes(1);
-            expect(guildChannelSendMock).toHaveBeenCalledWith(
-              discordMessageResponse.response,
-              discordMessageResponse.options
-            );
+            expect(guildChannelSendMock).toHaveBeenCalledWith(message);
           });
 
           describe(`when the message was not successfully sent`, (): void => {
@@ -547,7 +547,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
   describe(`addFirebaseGuild()`, (): void => {
     let guild: Guild;
-    let writeResult: admin.firestore.WriteResult;
+    let writeResult: WriteResult;
 
     let firebaseGuildsServiceIsReady$Spy: jest.SpyInstance;
     let firebaseGuildsServiceHasGuildSpy: jest.SpyInstance;
@@ -560,7 +560,7 @@ describe(`DiscordGuildCreateService`, (): void => {
       guild = createMock<Guild>({
         id: `dummy-id`,
       });
-      writeResult = createMock<admin.firestore.WriteResult>();
+      writeResult = createMock<WriteResult>();
 
       firebaseGuildsServiceIsReady$Spy = jest.spyOn(firebaseGuildsService, `isReady$`).mockReturnValue(of(true));
       firebaseGuildsServiceHasGuildSpy = jest

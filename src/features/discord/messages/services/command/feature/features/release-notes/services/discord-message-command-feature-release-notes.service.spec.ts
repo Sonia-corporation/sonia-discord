@@ -90,7 +90,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         const result = service.isReleaseNotesFeature(featureName);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -104,7 +104,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         const result = service.isReleaseNotesFeature(featureName);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -118,7 +118,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         const result = service.isReleaseNotesFeature(featureName);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -218,7 +218,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.author).toStrictEqual(messageEmbedAuthor);
+          expect(result[0].options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
         });
 
         it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -229,7 +229,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.color).toStrictEqual(ColorEnum.DESERT);
+          expect(result[0].options.embeds?.[0]?.color).toStrictEqual(ColorEnum.DESERT);
         });
 
         it(`should return a Discord message response embed with a description indicating that one flag was successful`, async (): Promise<void> => {
@@ -237,7 +237,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.description).toStrictEqual(`**1** release notes feature option updated.`);
+          expect(result[0].options.embeds?.[0]?.description).toBe(`**1** release notes feature option updated.`);
         });
 
         it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
@@ -245,7 +245,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.fields).toHaveLength(1);
+          expect(result[0].options.embeds?.[0]?.fields).toHaveLength(1);
         });
 
         it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<void> => {
@@ -253,7 +253,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[0]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
@@ -266,7 +266,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.footer).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Release notes feature successfully updated`,
           } as MessageEmbedFooter);
@@ -282,7 +282,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embed?.footer).toStrictEqual({
+            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Release notes feature successfully updated`,
             } as MessageEmbedFooter);
@@ -299,7 +299,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embed?.footer).toStrictEqual({
+            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Release notes feature successfully updated`,
             } as MessageEmbedFooter);
@@ -314,7 +314,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.thumbnail).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.NEW_PRODUCT,
           } as MessageEmbedThumbnail);
         });
@@ -324,9 +324,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result[0].options.embeds?.[0]?.timestamp).isValid()).toBe(true);
 
-          expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result[0].options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -334,15 +334,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.title).toStrictEqual(`Release notes feature updated.`);
-        });
-
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
-
-          expect(result[0].options.split).toStrictEqual(false);
+          expect(result[0].options.embeds?.[0]?.title).toBe(`Release notes feature updated.`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -350,7 +342,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toStrictEqual(``);
+          expect(result[0].content).toBe(``);
         });
       });
 
@@ -381,7 +373,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.description).toStrictEqual(`**3** release notes feature options updated.`);
+          expect(result[0].options.embeds?.[0]?.description).toBe(`**3** release notes feature options updated.`);
         });
 
         it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -389,7 +381,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.fields).toHaveLength(3);
+          expect(result[0].options.embeds?.[0]?.fields).toHaveLength(3);
         });
 
         it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<void> => {
@@ -397,19 +389,19 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[0]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
           } as EmbedFieldData);
 
-          expect(result[0].options.embed?.fields?.[1]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[1]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
           } as EmbedFieldData);
 
-          expect(result[0].options.embed?.fields?.[2]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
@@ -422,7 +414,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.footer).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Release notes feature successfully updated`,
           } as MessageEmbedFooter);
@@ -438,7 +430,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embed?.footer).toStrictEqual({
+            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Release notes feature successfully updated`,
             } as MessageEmbedFooter);
@@ -455,7 +447,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embed?.footer).toStrictEqual({
+            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Release notes feature successfully updated`,
             } as MessageEmbedFooter);
@@ -470,7 +462,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.thumbnail).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.NEW_PRODUCT,
           } as MessageEmbedThumbnail);
         });
@@ -480,9 +472,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result[0].options.embeds?.[0]?.timestamp).isValid()).toBe(true);
 
-          expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result[0].options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -490,15 +482,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.title).toStrictEqual(`Release notes feature updated.`);
-        });
-
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
-
-          expect(result[0].options.split).toStrictEqual(false);
+          expect(result[0].options.embeds?.[0]?.title).toBe(`Release notes feature updated.`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -506,7 +490,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toStrictEqual(``);
+          expect(result[0].content).toBe(``);
         });
       });
 
@@ -540,13 +524,13 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         beforeEach((): void => {
           discordMessageResponseA = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-a`,
+            content: `dummy-response-a`,
           });
           discordMessageResponseB = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-b`,
+            content: `dummy-response-b`,
           });
           discordMessageResponseC = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-c`,
+            content: `dummy-response-c`,
           });
           discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
           discordCommandFlagsResponse = discordMessageResponses;
@@ -580,13 +564,13 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
             createMock<IDiscordCommandFlagSuccess>(),
           ];
           discordMessageResponseA = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-a`,
+            content: `dummy-response-a`,
           });
           discordMessageResponseB = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-b`,
+            content: `dummy-response-b`,
           });
           discordMessageResponseC = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-c`,
+            content: `dummy-response-c`,
           });
           discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
           discordCommandFlagsResponse = _.concat<IDiscordCommandFlagResponse>(
@@ -613,7 +597,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.description).toStrictEqual(`**3** release notes feature options updated.`);
+          expect(result[0].options.embeds?.[0]?.description).toBe(`**3** release notes feature options updated.`);
         });
 
         it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -621,7 +605,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.fields).toHaveLength(3);
+          expect(result[0].options.embeds?.[0]?.fields).toHaveLength(3);
         });
 
         it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<void> => {
@@ -629,19 +613,19 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[0]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
           } as EmbedFieldData);
 
-          expect(result[0].options.embed?.fields?.[1]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[1]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
           } as EmbedFieldData);
 
-          expect(result[0].options.embed?.fields?.[2]).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
@@ -654,7 +638,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.footer).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Release notes feature successfully updated`,
           } as MessageEmbedFooter);
@@ -670,7 +654,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embed?.footer).toStrictEqual({
+            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Release notes feature successfully updated`,
             } as MessageEmbedFooter);
@@ -687,7 +671,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embed?.footer).toStrictEqual({
+            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Release notes feature successfully updated`,
             } as MessageEmbedFooter);
@@ -702,7 +686,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.thumbnail).toStrictEqual({
+          expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.NEW_PRODUCT,
           } as MessageEmbedThumbnail);
         });
@@ -712,9 +696,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result[0].options.embeds?.[0]?.timestamp).isValid()).toBe(true);
 
-          expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result[0].options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -722,15 +706,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.title).toStrictEqual(`Release notes feature updated.`);
-        });
-
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
-
-          expect(result[0].options.split).toStrictEqual(false);
+          expect(result[0].options.embeds?.[0]?.title).toBe(`Release notes feature updated.`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -738,7 +714,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toStrictEqual(``);
+          expect(result[0].content).toBe(``);
         });
       });
     });

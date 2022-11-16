@@ -5,12 +5,12 @@ describe(`FirebaseGuildChannelFeatureNoonVersionEnum`, (): void => {
   it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(FirebaseGuildChannelFeatureNoonVersionEnum)).toStrictEqual(2);
+    expect(getEnumLength(FirebaseGuildChannelFeatureNoonVersionEnum)).toBe(2);
   });
 
   it(`should have a member "V1"`, (): void => {
     expect.assertions(1);
 
-    expect(FirebaseGuildChannelFeatureNoonVersionEnum.V1).toStrictEqual(1);
+    expect(FirebaseGuildChannelFeatureNoonVersionEnum.V1).toBe(1);
   });
 });

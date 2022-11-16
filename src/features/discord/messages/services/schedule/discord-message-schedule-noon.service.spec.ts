@@ -24,12 +24,22 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from '../../../logger/services/discord-logger-error.service';
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
-import { Client, Collection, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
+import {
+  Client,
+  Collection,
+  Guild,
+  GuildChannel,
+  Message,
+  MessageOptions,
+  MessagePayload,
+  TextChannel,
+} from 'discord.js';
 import moment from 'moment-timezone';
 import * as NodeScheduleModule from 'node-schedule';
 import { noop } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
+// eslint-disable-next-line jest/require-hook
 let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -83,7 +93,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       expect.assertions(1);
 
       // @ts-ignore
-      expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(3);
+      expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toBe(3);
     });
   });
 
@@ -847,15 +857,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
 
-      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-        createMock<Client>({
-          guilds: {
-            cache: {
-              forEach: noop,
-            } as unknown as Collection<string, Guild>,
-          },
-        })
-      );
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+        guilds: {
+          cache: {
+            forEach: noop,
+          } as unknown as Collection<string, Guild>,
+        },
+      } as Client);
       discordGuildConfigServiceShouldSendNoonMessageSpy = jest
         .spyOn(discordGuildConfigService, `shouldSendNoonMessage`)
         .mockImplementation();
@@ -911,7 +919,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect.assertions(1);
 
           // @ts-ignore
-          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(8);
+          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toBe(8);
         });
 
         it(`should log about not being noon in Paris`, async (): Promise<void> => {
@@ -952,7 +960,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect.assertions(1);
 
           // @ts-ignore
-          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(12);
+          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toBe(12);
         });
 
         it(`should get the Discord client`, async (): Promise<void> => {
@@ -967,15 +975,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         describe(`when there is no guild`, (): void => {
           beforeEach((): void => {
-            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
-                guilds: {
-                  cache: {
-                    forEach: noop,
-                  } as unknown as Collection<string, Guild>,
-                },
-              })
-            );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+              guilds: {
+                cache: {
+                  forEach: noop,
+                } as unknown as Collection<string, Guild>,
+              },
+            } as Client);
           });
 
           it(`should not send a message`, async (): Promise<void> => {
@@ -997,15 +1003,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               id: `dummy-guild-id`,
             });
 
-            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
-                guilds: {
-                  cache: {
-                    forEach: (callback): void => callback(guild, `key`, new Map()),
-                  } as Collection<string, Guild>,
-                },
-              })
-            );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+              guilds: {
+                cache: {
+                  forEach: (callback): void => callback(guild, `key`, new Map()),
+                } as Collection<string, Guild>,
+              },
+            } as Client);
           });
 
           it(`should send a message for the guild`, async (): Promise<void> => {
@@ -1071,18 +1075,16 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               id: `dummy-guild-id-2`,
             });
 
-            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
-                guilds: {
-                  cache: {
-                    forEach(callback): void {
-                      callback(guild1, `key`, new Map());
-                      callback(guild2, `key`, new Map());
-                    },
-                  } as Collection<string, Guild>,
-                },
-              })
-            );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+              guilds: {
+                cache: {
+                  forEach(callback): void {
+                    callback(guild1, `key`, new Map());
+                    callback(guild2, `key`, new Map());
+                  },
+                } as Collection<string, Guild>,
+              },
+            } as Client);
           });
 
           it(`should send a message for the guild`, async (): Promise<void> => {
@@ -1226,10 +1228,11 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
+        const message: string | MessagePayload | MessageOptions = {
+          content: `Il est midi!`,
+        };
         expect(sendMock).toHaveBeenCalledTimes(1);
-        expect(sendMock).toHaveBeenCalledWith(`Il est midi!`, {
-          split: false,
-        });
+        expect(sendMock).toHaveBeenCalledWith(message);
       });
 
       describe(`when the sending of the message failed`, (): void => {

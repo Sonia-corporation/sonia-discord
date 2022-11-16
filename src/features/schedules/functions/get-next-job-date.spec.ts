@@ -19,7 +19,7 @@ describe(`getNextJobDate()`, (): void => {
 
       const result = getNextJobDate(job);
 
-      expect(result).toStrictEqual(`${moment().add(1, `hour`).format(`HH`)}:00:00`);
+      expect(result).toBe(`${moment().add(1, `hour`).format(`HH`)}:00:00`);
     });
   });
 
@@ -34,7 +34,7 @@ describe(`getNextJobDate()`, (): void => {
 
       const result = getNextJobDate(job);
 
-      expect(result).toStrictEqual(`${inOneMinute.format(`HH:mm`)}:00`);
+      expect(result).toBe(`${inOneMinute.format(`HH:mm`)}:00`);
     });
   });
 
@@ -48,7 +48,7 @@ describe(`getNextJobDate()`, (): void => {
 
       const result = getNextJobDate(job);
 
-      expect(result).toStrictEqual(`12:00:00`);
+      expect(result).toBe(`12:00:00`);
     });
   });
 });

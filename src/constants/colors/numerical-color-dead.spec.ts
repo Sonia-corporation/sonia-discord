@@ -4,6 +4,6 @@ describe(`NUMERICAL_COLOR_DEAD`, (): void => {
   it(`should be 9146008`, (): void => {
     expect.assertions(1);
 
-    expect(NUMERICAL_COLOR_DEAD).toStrictEqual(9146008);
+    expect(NUMERICAL_COLOR_DEAD).toBe(9146008);
   });
 });

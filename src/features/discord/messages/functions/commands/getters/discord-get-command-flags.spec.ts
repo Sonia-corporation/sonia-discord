@@ -142,7 +142,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e`);
+          expect(result).toBe(`-e`);
         });
       });
 
@@ -156,7 +156,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true`);
+          expect(result).toBe(`--enabled=true`);
         });
       });
 
@@ -170,7 +170,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -184,7 +184,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -198,7 +198,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -212,7 +212,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+          expect(result).toBe(`--enabled=true -e --enabled=false`);
         });
       });
 
@@ -226,7 +226,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -616,7 +616,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e`);
+          expect(result).toBe(`-e`);
         });
       });
 
@@ -630,7 +630,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e`);
+          expect(result).toBe(`-e`);
         });
       });
 
@@ -644,7 +644,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e`);
+          expect(result).toBe(`-e`);
         });
       });
 
@@ -658,7 +658,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e`);
+          expect(result).toBe(`-e`);
         });
       });
 
@@ -672,7 +672,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true`);
+          expect(result).toBe(`--enabled=true`);
         });
       });
 
@@ -686,7 +686,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true`);
+          expect(result).toBe(`--enabled=true`);
         });
       });
 
@@ -700,7 +700,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true`);
+          expect(result).toBe(`--enabled=true`);
         });
       });
 
@@ -714,7 +714,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true`);
+          expect(result).toBe(`--enabled=true`);
         });
       });
 
@@ -728,7 +728,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -742,7 +742,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -756,7 +756,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -770,7 +770,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -784,7 +784,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -798,7 +798,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -812,7 +812,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -826,7 +826,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -840,7 +840,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -854,7 +854,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -868,7 +868,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -882,7 +882,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -896,7 +896,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+          expect(result).toBe(`--enabled=true -e --enabled=false`);
         });
       });
 
@@ -910,7 +910,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+          expect(result).toBe(`--enabled=true -e --enabled=false`);
         });
       });
 
@@ -924,7 +924,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+          expect(result).toBe(`--enabled=true -e --enabled=false`);
         });
       });
 
@@ -938,7 +938,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+          expect(result).toBe(`--enabled=true -e --enabled=false`);
         });
       });
 
@@ -952,7 +952,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -966,7 +966,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -980,7 +980,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 
@@ -994,7 +994,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
           const result = discordGetCommandFlags(data);
 
-          expect(result).toStrictEqual(`-e --enabled=true`);
+          expect(result).toBe(`-e --enabled=true`);
         });
       });
 

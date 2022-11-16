@@ -1,8 +1,8 @@
-import type { Config } from '@jest/types';
+import { Config } from 'jest';
 
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-const config: Config.InitialOptions = {
+const config: Config = {
   // All imported modules in your tests should be mocked automatically
   automock: false,
 
@@ -51,6 +51,11 @@ const config: Config.InitialOptions = {
   // Make calling deprecated APIs throw helpful error messages
   errorOnDeprecated: true,
 
+  // Setting this value (enableGlobally) to "true" allows the use of fake timers for functions such as "setTimeout"
+  fakeTimers: {
+    enableGlobally: true,
+  },
+
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
 
@@ -64,6 +69,7 @@ const config: Config.InitialOptions = {
   globals: {
     'ts-jest': {
       compiler: `ttypescript`,
+      tsconfig: `tsconfig.spec.json`,
     },
   },
 
@@ -75,14 +81,18 @@ const config: Config.InitialOptions = {
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: [`./node_modules`],
 
-  // A map from regular expressions to module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
-
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
 
   // An array of file extensions your modules use
-  moduleFileExtensions: [`js`, `json`, `ts`, `node`],
+  moduleFileExtensions: [`js`, `ts`],
+
+  // A map from regular expressions to module names that allow to stub out resources with a single module
+  moduleNameMapper: {
+    // See https://github.com/axios/axios/issues/5101#issuecomment-1276572468
+    '^axios$': require.resolve(`axios`),
+    'whatwg-url': require.resolve(`node-fetch`),
+  },
 
   // Activates notifications for test results
   notify: true,
@@ -129,7 +139,7 @@ const config: Config.InitialOptions = {
   // runner: "jest-runner",
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: [`./src`, `./scripts`],
+  roots: [`./src`, `./scripts`, `./jest`],
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   setupFiles: [`./jest/config.ts`, `./jest/helpers.js`],
@@ -138,7 +148,7 @@ const config: Config.InitialOptions = {
   // snapshotSerializers: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: [`jest-extended`, `./jest/test.ts`],
+  setupFilesAfterEnv: [`jest-extended/all`, `./jest/test.ts`],
 
   // Prevent tests from printing messages through the console
   silent: true,
@@ -153,10 +163,7 @@ const config: Config.InitialOptions = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [`./**/*.spec.ts`],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -172,26 +179,18 @@ const config: Config.InitialOptions = {
   // This option allows use of a custom test runner
   // testRunner: "jasmine2",
 
-  // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
-  // testURL: "http://localhost",
-
   testTimeout: 5000,
-
-  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  timers: `fake`,
-
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "\\\\node_modules\\\\"
-  // ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '.ts': `ts-jest`,
+    '^.+\\.ts?$': `ts-jest`,
   },
+
+  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+  // transformIgnorePatterns: [`/node_modules/(?!(x)/)`],
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],
@@ -203,4 +202,5 @@ const config: Config.InitialOptions = {
   watchman: true,
 };
 
+// eslint-disable-next-line import/no-default-export
 export default config;

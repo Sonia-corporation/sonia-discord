@@ -6,7 +6,7 @@ import { FirebaseGuildVersionEnum } from '../../../../../../../../firebase/enums
 import { IFirebaseGuildV1 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1';
 import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
@@ -24,13 +24,13 @@ jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
   let service: DiscordMessageCommandFeatureReleaseNotesStatus<DiscordMessageCommandFeatureReleaseNotesFlagEnum>;
   let loggerService: LoggerService;
-  let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
+  let firebaseGuildsStoreService: FirebaseGuildsStoreService;
   let firebaseGuildsChannelsService: FirebaseGuildsChannelsService;
   let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
-    firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
+    firebaseGuildsStoreService = FirebaseGuildsStoreService.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
     discordChannelService = DiscordChannelService.getInstance();
   });
@@ -132,7 +132,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `news`,
+                type: `GUILD_NEWS`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -155,7 +155,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `dm`,
+                type: `DM`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -209,7 +209,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
             anyDiscordMessage = createMock<Message>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `text`,
+                type: `GUILD_TEXT`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -277,7 +277,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
-        .spyOn(firebaseGuildsStoreQuery, `getEntity`)
+        .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
       firebaseGuildsChannelsServiceIsValidSpy = jest
         .spyOn(firebaseGuildsChannelsService, `isValid`)
@@ -588,7 +588,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(true);
+                  expect(result).toBe(true);
                 });
               });
 
@@ -616,7 +616,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(false);
+                  expect(result).toBe(false);
                 });
               });
             });
@@ -634,14 +634,6 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
       isEnabled = false;
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(isEnabled);
-
-      expect(result.options.split).toStrictEqual(false);
-    });
-
     describe(`when the enabled state is undefined`, (): void => {
       beforeEach((): void => {
         isEnabled = undefined;
@@ -652,7 +644,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The release notes feature is disabled.`);
+        expect(result.content).toBe(`The release notes feature is disabled.`);
       });
     });
 
@@ -666,7 +658,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The release notes feature is disabled.`);
+        expect(result.content).toBe(`The release notes feature is disabled.`);
       });
     });
 
@@ -680,7 +672,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The release notes feature is enabled.`);
+        expect(result.content).toBe(`The release notes feature is enabled.`);
       });
     });
   });

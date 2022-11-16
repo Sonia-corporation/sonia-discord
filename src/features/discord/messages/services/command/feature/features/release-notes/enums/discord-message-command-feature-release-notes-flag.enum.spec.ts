@@ -5,66 +5,66 @@ describe(`DiscordMessageCommandFeatureReleaseNotesFlagEnum`, (): void => {
   it(`should have 10 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesFlagEnum)).toStrictEqual(10);
+    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesFlagEnum)).toBe(10);
   });
 
   it(`should have a member "D"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.D).toStrictEqual(`d`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.D).toBe(`d`);
   });
 
   it(`should have a member "DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.DISABLED).toStrictEqual(`disabled`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.DISABLED).toBe(`disabled`);
   });
 
   it(`should have a member "E"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.E).toStrictEqual(`e`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.E).toBe(`e`);
   });
 
   it(`should have a member "ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.ENABLED).toStrictEqual(`enabled`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.ENABLED).toBe(`enabled`);
   });
 
   it(`should have a member "H"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.H).toStrictEqual(`h`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.H).toBe(`h`);
   });
 
   it(`should have a member "HELP"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.HELP).toStrictEqual(`help`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.HELP).toBe(`help`);
   });
 
   it(`should have a member "HU"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.HU).toStrictEqual(`hu`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.HU).toBe(`hu`);
   });
 
   it(`should have a member "HUMANIZE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.HUMANIZE).toStrictEqual(`humanize`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.HUMANIZE).toBe(`humanize`);
   });
 
   it(`should have a member "S"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.S).toStrictEqual(`s`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.S).toBe(`s`);
   });
 
   it(`should have a member "STATUS"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.STATUS).toStrictEqual(`status`);
+    expect(DiscordMessageCommandFeatureReleaseNotesFlagEnum.STATUS).toBe(`status`);
   });
 });

@@ -14,7 +14,7 @@ describe(`isDiscordDmChannel()`, (): void => {
 
       const result = isDiscordDmChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -28,7 +28,7 @@ describe(`isDiscordDmChannel()`, (): void => {
 
       const result = isDiscordDmChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -42,7 +42,7 @@ describe(`isDiscordDmChannel()`, (): void => {
 
       const result = isDiscordDmChannel(channel);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

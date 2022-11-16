@@ -13,7 +13,7 @@ describe(`discordGetFormattedMessage()`, (): void => {
 
       const result = discordGetFormattedMessage(message);
 
-      expect(result).toStrictEqual(`lower case message`);
+      expect(result).toBe(`lower case message`);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`discordGetFormattedMessage()`, (): void => {
 
       const result = discordGetFormattedMessage(message);
 
-      expect(result).toStrictEqual(`upper case message`);
+      expect(result).toBe(`upper case message`);
     });
   });
 });

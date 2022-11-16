@@ -10,8 +10,8 @@ import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-so
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import cryptoRandomString from 'crypto-random-string';
 import { MessageEmbedAuthor } from 'discord.js';
+import faker from 'faker';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -229,7 +229,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return an error message response with an embed color`, (): void => {
@@ -239,7 +239,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when the Discord Sonia image url is null`, (): void => {
@@ -256,7 +256,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.footer?.iconURL).toBeUndefined();
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBeUndefined();
       });
     });
 
@@ -274,7 +274,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.footer?.iconURL).toStrictEqual(`dummy-image-url`);
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBe(`dummy-image-url`);
       });
     });
 
@@ -283,7 +283,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.options.embed?.footer?.text).toStrictEqual(`Discord error`);
+      expect(result.options.embeds?.[0]?.footer?.text).toBe(`Discord error`);
     });
 
     it(`should return an error message response with an embed thumbnail icon`, (): void => {
@@ -293,7 +293,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.options.embed?.thumbnail?.url).toStrictEqual(IconEnum.ALARM);
+      expect(result.options.embeds?.[0]?.thumbnail?.url).toStrictEqual(IconEnum.ALARM);
     });
 
     it(`should return an error message response with an embed timestamp set as now`, (): void => {
@@ -301,8 +301,8 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     describe(`when the given error is a string`, (): void => {
@@ -315,7 +315,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.title).toStrictEqual(`dummy-error`);
+        expect(result.options.embeds?.[0]?.title).toBe(`dummy-error`);
       });
 
       it(`should return an error message response without an embed description`, (): void => {
@@ -323,7 +323,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.description).toBeUndefined();
+        expect(result.options.embeds?.[0]?.description).toBeUndefined();
       });
 
       it(`should return an error message response without an embed field`, (): void => {
@@ -331,7 +331,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.fields).toBeUndefined();
+        expect(result.options.embeds?.[0]?.fields).toBeUndefined();
       });
     });
 
@@ -345,7 +345,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.title).toStrictEqual(`Error`);
+        expect(result.options.embeds?.[0]?.title).toBe(`Error`);
       });
 
       it(`should return an error message response with an embed description displaying the given error message`, (): void => {
@@ -353,7 +353,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embed?.description).toStrictEqual(`dummy-error`);
+        expect(result.options.embeds?.[0]?.description).toBe(`dummy-error`);
       });
 
       describe(`when the given error stack is undefined`, (): void => {
@@ -367,7 +367,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields).toBeUndefined();
+          expect(result.options.embeds?.[0]?.fields).toBeUndefined();
         });
       });
 
@@ -382,7 +382,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.length).toStrictEqual(1);
+          expect(result.options.embeds?.[0]?.fields?.length).toBe(1);
         });
 
         it(`should return an error message response with an embed field title`, (): void => {
@@ -390,7 +390,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.[0].name).toStrictEqual(`My blood trace`);
+          expect(result.options.embeds?.[0]?.fields?.[0].name).toBe(`My blood trace`);
         });
 
         it(`should return an error message response with an embed field value displaying the given error stack trace`, (): void => {
@@ -398,16 +398,14 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.[0].value).toStrictEqual(`dummy-stack`);
+          expect(result.options.embeds?.[0]?.fields?.[0].value).toBe(`dummy-stack`);
         });
       });
 
       describe(`when the given error stack is a string greater than the Discord limit`, (): void => {
         beforeEach((): void => {
           error = new Error(`dummy-error`);
-          error.stack = cryptoRandomString({
-            length: 1050,
-          });
+          error.stack = faker.datatype.string(1050);
         });
 
         it(`should return an error message response with an embed field`, (): void => {
@@ -415,7 +413,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.length).toStrictEqual(1);
+          expect(result.options.embeds?.[0]?.fields?.length).toBe(1);
         });
 
         it(`should return an error message response with an embed field title`, (): void => {
@@ -423,26 +421,18 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.[0].name).toStrictEqual(`My blood trace`);
+          expect(result.options.embeds?.[0]?.fields?.[0].name).toBe(`My blood trace`);
         });
 
         it(`should return an error message response with an embed field value displaying the given error stack trace with an ellipsis when the limit is reached`, (): void => {
           expect.assertions(2);
 
-          const result = service.getErrorMessageResponse(error);
+          const result: IDiscordMessageResponse = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.[0].value.length).toStrictEqual(1024);
-          expect(_.endsWith(result.options.embed?.fields?.[0].value, `...`)).toStrictEqual(true);
+          expect(result.options.embeds?.[0]?.fields?.[0].value.length).toBe(1024);
+          expect(_.endsWith(_.toString(result.options.embeds?.[0]?.fields?.[0].value), `...`)).toBe(true);
         });
       });
-    });
-
-    it(`should return an unify error message response`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getErrorMessageResponse(error);
-
-      expect(result.options.split).toStrictEqual(false);
     });
 
     it(`should return an error message response with an empty response`, (): void => {
@@ -450,7 +440,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.content).toBe(``);
     });
   });
 });

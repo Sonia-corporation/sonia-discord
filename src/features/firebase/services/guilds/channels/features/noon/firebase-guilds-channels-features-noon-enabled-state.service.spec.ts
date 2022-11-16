@@ -87,11 +87,12 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
         service.isEnabled(channel, firebaseGuild);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        const loggerLog: ILoggerLog = {
           context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
           message: `text-Firebase guild value-dummy-guild-id channel value-unknown has an invalid id`,
-        } as ILoggerLog);
+        };
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith(loggerLog);
       });
 
       it(`should return false`, (): void => {
@@ -99,7 +100,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
         const result = service.isEnabled(channel, firebaseGuild);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -130,7 +131,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
           const result = service.isEnabled(channel, firebaseGuild);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -160,7 +161,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
           const result = service.isEnabled(channel, firebaseGuild);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -200,7 +201,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
             const result = service.isEnabled(channel, firebaseGuild);
 
-            expect(result).toStrictEqual(false);
+            expect(result).toBe(false);
           });
         });
 
@@ -243,7 +244,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
               const result = service.isEnabled(channel, firebaseGuild);
 
-              expect(result).toStrictEqual(false);
+              expect(result).toBe(false);
             });
           });
 
@@ -289,7 +290,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                 const result = service.isEnabled(channel, firebaseGuild);
 
-                expect(result).toStrictEqual(false);
+                expect(result).toBe(false);
               });
             });
 
@@ -338,7 +339,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                   const result = service.isEnabled(channel, firebaseGuild);
 
-                  expect(result).toStrictEqual(false);
+                  expect(result).toBe(false);
                 });
               });
 
@@ -386,7 +387,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                     const result = service.isEnabled(channel, firebaseGuild);
 
-                    expect(result).toStrictEqual(false);
+                    expect(result).toBe(false);
                   });
                 });
 
@@ -419,7 +420,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                     const result = service.isEnabled(channel, firebaseGuild);
 
-                    expect(result).toStrictEqual(false);
+                    expect(result).toBe(false);
                   });
                 });
 
@@ -452,7 +453,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                     const result = service.isEnabled(channel, firebaseGuild);
 
-                    expect(result).toStrictEqual(true);
+                    expect(result).toBe(true);
                   });
                 });
               });

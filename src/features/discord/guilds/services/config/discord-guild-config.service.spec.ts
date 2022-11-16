@@ -89,7 +89,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldSendCookiesOnCreate();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -104,7 +104,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldSendNoonMessage();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -119,7 +119,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldWelcomeNewMembers();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -134,7 +134,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.getSoniaGuildId();
 
-      expect(result).toStrictEqual(`dummy-sonia-guild-id`);
+      expect(result).toBe(`dummy-sonia-guild-id`);
     });
   });
 
@@ -149,7 +149,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.getSoniaPermanentGuildInviteUrl();
 
-      expect(result).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      expect(result).toBe(`dummy-sonia-permanent-guild-invite-url`);
     });
   });
 });

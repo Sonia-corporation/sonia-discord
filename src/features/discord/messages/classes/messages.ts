@@ -45,32 +45,25 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
   /**
    * @description
    * Replace inside the picked string the variables with the params
-   *
    * If the picked message is "a message with a {{ variable }}"
    * And params is an object containing a key `variable` with value `dummy`
    * Then the replacement will be made
-   *
    * With "a message with a {{ variable }}", doing these is identical:
-   *
    * @example
    * getHumanizedRandomMessage({variable: 'dummy'});
    * // -> 'a message with a dummy'
-   *
    * @example
    * setParams({variable: 'dummy'});
    * getHumanizedRandomMessage();
    * // -> 'a message with a dummy'
-   *
    * @example
    * new Messages<T>({params: {variable: 'dummy'}, ...});
    * getHumanizedRandomMessage();
    * // -> 'a message with a dummy'
-   *
    * @param {Readonly<TParams | undefined>} [params=getParams] The object containing the replacements
-   *
    * @returns {string} The humanized and parsed message
    */
   public getHumanizedRandomMessage(params: Readonly<TParams | undefined> = this.getParams()): string {
-    return replaceInterpolation(this.getRandomMessage(), params ?? _.stubObject());
+    return replaceInterpolation(this.getRandomMessage(), params ?? {});
   }
 }

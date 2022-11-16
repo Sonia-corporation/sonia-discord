@@ -4,7 +4,7 @@ import { IFirebaseGuildV1 } from '../../../../../../../../firebase/interfaces/gu
 import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2';
 import { FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService } from '../../../../../../../../firebase/services/guilds/channels/features/release-notes/firebase-guilds-channels-features-release-notes-enabled.service';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
@@ -15,7 +15,7 @@ import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-disc
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { Message } from 'discord.js';
-import admin from 'firebase-admin';
+import { WriteResult } from 'firebase-admin/firestore';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -32,14 +32,14 @@ jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
   let service: DiscordMessageCommandFeatureReleaseNotesEnabled<string>;
   let loggerService: LoggerService;
-  let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
+  let firebaseGuildsStoreService: FirebaseGuildsStoreService;
   let firebaseGuildsChannelsFeaturesReleaseNotesEnabledService: FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService;
   let firebaseGuildsChannelsService: FirebaseGuildsChannelsService;
   let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
-    firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
+    firebaseGuildsStoreService = FirebaseGuildsStoreService.getInstance();
     firebaseGuildsChannelsFeaturesReleaseNotesEnabledService =
       FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
@@ -160,7 +160,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `news`,
+                type: `GUILD_NEWS`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -195,7 +195,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `dm`,
+                type: `DM`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -563,7 +563,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
             anyDiscordMessage = createMock<Message>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `text`,
+                type: `GUILD_TEXT`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -945,7 +945,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
-        .spyOn(firebaseGuildsStoreQuery, `getEntity`)
+        .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
       firebaseGuildsChannelsServiceIsValidSpy = jest
         .spyOn(firebaseGuildsChannelsService, `isValid`)
@@ -1253,7 +1253,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(true);
+                  expect(result).toBe(true);
                 });
               });
 
@@ -1281,7 +1281,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(false);
+                  expect(result).toBe(false);
                 });
               });
             });
@@ -1296,7 +1296,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
     let isEnabled: boolean | undefined;
     let firebaseGuild: IFirebaseGuild;
     let channel: IAnyDiscordChannel;
-    let writeResult: admin.firestore.WriteResult;
+    let writeResult: WriteResult;
 
     let firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy: jest.SpyInstance;
 
@@ -1308,7 +1308,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
       channel = createMock<IAnyDiscordChannel>({
         id: `dummy-channel-id`,
       });
-      writeResult = createMock<admin.firestore.WriteResult>();
+      writeResult = createMock<WriteResult>();
 
       firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy = jest
         .spyOn(firebaseGuildsChannelsFeaturesReleaseNotesEnabledService, `updateStateByGuildId`)

@@ -4,6 +4,6 @@ describe(`LOGGER_SUCCESS_LEVEL`, (): void => {
   it(`should be 2`, (): void => {
     expect.assertions(1);
 
-    expect(LOGGER_SUCCESS_LEVEL).toStrictEqual(2);
+    expect(LOGGER_SUCCESS_LEVEL).toBe(2);
   });
 });

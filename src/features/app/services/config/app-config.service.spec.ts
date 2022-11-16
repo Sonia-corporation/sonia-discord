@@ -94,7 +94,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getFirstReleaseDate();
 
-      expect(result).toStrictEqual(`dummy-first-release-date`);
+      expect(result).toBe(`dummy-first-release-date`);
     });
   });
 
@@ -109,7 +109,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getInitializationDate();
 
-      expect(result).toStrictEqual(`dummy-initialization-date`);
+      expect(result).toBe(`dummy-initialization-date`);
     });
   });
 
@@ -129,7 +129,7 @@ describe(`AppConfigService`, (): void => {
 
         const result = service.isProduction();
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -143,7 +143,7 @@ describe(`AppConfigService`, (): void => {
 
         const result = service.isProduction();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -159,7 +159,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getReleaseDate();
 
-      expect(result).toStrictEqual(`dummy-release-date`);
+      expect(result).toBe(`dummy-release-date`);
     });
   });
 
@@ -174,7 +174,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getReleaseNotes();
 
-      expect(result).toStrictEqual(`dummy-release-notes`);
+      expect(result).toBe(`dummy-release-notes`);
     });
   });
 
@@ -204,7 +204,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getTotalReleaseCount();
 
-      expect(result).toStrictEqual(8);
+      expect(result).toBe(8);
     });
   });
 
@@ -219,7 +219,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getVersion();
 
-      expect(result).toStrictEqual(`dummy-version`);
+      expect(result).toBe(`dummy-version`);
     });
   });
 });

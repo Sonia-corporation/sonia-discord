@@ -87,7 +87,7 @@ describe(`QuoteConfigService`, (): void => {
 
       const result = service.getApiKey();
 
-      expect(result).toStrictEqual(`dummy-api-key`);
+      expect(result).toBe(`dummy-api-key`);
     });
   });
 

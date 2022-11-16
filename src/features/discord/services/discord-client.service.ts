@@ -1,9 +1,9 @@
 import { AbstractService } from '../../../classes/services/abstract.service';
 import { ONE_EMITTER } from '../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
-import { Client } from 'discord.js';
+import { Client, Intents } from 'discord.js';
 import _ from 'lodash';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 export class DiscordClientService extends AbstractService {
@@ -25,7 +25,22 @@ export class DiscordClientService extends AbstractService {
   }
 
   public createClient(): Client {
-    this._client = new Client();
+    this._client = new Client({
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_INTEGRATIONS,
+        Intents.FLAGS.GUILD_INVITES,
+        Intents.FLAGS.GUILD_PRESENCES,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.GUILD_MESSAGE_TYPING,
+        Intents.FLAGS.DIRECT_MESSAGES,
+        Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+        Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+        Intents.FLAGS.GUILD_WEBHOOKS,
+        Intents.FLAGS.MESSAGE_CONTENT,
+      ],
+    });
 
     return this._client;
   }
@@ -43,13 +58,13 @@ export class DiscordClientService extends AbstractService {
   }
 
   public isReady(): Promise<true> {
-    return this.isReady$()
-      .pipe(
+    return firstValueFrom(
+      this.isReady$().pipe(
         filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 
   public notifyIsReady(): void {

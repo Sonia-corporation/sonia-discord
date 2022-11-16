@@ -13,7 +13,7 @@ describe(`wrapInBold()`, (): void => {
 
       const result = wrapInBold(value);
 
-      expect(result).toStrictEqual(`****`);
+      expect(result).toBe(`****`);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`wrapInBold()`, (): void => {
 
       const result = wrapInBold(value);
 
-      expect(result).toStrictEqual(`**dummy**`);
+      expect(result).toBe(`**dummy**`);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`wrapInBold()`, (): void => {
 
       const result = wrapInBold(value);
 
-      expect(result).toStrictEqual(`**hello, world!**`);
+      expect(result).toBe(`**hello, world!**`);
     });
   });
 });

@@ -1,7 +1,7 @@
 import { CoreService } from './features/core/services/core.service';
 import { InitService } from './features/init/services/init.service';
-import { enableAkitaProdMode } from '@datorama/akita';
-import { DotenvConfigOutput, config } from 'dotenv';
+import { enableElfProdMode } from '@ngneat/elf';
+import { config, DotenvConfigOutput } from 'dotenv';
 import _ from 'lodash';
 import xregexp from 'xregexp';
 
@@ -25,8 +25,8 @@ if (_.isEqual(process.env.NODE_ENV, `development`)) {
 if (_.isEqual(process.env.NODE_ENV, `production`)) {
   console.debug(`Start the application on production`);
 
-  enableAkitaProdMode();
-  console.debug(`Akita production mode enabled`);
+  enableElfProdMode();
+  console.debug(`Elf production mode enabled`);
 }
 
 /**

@@ -18,7 +18,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -32,7 +32,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -46,7 +46,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -66,7 +66,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -80,7 +80,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -94,7 +94,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -114,7 +114,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -128,7 +128,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -142,7 +142,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
   });

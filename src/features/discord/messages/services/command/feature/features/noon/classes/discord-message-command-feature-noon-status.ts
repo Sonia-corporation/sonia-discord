@@ -1,6 +1,6 @@
 import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
 import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
@@ -38,7 +38,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
       return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
 
-    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreQuery.getInstance().getEntity(
+    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreService.getInstance().getEntity(
       anyDiscordMessage.guild.id
     );
 
@@ -50,12 +50,12 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
   }
 
   public getMessageResponse(isEnabled: Readonly<boolean | undefined>): Promise<IDiscordMessageResponse> {
-    return Promise.resolve({
-      options: {
-        split: false,
-      },
-      response: this._getResponse(isEnabled),
-    });
+    const message: IDiscordMessageResponse = {
+      content: this._getResponse(isEnabled),
+      options: {},
+    };
+
+    return Promise.resolve(message);
   }
 
   private _getResponse(isEnabled: Readonly<boolean | undefined>): string {

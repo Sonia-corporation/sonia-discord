@@ -127,12 +127,12 @@ export class DiscordMessageTextService extends AbstractService {
       message: LoggerService.getInstance().getSnowflakeContext(id, `everyone mention`),
     });
 
-    return Promise.resolve({
-      options: {
-        split: false,
-      },
-      response: this._getEveryoneMentionMessageResponseWithEnvPrefix(`Il est midi everyone!`),
-    });
+    const message: IDiscordMessageResponse = {
+      content: this._getEveryoneMentionMessageResponseWithEnvPrefix(`Il est midi everyone!`),
+      options: {},
+    };
+
+    return Promise.resolve(message);
   }
 
   private _getEveryoneMentionMessageResponseWithEnvPrefix(response: Readonly<string>): string {
