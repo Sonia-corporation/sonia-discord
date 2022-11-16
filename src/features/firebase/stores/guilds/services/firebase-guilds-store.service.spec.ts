@@ -146,14 +146,14 @@ describe(`FirebaseGuildsStoreService`, (): void => {
   describe(`addOrUpdateEntities()`, (): void => {
     let firebaseGuilds: IFirebaseGuild[];
 
-    let firebaseGuildsStoreStoreUpdateSpy: jest.SpyInstance;
+    let firebaseGuildsStoreUpdateSpy: jest.SpyInstance;
     let upsertEntitiesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
-      firebaseGuildsStoreStoreUpdateSpy = jest.spyOn(firebaseGuildsStore.store, `update`).mockImplementation();
+      firebaseGuildsStoreUpdateSpy = jest.spyOn(firebaseGuildsStore, `update`).mockImplementation();
       upsertEntitiesSpy = jest.spyOn(ElfEntitiesModule, `upsertEntities`).mockImplementation();
     });
 
@@ -162,7 +162,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.addOrUpdateEntities(firebaseGuilds);
 
-      expect(firebaseGuildsStoreStoreUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreUpdateSpy).toHaveBeenCalledTimes(1);
       expect(upsertEntitiesSpy).toHaveBeenCalledTimes(1);
       expect(upsertEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
     });
@@ -171,14 +171,14 @@ describe(`FirebaseGuildsStoreService`, (): void => {
   describe(`addEntities()`, (): void => {
     let firebaseGuilds: IFirebaseGuild[];
 
-    let firebaseGuildsStoreStoreUpdateSpy: jest.SpyInstance;
+    let firebaseGuildsStoreUpdateSpy: jest.SpyInstance;
     let addEntitiesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
-      firebaseGuildsStoreStoreUpdateSpy = jest.spyOn(firebaseGuildsStore.store, `update`).mockImplementation();
+      firebaseGuildsStoreUpdateSpy = jest.spyOn(firebaseGuildsStore, `update`).mockImplementation();
       addEntitiesSpy = jest.spyOn(ElfEntitiesModule, `addEntities`).mockImplementation();
     });
 
@@ -187,20 +187,20 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.addEntities(firebaseGuilds);
 
-      expect(firebaseGuildsStoreStoreUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreUpdateSpy).toHaveBeenCalledTimes(1);
       expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
       expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
     });
   });
 
   describe(`removeAllEntities()`, (): void => {
-    let firebaseGuildsStoreStoreUpdateSpy: jest.SpyInstance;
+    let firebaseGuildsStoreUpdateSpy: jest.SpyInstance;
     let deleteAllEntitiesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
 
-      firebaseGuildsStoreStoreUpdateSpy = jest.spyOn(firebaseGuildsStore.store, `update`).mockImplementation();
+      firebaseGuildsStoreUpdateSpy = jest.spyOn(firebaseGuildsStore, `update`).mockImplementation();
       deleteAllEntitiesSpy = jest.spyOn(ElfEntitiesModule, `deleteAllEntities`).mockImplementation();
     });
 
@@ -209,7 +209,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.removeAllEntities();
 
-      expect(firebaseGuildsStoreStoreUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreUpdateSpy).toHaveBeenCalledTimes(1);
       expect(deleteAllEntitiesSpy).toHaveBeenCalledTimes(1);
       expect(deleteAllEntitiesSpy).toHaveBeenCalledWith();
     });
@@ -219,7 +219,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     let id: Snowflake;
     let firebaseGuild: IFirebaseGuild;
 
-    let firebaseGuildsStoreStoreQuerySpy: jest.SpyInstance;
+    let firebaseGuildsStoreQuerySpy: jest.SpyInstance;
     let getEntitySpy: jest.SpyInstance;
 
     beforeEach((): void => {
@@ -227,7 +227,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       id = `dummy-id`;
       firebaseGuild = createHydratedMock<IFirebaseGuild>();
 
-      firebaseGuildsStoreStoreQuerySpy = jest.spyOn(firebaseGuildsStore.store, `query`).mockReturnValue(firebaseGuild);
+      firebaseGuildsStoreQuerySpy = jest.spyOn(firebaseGuildsStore, `query`).mockReturnValue(firebaseGuild);
       getEntitySpy = jest.spyOn(ElfEntitiesModule, `getEntity`).mockImplementation();
     });
 
@@ -236,7 +236,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       const result = service.getEntity(id);
 
-      expect(firebaseGuildsStoreStoreQuerySpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreQuerySpy).toHaveBeenCalledTimes(1);
       expect(getEntitySpy).toHaveBeenCalledTimes(1);
       expect(getEntitySpy).toHaveBeenCalledWith(id);
       expect(result).toStrictEqual(firebaseGuild);

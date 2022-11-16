@@ -10,7 +10,7 @@ interface IDummy {
 }
 
 class DummyService extends AbstractEntityStoreService {
-  public readonly store = createStore({ name: `dummy` }, withEntities<IDummy>());
+  protected readonly _store$ = createStore({ name: `dummy` }, withEntities<IDummy>());
 
   public constructor(serviceName: ServiceNameEnum) {
     super(serviceName);
