@@ -335,7 +335,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].content).toBe(``);
+          expect(result[0].content).toBeUndefined();
         });
       });
 
@@ -481,7 +481,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].content).toBe(``);
+          expect(result[0].content).toBeUndefined();
         });
       });
 
@@ -703,7 +703,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].content).toBe(``);
+          expect(result[0].content).toBeUndefined();
         });
       });
     });

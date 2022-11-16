@@ -379,7 +379,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage);
 
-          expect(result.content).toBe(``);
+          expect(result.content).toBeUndefined();
         });
       });
     });

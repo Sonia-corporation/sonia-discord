@@ -342,7 +342,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].content).toBe(``);
+          expect(result[0].content).toBeUndefined();
         });
       });
 
@@ -490,7 +490,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].content).toBe(``);
+          expect(result[0].content).toBeUndefined();
         });
       });
 
@@ -714,7 +714,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].content).toBe(``);
+          expect(result[0].content).toBeUndefined();
         });
       });
     });

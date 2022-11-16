@@ -377,7 +377,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].content).toBe(``);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].content).toBeUndefined();
       });
     });
 
@@ -591,7 +591,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.content).toBe(``);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.content).toBeUndefined();
     });
   });
 });

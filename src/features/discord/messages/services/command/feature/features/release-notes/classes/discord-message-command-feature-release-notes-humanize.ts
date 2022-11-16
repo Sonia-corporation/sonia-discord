@@ -70,7 +70,6 @@ export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
       .getMessageResponse()
       .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
-          content: ``,
           options: {
             embeds: [this._getMessageEmbed(state)],
           },
