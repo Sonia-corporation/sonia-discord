@@ -1,6 +1,6 @@
 export interface IGetDiscordDevPrefix {
-  asMention?: boolean;
-  discordId: string | null;
-  hasEmphasis?: boolean;
-  nickname: string | null;
+  readonly asMention?: boolean;
+  readonly discordId: string | null;
+  readonly hasEmphasis?: boolean;
+  readonly nickname: string | null;
 }
