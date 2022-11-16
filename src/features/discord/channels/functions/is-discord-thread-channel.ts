@@ -1,8 +1,10 @@
-import { ThreadChannel } from 'discord.js';
+import { GuildBasedChannel, TextBasedChannel, ThreadChannel } from 'discord.js';
 
 /**
  * @param channel
  */
-export function isDiscordThreadChannel(channel: unknown): channel is ThreadChannel {
+export function isDiscordThreadChannel(
+  channel: Readonly<GuildBasedChannel | TextBasedChannel | null | undefined>
+): channel is ThreadChannel {
   return channel instanceof ThreadChannel;
 }

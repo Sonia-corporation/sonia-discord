@@ -1,4 +1,4 @@
-import { isDiscordThreadChannel } from './is-discord-thread-channel';
+import { isDiscordNewsChannel } from './is-discord-news-channel';
 import {
   CategoryChannel,
   DMChannel,
@@ -12,7 +12,7 @@ import {
   VoiceChannel,
 } from 'discord.js';
 
-describe(`isDiscordThreadChannel()`, (): void => {
+describe(`isDiscordNewsChannel()`, (): void => {
   let channel: GuildBasedChannel | TextBasedChannel | null | undefined;
 
   describe(`when the given value is undefined`, (): void => {
@@ -23,7 +23,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -37,7 +37,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -51,7 +51,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -65,7 +65,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -76,12 +76,12 @@ describe(`isDiscordThreadChannel()`, (): void => {
       channel = createInstance(NewsChannel.prototype);
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
@@ -93,7 +93,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -107,7 +107,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -121,7 +121,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
@@ -132,12 +132,12 @@ describe(`isDiscordThreadChannel()`, (): void => {
       channel = createInstance(ThreadChannel.prototype);
     });
 
-    it(`should return true`, (): void => {
+    it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
-      expect(result).toBe(true);
+      expect(result).toBe(false);
     });
   });
 
@@ -149,7 +149,7 @@ describe(`isDiscordThreadChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordThreadChannel(channel);
+      const result = isDiscordNewsChannel(channel);
 
       expect(result).toBe(false);
     });
