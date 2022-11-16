@@ -30,7 +30,6 @@ export class QuoteErrorApiService extends DiscordCommandErrorCoreService {
           title: this._getCustomMessageEmbedTitle(),
         };
         const message: IDiscordMessageResponse = {
-          content: ``,
           options: {
             embeds: [_.merge({}, this._getMessageEmbed(), options)],
           },

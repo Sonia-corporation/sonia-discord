@@ -269,7 +269,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

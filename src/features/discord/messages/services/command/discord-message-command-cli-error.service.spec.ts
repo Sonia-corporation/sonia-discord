@@ -174,7 +174,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

@@ -105,7 +105,6 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     };
 
     return {
-      content: ``,
       options: {
         embeds: [_.merge({}, this._getMessageEmbed(), options)],
       },

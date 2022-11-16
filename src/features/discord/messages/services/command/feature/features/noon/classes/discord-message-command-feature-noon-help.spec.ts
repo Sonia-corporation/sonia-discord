@@ -457,7 +457,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.content).toBe(``);
+        expect(result.content).toBeUndefined();
       });
     });
   });

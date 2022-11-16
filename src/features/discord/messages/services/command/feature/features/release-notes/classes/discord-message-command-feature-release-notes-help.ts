@@ -35,7 +35,6 @@ export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
       .getMessageResponse()
       .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
-          content: ``,
           options: {
             embeds: [this._getMessageEmbed(anyDiscordMessage, discordCommandFlags)],
           },

@@ -52,7 +52,6 @@ export class DiscordMessageCommandVersionService extends AbstractService {
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {
-      content: ``,
       options: {
         embeds: [this._getMessageEmbed()],
       },

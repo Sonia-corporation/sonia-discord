@@ -361,7 +361,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

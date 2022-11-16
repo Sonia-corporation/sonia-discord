@@ -825,7 +825,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.content).toBe(``);
+        expect(result.content).toBeUndefined();
       });
     });
   });
