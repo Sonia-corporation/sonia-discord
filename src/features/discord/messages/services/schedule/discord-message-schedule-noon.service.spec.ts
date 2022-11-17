@@ -18,6 +18,7 @@ import { ILoggerLog } from '../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../logger/services/logger.service';
 import * as GetNextJobDateModule from '../../../../schedules/functions/get-next-job-date';
 import * as GetNextJobDateHumanizedModule from '../../../../schedules/functions/get-next-job-date-humanized';
+import * as IsDiscordTextChannelModule from '../../../channels/functions/is-discord-text-channel';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../../../guilds/interfaces/discord-guild-sonia-send-message-to-channel';
 import { DiscordGuildConfigService } from '../../../guilds/services/config/discord-guild-config.service';
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
@@ -28,11 +29,13 @@ import {
   Client,
   Collection,
   Guild,
+  GuildBasedChannel,
   GuildChannel,
   Message,
   MessageOptions,
   MessagePayload,
   TextChannel,
+  VoiceChannel,
 } from 'discord.js';
 import moment from 'moment-timezone';
 import * as NodeScheduleModule from 'node-schedule';
@@ -1147,17 +1150,18 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
   });
 
   describe(`sendMessageResponse()`, (): void => {
-    let guildChannel: GuildChannel;
+    let guildChannel: GuildBasedChannel;
     let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
     let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
     let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
+    let isDiscordTextChannelSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
-      guildChannel = createMock<GuildChannel>({
+      guildChannel = createMock<GuildBasedChannel>({
         id: `dummy-guild-channel-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>();
@@ -1170,23 +1174,22 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
         .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
         .mockReturnValue(discordMessageResponse);
+      isDiscordTextChannelSpy = jest.spyOn(IsDiscordTextChannelModule, `isDiscordTextChannel`).mockReturnValue(false);
     });
 
-    describe(`when the given guild channel is not writable`, (): void => {
+    describe(`when the given guild channel is not a text channel`, (): void => {
       beforeEach((): void => {
-        guildChannel = createMock<GuildChannel>({
+        guildChannel = createMock<VoiceChannel>({
           id: `dummy-guild-channel-id`,
-          isText(): false {
-            return false;
-          },
         });
+        isDiscordTextChannelSpy.mockReturnValue(false);
       });
 
       it(`should log about the guild channel being not writable`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
-          new Error(`Guild channel not writable`)
+          new Error(`Guild channel is not a text channel`)
         );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1197,18 +1200,16 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       });
     });
 
-    describe(`when the given guild channel is writable`, (): void => {
+    describe(`when the given guild channel is a text channel`, (): void => {
       let sendMock: jest.Mock;
 
       beforeEach((): void => {
         sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
         guildChannel = createMock<TextChannel>({
           id: `dummy-guild-channel-id`,
-          isText(): true {
-            return true;
-          },
           send: sendMock,
         });
+        isDiscordTextChannelSpy.mockReturnValue(true);
       });
 
       it(`should log about sending a noon message`, async (): Promise<void> => {
@@ -1219,7 +1220,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonService`,
-          message: `text-sending message for noon for guild channel value-dummy-guild-channel-id...`,
+          message: `text-sending message for noon for the guild text channel value-dummy-guild-channel-id...`,
         } as ILoggerLog);
       });
 
@@ -1248,7 +1249,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
             context: `DiscordMessageScheduleNoonService`,
-            message: `text-noon message sending failed for guild channel value-dummy-guild-channel-id`,
+            message: `text-noon message sending failed for the guild text channel value-dummy-guild-channel-id`,
           } as ILoggerLog);
         });
 
@@ -1303,7 +1304,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
             context: `DiscordMessageScheduleNoonService`,
-            message: `text-noon message sent for guild channel value-dummy-guild-channel-id`,
+            message: `text-noon message sent for the guild text channel value-dummy-guild-channel-id`,
           } as ILoggerLog);
         });
 

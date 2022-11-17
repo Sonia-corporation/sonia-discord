@@ -6,7 +6,9 @@ import { CoreEventService } from '../../../core/services/core-event.service';
 import { FirebaseGuildsService } from '../../../firebase/services/guilds/firebase-guilds.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
+import * as IsDiscordTextChannelModule from '../../channels/functions/is-discord-text-channel';
 import { DiscordChannelGuildService } from '../../channels/services/discord-channel-guild.service';
+import { IAnyDiscordWritableChannel } from '../../channels/types/any-discord-writable-channel';
 import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageCommandCookieService } from '../../messages/services/command/cookie/services/discord-message-command-cookie.service';
@@ -14,7 +16,7 @@ import { DiscordMessageRightsService } from '../../messages/services/rights/disc
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
-import { Client, Guild, GuildChannel, Message, MessageOptions, MessagePayload, TextChannel } from 'discord.js';
+import { Client, Guild, Message, MessageOptions, MessagePayload, NewsChannel, TextChannel } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
 import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
@@ -274,7 +276,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
   describe(`sendMessage()`, (): void => {
     let guild: Guild;
-    let primaryGuildChannel: GuildChannel | null;
+    let primaryGuildChannel: IAnyDiscordWritableChannel | null;
     let discordMessageResponse: IDiscordMessageResponse;
     let discordMessageErrorResponse: IDiscordMessageResponse;
     let message: Message;
@@ -287,12 +289,13 @@ describe(`DiscordGuildCreateService`, (): void => {
     let discordMessageCommandCookieServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
     let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
+    let isDiscordTextChannelSpy: jest.SpyInstance;
     let guildChannelSendMock: jest.Mock;
 
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
       guild = createMock<Guild>();
-      primaryGuildChannel = createMock<GuildChannel>();
+      primaryGuildChannel = createMock<IAnyDiscordWritableChannel>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
       discordMessageErrorResponse = createMock<IDiscordMessageResponse>();
       message = createMock<Message>();
@@ -315,6 +318,7 @@ describe(`DiscordGuildCreateService`, (): void => {
       discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
         .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
         .mockReturnValue(discordMessageErrorResponse);
+      isDiscordTextChannelSpy = jest.spyOn(IsDiscordTextChannelModule, `isDiscordTextChannel`).mockReturnValue(false);
       guildChannelSendMock = jest.fn().mockRejectedValue(new Error(`error`));
     });
 
@@ -395,12 +399,13 @@ describe(`DiscordGuildCreateService`, (): void => {
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
         });
 
-        describe(`when the primary guild channel is not writable`, (): void => {
+        describe(`when the primary guild channel is not a text channel`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<GuildChannel>({
-              type: `GUILD_VOICE`,
+            primaryGuildChannel = createMock<NewsChannel>({
+              type: `GUILD_NEWS`,
             });
 
+            isDiscordTextChannelSpy.mockReturnValue(false);
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
           });
 
@@ -425,16 +430,14 @@ describe(`DiscordGuildCreateService`, (): void => {
           });
         });
 
-        describe(`when the primary guild channel is writable`, (): void => {
+        describe(`when the primary guild channel is a text channel`, (): void => {
           beforeEach((): void => {
             primaryGuildChannel = createMock<TextChannel>({
-              isText(): true {
-                return true;
-              },
               send: guildChannelSendMock,
               type: `GUILD_TEXT`,
             });
 
+            isDiscordTextChannelSpy.mockReturnValue(true);
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
           });
 
