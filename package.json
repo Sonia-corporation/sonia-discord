@@ -194,7 +194,7 @@
     "@types/xregexp": "4.3.0",
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.42.1",
-    "@vercel/ncc": "^0.34.0",
+    "@vercel/ncc": "0.34.0",
     "all-contributors-cli": "6.24.0",
     "commitizen": "4.2.5",
     "concurrently": "7.5.0",
