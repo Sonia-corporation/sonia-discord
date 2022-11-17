@@ -84,7 +84,10 @@ export class DiscordMessageService extends AbstractService {
       void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
 
       return this._dmMessage(anyDiscordMessage);
-    } else if (DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)) {
+    } else if (
+      DiscordChannelService.getInstance().isText(anyDiscordMessage.channel) ||
+      DiscordChannelService.getInstance().isThread(anyDiscordMessage.channel)
+    ) {
       if (
         _.isNil(anyDiscordMessage.guild) ||
         !DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(anyDiscordMessage.guild)
@@ -130,7 +133,7 @@ export class DiscordMessageService extends AbstractService {
       return this._textMessage(anyDiscordMessage);
     }
 
-    return Promise.reject(new Error(`Discord message is not a DM channel nor a text channel`));
+    return Promise.reject(new Error(`Discord message is not a DM channel nor a text channel nor a thread`));
   }
 
   private _listen(): void {

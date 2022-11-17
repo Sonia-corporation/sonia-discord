@@ -483,7 +483,7 @@ describe(`DiscordMessageService`, (): void => {
           expect.assertions(7);
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-            new Error(`Discord message is not a DM channel nor a text channel`)
+            new Error(`Discord message is not a DM channel nor a text channel nor a thread`)
           );
 
           expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();

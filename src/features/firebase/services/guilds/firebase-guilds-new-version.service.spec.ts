@@ -6,6 +6,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
 import { CoreEventService } from '../../../core/services/core-event.service';
+import * as IsDiscordTextChannelModule from '../../../discord/channels/functions/is-discord-text-channel';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../../../discord/guilds/interfaces/discord-guild-sonia-send-message-to-channel';
 import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
 import { DiscordGuildService } from '../../../discord/guilds/services/discord-guild.service';
@@ -32,7 +33,16 @@ import { IFirebaseGuildChannelVFinal } from '../../types/guilds/channels/firebas
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
-import { Guild, GuildChannel, Message, MessageOptions, MessagePayload, TextChannel } from 'discord.js';
+import {
+  Guild,
+  GuildBasedChannel,
+  GuildChannel,
+  Message,
+  MessageOptions,
+  MessagePayload,
+  TextChannel,
+  VoiceChannel,
+} from 'discord.js';
 import { QueryDocumentSnapshot, QuerySnapshot, WriteBatch, WriteResult } from 'firebase-admin/firestore';
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -793,7 +803,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
-                      message: `text-release notes message sending failed for guild value-dummy-id`,
+                      message: `text-release notes message sending failed for the guild value-dummy-id`,
                     } as ILoggerLog);
                   });
                 });
@@ -888,7 +898,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
-                      message: `text-release notes message sending failed for guild value-dummy-id`,
+                      message: `text-release notes message sending failed for the guild value-dummy-id`,
                     } as ILoggerLog);
                   });
                 });
@@ -983,7 +993,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
-                      message: `text-release notes message sending failed for guild value-dummy-id`,
+                      message: `text-release notes message sending failed for the guild value-dummy-id`,
                     } as ILoggerLog);
                   });
                 });
@@ -1140,7 +1150,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
-                      message: `text-release notes message sending failed for guild value-dummy-id`,
+                      message: `text-release notes message sending failed for the guild value-dummy-id`,
                     } as ILoggerLog);
                   });
                 });
@@ -1552,7 +1562,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   });
 
   describe(`sendMessageResponse()`, (): void => {
-    let guildChannel: GuildChannel;
+    let guildChannel: GuildBasedChannel;
     let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -1560,10 +1570,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
     let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
     let getMessageResponseSpy: jest.SpyInstance;
+    let isDiscordTextChannelSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      guildChannel = createMock<GuildChannel>({
+      guildChannel = createMock<GuildBasedChannel>({
         id: `dummy-guild-channel-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>();
@@ -1577,45 +1588,42 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
         .mockReturnValue(discordMessageResponse);
       getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(null);
+      isDiscordTextChannelSpy = jest.spyOn(IsDiscordTextChannelModule, `isDiscordTextChannel`).mockReturnValue(false);
     });
 
-    describe(`when the given guild channel is not writable`, (): void => {
+    describe(`when the given guild channel is not a text channel`, (): void => {
       beforeEach((): void => {
-        guildChannel = createMock<GuildChannel>({
+        guildChannel = createMock<VoiceChannel>({
           id: `dummy-guild-channel-id`,
-          isText(): false {
-            return false;
-          },
         });
+        isDiscordTextChannelSpy.mockReturnValue(false);
       });
 
-      it(`should log about the guild channel being not writable`, async (): Promise<void> => {
+      it(`should log about the guild channel being not a text channel`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
-          new Error(`Guild channel not writable`)
+          new Error(`Guild channel not a text channel`)
         );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
-          message: `text-the guild channel value-dummy-guild-channel-id is not writable`,
+          message: `text-the guild channel value-dummy-guild-channel-id is not a text channel`,
         } as ILoggerLog);
       });
     });
 
-    describe(`when the given guild channel is writable`, (): void => {
+    describe(`when the given guild channel is a text channel`, (): void => {
       let sendMock: jest.Mock;
 
       beforeEach((): void => {
         sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
         guildChannel = createMock<TextChannel>({
           id: `dummy-guild-channel-id`,
-          isText(): true {
-            return true;
-          },
           send: sendMock,
         });
+        isDiscordTextChannelSpy.mockReturnValue(true);
       });
 
       it(`should get a message response`, async (): Promise<void> => {
@@ -1661,7 +1669,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsNewVersionService`,
-            message: `text-sending message for release notes for guild channel value-dummy-guild-channel-id...`,
+            message: `text-sending message for release notes for the guild text channel value-dummy-guild-channel-id...`,
           } as ILoggerLog);
         });
 
@@ -1690,7 +1698,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
               context: `FirebaseGuildsNewVersionService`,
-              message: `text-release notes message sending failed for guild channel value-dummy-guild-channel-id`,
+              message: `text-release notes message sending failed for the guild text channel value-dummy-guild-channel-id`,
             } as ILoggerLog);
           });
 
@@ -1745,7 +1753,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
               context: `FirebaseGuildsNewVersionService`,
-              message: `text-release notes message sent for guild channel value-dummy-guild-channel-id`,
+              message: `text-release notes message sent for the guild text channel value-dummy-guild-channel-id`,
             } as ILoggerLog);
           });
 

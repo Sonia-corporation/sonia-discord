@@ -13,14 +13,14 @@ import { LoggerService } from '../../../../logger/services/logger.service';
 import { getNextJobDate } from '../../../../schedules/functions/get-next-job-date';
 import { getNextJobDateHumanized } from '../../../../schedules/functions/get-next-job-date-humanized';
 import { TimezoneEnum } from '../../../../time/enums/timezone.enum';
-import { isDiscordGuildChannelWritable } from '../../../channels/functions/types/is-discord-guild-channel-writable';
+import { isDiscordTextChannel } from '../../../channels/functions/is-discord-text-channel';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../guilds/enums/discord-guild-sonia-channel-name.enum';
 import { DiscordGuildConfigService } from '../../../guilds/services/config/discord-guild-config.service';
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
 import { DiscordLoggerErrorService } from '../../../logger/services/discord-logger-error.service';
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
-import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
+import { Guild, GuildBasedChannel, GuildChannel, Message, TextChannel, ThreadChannel } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { Job, scheduleJob } from 'node-schedule';
@@ -96,10 +96,9 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
       return Promise.reject(new Error(`Guild channel id nil!`));
     }
 
-    // TODO add support for ThreadChannel
-    const guildOrThreadChannel: GuildChannel | ThreadChannel | undefined = guild.channels.cache.get(channel.id);
+    const guildBasedChannel: GuildBasedChannel | undefined = guild.channels.cache.get(channel.id);
 
-    if (_.isNil(guildOrThreadChannel)) {
+    if (_.isNil(guildBasedChannel)) {
       this._logInValidDiscordGuildChannel(guild, channel);
 
       return Promise.reject(new Error(`Guild channel not found`));
@@ -107,7 +106,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
     this._logValidDiscordGuildChannel(guild, channel);
 
-    return this.sendMessageResponse(guildOrThreadChannel);
+    return this.sendMessageResponse(guildBasedChannel);
   }
 
   public handleMessages(): Promise<((Message | void)[] | void)[] | void> {
@@ -132,29 +131,29 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return Promise.all(messagePromises);
   }
 
-  public sendMessageResponse(guildOrThreadChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
+  public sendMessageResponse(guildBasedChannel: Readonly<GuildBasedChannel>): Promise<Message | void> {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
-    if (!isDiscordGuildChannelWritable(guildOrThreadChannel)) {
-      this._logGuildChannelNotWritable(guildOrThreadChannel);
+    if (!isDiscordTextChannel(guildBasedChannel)) {
+      this._logGuildChannelNotWritable(guildBasedChannel);
 
-      return Promise.reject(new Error(`Guild channel not writable`));
+      return Promise.reject(new Error(`Guild channel is not a text channel`));
     }
 
-    this._logSendingMessagesForNoon(guildOrThreadChannel);
+    this._logSendingMessagesForNoon(guildBasedChannel);
 
-    return guildOrThreadChannel
+    return guildBasedChannel
       .send({
         ...messageResponse.options,
         content: messageResponse.content,
       })
       .then((message: Message): Promise<Message> => {
-        this._logNoonMessageSent(guildOrThreadChannel);
+        this._logNoonMessageSent(guildBasedChannel);
 
         return Promise.resolve(message);
       })
       .catch((error: Readonly<string>): Promise<void> => {
-        this._onMessageError(error, guildOrThreadChannel);
+        this._onMessageError(error, guildBasedChannel);
 
         return Promise.reject(error);
       });
@@ -342,20 +341,20 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), NOON_HOUR);
   }
 
-  private _logSendingMessagesForNoon({ id }: Readonly<GuildChannel>): void {
+  private _logSendingMessagesForNoon({ id }: Readonly<TextChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `sending message for noon for guild channel ${ChalkService.getInstance().value(id)}...`
+        `sending message for noon for the guild text channel ${ChalkService.getInstance().value(id)}...`
       ),
     });
   }
 
-  private _logNoonMessageSent({ id }: Readonly<GuildChannel>): void {
+  private _logNoonMessageSent({ id }: Readonly<TextChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `noon message sent for guild channel ${ChalkService.getInstance().value(id)}`
+        `noon message sent for the guild text channel ${ChalkService.getInstance().value(id)}`
       ),
     });
   }
@@ -369,16 +368,16 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _onMessageError(error: Readonly<string>, guildChannel: Readonly<GuildChannel>): void {
-    this._messageErrorLog(error, guildChannel);
+  private _onMessageError(error: Readonly<string>, textChannel: Readonly<TextChannel>): void {
+    this._messageErrorLog(error, textChannel);
     this._sendMessageToSoniaDiscord(error);
   }
 
-  private _messageErrorLog(error: Readonly<string>, { id }: Readonly<GuildChannel>): void {
+  private _messageErrorLog(error: Readonly<string>, { id }: Readonly<TextChannel>): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `noon message sending failed for guild channel ${ChalkService.getInstance().value(id)}`
+        `noon message sending failed for the guild text channel ${ChalkService.getInstance().value(id)}`
       ),
     });
     LoggerService.getInstance().error({

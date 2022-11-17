@@ -3,7 +3,8 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import * as IsDiscordDmChannelModule from '../functions/is-discord-dm-channel';
 import * as IsDiscordTextChannelModule from '../functions/is-discord-text-channel';
-import { DMChannel, NewsChannel, TextChannel } from 'discord.js';
+import * as IsDiscordThreadChannelModule from '../functions/is-discord-thread-channel';
+import { DMChannel, NewsChannel, TextBasedChannel, TextChannel } from 'discord.js';
 
 describe(`DiscordChannelService`, (): void => {
   let service: DiscordChannelService;
@@ -55,6 +56,7 @@ describe(`DiscordChannelService`, (): void => {
 
     let isTextSpy: jest.SpyInstance;
     let isDmSpy: jest.SpyInstance;
+    let isThreadSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordChannelService();
@@ -62,6 +64,7 @@ describe(`DiscordChannelService`, (): void => {
 
       isTextSpy = jest.spyOn(service, `isText`).mockReturnValue(false);
       isDmSpy = jest.spyOn(service, `isDm`).mockReturnValue(false);
+      isThreadSpy = jest.spyOn(service, `isThread`).mockReturnValue(false);
     });
 
     describe(`when the given channel is not a text channel`, (): void => {
@@ -74,12 +77,32 @@ describe(`DiscordChannelService`, (): void => {
           isDmSpy.mockReturnValue(false);
         });
 
-        it(`should return false`, (): void => {
-          expect.assertions(1);
+        describe(`when the given channel is not a thread channel`, (): void => {
+          beforeEach((): void => {
+            isThreadSpy.mockReturnValue(false);
+          });
 
-          const result = service.isValid(channel);
+          it(`should return false`, (): void => {
+            expect.assertions(1);
 
-          expect(result).toBe(false);
+            const result = service.isValid(channel);
+
+            expect(result).toBe(false);
+          });
+        });
+
+        describe(`when the given channel is a thread channel`, (): void => {
+          beforeEach((): void => {
+            isThreadSpy.mockReturnValue(true);
+          });
+
+          it(`should return true`, (): void => {
+            expect.assertions(1);
+
+            const result = service.isValid(channel);
+
+            expect(result).toBe(true);
+          });
         });
       });
 
@@ -134,7 +157,7 @@ describe(`DiscordChannelService`, (): void => {
   });
 
   describe(`isText()`, (): void => {
-    let channel: TextChannel | DMChannel | NewsChannel | null | undefined;
+    let channel: TextBasedChannel | null | undefined;
 
     let isDiscordTextChannelSpy: jest.SpyInstance;
 
@@ -174,7 +197,7 @@ describe(`DiscordChannelService`, (): void => {
   });
 
   describe(`isDm()`, (): void => {
-    let channel: TextChannel | DMChannel | NewsChannel | null | undefined;
+    let channel: TextBasedChannel | null | undefined;
 
     let isDiscordDmChannelSpy: jest.SpyInstance;
 
@@ -207,6 +230,48 @@ describe(`DiscordChannelService`, (): void => {
         expect.assertions(1);
 
         const result = service.isDm(channel);
+
+        expect(result).toBe(true);
+      });
+    });
+  });
+
+  describe(`isThread()`, (): void => {
+    let channel: TextBasedChannel | null | undefined;
+
+    let isDiscordThreadChannelSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordChannelService();
+
+      isDiscordThreadChannelSpy = jest
+        .spyOn(IsDiscordThreadChannelModule, `isDiscordThreadChannel`)
+        .mockReturnValue(false);
+    });
+
+    describe(`when the given channel is not a thread channel`, (): void => {
+      beforeEach((): void => {
+        isDiscordThreadChannelSpy.mockReturnValue(false);
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isThread(channel);
+
+        expect(result).toBe(false);
+      });
+    });
+
+    describe(`when the given channel is a thread channel`, (): void => {
+      beforeEach((): void => {
+        isDiscordThreadChannelSpy.mockReturnValue(true);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isThread(channel);
 
         expect(result).toBe(true);
       });

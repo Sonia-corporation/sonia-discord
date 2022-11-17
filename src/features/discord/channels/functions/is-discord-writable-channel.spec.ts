@@ -132,12 +132,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       channel = createInstance(ThreadChannel.prototype);
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
