@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.100.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.3...1.100.0) (2022-11-17)
+
+
+### :rocket: Features
+
+* **thread:** allow Sonia to reply in threads ([c5a02fb](https://github.com/Sonia-corporation/sonia-discord/commit/c5a02fb2aa20ac86f5300d093b42af99c1d3cd05)), closes [#1816](https://github.com/Sonia-corporation/sonia-discord/issues/1816)
+
 ## [1.99.3](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.2...1.99.3) (2022-11-16)
 
 
