@@ -8,10 +8,11 @@ import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { isDiscordWritableChannel } from '../../channels/functions/is-discord-writable-channel';
+import { IAnyDiscordWritableChannel } from '../../channels/types/any-discord-writable-channel';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
-import { Guild, GuildBasedChannel, NewsChannel, TextChannel } from 'discord.js';
+import { Guild, GuildBasedChannel } from 'discord.js';
 import _ from 'lodash';
 import { filter, take } from 'rxjs/operators';
 
@@ -67,20 +68,9 @@ export class DiscordGuildSoniaService extends AbstractService {
         message: ChalkService.getInstance().text(
           `The channel ${ChalkService.getInstance().value(
             sendMessageToChannel.channelName
-          )} is not a text channel. The support for other type of channel is not yet there.`
-        ),
-      });
-
-      return;
-    }
-
-    if (channel.isThread()) {
-      LoggerService.getInstance().warning({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `The channel ${ChalkService.getInstance().value(
-            sendMessageToChannel.channelName
-          )} is actually a thread channel! We do not yet support it.`
+          )} is not a writable channel. The support for ${ChalkService.getInstance().value(
+            typeof channel
+          )} channel is not yet there.`
         ),
       });
 
@@ -129,7 +119,7 @@ export class DiscordGuildSoniaService extends AbstractService {
 
   private _sendMessageToChannel(
     { messageResponse }: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
-    channel: Readonly<TextChannel | NewsChannel>
+    channel: Readonly<IAnyDiscordWritableChannel>
   ): void {
     channel
       .send({

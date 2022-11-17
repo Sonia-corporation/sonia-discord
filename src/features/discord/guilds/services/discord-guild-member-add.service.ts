@@ -7,9 +7,10 @@ import { AppConfigService } from '../../../app/services/config/app-config.servic
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { ProfileConfigService } from '../../../profile/services/config/profile-config.service';
-import { isDiscordGuildChannel } from '../../channels/functions/is-discord-guild-channel';
-import { isDiscordGuildChannelWritable } from '../../channels/functions/types/is-discord-guild-channel-writable';
+import { getDiscordHumanizedChannel } from '../../channels/functions/get-discord-humanized-channel';
+import { isDiscordTextChannel } from '../../channels/functions/is-discord-text-channel';
 import { DiscordChannelGuildService } from '../../channels/services/discord-channel-guild.service';
+import { IAnyDiscordWritableChannel } from '../../channels/types/any-discord-writable-channel';
 import { addDiscordDevPrefix } from '../../functions/dev-prefix/add-discord-dev-prefix';
 import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { wrapUserIdIntoMention } from '../../mentions/functions/wrap-user-id-into-mention';
@@ -18,7 +19,7 @@ import { DiscordMessageRightsService } from '../../messages/services/rights/disc
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IAnyGuildMember } from '../types/any-guild-member';
-import { Guild, GuildChannel, ThreadChannel } from 'discord.js';
+import { Guild } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordGuildMemberAddService extends AbstractService {
@@ -42,13 +43,14 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   public sendMessage(member: Readonly<IAnyGuildMember>): void {
     if (this._canSendMessage(member.guild)) {
-      const primaryChannel: GuildChannel | ThreadChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
-        member.guild
-      );
+      const primaryGuildBasedChannel: IAnyDiscordWritableChannel | null =
+        DiscordChannelGuildService.getInstance().getPrimary(member.guild);
 
-      if (isDiscordGuildChannel(primaryChannel)) {
-        this._sendMessage(primaryChannel, member);
+      if (_.isNil(primaryGuildBasedChannel)) {
+        throw new Error(`No primary guild channel found`);
       }
+
+      this._sendMessage(primaryGuildBasedChannel, member);
     }
   }
 
@@ -102,13 +104,26 @@ export class DiscordGuildMemberAddService extends AbstractService {
     return true;
   }
 
-  private _sendMessage(guildChannel: Readonly<GuildChannel>, member: Readonly<IAnyGuildMember>): void {
+  private _sendMessage(
+    primaryGuildBasedChannel: Readonly<IAnyDiscordWritableChannel>,
+    member: Readonly<IAnyGuildMember>
+  ): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(member);
 
-    if (!isDiscordGuildChannelWritable(guildChannel)) {
+    if (!isDiscordTextChannel(primaryGuildBasedChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: ChalkService.getInstance().text(`the guild channel is not writable`),
+        message: ChalkService.getInstance().text(`the guild channel is not a text channel`),
+      });
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `The channel ${ChalkService.getInstance().value(
+            primaryGuildBasedChannel.name
+          )} is not a text channel. The support for ${ChalkService.getInstance().value(
+            getDiscordHumanizedChannel(primaryGuildBasedChannel)
+          )} is not yet there.`
+        ),
       });
 
       return;
@@ -119,7 +134,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
       message: ChalkService.getInstance().text(`sending message for the new guild member...`),
     });
 
-    guildChannel
+    primaryGuildBasedChannel
       .send({
         ...messageResponse.options,
         content: messageResponse.content,

@@ -7,7 +7,7 @@ import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { FirebaseGuildsService } from '../../../firebase/services/guilds/firebase-guilds.service';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
-import { isDiscordGuildChannelWritable } from '../../channels/functions/types/is-discord-guild-channel-writable';
+import { isDiscordWritableChannel } from '../../channels/functions/is-discord-writable-channel';
 import { DiscordChannelGuildService } from '../../channels/services/discord-channel-guild.service';
 import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
@@ -15,7 +15,7 @@ import { DiscordMessageCommandCookieService } from '../../messages/services/comm
 import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
-import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
+import { Guild, GuildBasedChannel, Message } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
 import _ from 'lodash';
 import { firstValueFrom } from 'rxjs';
@@ -100,14 +100,14 @@ export class DiscordGuildCreateService extends AbstractService {
       return Promise.reject(new Error(`Can not send cookies message`));
     }
 
-    const primaryGuildChannel: GuildChannel | ThreadChannel | null =
+    const primaryGuildBasedChannel: GuildBasedChannel | null =
       DiscordChannelGuildService.getInstance().getPrimary(guild);
 
-    if (_.isNil(primaryGuildChannel)) {
+    if (_.isNil(primaryGuildBasedChannel)) {
       return Promise.reject(new Error(`No primary guild channel found`));
     }
 
-    return this._sendCookieMessageToChannel(primaryGuildChannel);
+    return this._sendCookieMessageToChannel(primaryGuildBasedChannel);
   }
 
   private _listen(): void {
@@ -161,11 +161,21 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
-    if (!isDiscordGuildChannelWritable(guildChannel)) {
+  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildBasedChannel>): Promise<Message | void> {
+    if (!isDiscordWritableChannel(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(`primary guild channel not writable`),
+      });
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `The channel ${ChalkService.getInstance().value(
+            guildChannel.name
+          )} is not a writable channel. The support for ${ChalkService.getInstance().value(
+            typeof guildChannel
+          )} channel is not yet there.`
+        ),
       });
 
       return Promise.reject(new Error(`Primary guild channel not writable`));

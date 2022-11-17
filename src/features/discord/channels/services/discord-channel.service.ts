@@ -2,8 +2,9 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { isDiscordDmChannel } from '../functions/is-discord-dm-channel';
 import { isDiscordTextChannel } from '../functions/is-discord-text-channel';
+import { isDiscordThreadChannel } from '../functions/is-discord-thread-channel';
 import { IAnyDiscordChannel } from '../types/any-discord-channel';
-import { DMChannel, TextBasedChannel, TextChannel } from 'discord.js';
+import { DMChannel, TextBasedChannel, TextChannel, ThreadChannel } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordChannelService extends AbstractService {
@@ -22,7 +23,7 @@ export class DiscordChannelService extends AbstractService {
   }
 
   public isValid(channel: Readonly<TextBasedChannel | null | undefined>): channel is IAnyDiscordChannel {
-    return !!(this.isText(channel) || this.isDm(channel));
+    return !!(this.isText(channel) || this.isDm(channel) || this.isThread(channel));
   }
 
   public isText(channel: Readonly<TextBasedChannel | null | undefined>): channel is TextChannel {
@@ -31,5 +32,9 @@ export class DiscordChannelService extends AbstractService {
 
   public isDm(channel: Readonly<TextBasedChannel | null | undefined>): channel is DMChannel {
     return isDiscordDmChannel(channel);
+  }
+
+  public isThread(channel: Readonly<TextBasedChannel | null | undefined>): channel is ThreadChannel {
+    return isDiscordThreadChannel(channel);
   }
 }

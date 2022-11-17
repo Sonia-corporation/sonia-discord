@@ -8,7 +8,8 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
 import { IAppReleaseTypeResponsesFactoryPattern } from '../../../app/types/app-release-type-responses-factory-pattern';
-import { isDiscordGuildChannelWritable } from '../../../discord/channels/functions/types/is-discord-guild-channel-writable';
+import { getDiscordHumanizedChannel } from '../../../discord/channels/functions/get-discord-humanized-channel';
+import { isDiscordTextChannel } from '../../../discord/channels/functions/is-discord-text-channel';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
 import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
 import { DiscordGuildService } from '../../../discord/guilds/services/discord-guild.service';
@@ -30,7 +31,7 @@ import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guil
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { compareVersions } from 'compare-versions';
-import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
+import { Guild, GuildBasedChannel, Message, TextChannel } from 'discord.js';
 import { QueryDocumentSnapshot, QuerySnapshot, WriteBatch } from 'firebase-admin/firestore';
 import _ from 'lodash';
 import { firstValueFrom, forkJoin, Observable } from 'rxjs';
@@ -134,10 +135,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Guild channel id nil!`));
     }
 
-    // TODO add support for ThreadChannel
-    const guildOrThreadChannel: GuildChannel | ThreadChannel | undefined = guild.channels.cache.get(channel.id);
+    const guildBasedChannel: GuildBasedChannel | undefined = guild.channels.cache.get(channel.id);
 
-    if (_.isNil(guildOrThreadChannel)) {
+    if (_.isNil(guildBasedChannel)) {
       this._logInValidDiscordGuildChannel(guild, channel);
 
       return Promise.reject(new Error(`Guild channel not found`));
@@ -145,16 +145,24 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     this._logValidDiscordGuildChannel(guild, channel);
 
-    return this.sendMessageResponse(guildOrThreadChannel);
+    return this.sendMessageResponse(guildBasedChannel);
   }
 
-  public async sendMessageResponse(
-    guildOrThreadChannel: Readonly<GuildChannel | ThreadChannel>
-  ): Promise<Message | void> {
-    if (!isDiscordGuildChannelWritable(guildOrThreadChannel)) {
-      this._logGuildChannelNotWritable(guildOrThreadChannel);
+  public async sendMessageResponse(guildBasedChannel: Readonly<GuildBasedChannel>): Promise<Message | void> {
+    if (!isDiscordTextChannel(guildBasedChannel)) {
+      this._logGuildChannelNotTextChannel(guildBasedChannel);
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `The channel ${ChalkService.getInstance().value(
+            guildBasedChannel.name
+          )} is not a text channel. The support for ${ChalkService.getInstance().value(
+            getDiscordHumanizedChannel(guildBasedChannel)
+          )} is not yet there.`
+        ),
+      });
 
-      return Promise.reject(new Error(`Guild channel not writable`));
+      return Promise.reject(new Error(`Guild channel not a text channel`));
     }
 
     const messageResponse: IDiscordMessageResponse | null = await this.getMessageResponse();
@@ -163,20 +171,20 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`No message response fetched`));
     }
 
-    this._logSendingMessagesForReleaseNotes(guildOrThreadChannel);
+    this._logSendingMessagesForReleaseNotes(guildBasedChannel);
 
-    return guildOrThreadChannel
+    return guildBasedChannel
       .send({
         ...messageResponse.options,
         content: messageResponse.content,
       })
       .then((message: Message): Promise<Message> => {
-        this._logReleaseNotesMessageSent(guildOrThreadChannel);
+        this._logReleaseNotesMessageSent(guildBasedChannel);
 
         return Promise.resolve(message);
       })
       .catch((error: Readonly<string>): Promise<void> => {
-        this._onMessageError(error, guildOrThreadChannel);
+        this._onMessageError(error, guildBasedChannel);
 
         return Promise.reject(error);
       });
@@ -301,7 +309,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
                 LoggerService.getInstance().error({
                   context: this._serviceName,
                   message: ChalkService.getInstance().text(
-                    `release notes message sending failed for guild ${ChalkService.getInstance().value(
+                    `release notes message sending failed for the guild ${ChalkService.getInstance().value(
                       firebaseGuild.id
                     )}`
                   ),
@@ -477,43 +485,43 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel | ThreadChannel>): void {
+  private _logGuildChannelNotTextChannel({ id }: Readonly<GuildBasedChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `the guild channel ${ChalkService.getInstance().value(id)} is not writable`
+        `the guild channel ${ChalkService.getInstance().value(id)} is not a text channel`
       ),
     });
   }
 
-  private _logSendingMessagesForReleaseNotes({ id }: Readonly<GuildChannel>): void {
+  private _logSendingMessagesForReleaseNotes({ id }: Readonly<TextChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `sending message for release notes for guild channel ${ChalkService.getInstance().value(id)}...`
+        `sending message for release notes for the guild text channel ${ChalkService.getInstance().value(id)}...`
       ),
     });
   }
 
-  private _logReleaseNotesMessageSent({ id }: Readonly<GuildChannel>): void {
+  private _logReleaseNotesMessageSent({ id }: Readonly<TextChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `release notes message sent for guild channel ${ChalkService.getInstance().value(id)}`
+        `release notes message sent for the guild text channel ${ChalkService.getInstance().value(id)}`
       ),
     });
   }
 
-  private _onMessageError(error: Readonly<string>, guildChannel: Readonly<GuildChannel>): void {
+  private _onMessageError(error: Readonly<string>, guildChannel: Readonly<TextChannel>): void {
     this._messageErrorLog(error, guildChannel);
     this._sendMessageToSoniaDiscord(error);
   }
 
-  private _messageErrorLog(error: Readonly<string>, { id }: Readonly<GuildChannel>): void {
+  private _messageErrorLog(error: Readonly<string>, { id }: Readonly<TextChannel>): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `release notes message sending failed for guild channel ${ChalkService.getInstance().value(id)}`
+        `release notes message sending failed for the guild text channel ${ChalkService.getInstance().value(id)}`
       ),
     });
     LoggerService.getInstance().error({
