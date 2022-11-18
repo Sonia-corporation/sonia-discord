@@ -40,6 +40,7 @@ export class DiscordClientService extends AbstractService {
         Intents.FLAGS.GUILD_WEBHOOKS,
         Intents.FLAGS.MESSAGE_CONTENT,
       ],
+      partials: [`USER`, `CHANNEL`, `GUILD_MEMBER`, `MESSAGE`, `REACTION`, `GUILD_SCHEDULED_EVENT`],
     });
 
     return this._client;
