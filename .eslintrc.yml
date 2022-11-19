@@ -295,6 +295,9 @@ rules:
   import/no-unresolved: error
   prefer-template: error
   no-useless-concat: error
+  no-native-reassign: error
+  no-global-assign: error
+  no-param-reassign: error
   no-constant-condition:
     - error
     - checkLoops: true
@@ -334,10 +337,7 @@ rules:
     - path: never
       types: never
       lib: never
-  '@typescript-eslint/prefer-readonly-parameter-types': # @todo change it to error once the nested object issue is resolved (https://github.com/typescript-eslint/typescript-eslint/issues/2823)
-    - warn
-    - ignoreInferredTypes: true
-      checkParameterProperties: false
+  '@typescript-eslint/prefer-readonly-parameter-types': off
   '@typescript-eslint/no-empty-interface':
     - error
     - allowSingleExtends: false
@@ -347,7 +347,14 @@ rules:
       allowBoolean: false
       allowAny: false
       allowNullish: false
-  '@typescript-eslint/ban-types': error
+  '@typescript-eslint/ban-types':
+    - error
+    - types:
+        Readonly:
+          message: 'Sonia rule - Useless due to no-param-reassign rule'
+        ReadonlyArray:
+          message: 'Sonia rule - Useless due to no-param-reassign rule'
+      extendDefaults: true
   '@typescript-eslint/restrict-plus-operands':
     - error
     - checkCompoundAssignments: true
@@ -486,12 +493,6 @@ overrides:
             - afterEach
       no-magic-numbers: off
       '@typescript-eslint/no-magic-numbers': off
-      '@typescript-eslint/ban-types':
-        - error
-        - types:
-            Readonly:
-              message: 'Sonia rule - This is useless inside the tests'
-          extendDefaults: true
       '@typescript-eslint/naming-convention':
         - error
         - selector: default
