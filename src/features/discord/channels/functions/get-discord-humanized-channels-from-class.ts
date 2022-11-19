@@ -1,5 +1,6 @@
 import { getDiscordHumanizedChannelFromClass } from './get-discord-humanized-channel-from-class';
 import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
+import { oxford } from 'humanize-plus';
 
 /**
  * @description
@@ -9,7 +10,9 @@ import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
  * @returns {string}                                            The humanized channels, comma delimited.
  */
 export function getDiscordHumanizedChannelsFromClass(channels: (GuildBasedChannel | TextBasedChannel)[]): string {
-  return channels
-    .map((channel: GuildBasedChannel | TextBasedChannel): string => getDiscordHumanizedChannelFromClass(channel))
-    .join(`, `);
+  return oxford(
+    channels.map((channel: GuildBasedChannel | TextBasedChannel): string =>
+      getDiscordHumanizedChannelFromClass(channel)
+    )
+  );
 }

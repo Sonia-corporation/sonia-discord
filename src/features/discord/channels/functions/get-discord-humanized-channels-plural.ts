@@ -1,5 +1,6 @@
 import { getDiscordHumanizedChannelPlural } from './get-discord-humanized-channel-plural';
 import { DiscordChannelEnum } from '../enums/discord-channel.enum';
+import { oxford } from 'humanize-plus';
 
 /**
  * @description
@@ -9,5 +10,5 @@ import { DiscordChannelEnum } from '../enums/discord-channel.enum';
  * @returns {string}                        The humanized channels as plural, comma delimited.
  */
 export function getDiscordHumanizedChannelsPlural(channels: DiscordChannelEnum[]): string {
-  return channels.map((channel: DiscordChannelEnum): string => getDiscordHumanizedChannelPlural(channel)).join(`, `);
+  return oxford(channels.map((channel: DiscordChannelEnum): string => getDiscordHumanizedChannelPlural(channel)));
 }

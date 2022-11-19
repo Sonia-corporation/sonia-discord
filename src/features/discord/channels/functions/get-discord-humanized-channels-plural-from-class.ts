@@ -1,5 +1,6 @@
 import { getDiscordHumanizedChannelPluralFromClass } from './get-discord-humanized-channel-plural-from-class';
 import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
+import { oxford } from 'humanize-plus';
 
 /**
  * @description
@@ -9,7 +10,9 @@ import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
  * @returns {string}                                            The humanized channels as plural, comma delimited.
  */
 export function getDiscordHumanizedChannelsPluralFromClass(channels: (GuildBasedChannel | TextBasedChannel)[]): string {
-  return channels
-    .map((channel: GuildBasedChannel | TextBasedChannel): string => getDiscordHumanizedChannelPluralFromClass(channel))
-    .join(`, `);
+  return oxford(
+    channels.map((channel: GuildBasedChannel | TextBasedChannel): string =>
+      getDiscordHumanizedChannelPluralFromClass(channel)
+    )
+  );
 }

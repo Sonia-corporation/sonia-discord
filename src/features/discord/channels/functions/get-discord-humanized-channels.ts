@@ -1,5 +1,6 @@
 import { getDiscordHumanizedChannel } from './get-discord-humanized-channel';
 import { DiscordChannelEnum } from '../enums/discord-channel.enum';
+import { oxford } from 'humanize-plus';
 
 /**
  * @description
@@ -9,5 +10,5 @@ import { DiscordChannelEnum } from '../enums/discord-channel.enum';
  * @returns {string}                        The humanized channels, comma delimited.
  */
 export function getDiscordHumanizedChannels(channels: DiscordChannelEnum[]): string {
-  return channels.map((channel: DiscordChannelEnum): string => getDiscordHumanizedChannel(channel)).join(`, `);
+  return oxford(channels.map((channel: DiscordChannelEnum): string => getDiscordHumanizedChannel(channel)));
 }
