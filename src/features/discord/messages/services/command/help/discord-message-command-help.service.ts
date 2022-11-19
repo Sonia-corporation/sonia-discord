@@ -1,16 +1,14 @@
-import { AbstractService } from '../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
-import { LoggerService } from '../../../../../logger/services/logger.service';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
-import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../helpers/discord-message-help.service';
+import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
 import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 import _ from 'lodash';
 
-export class DiscordMessageCommandHelpService extends AbstractService {
+export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandHelpService;
 
   public static getInstance(): DiscordMessageCommandHelpService {
@@ -21,18 +19,10 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return DiscordMessageCommandHelpService._instance;
   }
 
+  protected readonly _commandName: string = `help`;
+
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE);
-  }
-
-  public handleResponse({ id }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `help command detected`),
-    });
-
-    return this.getMessageResponse();
   }
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {

@@ -108,7 +108,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       await service.handleResponse(anyDiscordMessage);
 
       expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
-      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+      expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return the message response`, async (): Promise<void> => {
@@ -259,7 +259,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.handleResponse(anyDiscordMessage);
+      const result = (await service.handleResponse(anyDiscordMessage)) as IDiscordMessageResponse;
 
       expect(result.content).toBeUndefined();
     });

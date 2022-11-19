@@ -10,7 +10,6 @@ import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './servi
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
 import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
-import { AbstractService } from '../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
 import { ChalkService } from '../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../logger/services/logger.service';
@@ -24,10 +23,11 @@ import { IDiscordCommandFlagsDuplicated } from '../../../types/commands/flags/di
 import { IDiscordCommandFlagsErrors } from '../../../types/commands/flags/discord-command-flags-errors';
 import { IDiscordCommandFlagsOpposite } from '../../../types/commands/flags/discord-command-flags-opposite';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
 import { Message } from 'discord.js';
 import _ from 'lodash';
 
-export class DiscordMessageCommandFeatureService extends AbstractService {
+export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandFeatureService;
 
   public static getInstance(): DiscordMessageCommandFeatureService {
@@ -38,6 +38,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     return DiscordMessageCommandFeatureService._instance;
   }
 
+  protected readonly _commandName: string = `feature`;
+
   private readonly _commands: DiscordMessageCommandEnum[] = [
     DiscordMessageCommandEnum.FEATURE,
     DiscordMessageCommandEnum.F,
@@ -45,18 +47,6 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE);
-  }
-
-  public handleResponse(
-    anyDiscordMessage: IAnyDiscordMessage
-  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `feature command detected`),
-    });
-
-    return this.getMessageResponse(anyDiscordMessage);
   }
 
   public getMessageResponse(

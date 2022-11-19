@@ -50,31 +50,45 @@ export class DiscordMessageCommandService extends AbstractService {
     return false;
   }
 
-  public handleVersionCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleVersionCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandVersionService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleErrorCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleErrorCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandErrorService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleHelpCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleHelpCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandHelpService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleCookieCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleCookieCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandCookieService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleLunchCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleLunchCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandLunchService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleReleaseNotesCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleReleaseNotesCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandReleaseNotesService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleQuoteCommand(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
+  public handleQuoteCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandQuoteService.getInstance().handleResponse(anyDiscordMessage);
   }
 

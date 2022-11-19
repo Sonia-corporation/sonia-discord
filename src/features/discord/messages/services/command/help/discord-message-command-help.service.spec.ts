@@ -107,7 +107,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       await service.handleResponse(anyDiscordMessage);
 
       expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
-      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+      expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return the message response`, async (): Promise<void> => {

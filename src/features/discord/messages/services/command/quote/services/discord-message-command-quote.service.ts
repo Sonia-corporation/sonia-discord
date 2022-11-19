@@ -1,6 +1,4 @@
-import { AbstractService } from '../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
-import { LoggerService } from '../../../../../../logger/services/logger.service';
 import { isQuoteErrorApi } from '../../../../../../quote/functions/is-quote-error-api';
 import { IQuote } from '../../../../../../quote/interfaces/quote';
 import { IQuoteErrorApi } from '../../../../../../quote/interfaces/quote-error-api';
@@ -14,11 +12,12 @@ import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-
 import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
 import { DiscordMessageErrorService } from '../../../helpers/discord-message-error.service';
+import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
 import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-export class DiscordMessageCommandQuoteService extends AbstractService {
+export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandQuoteService;
 
   public static getInstance(): DiscordMessageCommandQuoteService {
@@ -29,18 +28,10 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     return DiscordMessageCommandQuoteService._instance;
   }
 
+  protected readonly _commandName: string = `quote`;
+
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE);
-  }
-
-  public handleResponse(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `quote command detected`),
-    });
-
-    return this.getMessageResponse(anyDiscordMessage);
   }
 
   public getMessageResponse(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
