@@ -13,6 +13,7 @@ import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/f
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
 import { ChalkService } from '../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordChannelEnum } from '../../../../channels/enums/discord-channel.enum';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
 import { discordGetCommandFirstArgument } from '../../../functions/commands/getters/discord-get-command-first-argument';
@@ -38,6 +39,10 @@ export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCo
     return DiscordMessageCommandFeatureService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+  ]);
   protected readonly _commandName: string = `feature`;
 
   private readonly _commands: DiscordMessageCommandEnum[] = [

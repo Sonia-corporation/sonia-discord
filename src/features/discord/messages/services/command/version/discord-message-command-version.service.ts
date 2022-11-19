@@ -3,6 +3,7 @@ import { ellipsis } from '../../../../../../functions/formatters/ellipsis';
 import { AppProductionStateEnum } from '../../../../../app/enums/app-production-state.enum';
 import { AppConfigQueryService } from '../../../../../app/services/config/app-config-query.service';
 import { AppConfigService } from '../../../../../app/services/config/app-config.service';
+import { DiscordChannelEnum } from '../../../../channels/enums/discord-channel.enum';
 import { DiscordSoniaEmotionalStateEnum } from '../../../../emotional-states/enums/discord-sonia-emotional-state.enum';
 import { DiscordSoniaEmotionalStateService } from '../../../../emotional-states/services/discord-sonia-emotional-state.service';
 import { DiscordSoniaService } from '../../../../users/services/discord-sonia.service';
@@ -33,6 +34,11 @@ export class DiscordMessageCommandVersionService extends DiscordMessageCommandCo
     return DiscordMessageCommandVersionService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+    DiscordChannelEnum.THREAD,
+  ]);
   protected readonly _commandName: string = `version`;
 
   public constructor() {

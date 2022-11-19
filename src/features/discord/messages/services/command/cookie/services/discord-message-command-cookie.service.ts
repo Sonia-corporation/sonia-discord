@@ -1,4 +1,5 @@
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { DiscordChannelEnum } from '../../../../../channels/enums/discord-channel.enum';
 import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandEnum } from '../../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../../functions/commands/checks/discord-has-this-command';
@@ -22,6 +23,11 @@ export class DiscordMessageCommandCookieService extends DiscordMessageCommandCor
     return DiscordMessageCommandCookieService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+    DiscordChannelEnum.THREAD,
+  ]);
   protected readonly _commandName: string = `cookie`;
 
   public constructor() {

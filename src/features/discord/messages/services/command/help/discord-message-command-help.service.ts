@@ -1,4 +1,5 @@
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { DiscordChannelEnum } from '../../../../channels/enums/discord-channel.enum';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
@@ -19,6 +20,11 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     return DiscordMessageCommandHelpService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+    DiscordChannelEnum.THREAD,
+  ]);
   protected readonly _commandName: string = `help`;
 
   public constructor() {
