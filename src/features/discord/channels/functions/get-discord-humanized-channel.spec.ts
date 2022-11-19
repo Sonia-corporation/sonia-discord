@@ -1,14 +1,15 @@
 import { getDiscordHumanizedChannel } from './get-discord-humanized-channel';
-import { DMChannel, NewsChannel, TextBasedChannel, TextChannel, ThreadChannel } from 'discord.js';
+import { DiscordChannelEnum } from '../enums/discord-channel.enum';
 
 describe(`getDiscordHumanizedChannel()`, (): void => {
   describe.each`
-    channel                                    | channelName        | output
-    ${createInstance(TextChannel.prototype)}   | ${`TextChannel`}   | ${`text channel`}
-    ${createInstance(DMChannel.prototype)}     | ${`DMChannel`}     | ${`private message`}
-    ${createInstance(NewsChannel.prototype)}   | ${`NewsChannel`}   | ${`news channel`}
-    ${createInstance(ThreadChannel.prototype)} | ${`ThreadChannel`} | ${`thread`}
-  `(`when the channel is $channelName`, ({ channel, output }: IMatrix): void => {
+    channel                      | output
+    ${undefined}                 | ${`channel`}
+    ${DiscordChannelEnum.TEXT}   | ${`text channel`}
+    ${DiscordChannelEnum.DM}     | ${`private message`}
+    ${DiscordChannelEnum.NEWS}   | ${`news channel`}
+    ${DiscordChannelEnum.THREAD} | ${`thread`}
+  `(`when the channel is $channel`, ({ channel, output }: IMatrix): void => {
     it(`should return ${output}`, (): void => {
       expect.assertions(1);
 
@@ -20,7 +21,6 @@ describe(`getDiscordHumanizedChannel()`, (): void => {
 });
 
 interface IMatrix {
-  readonly channel: TextBasedChannel;
-  readonly channelName: string;
+  readonly channel: DiscordChannelEnum | undefined;
   readonly output: string;
 }
