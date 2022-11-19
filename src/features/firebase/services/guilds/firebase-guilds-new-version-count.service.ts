@@ -45,16 +45,16 @@ export class FirebaseGuildsNewVersionCountService extends AbstractService {
     let channelCount = DEFAULT_CHANNEL_COUNT;
 
     if (_.isArray(guildMessages)) {
-      const typedGuildMessages: ((Message | void)[] | void)[] = guildMessages;
+      const typedGuildMessages: ((Message | null)[] | void)[] = guildMessages;
 
-      _.forEach(typedGuildMessages, (messages: (Message | void)[] | void): void => {
+      _.forEach(typedGuildMessages, (messages: (Message | null)[] | void): void => {
         totalGuildCount = _.add(totalGuildCount, ONE_GUILD);
 
         if (_.isArray(messages)) {
-          const typedGuildMessage: (Message | void)[] = messages;
+          const typedGuildMessage: (Message | null)[] = messages;
           let hasCountThisGuild = false;
 
-          _.forEach(typedGuildMessage, (message: Message | void): void => {
+          _.forEach(typedGuildMessage, (message: Message | null): void => {
             if (!_.isNil(message)) {
               channelCount = _.add(channelCount, ONE_CHANNEL);
 
