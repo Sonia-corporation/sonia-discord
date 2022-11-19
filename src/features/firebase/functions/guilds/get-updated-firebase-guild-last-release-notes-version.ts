@@ -4,7 +4,7 @@ import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds
  * @param version
  */
 export function getUpdatedFirebaseGuildLastReleaseNotesVersion(
-  version: Readonly<string>
+  version: string
 ): IUpdatedFirebaseGuildLastReleaseNotesVersion {
   return {
     lastReleaseNotesVersion: version,

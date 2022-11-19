@@ -4,12 +4,10 @@ import { INewFirebaseGuild } from '../../interfaces/guilds/new-firebase-guild';
 
 /**
  * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
- *
- * @param {Readonly<ICreateFirebaseGuild>} guild Default guild data
- *
+ * @param {ICreateFirebaseGuild} guild Default guild data
  * @returns {IFirebaseGuildVFinal} A simple Firebase guild
  */
-export function createFirebaseGuild({ id }: Readonly<ICreateFirebaseGuild>): INewFirebaseGuild {
+export function createFirebaseGuild({ id }: ICreateFirebaseGuild): INewFirebaseGuild {
   return {
     channels: {},
     id,

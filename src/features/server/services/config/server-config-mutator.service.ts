@@ -14,7 +14,7 @@ import _ from 'lodash';
 export class ServerConfigMutatorService extends AbstractConfigService<IServerConfig> {
   private static _instance: ServerConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IServerConfig>>): ServerConfigMutatorService {
+  public static getInstance(config?: IPartialNested<IServerConfig>): ServerConfigMutatorService {
     if (_.isNil(ServerConfigMutatorService._instance)) {
       ServerConfigMutatorService._instance = new ServerConfigMutatorService(config);
     }
@@ -22,7 +22,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<IServerCon
     return ServerConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IServerConfig>>) {
+  public constructor(config?: IPartialNested<IServerConfig>) {
     super(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -38,7 +38,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<IServerCon
     ServerConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IServerConfig>>): void {
+  public updateConfig(config?: IPartialNested<IServerConfig>): void {
     if (!_.isNil(config)) {
       this.updatePort(config.port);
 
@@ -49,7 +49,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<IServerCon
     }
   }
 
-  public updatePort(port?: Readonly<number>): void {
+  public updatePort(port?: number): void {
     ServerConfigCoreService.getInstance().port = ConfigService.getInstance().getUpdatedNumber({
       context: this._serviceName,
       newValue: port,

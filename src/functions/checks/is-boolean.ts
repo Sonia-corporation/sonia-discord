@@ -3,7 +3,7 @@ import _ from 'lodash';
 /**
  * @param value
  */
-export function isBoolean(value: Readonly<boolean | string | null | undefined>): boolean {
+export function isBoolean(value: boolean | string | null | undefined): boolean {
   if (_.isString(value)) {
     if (_.isEqual(_.toLower(value), `true`)) {
       return true;

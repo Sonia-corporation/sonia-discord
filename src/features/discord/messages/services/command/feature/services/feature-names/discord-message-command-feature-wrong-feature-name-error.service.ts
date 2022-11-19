@@ -24,13 +24,13 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
   }
 
   public getMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[],
-    featureName: Readonly<string>
+    anyDiscordMessage: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[],
+    featureName: string
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+      .then((cliErrorMessageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
           options: {
             embeds: [this._getMessageEmbed(anyDiscordMessage, commands, featureName)],
@@ -42,9 +42,9 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
   }
 
   private _getMessageEmbed(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[],
-    featureName: Readonly<string>
+    anyDiscordMessage: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[],
+    featureName: string
   ): MessageEmbedOptions {
     return {
       fields: this._getMessageEmbedFields(anyDiscordMessage, commands, featureName),
@@ -54,9 +54,9 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
   }
 
   private _getMessageEmbedFields(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[],
-    featureName: Readonly<string>
+    anyDiscordMessage: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[],
+    featureName: string
   ): EmbedFieldData[] {
     return [
       this._getMessageEmbedFieldError(featureName),
@@ -65,7 +65,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
     ];
   }
 
-  private _getMessageEmbedFieldError(featureName: Readonly<string>): EmbedFieldData {
+  private _getMessageEmbedFieldError(featureName: string): EmbedFieldData {
     return {
       name: `Wrong feature name`,
       value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,

@@ -13,7 +13,7 @@ export function discordGetThisCommandWithPrefix({
   message,
   command,
   prefix,
-}: Readonly<IDiscordGetThisCommandWithPrefixData>): string | null {
+}: IDiscordGetThisCommandWithPrefixData): string | null {
   const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandRegexp({

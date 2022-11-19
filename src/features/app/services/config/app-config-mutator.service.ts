@@ -17,7 +17,7 @@ import _ from 'lodash';
 export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IAppUpdatableConfig>>): AppConfigMutatorService {
+  public static getInstance(config?: IPartialNested<IAppUpdatableConfig>): AppConfigMutatorService {
     if (_.isNil(AppConfigMutatorService._instance)) {
       AppConfigMutatorService._instance = new AppConfigMutatorService(config);
     }
@@ -25,7 +25,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return AppConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IAppConfig>>) {
+  public constructor(config?: IPartialNested<IAppConfig>) {
     super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -43,7 +43,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     AppConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IAppUpdatableConfig>>): void {
+  public updateConfig(config?: IPartialNested<IAppUpdatableConfig>): void {
     if (!_.isNil(config)) {
       this.updateFirstReleaseDate(config.firstReleaseDate);
       this.updateInitializationDate(config.initializationDate);
@@ -60,7 +60,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     }
   }
 
-  public updateFirstReleaseDate(firstReleaseDate?: Readonly<string>): void {
+  public updateFirstReleaseDate(firstReleaseDate?: string): void {
     AppConfigCoreService.getInstance().firstReleaseDate = ConfigService.getInstance().getUpdatedDate({
       context: this._serviceName,
       newValue: firstReleaseDate,
@@ -69,7 +69,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     });
   }
 
-  public updateInitializationDate(initializationDate?: Readonly<string>): void {
+  public updateInitializationDate(initializationDate?: string): void {
     AppConfigCoreService.getInstance().initializationDate = ConfigService.getInstance().getUpdatedDate({
       context: this._serviceName,
       newValue: initializationDate,
@@ -78,7 +78,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     });
   }
 
-  public updateProductionState(isProduction?: Readonly<boolean>): void {
+  public updateProductionState(isProduction?: boolean): void {
     AppConfigCoreService.getInstance().isProduction = ConfigService.getInstance().getUpdatedBoolean({
       context: this._serviceName,
       newValue: isProduction,
@@ -87,7 +87,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     });
   }
 
-  public updateReleaseDate(releaseDate?: Readonly<string>): void {
+  public updateReleaseDate(releaseDate?: string): void {
     AppConfigCoreService.getInstance().releaseDate = ConfigService.getInstance().getUpdatedDate({
       context: this._serviceName,
       newValue: releaseDate,
@@ -96,7 +96,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     });
   }
 
-  public updateReleaseNotes(releaseNotes?: Readonly<string>): void {
+  public updateReleaseNotes(releaseNotes?: string): void {
     AppConfigCoreService.getInstance().releaseNotes = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueDisplay: false,
@@ -107,7 +107,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     this._setReleaseType();
   }
 
-  public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
+  public updateTotalReleaseCount(totalReleaseCount?: number): void {
     AppConfigCoreService.getInstance().totalReleaseCount = ConfigService.getInstance().getUpdatedNumber({
       context: this._serviceName,
       newValue: totalReleaseCount,
@@ -116,7 +116,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     });
   }
 
-  public updateVersion(version?: Readonly<string>): void {
+  public updateVersion(version?: string): void {
     AppConfigCoreService.getInstance().version = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: version,

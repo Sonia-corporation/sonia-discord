@@ -11,7 +11,7 @@ import moment from 'moment-timezone';
  * Used to avoid code duplication
  */
 export abstract class DiscordCommandErrorCoreService extends AbstractService {
-  protected constructor(serviceName: Readonly<ServiceNameEnum>) {
+  protected constructor(serviceName: ServiceNameEnum) {
     super(serviceName);
   }
 

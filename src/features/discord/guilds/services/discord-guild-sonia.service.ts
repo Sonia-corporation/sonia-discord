@@ -37,7 +37,7 @@ export class DiscordGuildSoniaService extends AbstractService {
     this._listen();
   }
 
-  public sendMessageToChannel(sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>): void {
+  public sendMessageToChannel(sendMessageToChannel: IDiscordGuildSoniaSendMessageToChannel): void {
     if (_.isNil(this._soniaGuild)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
@@ -81,7 +81,7 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   public getSoniaGuildChannelByName(
-    channelName: Readonly<DiscordGuildSoniaChannelNameEnum>
+    channelName: DiscordGuildSoniaChannelNameEnum
   ): GuildBasedChannel | null | undefined {
     if (_.isNil(this._soniaGuild)) {
       LoggerService.getInstance().warning({
@@ -92,7 +92,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       return null;
     }
 
-    return this._soniaGuild.channels.cache.find(({ name }: Readonly<GuildBasedChannel>): boolean =>
+    return this._soniaGuild.channels.cache.find(({ name }: GuildBasedChannel): boolean =>
       _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
     );
   }
@@ -118,8 +118,8 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _sendMessageToChannel(
-    { messageResponse }: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
-    channel: Readonly<IAnyDiscordWritableChannel>
+    { messageResponse }: IDiscordGuildSoniaSendMessageToChannel,
+    channel: IAnyDiscordWritableChannel
   ): void {
     channel
       .send({
@@ -158,7 +158,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       DiscordClientService.getInstance()
         .isReady$()
         .pipe(
-          filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+          filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
           take(ONE_EMITTER)
         )
         .subscribe({

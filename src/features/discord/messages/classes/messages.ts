@@ -8,7 +8,7 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
   private _messages: IObject<T>;
   private _params: TParams | undefined = undefined;
 
-  public constructor({ defaultMessage, messages, params }: Readonly<IMessageConfig<T, TParams>>) {
+  public constructor({ defaultMessage, messages, params }: IMessageConfig<T, TParams>) {
     this._defaultMessage = defaultMessage;
     this._messages = messages;
     this._params = params;
@@ -18,7 +18,7 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
     return this._defaultMessage;
   }
 
-  public setDefaultMessage(message: Readonly<T>): void {
+  public setDefaultMessage(message: T): void {
     this._defaultMessage = message;
   }
 
@@ -26,7 +26,7 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
     return this._messages;
   }
 
-  public setMessages(messages: Readonly<IObject<T>>): void {
+  public setMessages(messages: IObject<T>): void {
     this._messages = messages;
   }
 
@@ -34,7 +34,7 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
     return this._params;
   }
 
-  public setParams(params: Readonly<TParams>): void {
+  public setParams(params: TParams): void {
     this._params = params;
   }
 
@@ -60,10 +60,10 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
    * new Messages<T>({params: {variable: 'dummy'}, ...});
    * getHumanizedRandomMessage();
    * // -> 'a message with a dummy'
-   * @param {Readonly<TParams | undefined>} [params=getParams] The object containing the replacements
+   * @param {TParams | undefined} [params=getParams] The object containing the replacements
    * @returns {string} The humanized and parsed message
    */
-  public getHumanizedRandomMessage(params: Readonly<TParams | undefined> = this.getParams()): string {
+  public getHumanizedRandomMessage(params: TParams | undefined = this.getParams()): string {
     return replaceInterpolation(this.getRandomMessage(), params ?? {});
   }
 }

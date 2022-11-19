@@ -8,7 +8,7 @@ import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
  * @param channel
  */
 export function isDiscordWritableChannel(
-  channel: Readonly<GuildBasedChannel | TextBasedChannel | null | undefined>
+  channel: GuildBasedChannel | TextBasedChannel | null | undefined
 ): channel is IAnyDiscordWritableChannel {
   return isDiscordTextChannel(channel) || isDiscordNewsChannel(channel) || isDiscordThreadChannel(channel);
 }

@@ -8,10 +8,7 @@ import { IFirebaseGuildChannelV2 } from '../../../interfaces/guilds/channels/fir
  * @param root0.id
  * @param root0.features
  */
-export function upgradeFirebaseGuildChannelToV2({
-  id,
-  features,
-}: Readonly<IFirebaseGuildChannelV1>): IFirebaseGuildChannelV2 {
+export function upgradeFirebaseGuildChannelToV2({ id, features }: IFirebaseGuildChannelV1): IFirebaseGuildChannelV2 {
   return {
     features: features ? handleFirebaseGuildChannelFeatureBreakingChange(features) : undefined,
     id,

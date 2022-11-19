@@ -6,6 +6,6 @@ import _ from 'lodash';
  * @param root0.prefix
  * @param root0.command
  */
-export function discordGetCommandWithPrefix({ prefix, command }: Readonly<IDiscordGetCommandWithPrefix>): string {
+export function discordGetCommandWithPrefix({ prefix, command }: IDiscordGetCommandWithPrefix): string {
   return _.toLower(`${prefix}${command}`);
 }

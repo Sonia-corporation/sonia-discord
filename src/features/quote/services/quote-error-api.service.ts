@@ -21,10 +21,10 @@ export class QuoteErrorApiService extends DiscordCommandErrorCoreService {
     super(ServiceNameEnum.QUOTE_ERROR_API_SERVICE);
   }
 
-  public getMessageResponse(error: Readonly<IQuoteErrorApi>): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(error: IQuoteErrorApi): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then((messageResponse: Readonly<IDiscordMessageResponse>): IDiscordMessageResponse => {
+      .then((messageResponse: IDiscordMessageResponse): IDiscordMessageResponse => {
         const options: MessageEmbedOptions = {
           description: this._getMessageEmbedDescription(error),
           title: this._getCustomMessageEmbedTitle(),
@@ -39,7 +39,7 @@ export class QuoteErrorApiService extends DiscordCommandErrorCoreService {
       });
   }
 
-  private _getMessageEmbedDescription({ message }: Readonly<IQuoteErrorApi>): string {
+  private _getMessageEmbedDescription({ message }: IQuoteErrorApi): string {
     return message;
   }
 

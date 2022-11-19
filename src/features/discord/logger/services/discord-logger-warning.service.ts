@@ -26,7 +26,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     super(ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE);
   }
 
-  public handleWarning(warning: Readonly<string>): void {
+  public handleWarning(warning: string): void {
     LoggerService.getInstance().warning({
       context: this._serviceName,
       message: ChalkService.getInstance().text(warning),
@@ -42,7 +42,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     });
   }
 
-  public getWarningMessageResponse(warning: Readonly<string>): IDiscordMessageResponse {
+  public getWarningMessageResponse(warning: string): IDiscordMessageResponse {
     return {
       options: {
         embeds: [this._getMessageEmbed(warning)],
@@ -50,7 +50,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     };
   }
 
-  private _getMessageEmbed(warning: Readonly<string>): MessageEmbedOptions {
+  private _getMessageEmbed(warning: string): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -93,7 +93,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     return `Warning!`;
   }
 
-  private _getMessageEmbedDescription(warning: Readonly<string>): string {
+  private _getMessageEmbedDescription(warning: string): string {
     return warning;
   }
 }

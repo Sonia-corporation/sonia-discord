@@ -24,12 +24,12 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
   }
 
   public getMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[]
+    anyDiscordMessage: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[]
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+      .then((cliErrorMessageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
           options: {
             embeds: [this._getMessageEmbed(anyDiscordMessage, commands)],
@@ -41,8 +41,8 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
   }
 
   private _getMessageEmbed(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[]
+    anyDiscordMessage: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[]
   ): MessageEmbedOptions {
     return {
       fields: this._getMessageEmbedFields(anyDiscordMessage, commands),
@@ -52,8 +52,8 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
   }
 
   private _getMessageEmbedFields(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[]
+    anyDiscordMessage: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[]
   ): EmbedFieldData[] {
     return [
       this._getMessageEmbedFieldError(),

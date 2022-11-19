@@ -15,11 +15,11 @@ import _ from 'lodash';
 export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements DiscordCommandFlagActionValueless<T> {
   private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS;
 
-  public execute(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public execute(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     this._logExecuteAction(anyDiscordMessage.id);
 
     return this.isEnabled(anyDiscordMessage).then(
-      (isEnabled: Readonly<boolean | undefined>): Promise<IDiscordMessageResponse> => {
+      (isEnabled: boolean | undefined): Promise<IDiscordMessageResponse> => {
         if (_.isNil(anyDiscordMessage.guild)) {
           return Promise.reject(new Error(`Firebase guild invalid`));
         }
@@ -33,7 +33,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     );
   }
 
-  public isEnabled(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<boolean | undefined> {
+  public isEnabled(anyDiscordMessage: IAnyDiscordMessage): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
       return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
@@ -49,7 +49,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return Promise.resolve(this._isNoonEnabled(firebaseGuild, anyDiscordMessage.channel.id));
   }
 
-  public getMessageResponse(isEnabled: Readonly<boolean | undefined>): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(isEnabled: boolean | undefined): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {
       content: this._getResponse(isEnabled),
       options: {},
@@ -58,7 +58,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return Promise.resolve(message);
   }
 
-  private _getResponse(isEnabled: Readonly<boolean | undefined>): string {
+  private _getResponse(isEnabled: boolean | undefined): string {
     if (_.isEqual(isEnabled, true)) {
       return `The noon feature is enabled.`;
     }
@@ -66,7 +66,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return `The noon feature is disabled.`;
   }
 
-  private _isNoonEnabled(firebaseGuild: Readonly<IFirebaseGuild>, channelId: Readonly<Snowflake>): boolean | undefined {
+  private _isNoonEnabled(firebaseGuild: IFirebaseGuild, channelId: Snowflake): boolean | undefined {
     const firebaseGuildChannel: IFirebaseGuildChannel | undefined = this._getFirebaseGuildChannel(
       firebaseGuild,
       channelId
@@ -79,13 +79,13 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return this._getFirebaseEnabledState(firebaseGuildChannel);
   }
 
-  private _getFirebaseEnabledState(firebaseGuildChannel: Readonly<IFirebaseGuildChannel>): boolean | undefined {
+  private _getFirebaseEnabledState(firebaseGuildChannel: IFirebaseGuildChannel): boolean | undefined {
     return firebaseGuildChannel.features?.noon?.isEnabled;
   }
 
   private _getFirebaseGuildChannel(
-    firebaseGuild: Readonly<IFirebaseGuild>,
-    channelId: Readonly<Snowflake>
+    firebaseGuild: IFirebaseGuild,
+    channelId: Snowflake
   ): IFirebaseGuildChannel | undefined {
     if (!hasFirebaseGuildChannels(firebaseGuild)) {
       return undefined;
@@ -94,10 +94,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return _.get(firebaseGuild.channels, channelId);
   }
 
-  private _getNoFirebaseGuildError(
-    discordMessageId: Readonly<Snowflake>,
-    guildId: Readonly<Snowflake>
-  ): Promise<never> {
+  private _getNoFirebaseGuildError(discordMessageId: Snowflake, guildId: Snowflake): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -110,7 +107,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return Promise.reject(new Error(`Could not find the guild ${guildId} in Firebase`));
   }
 
-  private _getNoGuildMessageError(discordMessageId: Readonly<Snowflake>): Promise<never> {
+  private _getNoGuildMessageError(discordMessageId: Snowflake): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -123,7 +120,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return Promise.reject(new Error(`Could not get the guild from the message`));
   }
 
-  private _logExecuteAction(discordMessageId: Readonly<Snowflake>): void {
+  private _logExecuteAction(discordMessageId: Snowflake): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,

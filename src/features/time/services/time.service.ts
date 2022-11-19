@@ -19,11 +19,11 @@ export class TimeService extends AbstractService {
     super(ServiceNameEnum.TIME_SERVICE);
   }
 
-  public now(format?: Readonly<string>): string {
+  public now(format?: string): string {
     return moment().format(format);
   }
 
-  public fromNow<T = string>(date: Readonly<T>, isCapitalized: Readonly<boolean> = true): string {
+  public fromNow<T = string>(date: T, isCapitalized = true): string {
     return fromNow<T>(date, isCapitalized);
   }
 }

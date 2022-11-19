@@ -17,7 +17,7 @@ export class TimeService extends AbstractService {
     super(ServiceNameEnum.TIME_SERVICE);
   }
 
-  public now(format?: Readonly<string>): string {
+  public now(format?: string): string {
     let value = `now`;
 
     if (_.isString(format)) {

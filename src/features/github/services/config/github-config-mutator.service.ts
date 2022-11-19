@@ -14,7 +14,7 @@ import _ from 'lodash';
 export class GithubConfigMutatorService extends AbstractConfigService<IGithubConfig> {
   private static _instance: GithubConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IGithubConfig>>): GithubConfigMutatorService {
+  public static getInstance(config?: IPartialNested<IGithubConfig>): GithubConfigMutatorService {
     if (_.isNil(GithubConfigMutatorService._instance)) {
       GithubConfigMutatorService._instance = new GithubConfigMutatorService(config);
     }
@@ -22,7 +22,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
     return GithubConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IGithubConfig>>) {
+  public constructor(config?: IPartialNested<IGithubConfig>) {
     super(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -32,7 +32,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
     GithubConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IGithubConfig>>): void {
+  public updateConfig(config?: IPartialNested<IGithubConfig>): void {
     if (!_.isNil(config)) {
       this.updateBugReportUrl(config.bugReportUrl);
       this.updatePersonalAccessToken(config.personalAccessToken);
@@ -44,7 +44,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
     }
   }
 
-  public updateBugReportUrl(bugReportUrl?: Readonly<string>): void {
+  public updateBugReportUrl(bugReportUrl?: string): void {
     GithubConfigCoreService.getInstance().bugReportUrl = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: bugReportUrl,
@@ -53,7 +53,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
     });
   }
 
-  public updatePersonalAccessToken(personalAccessToken?: Readonly<IPersonalAccessToken>): void {
+  public updatePersonalAccessToken(personalAccessToken?: IPersonalAccessToken): void {
     GithubConfigCoreService.getInstance().personalAccessToken = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueHidden: true,

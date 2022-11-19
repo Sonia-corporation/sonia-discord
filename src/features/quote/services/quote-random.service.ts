@@ -24,7 +24,7 @@ export class QuoteRandomService extends AbstractService {
     super(ServiceNameEnum.QUOTE_RANDOM_SERVICE);
   }
 
-  public fetchRandomQuote(messageId: Readonly<Snowflake>): Promise<IQuote | IQuoteErrorApi> {
+  public fetchRandomQuote(messageId: Snowflake): Promise<IQuote | IQuoteErrorApi> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -33,12 +33,12 @@ export class QuoteRandomService extends AbstractService {
 
     return QuoteApiService.getInstance()
       .getQuoteOfTheDay(messageId)
-      .then((quote: Readonly<IQuoteOfTheDayApi | IQuoteErrorApi>): IQuote | IQuoteErrorApi =>
+      .then((quote: IQuoteOfTheDayApi | IQuoteErrorApi): IQuote | IQuoteErrorApi =>
         this._quoteOfTheDayApiToQuote(quote)
       );
   }
 
-  private _quoteOfTheDayApiToQuote(quote: Readonly<IQuoteOfTheDayApi | IQuoteErrorApi>): IQuote | IQuoteErrorApi {
+  private _quoteOfTheDayApiToQuote(quote: IQuoteOfTheDayApi | IQuoteErrorApi): IQuote | IQuoteErrorApi {
     if (isQuoteErrorApi(quote)) {
       return quote;
     }

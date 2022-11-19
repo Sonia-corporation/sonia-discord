@@ -28,10 +28,10 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
    *
    * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
    * Like it is really her mentioned and she has the rights to respond, etc
-   * @param {Readonly<string>} message The message to check if a response to any question is possible
+   * @param {string} message The message to check if a response to any question is possible
    * @returns {boolean} Return true when she can respond to any question
    */
-  public hasCriteria(message: Readonly<string>): boolean {
+  public hasCriteria(message: string): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
 
     return _.isEqual(
@@ -40,7 +40,7 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
     );
   }
 
-  public reply(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public reply(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     if (!DiscordMessageContentService.getInstance().hasContent(anyDiscordMessage.content)) {
       return Promise.reject(new Error(`No content`));
     }
@@ -53,7 +53,7 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
     return Promise.resolve(message);
   }
 
-  private _getMessageWithoutFirstMention(message: Readonly<string>): string {
+  private _getMessageWithoutFirstMention(message: string): string {
     /**
      * @description
      * This is important to only remove the first one

@@ -26,7 +26,7 @@ export class DiscordSoniaService extends AbstractService {
     super(ServiceNameEnum.DISCORD_SONIA_SERVICE);
   }
 
-  public isSonia(id: Readonly<string>): boolean {
+  public isSonia(id: string): boolean {
     return _.isEqual(id, DiscordSoniaConfigService.getInstance().getId());
   }
 

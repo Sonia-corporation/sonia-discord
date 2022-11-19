@@ -24,8 +24,8 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
   private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_DISABLED;
 
   public execute(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value?: Readonly<string | null | undefined>
+    anyDiscordMessage: IAnyDiscordMessage,
+    value?: string | null | undefined
   ): Promise<IDiscordCommandFlagSuccess> {
     const shouldDisable: boolean = toBoolean(value, true);
 
@@ -33,7 +33,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     this._logNewState(anyDiscordMessage.id, shouldDisable);
 
     return this.isDisabled(anyDiscordMessage).then(
-      (isDisabled: Readonly<boolean | undefined>): Promise<IDiscordCommandFlagSuccess> => {
+      (isDisabled: boolean | undefined): Promise<IDiscordCommandFlagSuccess> => {
         this._logCurrentState(anyDiscordMessage.id, isDisabled);
 
         if (!_.isNil(anyDiscordMessage.guild)) {
@@ -49,7 +49,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     );
   }
 
-  public isDisabled(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<boolean | undefined> {
+  public isDisabled(anyDiscordMessage: IAnyDiscordMessage): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
       return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
@@ -66,10 +66,10 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
   }
 
   public updateDatabase(
-    shouldDisable: Readonly<boolean>,
-    isDisabled: Readonly<boolean | undefined>,
-    { id }: Readonly<IFirebaseGuild>,
-    discordChannel: Readonly<IAnyDiscordChannel>
+    shouldDisable: boolean,
+    isDisabled: boolean | undefined,
+    { id }: IFirebaseGuild,
+    discordChannel: IAnyDiscordChannel
   ): Promise<IDiscordCommandFlagSuccess> {
     if (_.isNil(id)) {
       return Promise.reject(new Error(`Firebase guild id invalid`));
@@ -83,10 +83,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
       );
   }
 
-  private _isReleaseNotesDisabled(
-    firebaseGuild: Readonly<IFirebaseGuild>,
-    channelId: Readonly<Snowflake>
-  ): boolean | undefined {
+  private _isReleaseNotesDisabled(firebaseGuild: IFirebaseGuild, channelId: Snowflake): boolean | undefined {
     const firebaseGuildChannel: IFirebaseGuildChannel | undefined = this._getFirebaseGuildChannel(
       firebaseGuild,
       channelId
@@ -103,8 +100,8 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
   }
 
   private _getFirebaseGuildChannel(
-    firebaseGuild: Readonly<IFirebaseGuild>,
-    channelId: Readonly<Snowflake>
+    firebaseGuild: IFirebaseGuild,
+    channelId: Snowflake
   ): IFirebaseGuildChannel | undefined {
     if (!hasFirebaseGuildChannels(firebaseGuild)) {
       return undefined;
@@ -113,7 +110,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     return _.get(firebaseGuild.channels, channelId);
   }
 
-  private _getFirebaseDisabledState(firebaseGuildChannel: Readonly<IFirebaseGuildChannelVFinal>): boolean | undefined {
+  private _getFirebaseDisabledState(firebaseGuildChannel: IFirebaseGuildChannelVFinal): boolean | undefined {
     const isEnabled: boolean | undefined = firebaseGuildChannel.features?.releaseNotes?.isEnabled;
 
     if (!_.isBoolean(isEnabled)) {
@@ -127,7 +124,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     return !isEnabled;
   }
 
-  private _getNoGuildMessageError(discordMessageId: Readonly<Snowflake>): Promise<never> {
+  private _getNoGuildMessageError(discordMessageId: Snowflake): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -140,10 +137,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     return Promise.reject(new Error(`Could not get the guild from the message`));
   }
 
-  private _getNoFirebaseGuildError(
-    discordMessageId: Readonly<Snowflake>,
-    guildId: Readonly<Snowflake>
-  ): Promise<never> {
+  private _getNoFirebaseGuildError(discordMessageId: Snowflake, guildId: Snowflake): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -156,7 +150,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     return Promise.reject(new Error(`Could not find the guild ${guildId} in Firebase`));
   }
 
-  private _logExecuteAction(discordMessageId: Readonly<Snowflake>): void {
+  private _logExecuteAction(discordMessageId: Snowflake): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -167,7 +161,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     });
   }
 
-  private _logNewState(discordMessageId: Readonly<Snowflake>, isDisabled: Readonly<boolean>): void {
+  private _logNewState(discordMessageId: Snowflake, isDisabled: boolean): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -178,7 +172,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     });
   }
 
-  private _logCurrentState(discordMessageId: Readonly<Snowflake>, isDisabled: Readonly<boolean | undefined>): void {
+  private _logCurrentState(discordMessageId: Snowflake, isDisabled: boolean | undefined): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -189,10 +183,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
     });
   }
 
-  private _getCommandFlagSuccess(
-    shouldDisable: Readonly<boolean>,
-    isDisabled: Readonly<boolean | undefined>
-  ): IDiscordCommandFlagSuccess {
+  private _getCommandFlagSuccess(shouldDisable: boolean, isDisabled: boolean | undefined): IDiscordCommandFlagSuccess {
     return DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService.getInstance().getFlag(
       !shouldDisable,
       _.isBoolean(isDisabled) ? !isDisabled : undefined

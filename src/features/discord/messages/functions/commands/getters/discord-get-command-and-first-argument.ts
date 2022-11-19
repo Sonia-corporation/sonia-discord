@@ -16,7 +16,7 @@ function getCommandAndFirstArgument({
   command,
   message,
   prefix,
-}: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
+}: IDiscordExtractFromCommandCallbackData): string | null {
   const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandWithFirstArgumentRegexp({
@@ -44,7 +44,7 @@ export function discordGetCommandAndFirstArgument({
   commands,
   message,
   prefixes,
-}: Readonly<IDiscordGetCommandAndFirstArgumentData>): string | null {
+}: IDiscordGetCommandAndFirstArgumentData): string | null {
   return discordExtractFromCommand({
     commands,
     finder: getCommandAndFirstArgument,

@@ -40,7 +40,7 @@ export class DiscordMessageService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<(Message | void) | (Message | void)[]> {
+  public sendMessage(anyDiscordMessage: IAnyDiscordMessage): Promise<(Message | void) | (Message | void)[]> {
     if (!isDiscordValidTextMessage(anyDiscordMessage)) {
       if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
         LoggerService.getInstance().warning({
@@ -77,9 +77,7 @@ export class DiscordMessageService extends AbstractService {
     return this.handleChannelMessage(anyDiscordMessage);
   }
 
-  public handleChannelMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<(Message | void) | (Message | void)[]> {
+  public handleChannelMessage(anyDiscordMessage: IAnyDiscordMessage): Promise<(Message | void) | (Message | void)[]> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
       void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
 
@@ -139,8 +137,8 @@ export class DiscordMessageService extends AbstractService {
   private _listen(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(`messageCreate`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
-        this.sendMessage(anyDiscordMessage).catch((error: Readonly<Error>): void => {
+      .on(`messageCreate`, (anyDiscordMessage: IAnyDiscordMessage): void => {
+        this.sendMessage(anyDiscordMessage).catch((error: Error): void => {
           // @todo add coverage
           if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
             LoggerService.getInstance().debug({
@@ -164,7 +162,7 @@ export class DiscordMessageService extends AbstractService {
     });
   }
 
-  private _dmMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<(Message | void) | (Message | void)[]> {
+  private _dmMessage(anyDiscordMessage: IAnyDiscordMessage): Promise<(Message | void) | (Message | void)[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -198,9 +196,7 @@ export class DiscordMessageService extends AbstractService {
       });
   }
 
-  private _textMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<(Message | void) | (Message | void)[]> {
+  private _textMessage(anyDiscordMessage: IAnyDiscordMessage): Promise<(Message | void) | (Message | void)[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -235,8 +231,8 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _sendMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    { content, options }: Readonly<IDiscordMessageResponse>
+    anyDiscordMessage: IAnyDiscordMessage,
+    { content, options }: IDiscordMessageResponse
   ): Promise<Message | void> {
     if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       throw new Error(`Discord message channel not valid`);
@@ -270,13 +266,13 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _sendMessages(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    discordMessageResponses: Readonly<IDiscordMessageResponse[]>
+    anyDiscordMessage: IAnyDiscordMessage,
+    discordMessageResponses: IDiscordMessageResponse[]
   ): Promise<(Message | void)[]> {
     return Promise.all(
       _.map(
         discordMessageResponses,
-        (discordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
+        (discordMessageResponse: IDiscordMessageResponse): Promise<Message | void> =>
           this._sendMessage(anyDiscordMessage, discordMessageResponse)
       )
     );

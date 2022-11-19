@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../enums/service-name.enum';
 import { IPartialNested } from '../../types/partial-nested';
 
 export abstract class AbstractConfigService<TConfig> extends AbstractService {
-  protected constructor(serviceName: Readonly<ServiceNameEnum>, config?: Readonly<IPartialNested<TConfig>>) {
+  protected constructor(serviceName: ServiceNameEnum, config?: IPartialNested<TConfig>) {
     super(serviceName);
     this.preUpdateConfig();
     this.updateConfig(config);
@@ -32,5 +32,5 @@ export abstract class AbstractConfigService<TConfig> extends AbstractService {
     // Avoid lint error :)
   }
 
-  public abstract updateConfig(config?: Readonly<IPartialNested<TConfig>>): void;
+  public abstract updateConfig(config?: IPartialNested<TConfig>): void;
 }

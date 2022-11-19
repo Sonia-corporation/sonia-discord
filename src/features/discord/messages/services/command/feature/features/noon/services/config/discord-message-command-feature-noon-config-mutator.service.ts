@@ -17,7 +17,7 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
   private static _instance: DiscordMessageCommandFeatureNoonConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>
+    config?: IPartialNested<IDiscordMessageCommandFeatureConfig>
   ): DiscordMessageCommandFeatureNoonConfigMutatorService {
     if (_.isNil(DiscordMessageCommandFeatureNoonConfigMutatorService._instance)) {
       DiscordMessageCommandFeatureNoonConfigMutatorService._instance =
@@ -27,7 +27,7 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
     return DiscordMessageCommandFeatureNoonConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>) {
+  public constructor(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -37,7 +37,7 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
     DiscordMessageCommandFeatureNoonConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>): void {
+  public updateConfig(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>): void {
     if (!_.isNil(config)) {
       this.updateNoon(config.noon);
 
@@ -48,14 +48,14 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
     }
   }
 
-  public updateNoon(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureNoonConfig>>): void {
+  public updateNoon(config?: IPartialNested<IDiscordMessageCommandFeatureNoonConfig>): void {
     if (!_.isNil(config)) {
       this.updateNoonImageColor(config.imageColor);
       this.updateNoonImageUrl(config.imageUrl);
     }
   }
 
-  public updateNoonImageColor(imageColor?: Readonly<ColorEnum>): void {
+  public updateNoonImageColor(imageColor?: ColorEnum): void {
     DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageColor =
       ConfigService.getInstance().getUpdatedNumber({
         context: this._serviceName,
@@ -65,7 +65,7 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
       });
   }
 
-  public updateNoonImageUrl(imageUrl?: Readonly<IconEnum>): void {
+  public updateNoonImageUrl(imageUrl?: IconEnum): void {
     DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageUrl =
       ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,

@@ -41,7 +41,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(member: Readonly<IAnyGuildMember>): void {
+  public sendMessage(member: IAnyGuildMember): void {
     if (this._canSendMessage(member.guild)) {
       const primaryGuildBasedChannel: IAnyDiscordWritableChannel | null =
         DiscordChannelGuildService.getInstance().getPrimary(member.guild);
@@ -57,7 +57,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   private _listen(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(`guildMemberAdd`, (member: Readonly<IAnyGuildMember>): void => {
+      .on(`guildMemberAdd`, (member: IAnyGuildMember): void => {
         LoggerService.getInstance().debug({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`${wrapInQuotes(`guildMemberAdd`)} event triggered`),
@@ -72,7 +72,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     });
   }
 
-  private _canSendMessage(guild: Readonly<Guild>): boolean {
+  private _canSendMessage(guild: Guild): boolean {
     if (!DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(guild)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
@@ -104,10 +104,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     return true;
   }
 
-  private _sendMessage(
-    primaryGuildBasedChannel: Readonly<IAnyDiscordWritableChannel>,
-    member: Readonly<IAnyGuildMember>
-  ): void {
+  private _sendMessage(primaryGuildBasedChannel: IAnyDiscordWritableChannel, member: IAnyGuildMember): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(member);
 
     if (!isDiscordTextChannel(primaryGuildBasedChannel)) {
@@ -146,7 +143,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
           message: ChalkService.getInstance().text(`welcome message for the new guild sent`),
         });
       })
-      .catch((error: Readonly<Error | string>): void => {
+      .catch((error: Error | string): void => {
         // @todo add coverage
         LoggerService.getInstance().error({
           context: this._serviceName,
@@ -163,14 +160,14 @@ export class DiscordGuildMemberAddService extends AbstractService {
       });
   }
 
-  private _getMessageResponse({ id }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
+  private _getMessageResponse({ id }: IAnyGuildMember): IDiscordMessageResponse {
     return {
       content: this._getMessageResponseWithEnvPrefix(`Welcome ${wrapUserIdIntoMention(id)}! il est midi!`),
       options: {},
     };
   }
 
-  private _getMessageResponseWithEnvPrefix(response: Readonly<string>): string {
+  private _getMessageResponseWithEnvPrefix(response: string): string {
     if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({
         asMention: true,

@@ -6,11 +6,7 @@ import _ from 'lodash';
  * @param limit
  * @param suffix
  */
-export function ellipsis(
-  value: Readonly<string>,
-  limit: Readonly<number> = DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT,
-  suffix: Readonly<string> = `...`
-): string {
+export function ellipsis(value: string, limit: number = DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT, suffix = `...`): string {
   return _.truncate(value, {
     length: limit,
     omission: suffix,

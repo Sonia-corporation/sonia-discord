@@ -32,7 +32,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE);
   }
 
-  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -52,7 +52,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: [DiscordMessageCommandEnum.ERROR, DiscordMessageCommandEnum.BUG],
       message,

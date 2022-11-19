@@ -17,7 +17,7 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
   private static _instance: DiscordMessageCommandFeatureReleaseNotesConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>
+    config?: IPartialNested<IDiscordMessageCommandFeatureConfig>
   ): DiscordMessageCommandFeatureReleaseNotesConfigMutatorService {
     if (_.isNil(DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance)) {
       DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance =
@@ -27,7 +27,7 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
     return DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>) {
+  public constructor(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -37,7 +37,7 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
     DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>): void {
+  public updateConfig(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>): void {
     if (!_.isNil(config)) {
       this.updateReleaseNotes(config.releaseNotes?.unknown);
 
@@ -48,14 +48,14 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
     }
   }
 
-  public updateReleaseNotes(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureReleaseNotesConfig>>): void {
+  public updateReleaseNotes(config?: IPartialNested<IDiscordMessageCommandFeatureReleaseNotesConfig>): void {
     if (!_.isNil(config)) {
       this.updateReleaseNotesImageColor(config.imageColor);
       this.updateReleaseNotesImageUrl(config.imageUrl);
     }
   }
 
-  public updateReleaseNotesImageColor(imageColor?: Readonly<ColorEnum>): void {
+  public updateReleaseNotesImageColor(imageColor?: ColorEnum): void {
     DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance().releaseNotes.imageColor =
       ConfigService.getInstance().getUpdatedNumber({
         context: this._serviceName,
@@ -65,7 +65,7 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
       });
   }
 
-  public updateReleaseNotesImageUrl(imageUrl?: Readonly<IconEnum>): void {
+  public updateReleaseNotesImageUrl(imageUrl?: IconEnum): void {
     DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance().releaseNotes.imageUrl =
       ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,

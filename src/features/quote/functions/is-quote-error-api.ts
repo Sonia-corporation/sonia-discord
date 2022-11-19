@@ -8,6 +8,6 @@ import _ from 'lodash';
  * @param {Object | IQuoteErrorApi} quote The quote to check
  * @returns {boolean} Returns true if the given quote contains an "error_code" property
  */
-export function isQuoteErrorApi(quote: Readonly<IObject | IQuoteErrorApi>): quote is IQuoteErrorApi {
+export function isQuoteErrorApi(quote: IObject | IQuoteErrorApi): quote is IQuoteErrorApi {
   return _.has(quote, `error_code`);
 }

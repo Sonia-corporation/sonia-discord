@@ -13,39 +13,39 @@ export class ChalkService {
     return ChalkService._instance;
   }
 
-  public success(message: Readonly<string> | unknown): string {
+  public success(message: string | unknown): string {
     return `success-${_.toString(message)}`;
   }
 
-  public context(message: Readonly<string> | unknown): string {
+  public context(message: string | unknown): string {
     return `context-${_.toString(message)}`;
   }
 
-  public value(message: Readonly<string> | unknown): string {
+  public value(message: string | unknown): string {
     return `value-${_.toString(message)}`;
   }
 
-  public hint(message: Readonly<string> | unknown): string {
+  public hint(message: string | unknown): string {
     return `hint-${_.toString(message)}`;
   }
 
-  public error(message: Readonly<string> | unknown): string {
+  public error(message: string | unknown): string {
     return `error-${_.toString(message)}`;
   }
 
-  public warning(message: Readonly<string> | unknown): string {
+  public warning(message: string | unknown): string {
     return `warning-${_.toString(message)}`;
   }
 
-  public text(message: Readonly<string> | unknown): string {
+  public text(message: string | unknown): string {
     return `text-${_.toString(message)}`;
   }
 
-  public log(message: Readonly<string> | unknown): string {
+  public log(message: string | unknown): string {
     return `log-${_.toString(message)}`;
   }
 
-  public debug(message: Readonly<string> | unknown): string {
+  public debug(message: string | unknown): string {
     return `debug-${_.toString(message)}`;
   }
 

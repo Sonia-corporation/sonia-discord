@@ -29,16 +29,16 @@ export class DiscordMessagePingPongService extends AbstractService {
    *
    * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
    * Like it is really her mentioned and she has the rights to respond, etc
-   * @param {Readonly<string>} message The message to check if a response to ping is possible
+   * @param {string} message The message to check if a response to ping is possible
    * @returns {boolean} Return true when she can respond to ping
    */
-  public hasCriteria(message: Readonly<string>): boolean {
+  public hasCriteria(message: string): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
 
     return _.isEqual(_.toLower(messageWithoutFirstMention), `ping`);
   }
 
-  public reply(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public reply(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     if (!DiscordMessageContentService.getInstance().hasContent(anyDiscordMessage.content)) {
       return Promise.reject(new Error(`No content`));
     }
@@ -64,7 +64,7 @@ export class DiscordMessagePingPongService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  private _getMessageWithoutFirstMention(message: Readonly<string>): string {
+  private _getMessageWithoutFirstMention(message: string): string {
     /**
      * @description
      * This is important to only remove the first one

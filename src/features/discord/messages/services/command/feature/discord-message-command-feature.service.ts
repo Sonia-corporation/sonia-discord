@@ -48,7 +48,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   public handleResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -60,7 +60,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   public getMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (!_.isString(anyDiscordMessage.content)) {
       return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
@@ -107,7 +107,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     );
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: this._commands,
       message,
@@ -115,13 +115,13 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     });
   }
 
-  public hasFlags(message: Readonly<string>): boolean {
+  public hasFlags(message: string): boolean {
     const flags: string | null = this.getFlags(message);
 
     return !_.isNil(flags);
   }
 
-  public getFlags(message: Readonly<string>): string | null {
+  public getFlags(message: string): string | null {
     return discordGetCommandFlags({
       commands: this._commands,
       message,
@@ -129,7 +129,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     });
   }
 
-  private _getFeatureName(message: Readonly<string>): string | null {
+  private _getFeatureName(message: string): string | null {
     return discordGetCommandFirstArgument({
       commands: this._commands,
       message,
@@ -138,8 +138,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getEmptyFlagsErrorMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>
+    anyDiscordMessage: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -158,9 +158,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getWrongFlagsErrorMessageResponse(
-    { id }: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
-    flagsErrors: Readonly<IDiscordCommandFlagsErrors>
+    { id }: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum,
+    flagsErrors: IDiscordCommandFlagsErrors
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -175,9 +175,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getDuplicatedFlagsErrorMessageResponse(
-    { id }: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
-    flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>
+    { id }: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum,
+    flagsDuplicated: IDiscordCommandFlagsDuplicated
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -192,9 +192,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getOppositeFlagsErrorMessageResponse(
-    { id }: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
+    { id }: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum,
+    oppositeFlags: IDiscordCommandFlagsOpposite
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -208,9 +208,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     return DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance().getMessageResponse(oppositeFlags);
   }
 
-  private _getNoonMessageResponse(
-    message: Readonly<Message>
-  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+  private _getNoonMessageResponse(message: Message): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     const messageFlags: string | null = this.getFlags(message.content);
 
     if (_.isNil(messageFlags)) {
@@ -250,7 +248,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getReleaseNotesMessageResponse(
-    message: Readonly<Message>
+    message: Message
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     const messageFlags: string | null = this.getFlags(message.content);
 

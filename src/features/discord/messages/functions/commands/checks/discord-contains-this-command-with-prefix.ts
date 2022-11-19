@@ -13,7 +13,7 @@ export function discordContainsThisCommandWithPrefix({
   commands,
   message,
   prefix,
-}: Readonly<IDiscordContainsThisCommandWithPrefixData>): boolean {
+}: IDiscordContainsThisCommandWithPrefixData): boolean {
   let containsThisCommandWithPrefix = false;
 
   if (_.isString(commands)) {
@@ -25,7 +25,7 @@ export function discordContainsThisCommandWithPrefix({
       prefix,
     });
   } else if (_.isArray(commands)) {
-    _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>): false | void => {
+    _.forEach(commands, (command: DiscordMessageCommandEnum): false | void => {
       if (
         discordStrictlyContainsThisCommandWithPrefix({
           command,

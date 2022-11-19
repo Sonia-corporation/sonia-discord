@@ -12,7 +12,7 @@ import xregexp, { ExecArray } from 'xregexp';
  * @param root0.message
  * @param root0.prefix
  */
-function getFlags({ command, message, prefix }: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
+function getFlags({ command, message, prefix }: IDiscordExtractFromCommandCallbackData): string | null {
   const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandWithFirstArgumentAndFlagsRegexp({
@@ -34,11 +34,7 @@ function getFlags({ command, message, prefix }: Readonly<IDiscordExtractFromComm
  * @param root0.message
  * @param root0.prefixes
  */
-export function discordGetCommandFlags({
-  commands,
-  message,
-  prefixes,
-}: Readonly<IDiscordGetCommandFlagsData>): string | null {
+export function discordGetCommandFlags({ commands, message, prefixes }: IDiscordGetCommandFlagsData): string | null {
   return discordExtractFromCommand({
     commands,
     finder: getFlags,

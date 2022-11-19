@@ -29,7 +29,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     super(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE);
   }
 
-  public isEnabled({ id }: Readonly<IFirebaseGuildChannel>, firebaseGuild: Readonly<IFirebaseGuildVFinal>): boolean {
+  public isEnabled({ id }: IFirebaseGuildChannel, firebaseGuild: IFirebaseGuildVFinal): boolean {
     if (_.isNil(id)) {
       this._logInvalidChannelId(firebaseGuild);
 
@@ -51,10 +51,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     return firebaseGuild.channels?.[id]?.features?.noon?.isEnabled ?? false;
   }
 
-  private _isValidChannel(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
+  private _isValidChannel(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): boolean {
     const channel: IFirebaseGuildChannelVFinal | undefined =
       firebaseGuild.channels && firebaseGuild.channels[channelId];
 
@@ -73,10 +70,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     return true;
   }
 
-  private _isValidFeature(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
+  private _isValidFeature(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): boolean {
     const features: IFirebaseGuildChannelFeatureVFinal | undefined =
       firebaseGuild.channels && firebaseGuild.channels[channelId].features;
 
@@ -95,10 +89,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     return true;
   }
 
-  private _isValidNoonFeature(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
+  private _isValidNoonFeature(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): boolean {
     const noon: IFirebaseGuildChannelFeatureNoonVFinal | undefined =
       firebaseGuild.channels && firebaseGuild.channels[channelId].features?.noon;
 
@@ -117,73 +108,55 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     return true;
   }
 
-  private _logInvalidChannelId(firebaseGuild: Readonly<IFirebaseGuildVFinal>): void {
+  private _logInvalidChannelId(firebaseGuild: IFirebaseGuildVFinal): void {
     this._log(`unknown`, firebaseGuild, `has an invalid id`);
   }
 
-  private _logChannelNotUpToDate(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): void {
+  private _logChannelNotUpToDate(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): void {
     this._logNotUpToDate(channelId, firebaseGuild);
   }
 
-  private _logChannelNotSet(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): void {
+  private _logChannelNotSet(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): void {
     this._logNotSet(channelId, firebaseGuild);
   }
 
-  private _logFeaturesNotUpToDate(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): void {
+  private _logFeaturesNotUpToDate(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): void {
     this._logNotUpToDate(channelId, firebaseGuild, `features`);
   }
 
-  private _logFeaturesNotSet(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): void {
+  private _logFeaturesNotSet(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): void {
     this._logNotSet(channelId, firebaseGuild, `features`);
   }
 
-  private _logNoonNotUpToDate(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): void {
+  private _logNoonNotUpToDate(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): void {
     this._logNotUpToDate(channelId, firebaseGuild, `noon feature`);
   }
 
-  private _logNoonNotSet(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): void {
+  private _logNoonNotSet(channelId: IAnyDiscordChannel['id'], firebaseGuild: IFirebaseGuildVFinal): void {
     this._logNotSet(channelId, firebaseGuild, `noon feature`);
   }
 
   private _logNotUpToDate(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    entity?: Readonly<string | undefined>
+    channelId: IAnyDiscordChannel['id'],
+    firebaseGuild: IFirebaseGuildVFinal,
+    entity?: string | undefined
   ): void {
     this._logNot(channelId, firebaseGuild, entity, `up-to-date`);
   }
 
   private _logNotSet(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    entity?: Readonly<string | undefined>
+    channelId: IAnyDiscordChannel['id'],
+    firebaseGuild: IFirebaseGuildVFinal,
+    entity?: string | undefined
   ): void {
     this._logNot(channelId, firebaseGuild, entity, `set`);
   }
 
   private _logNot(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    entity: Readonly<string | undefined>,
-    type: Readonly<string>
+    channelId: IAnyDiscordChannel['id'],
+    firebaseGuild: IFirebaseGuildVFinal,
+    entity: string | undefined,
+    type: string
   ): void {
     let message = `not ${type}`;
 
@@ -194,11 +167,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     this._log(channelId, firebaseGuild, message);
   }
 
-  private _log(
-    channelId: Readonly<IAnyDiscordChannel['id']>,
-    { id }: Readonly<IFirebaseGuildVFinal>,
-    message: Readonly<string>
-  ): void {
+  private _log(channelId: IAnyDiscordChannel['id'], { id }: IFirebaseGuildVFinal, message: string): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(

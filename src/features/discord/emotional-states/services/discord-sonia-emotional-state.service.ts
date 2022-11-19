@@ -49,7 +49,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     this._createSchedule();
   }
 
-  public setEmotionalState(emotionalState: Readonly<DiscordSoniaEmotionalStateEnum>): void {
+  public setEmotionalState(emotionalState: DiscordSoniaEmotionalStateEnum): void {
     this._emotionalState = emotionalState;
 
     LoggerService.getInstance().debug({
@@ -96,7 +96,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     this._logNextJobDate();
   }
 
-  private _logJobRule(rule: Readonly<string>, jobName: Readonly<string>): void {
+  private _logJobRule(rule: string, jobName: string): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`${jobName} rule: ${ChalkService.getInstance().value(rule)}`),
@@ -147,7 +147,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     this._logJobDate(this._job, `next`);
   }
 
-  private _logJobDate(job: Readonly<Job | undefined>, jobName: Readonly<string>): void {
+  private _logJobDate(job: Job | undefined, jobName: string): void {
     if (!_.isNil(job)) {
       LoggerService.getInstance().logJobDate({
         context: this._serviceName,
@@ -167,7 +167,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     return DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+        filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
         mergeMap((): Promise<DiscordSoniaEmotionalStateEnum> => this.setRandomEmotionalState()),
         take(ONE_EMITTER),
         tap({

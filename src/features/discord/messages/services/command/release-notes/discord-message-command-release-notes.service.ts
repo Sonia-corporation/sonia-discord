@@ -30,7 +30,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE);
   }
 
-  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -50,7 +50,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: [DiscordMessageCommandEnum.RELEASE_NOTES, DiscordMessageCommandEnum.R],
       message,

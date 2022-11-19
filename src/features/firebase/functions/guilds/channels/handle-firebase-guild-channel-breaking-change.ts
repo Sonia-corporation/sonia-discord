@@ -7,13 +7,11 @@ import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/fire
  * @description
  * Upgrade the given object to the latest possible version of a [Firebase guild channel]{@link IFirebaseGuildChannel}
  * Based on the [version]{@link IFirebaseGuildChannel#version}
- *
- * @param {Readonly<IFirebaseGuildChannel>} firebaseGuildChannel The [Firebase guild channel]{@link IFirebaseGuildChannel} to update
- *
+ * @param {IFirebaseGuildChannel} firebaseGuildChannel The [Firebase guild channel]{@link IFirebaseGuildChannel} to update
  * @returns {IFirebaseGuildChannel} Updated [Firebase guild channel]{@link IFirebaseGuildChannel}
  */
 export function handleFirebaseGuildChannelBreakingChange(
-  firebaseGuildChannel: Readonly<IFirebaseGuildChannel>
+  firebaseGuildChannel: IFirebaseGuildChannel
 ): IFirebaseGuildChannelVFinal | never {
   if (firebaseGuildChannel.version === FirebaseGuildChannelVersionEnum.V2) {
     return firebaseGuildChannel;

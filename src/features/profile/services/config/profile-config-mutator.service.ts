@@ -11,7 +11,7 @@ import _ from 'lodash';
 export class ProfileConfigMutatorService extends AbstractConfigService<IProfileConfig> {
   private static _instance: ProfileConfigMutatorService;
 
-  public static getInstance(config?: Readonly<Partial<IProfileConfig>>): ProfileConfigMutatorService {
+  public static getInstance(config?: Partial<IProfileConfig>): ProfileConfigMutatorService {
     if (_.isNil(ProfileConfigMutatorService._instance)) {
       ProfileConfigMutatorService._instance = new ProfileConfigMutatorService(config);
     }
@@ -19,7 +19,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<IProfileC
     return ProfileConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<Partial<IProfileConfig>>) {
+  public constructor(config?: Partial<IProfileConfig>) {
     super(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -29,7 +29,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<IProfileC
     ProfileConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {
+  public updateConfig(config?: Partial<IProfileConfig>): void {
     if (!_.isNil(config)) {
       this.updateDiscordId(config.discordId);
       this.updateNickname(config.nickname);
@@ -41,7 +41,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<IProfileC
     }
   }
 
-  public updateDiscordId(discordId?: Readonly<string | null>): void {
+  public updateDiscordId(discordId?: string | null): void {
     ProfileConfigCoreService.getInstance().discordId = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: discordId,
@@ -50,7 +50,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<IProfileC
     });
   }
 
-  public updateNickname(nickname?: Readonly<string | null>): void {
+  public updateNickname(nickname?: string | null): void {
     ProfileConfigCoreService.getInstance().nickname = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: nickname,

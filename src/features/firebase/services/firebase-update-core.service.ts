@@ -15,22 +15,22 @@ export abstract class FirebaseUpdateCoreService<
   /**
    * @description
    * Check if the given object exists and is on the latest version
-   * @param {Readonly<TEntity | undefined>} entity The object to check
+   * @param {TEntity | undefined} entity The object to check
    * @returns {boolean} true when not undefined and on the latest version
    */
-  public isValid(entity: Readonly<TEntity | undefined>): entity is TFinalEntity {
+  public isValid(entity: TEntity | undefined): entity is TFinalEntity {
     return this.isSet(entity) && this.isUpToDate(entity);
   }
 
   /**
    * @description
    * Check if the given object exists
-   * @param {Readonly<TEntity | TFinalEntity | undefined>} entity The object to check
+   * @param {TEntity | TFinalEntity | undefined} entity The object to check
    * @returns {boolean} true when not undefined
    */
-  public isSet(entity: Readonly<TFinalEntity | undefined>): entity is TFinalEntity;
-  public isSet(entity: Readonly<TEntity | undefined>): entity is TEntity;
-  public isSet(entity: Readonly<TEntity | TFinalEntity | undefined>): entity is TEntity | TFinalEntity {
+  public isSet(entity: TFinalEntity | undefined): entity is TFinalEntity;
+  public isSet(entity: TEntity | undefined): entity is TEntity;
+  public isSet(entity: TEntity | TFinalEntity | undefined): entity is TEntity | TFinalEntity {
     return !_.isNil(entity);
   }
 
@@ -40,15 +40,12 @@ export abstract class FirebaseUpdateCoreService<
    * - return it if already on the latest version
    * - return an updated object to the latest version if not on the latest version
    * - return a complete newly created object if undefined
-   * @param {Readonly<TEntity | undefined>} entity The object to check
-   * @param {Readonly<TCreateEntity | undefined>} createEntity Eventually an object containing some custom data.
+   * @param {TEntity | undefined} entity The object to check
+   * @param {TCreateEntity | undefined} createEntity Eventually an object containing some custom data.
    * Very useful to customize the new object instead of having arbitrary default values
    * @returns {TFinalEntity | TNewEntity} An object possibly updated
    */
-  public getUpToDate(
-    entity: Readonly<TEntity | undefined>,
-    createEntity?: Readonly<TCreateEntity | undefined>
-  ): TFinalEntity | TNewEntity {
+  public getUpToDate(entity: TEntity | undefined, createEntity?: TCreateEntity | undefined): TFinalEntity | TNewEntity {
     if (this.isSet(entity)) {
       if (!this.isUpToDate(entity)) {
         return this.upgrade(entity);
@@ -63,25 +60,25 @@ export abstract class FirebaseUpdateCoreService<
   /**
    * @description
    * Check if the given object is already into the latest version
-   * @param {Readonly<TEntity | TFinalEntity>} entity The object to check
+   * @param {TEntity | TFinalEntity} entity The object to check
    * @returns {boolean} true when the given object is on the latest version
    */
-  public abstract isUpToDate(entity: Readonly<TEntity | TFinalEntity>): entity is TFinalEntity;
+  public abstract isUpToDate(entity: TEntity | TFinalEntity): entity is TFinalEntity;
 
   /**
    * @description
    * Create a new object directly to the latest version
-   * @param {Readonly<TCreateEntity | undefined>} createEntity Eventually an object containing some custom data.
+   * @param {TCreateEntity | undefined} createEntity Eventually an object containing some custom data.
    * Very useful to customize the new object instead of having arbitrary default values
    * @returns {TNewEntity} An object with explicit set value (basically no choices like "string | undefined")
    */
-  public abstract create(createEntity?: Readonly<TCreateEntity | undefined>): TNewEntity;
+  public abstract create(createEntity?: TCreateEntity | undefined): TNewEntity;
 
   /**
    * @description
    * Update the given object to the latest version if not up-to-date
-   * @param {Readonly<TEntity>} entity The original object on whatever version possible
+   * @param {TEntity} entity The original object on whatever version possible
    * @returns {TFinalEntity} An object upgraded on the latest version
    */
-  public abstract upgrade(entity: Readonly<TEntity>): TFinalEntity;
+  public abstract upgrade(entity: TEntity): TFinalEntity;
 }

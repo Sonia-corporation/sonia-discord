@@ -68,7 +68,7 @@ export class InitService extends AbstractService {
   public isAppConfigured(): Promise<true> {
     return firstValueFrom(
       this.isAppConfigured$().pipe(
-        filter((isAppConfigured: Readonly<boolean>): boolean => _.isEqual(isAppConfigured, true)),
+        filter((isAppConfigured: boolean): boolean => _.isEqual(isAppConfigured, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
@@ -95,8 +95,8 @@ export class InitService extends AbstractService {
     return fs
       .readJson(environmentPath)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]] | void> =>
-          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Readonly<Error>): void => {
+        (environment: IEnvironment): Promise<[true, [number | void, WriteResult[] | void]] | void> =>
+          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Error): void => {
             LoggerService.getInstance().error({
               context: this._serviceName,
               message: ChalkService.getInstance().text(error),
@@ -130,7 +130,7 @@ export class InitService extends AbstractService {
       });
   }
 
-  private _mergeEnvironments(environmentA: Readonly<IEnvironment>, environmentB: Readonly<IEnvironment>): IEnvironment {
+  private _mergeEnvironments(environmentA: IEnvironment, environmentB: IEnvironment): IEnvironment {
     return _.merge({}, environmentA, environmentB);
   }
 
@@ -141,7 +141,7 @@ export class InitService extends AbstractService {
     return Promise.all([DiscordService.getInstance().init(), FirebaseService.getInstance().init()]);
   }
 
-  private _configureApp(environment: Readonly<IEnvironment>): Promise<IGithubReleaseAndTotalCount> {
+  private _configureApp(environment: IEnvironment): Promise<IGithubReleaseAndTotalCount> {
     this._configureAppFromEnvironment(environment);
 
     return this._configureAppFromPackage().then(
@@ -149,7 +149,7 @@ export class InitService extends AbstractService {
     );
   }
 
-  private _configureAppFromEnvironment({ logger, github, discord, profile, app, quote }: Readonly<IEnvironment>): void {
+  private _configureAppFromEnvironment({ logger, github, discord, profile, app, quote }: IEnvironment): void {
     LoggerConfigMutatorService.getInstance().updateConfig(logger);
     GithubConfigMutatorService.getInstance().updateConfig(github);
     DiscordSoniaConfigMutatorService.getInstance().updateConfig(discord);
@@ -182,7 +182,7 @@ export class InitService extends AbstractService {
 
     return fs
       .readJson(packagePath)
-      .then((data: Readonly<IPackage>): Promise<IPackage> => {
+      .then((data: IPackage): Promise<IPackage> => {
         AppConfigMutatorService.getInstance().updateVersion(data.version);
 
         return Promise.resolve(data);
@@ -220,7 +220,7 @@ export class InitService extends AbstractService {
       method: `post`,
       url: GITHUB_API_URL,
     })
-      .then(({ data }: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>): Promise<IGithubReleaseAndTotalCount> => {
+      .then(({ data }: AxiosResponse<IGithubReleaseAndTotalCount>): Promise<IGithubReleaseAndTotalCount> => {
         AppConfigMutatorService.getInstance().updateTotalReleaseCount(data.data.repository.releases.totalCount);
 
         LoggerService.getInstance().success({
@@ -269,7 +269,7 @@ export class InitService extends AbstractService {
       });
   }
 
-  private _startApp(environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> {
+  private _startApp(environment: IEnvironment): Promise<[true, [number | void, WriteResult[] | void]]> {
     return this._configureApp(environment).then(
       (): Promise<[true, [number | void, WriteResult[] | void]]> => this._runApp()
     );

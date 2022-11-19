@@ -12,10 +12,10 @@ export function discordContainsThisCommandWithOneOfThesePrefixes({
   prefixes,
   commands,
   message,
-}: Readonly<IDiscordContainsThisCommandWithOneOfThesePrefixesData>): boolean {
+}: IDiscordContainsThisCommandWithOneOfThesePrefixesData): boolean {
   let containsThisCommand = false;
 
-  _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
+  _.forEach(prefixes, (prefix: string): false | void => {
     if (
       discordContainsThisCommandWithPrefix({
         commands,

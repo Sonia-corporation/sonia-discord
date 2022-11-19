@@ -12,7 +12,7 @@ export function discordStrictlyContainsThisCommandWithPrefix({
   message,
   command,
   prefix,
-}: Readonly<IDiscordStrictlyContainsThisCommandWithPrefixData>): boolean {
+}: IDiscordStrictlyContainsThisCommandWithPrefixData): boolean {
   return xregexp.test(
     message,
     discordGetCommandRegexp({

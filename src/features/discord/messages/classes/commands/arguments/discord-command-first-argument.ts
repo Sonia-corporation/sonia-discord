@@ -7,9 +7,9 @@ export class DiscordCommandFirstArgument<T extends string> {
   private _shortcuts: T[] | undefined;
 
   /**
-   * @param {Readonly<DiscordCommandFirstArgument>} discordCommandFirstArgument Default values
+   * @param {DiscordCommandFirstArgument} discordCommandFirstArgument Default values
    */
-  public constructor({ description, name, shortcuts }: Readonly<IDiscordCommandFirstArgument<T>>) {
+  public constructor({ description, name, shortcuts }: IDiscordCommandFirstArgument<T>) {
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
@@ -19,7 +19,7 @@ export class DiscordCommandFirstArgument<T extends string> {
     return this._description;
   }
 
-  public setDescription(description: Readonly<string>): void {
+  public setDescription(description: string): void {
     this._description = description;
   }
 
@@ -31,7 +31,7 @@ export class DiscordCommandFirstArgument<T extends string> {
     return _.toLower(_.toString(this.getName()));
   }
 
-  public setName(name: Readonly<T>): void {
+  public setName(name: T): void {
     this._name = name;
   }
 
@@ -40,10 +40,10 @@ export class DiscordCommandFirstArgument<T extends string> {
   }
 
   public getLowerCaseShortcuts(): string[] | undefined {
-    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string => _.toLower(_.toString(shortcut)));
+    return _.map(this.getShortcuts(), (shortcut: T): string => _.toLower(_.toString(shortcut)));
   }
 
-  public setShortcuts(shortcuts: Readonly<T>[] | Readonly<undefined>): void {
+  public setShortcuts(shortcuts: T[] | undefined): void {
     this._shortcuts = shortcuts;
   }
 
@@ -53,11 +53,7 @@ export class DiscordCommandFirstArgument<T extends string> {
 
     if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
       example += ` (or ${_.trimEnd(
-        _.reduce(
-          shortcuts,
-          (value: Readonly<string>, shortcut: Readonly<string>): string => `${value}${shortcut}, `,
-          ``
-        ),
+        _.reduce(shortcuts, (value: string, shortcut: string): string => `${value}${shortcut}, `, ``),
         `, `
       )})`;
     }

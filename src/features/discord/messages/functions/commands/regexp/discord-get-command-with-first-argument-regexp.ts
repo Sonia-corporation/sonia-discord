@@ -2,14 +2,13 @@ import { IDiscordGetCommandWithFirstArgumentRegexpData } from '../../../interfac
 import xregexp from 'xregexp';
 
 /**
- * @param {Readonly<IDiscordGetCommandWithFirstArgumentRegexpData>} data The data used as a command
- *
+ * @param {IDiscordGetCommandWithFirstArgumentRegexpData} data The data used as a command
  * @returns {RegExp} A RegExp matching a prefix with a command and one argument
  */
 export function discordGetCommandWithFirstArgumentRegexp({
   prefix,
   command,
-}: Readonly<IDiscordGetCommandWithFirstArgumentRegexpData>): RegExp {
+}: IDiscordGetCommandWithFirstArgumentRegexpData): RegExp {
   return xregexp(
     `
     (?<prefix>\\${prefix})                      # Command prefix

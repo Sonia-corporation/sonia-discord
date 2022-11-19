@@ -6,10 +6,10 @@ import _ from 'lodash';
  * @param text
  * @param replacement
  */
-export function replaceInterpolation(text: Readonly<string>, replacement: Readonly<IObject>): string {
+export function replaceInterpolation(text: string, replacement: IObject): string {
   return _.reduce(
     replacement,
-    (updatedText: Readonly<string>, value: unknown, key: Readonly<string>): string =>
+    (updatedText: string, value: unknown, key: string): string =>
       _.replace(updatedText, getInterpolationRegexp(key), _.toString(value)),
     text
   );

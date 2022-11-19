@@ -3,7 +3,7 @@ import { wrapUserIdIntoMention } from '../../mentions/functions/wrap-user-id-int
 import _ from 'lodash';
 
 /**
- * @param {Readonly<IGetDiscordDevPrefix>} config The configuration object
+ * @param {IGetDiscordDevPrefix} config The configuration object
  * [getDiscordDevPrefix#hasEmphasis]{@link IGetDiscordDevPrefix#hasEmphasis} will be set to true when not a boolean
  * [getDiscordDevPrefix#asMention]{@link IGetDiscordDevPrefix#asMention} will be set to false when not a boolean
  * @returns {string} A string representing the current developer profile
@@ -13,7 +13,7 @@ export function getDiscordDevPrefix({
   asMention = false,
   discordId,
   nickname,
-}: Readonly<IGetDiscordDevPrefix>): string {
+}: IGetDiscordDevPrefix): string {
   let discordDevPrefix = `[dev]`;
 
   if (_.isEqual(asMention, true) && _.isString(discordId) && !_.isEmpty(discordId)) {

@@ -8,7 +8,7 @@ import { IFirebaseGuildChannelFeatureV2 } from '../../../../interfaces/guilds/ch
  */
 export function upgradeFirebaseGuildChannelFeatureToV2({
   noon,
-}: Readonly<IFirebaseGuildChannelFeatureV1>): IFirebaseGuildChannelFeatureV2 {
+}: IFirebaseGuildChannelFeatureV1): IFirebaseGuildChannelFeatureV2 {
   return {
     noon,
     releaseNotes: undefined,

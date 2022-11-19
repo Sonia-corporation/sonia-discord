@@ -25,7 +25,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE);
   }
 
-  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -38,7 +38,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
-      .then((helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+      .then((helpDiscordMessageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
           options: {
             embeds: [this._getMessageEmbed()],
@@ -49,7 +49,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       });
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.H],
       message,

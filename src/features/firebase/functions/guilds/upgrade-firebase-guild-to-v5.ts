@@ -16,11 +16,11 @@ export function upgradeFirebaseGuildToV5({
   channels,
   id,
   lastReleaseNotesVersion,
-}: Readonly<IFirebaseGuildV4>): IFirebaseGuildV5 {
+}: IFirebaseGuildV4): IFirebaseGuildV5 {
   return {
     channels: _.mapValues(
       channels,
-      (channel: Readonly<IFirebaseGuildChannelV1>): IFirebaseGuildChannelVFinal =>
+      (channel: IFirebaseGuildChannelV1): IFirebaseGuildChannelVFinal =>
         handleFirebaseGuildChannelBreakingChange(channel)
     ),
     id,

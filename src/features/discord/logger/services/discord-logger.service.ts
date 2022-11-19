@@ -31,7 +31,7 @@ export class DiscordLoggerService extends AbstractService {
   private _listenForWarnings(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(`warn`, (warning: Readonly<string>): void => {
+      .on(`warn`, (warning: string): void => {
         DiscordLoggerWarningService.getInstance().handleWarning(warning);
       });
 
@@ -44,7 +44,7 @@ export class DiscordLoggerService extends AbstractService {
   private _listenForErrors(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(`error`, (error: Readonly<Error | string>): void => {
+      .on(`error`, (error: Error | string): void => {
         DiscordLoggerErrorService.getInstance().handleError(error);
       });
 

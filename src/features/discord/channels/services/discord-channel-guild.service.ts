@@ -21,7 +21,7 @@ export class DiscordChannelGuildService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE);
   }
 
-  public isGeneral({ name }: Readonly<GuildBasedChannel>): boolean {
+  public isGeneral({ name }: GuildBasedChannel): boolean {
     if (_.isString(name)) {
       return _.isEqual(_.toLower(_.deburr(name)), `general`);
     }
@@ -29,13 +29,13 @@ export class DiscordChannelGuildService extends AbstractService {
     return false;
   }
 
-  public getPrimary(guild: Readonly<Guild>): IAnyDiscordWritableChannel | null {
+  public getPrimary(guild: Guild): IAnyDiscordWritableChannel | null {
     if (!isDiscordGuild(guild)) {
       return null;
     }
 
     const primaryGuildBasedChannel: GuildBasedChannel | undefined = guild.channels.cache.find(
-      (channel: Readonly<GuildBasedChannel>): boolean => this.isGeneral(channel)
+      (channel: GuildBasedChannel): boolean => this.isGeneral(channel)
     );
 
     if (!isDiscordWritableChannel(primaryGuildBasedChannel)) {

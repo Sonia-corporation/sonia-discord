@@ -18,7 +18,7 @@ import _ from 'lodash';
 export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordSoniaConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IDiscordConfig>>): DiscordSoniaConfigMutatorService {
+  public static getInstance(config?: IPartialNested<IDiscordConfig>): DiscordSoniaConfigMutatorService {
     if (_.isNil(DiscordSoniaConfigMutatorService._instance)) {
       DiscordSoniaConfigMutatorService._instance = new DiscordSoniaConfigMutatorService(config);
     }
@@ -26,7 +26,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     return DiscordSoniaConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
+  public constructor(config?: IPartialNested<IDiscordConfig>) {
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -36,7 +36,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     DiscordSoniaConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: IPartialNested<IDiscordConfig>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 
@@ -47,7 +47,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     }
   }
 
-  public updateSonia(sonia?: Readonly<IPartialNested<IDiscordSoniaConfig>>): void {
+  public updateSonia(sonia?: IPartialNested<IDiscordSoniaConfig>): void {
     if (!_.isNil(sonia)) {
       this.updateCorporationImageUrl(sonia.corporationImageUrl);
       this.updateCorporationMessageEmbedAuthor(sonia.corporationMessageEmbedAuthor);
@@ -57,7 +57,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     }
   }
 
-  public updateCorporationImageUrl(corporationImageUrl?: Readonly<IconEnum>): void {
+  public updateCorporationImageUrl(corporationImageUrl?: IconEnum): void {
     DiscordSoniaConfigCoreService.getInstance().corporationImageUrl = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: corporationImageUrl,
@@ -67,7 +67,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
   }
 
   public updateCorporationMessageEmbedAuthor(
-    corporationMessageEmbedAuthor?: Readonly<IPartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>>
+    corporationMessageEmbedAuthor?: IPartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
   ): void {
     if (!_.isNil(corporationMessageEmbedAuthor)) {
       this.updateCorporationMessageEmbedAuthorIconUrl(corporationMessageEmbedAuthor.iconURL);
@@ -76,7 +76,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     }
   }
 
-  public updateCorporationMessageEmbedAuthorIconUrl(iconUrl?: Readonly<string>): void {
+  public updateCorporationMessageEmbedAuthorIconUrl(iconUrl?: string): void {
     DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.iconURL =
       ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
@@ -86,7 +86,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
       });
   }
 
-  public updateCorporationMessageEmbedAuthorName(name?: Readonly<string>): void {
+  public updateCorporationMessageEmbedAuthorName(name?: string): void {
     DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.name =
       ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
@@ -96,7 +96,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
       });
   }
 
-  public updateCorporationMessageEmbedAuthorUrl(url?: Readonly<string>): void {
+  public updateCorporationMessageEmbedAuthorUrl(url?: string): void {
     DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.url =
       ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
@@ -106,7 +106,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
       });
   }
 
-  public updateDevGuildIdWhitelist(whitelist?: Readonly<Snowflake | undefined>[]): void {
+  public updateDevGuildIdWhitelist(whitelist?: Snowflake | undefined[]): void {
     let updatedDevGuildIdWhitelist: string[] | undefined;
 
     if (_.isArray(whitelist)) {
@@ -122,7 +122,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     });
   }
 
-  public updateId(id?: Readonly<Snowflake>): void {
+  public updateId(id?: Snowflake): void {
     DiscordSoniaConfigCoreService.getInstance().id = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueHidden: true,
@@ -132,7 +132,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     });
   }
 
-  public updateSecretToken(secretToken?: Readonly<string>): void {
+  public updateSecretToken(secretToken?: string): void {
     DiscordSoniaConfigCoreService.getInstance().secretToken = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueHidden: true,

@@ -40,7 +40,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
   }
 
-  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -60,7 +60,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: [DiscordMessageCommandEnum.VERSION, DiscordMessageCommandEnum.V],
       message,

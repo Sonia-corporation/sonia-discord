@@ -26,10 +26,10 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE);
   }
 
-  public getMessageResponse(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(flagsErrors: IDiscordCommandFlagsErrors): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+      .then((cliErrorMessageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
           options: {
             embeds: [this._getMessageEmbed(flagsErrors)],
@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
       });
   }
 
-  private _getMessageEmbed(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): MessageEmbedOptions {
+  private _getMessageEmbed(flagsErrors: IDiscordCommandFlagsErrors): MessageEmbedOptions {
     return {
       description: this._getMessageEmbedDescription(flagsErrors),
       fields: this._getMessageEmbedFields(flagsErrors),
@@ -49,14 +49,14 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
     };
   }
 
-  private _getMessageEmbedDescription(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): string {
+  private _getMessageEmbedDescription(flagsErrors: IDiscordCommandFlagsErrors): string {
     const flagsErrorsCount: number = this._getFlagsErrorsCount(flagsErrors);
 
     return `${wrapInBold(flagsErrorsCount)} error${_.gt(flagsErrorsCount, ONE_FLAG_ERROR) ? `s` : ``} found.`;
   }
 
-  private _getMessageEmbedFields(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): EmbedFieldData[] {
-    return _.map(flagsErrors, ({ name, description }: Readonly<IDiscordCommandFlagError>): EmbedFieldData => {
+  private _getMessageEmbedFields(flagsErrors: IDiscordCommandFlagsErrors): EmbedFieldData[] {
+    return _.map(flagsErrors, ({ name, description }: IDiscordCommandFlagError): EmbedFieldData => {
       return {
         inline: false,
         name,
@@ -65,7 +65,7 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
     });
   }
 
-  private _getFlagsErrorsCount(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): number {
+  private _getFlagsErrorsCount(flagsErrors: IDiscordCommandFlagsErrors): number {
     return _.size(flagsErrors);
   }
 }

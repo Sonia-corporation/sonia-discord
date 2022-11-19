@@ -5,7 +5,7 @@ import { hasCommandLineArguments } from './has-command-line-arguments';
 /**
  * @param name
  */
-export function getNodeArgument(name: Readonly<string>): unknown | null {
+export function getNodeArgument(name: string): unknown | null {
   if (!hasCommandLineArguments()) {
     return null;
   }

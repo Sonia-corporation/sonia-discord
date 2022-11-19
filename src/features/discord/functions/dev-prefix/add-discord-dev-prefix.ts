@@ -5,7 +5,7 @@ import { IAddDiscordDevPrefix } from '../../interfaces/dev-prefix/add-discord-de
  * @description
  * Add a dev prefix to the given message
  * Useful to distinguish Sonia prod from Sonia dev (locally)
- * @param {Readonly<IAddDiscordDevPrefix>} config The configuration object
+ * @param {IAddDiscordDevPrefix} config The configuration object
  * [addDiscordDevPrefix#hasEmphasis]{@link IAddDiscordDevPrefix#hasEmphasis} will be set to true when not a boolean
  * [addDiscordDevPrefix#asMention]{@link IAddDiscordDevPrefix#asMention} will be set to false when not a boolean
  * @returns {string} The given message with a prefix representing the current developer profile
@@ -16,7 +16,7 @@ export function addDiscordDevPrefix({
   discordId,
   nickname,
   message,
-}: Readonly<IAddDiscordDevPrefix>): string {
+}: IAddDiscordDevPrefix): string {
   const discordDevPrefix: string = getDiscordDevPrefix({
     asMention,
     discordId,

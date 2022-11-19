@@ -33,7 +33,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE);
   }
 
-  public handleResponse(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -43,10 +43,10 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     return this.getMessageResponse(anyDiscordMessage);
   }
 
-  public getMessageResponse(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     return QuoteRandomService.getInstance()
       .fetchRandomQuote(anyDiscordMessage.id)
-      .then((quote: Readonly<IQuote | IQuoteErrorApi>): Promise<IDiscordMessageResponse> => {
+      .then((quote: IQuote | IQuoteErrorApi): Promise<IDiscordMessageResponse> => {
         if (isQuoteErrorApi(quote)) {
           return QuoteErrorApiService.getInstance().getMessageResponse(quote);
         }
@@ -66,7 +66,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
       });
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: [DiscordMessageCommandEnum.QUOTE, DiscordMessageCommandEnum.Q],
       message,
@@ -74,7 +74,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     });
   }
 
-  private _getMessageEmbed(quote: Readonly<IQuote>): MessageEmbedOptions {
+  private _getMessageEmbed(quote: IQuote): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(quote),
       color: this._getMessageEmbedColor(),
@@ -86,7 +86,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedAuthor({ authorName, quoteUrl }: Readonly<IQuote>): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor({ authorName, quoteUrl }: IQuote): MessageEmbedAuthor {
     return {
       iconURL: QuoteConfigService.getInstance().getAuthorIconUrl(),
       name: authorName,
@@ -98,7 +98,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     return QuoteConfigService.getInstance().getImageColor();
   }
 
-  private _getMessageDescription({ quote }: Readonly<IQuote>): string {
+  private _getMessageDescription({ quote }: IQuote): string {
     return quote;
   }
 
@@ -117,7 +117,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedTimestamp({ date }: Readonly<IQuote>): Date {
+  private _getMessageEmbedTimestamp({ date }: IQuote): Date {
     return moment(date).toDate();
   }
 

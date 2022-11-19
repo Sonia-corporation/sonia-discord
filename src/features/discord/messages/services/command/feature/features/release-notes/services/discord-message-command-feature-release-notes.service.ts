@@ -41,7 +41,7 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
   }
 
   public isReleaseNotesFeature(
-    featureName: Readonly<string | DiscordMessageCommandFeatureNameEnum>
+    featureName: string | DiscordMessageCommandFeatureNameEnum
   ): featureName is IDiscordMessageCommandFeatureNameReleaseNotes {
     return (
       featureName === DiscordMessageCommandFeatureNameEnum.RELEASE_NOTES ||
@@ -56,16 +56,16 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
    *
    * It will trigger the action on flags
    * Then return a response
-   * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage Original message
-   * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
+   * @param {IAnyDiscordMessage} anyDiscordMessage Original message
+   * @param {string} messageFlags A partial message containing only a string with flags
    * @returns {Promise<IDiscordMessageResponse[]>} Some embed message to respond
    */
   public getMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    messageFlags: Readonly<string>
+    anyDiscordMessage: IAnyDiscordMessage,
+    messageFlags: string
   ): Promise<IDiscordMessageResponse[]> {
     return DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.executeAll(anyDiscordMessage, messageFlags).then(
-      (discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>): Promise<IDiscordMessageResponse[]> => {
+      (discordCommandFlagsResponse: IDiscordCommandFlagsResponse): Promise<IDiscordMessageResponse[]> => {
         const discordCommandSplittedFlagsResponse: IDiscordCommandSplittedFlagsResponse =
           discordCommandSplitFlagsResponse(discordCommandFlagsResponse);
         const discordMessageResponses: IDiscordMessageResponse[] = discordCommandSplittedFlagsResponse.messageResponses;
@@ -89,7 +89,7 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
     );
   }
 
-  private _getMessageEmbed(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): MessageEmbedOptions {
+  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -110,7 +110,7 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
     return DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageColor();
   }
 
-  private _getMessageEmbedDescription(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): string {
+  private _getMessageEmbedDescription(flagsSuccess: IDiscordCommandFlagsSuccess): string {
     const flagsSuccessCount: number = this._getFlagsSuccessCount(flagsSuccess);
 
     return `${wrapInBold(flagsSuccessCount)} release notes feature option${
@@ -118,12 +118,12 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
     } updated.`;
   }
 
-  private _getFlagsSuccessCount(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): number {
+  private _getFlagsSuccessCount(flagsSuccess: IDiscordCommandFlagsSuccess): number {
     return _.size(flagsSuccess);
   }
 
-  private _getMessageEmbedFields(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): EmbedFieldData[] {
-    return _.map(flagsSuccess, ({ name, description }: Readonly<IDiscordCommandFlagSuccess>): EmbedFieldData => {
+  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedFieldData[] {
+    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): EmbedFieldData => {
       return {
         inline: false,
         name,

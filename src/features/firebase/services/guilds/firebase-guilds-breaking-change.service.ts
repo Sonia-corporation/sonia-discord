@@ -48,7 +48,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   public hasFinished(): Promise<true> {
     return firstValueFrom(
       this.hasFinished$().pipe(
-        filter((hasFinished: Readonly<boolean>): boolean => _.isEqual(hasFinished, true)),
+        filter((hasFinished: boolean): boolean => _.isEqual(hasFinished, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )

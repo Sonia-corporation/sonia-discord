@@ -17,28 +17,25 @@ export class DiscordCommandBooleanFlag<T extends string> extends DiscordCommandF
   protected _type: DiscordCommandFlagTypeEnum.BOOLEAN = DiscordCommandFlagTypeEnum.BOOLEAN;
 
   /**
-   * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
+   * @param {IDiscordCommandFlag} discordCommandFlag Default values
    */
-  public constructor(discordCommandFlag: Readonly<IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>>) {
+  public constructor(discordCommandFlag: IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>) {
     super(discordCommandFlag);
   }
 
   /**
    * @description
    * Check if the flag value is a boolean
-   *
    * @example
    * isValid('enabled')       => false
    * isValid('enabled=')      => false
    * isValid('enabled=dummy') => false
    * isValid('enabled=true')  => true
    * isValid('enabled=false') => true
-   *
-   * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
-   *
+   * @param {IDiscordMessageFlag} messageFlag A flag as a message
    * @returns {boolean} true if the flag value is valid
    */
-  public isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
+  public isValid(messageFlag: IDiscordMessageFlag): boolean {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
@@ -51,7 +48,7 @@ export class DiscordCommandBooleanFlag<T extends string> extends DiscordCommandF
     return _.includes([`true`, `false`], value);
   }
 
-  public getInvalidFlagError(messageFlag: Readonly<IDiscordMessageFlag>): IDiscordCommandFlagError | null {
+  public getInvalidFlagError(messageFlag: IDiscordMessageFlag): IDiscordCommandFlagError | null {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 

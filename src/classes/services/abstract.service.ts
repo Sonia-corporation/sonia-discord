@@ -9,7 +9,7 @@ import { AutoUnsubscribe } from '../auto-unsubscribe';
 export abstract class AbstractService extends AutoUnsubscribe {
   protected readonly _serviceName: ServiceNameEnum;
 
-  protected constructor(serviceName: Readonly<ServiceNameEnum>) {
+  protected constructor(serviceName: ServiceNameEnum) {
     super();
     this._serviceName = serviceName;
 

@@ -11,7 +11,7 @@ import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
  * @param {GuildBasedChannel | TextBasedChannel} channel The channel to humanize
  * @returns {string} The humanized channel
  */
-export function getDiscordHumanizedChannel(channel: Readonly<GuildBasedChannel | TextBasedChannel>): string {
+export function getDiscordHumanizedChannel(channel: GuildBasedChannel | TextBasedChannel): string {
   if (isDiscordTextChannel(channel)) {
     return `text channel`;
   }

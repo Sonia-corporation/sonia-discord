@@ -29,7 +29,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   public getMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (!DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       return Promise.reject(new Error(`Invalid author`));
@@ -39,7 +39,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   public getDiscordMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordMessageContentService.getInstance().hasContent(anyDiscordMessage.content)) {
       if (DiscordMessageCommandService.getInstance().hasCommand(anyDiscordMessage.content)) {
@@ -67,7 +67,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getCommandMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -79,7 +79,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getPingPongMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -91,7 +91,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getHotelTrivagoMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -103,7 +103,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getAnyQuestionPineapplePizzaMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -118,7 +118,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getSimpleBasicMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,

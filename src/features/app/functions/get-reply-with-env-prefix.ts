@@ -5,7 +5,7 @@ import { AppConfigService } from '../services/config/app-config.service';
 /**
  * @param response
  */
-export function getReplyWithEnvPrefix(response: Readonly<string>): string {
+export function getReplyWithEnvPrefix(response: string): string {
   if (!AppConfigService.getInstance().isProduction()) {
     return addDiscordDevPrefix({
       asMention: true,

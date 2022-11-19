@@ -38,7 +38,7 @@ export class DiscordCommandFirstArguments<T extends string> {
     return _.trimEnd(
       _.reduce(
         this.getAllArgumentsLowerCaseName(),
-        (value: Readonly<string>, argumentName: Readonly<string>): string => `${value}\`${argumentName}\`, `,
+        (value: string, argumentName: string): string => `${value}\`${argumentName}\`, `,
         ``
       ),
       `, `
@@ -49,7 +49,7 @@ export class DiscordCommandFirstArguments<T extends string> {
     return _.trimEnd(
       _.reduce(
         this.getArguments(),
-        (value: Readonly<string>, argument: Readonly<DiscordCommandFirstArgument<T>>): string =>
+        (value: string, argument: DiscordCommandFirstArgument<T>): string =>
           `${value}\`${argument.getLowerCaseNameAndShortcutsExample()}\`, `,
         ``
       ),
@@ -58,14 +58,14 @@ export class DiscordCommandFirstArguments<T extends string> {
   }
 
   public getAllArgumentsLowerCaseName(): string[] {
-    return _.map(this.getArguments(), (argument: Readonly<DiscordCommandFirstArgument<T>>): string =>
+    return _.map(this.getArguments(), (argument: DiscordCommandFirstArgument<T>): string =>
       argument.getLowerCaseName()
     );
   }
 
   public getAllArgumentsLowerCaseNameWithShortcuts(): string[] {
     return _.flatten(
-      _.map(this.getArguments(), (argument: Readonly<DiscordCommandFirstArgument<T>>): string[] =>
+      _.map(this.getArguments(), (argument: DiscordCommandFirstArgument<T>): string[] =>
         removeUndefined(_.flatten([argument.getLowerCaseName(), argument.getLowerCaseShortcuts()]))
       )
     );

@@ -25,11 +25,7 @@ export class FirebaseGuildsNewVersionCountHumanizedService extends AbstractServi
     super(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE);
   }
 
-  public getHumanizedCount(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
-  ): string {
+  public getHumanizedCount(totalGuildCount: number, guildCount: number, channelCount: number): string {
     if (_.isEqual(totalGuildCount, NO_GUILD)) {
       return this._getNoTotalGuildCount();
     }
@@ -41,11 +37,7 @@ export class FirebaseGuildsNewVersionCountHumanizedService extends AbstractServi
     return this._getCount(totalGuildCount, guildCount, channelCount);
   }
 
-  public getHumanizedCountForLogs(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
-  ): string {
+  public getHumanizedCountForLogs(totalGuildCount: number, guildCount: number, channelCount: number): string {
     if (_.isEqual(totalGuildCount, NO_GUILD)) {
       return this._getNoTotalGuildCountForLogs();
     }
@@ -61,17 +53,13 @@ export class FirebaseGuildsNewVersionCountHumanizedService extends AbstractServi
     return `No release note messages were sent today.`;
   }
 
-  private _getNoGuildCount(totalGuildCount: Readonly<number>): string {
+  private _getNoGuildCount(totalGuildCount: number): string {
     return `No release note messages were sent today for the ${wrapInBold(totalGuildCount)} guild${
       _.gt(totalGuildCount, ONE_GUILD) ? `s` : ``
     } using ${wrapUserIdIntoMention(DiscordSoniaConfigService.getInstance().getId())}.`;
   }
 
-  private _getCount(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
-  ): string {
+  private _getCount(totalGuildCount: number, guildCount: number, channelCount: number): string {
     return `${wrapInBold(channelCount)} release note message${
       _.gt(channelCount, ONE_CHANNEL) ? `s were` : ` was`
     } sent over ${wrapInBold(guildCount)} of ${wrapInBold(totalGuildCount)} guild${
@@ -83,17 +71,13 @@ export class FirebaseGuildsNewVersionCountHumanizedService extends AbstractServi
     return `no release note message sent`;
   }
 
-  private _getNoGuildCountForLogs(totalGuildCount: Readonly<number>): string {
+  private _getNoGuildCountForLogs(totalGuildCount: number): string {
     return `no release note message sent for the ${ChalkService.getInstance().value(totalGuildCount)} guild${
       _.gt(totalGuildCount, ONE_GUILD) ? `s` : ``
     }`;
   }
 
-  private _getCountForLogs(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
-  ): string {
+  private _getCountForLogs(totalGuildCount: number, guildCount: number, channelCount: number): string {
     return `${ChalkService.getInstance().value(channelCount)} release note message${
       _.gt(channelCount, ONE_CHANNEL) ? `s` : ``
     } sent over ${ChalkService.getInstance().value(guildCount)} guild${

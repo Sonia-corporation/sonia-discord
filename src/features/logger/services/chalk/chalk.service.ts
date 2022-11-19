@@ -22,7 +22,7 @@ export class ChalkService extends AbstractService {
     super(ServiceNameEnum.CHALK_SERVICE);
   }
 
-  public success(message: Readonly<string> | unknown): string {
+  public success(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.AURORA_GREEN)(message);
     }
@@ -30,7 +30,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.green(message);
   }
 
-  public context(message: Readonly<string> | unknown): string {
+  public context(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.ROSY_HIGHLIGHT)(message);
     }
@@ -38,7 +38,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.yellow(message);
   }
 
-  public value(message: Readonly<string> | unknown): string {
+  public value(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.BLUE_CARACAO)(message);
     }
@@ -46,7 +46,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.cyan(message);
   }
 
-  public hint(message: Readonly<string> | unknown): string {
+  public hint(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.OLD_GERANIUM)(message);
     }
@@ -54,7 +54,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.magenta(message);
   }
 
-  public error(message: Readonly<string> | unknown): string {
+  public error(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.DEEP_ROSE)(message);
     }
@@ -62,7 +62,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.red(message);
   }
 
-  public warning(message: Readonly<string> | unknown): string {
+  public warning(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.SAWTOOTH_AAK)(message);
     }
@@ -70,7 +70,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.yellow(message);
   }
 
-  public text(message: Readonly<string> | unknown): string {
+  public text(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.WHITE)(message);
     }
@@ -78,7 +78,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.white(message);
   }
 
-  public log(message: Readonly<string> | unknown): string {
+  public log(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.SOFT_BLUE)(message);
     }
@@ -86,7 +86,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.blue(message);
   }
 
-  public debug(message: Readonly<string> | unknown): string {
+  public debug(message: string | unknown): string {
     if (_.isEqual(this.getLevel(), TRUE_COLOR_LEVEL)) {
       return CHALK_INSTANCE.hex(ChalkColorEnum.PURPLE_MOUNTAIN_MAJESTY)(message);
     }

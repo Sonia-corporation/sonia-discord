@@ -7,10 +7,7 @@ import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
  * @param root0.id
  * @param root0.lastReleaseNotesVersion
  */
-export function upgradeFirebaseGuildToV4({
-  id,
-  lastReleaseNotesVersion,
-}: Readonly<IFirebaseGuildV3>): IFirebaseGuildV4 {
+export function upgradeFirebaseGuildToV4({ id, lastReleaseNotesVersion }: IFirebaseGuildV3): IFirebaseGuildV4 {
   return {
     channels: {},
     id,

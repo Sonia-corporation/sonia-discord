@@ -3,7 +3,7 @@ import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-messa
 
 export interface IDiscordExtractFromCommandData {
   commands: DiscordMessageCommandEnum | DiscordMessageCommandEnum[];
-  finder: (data: Readonly<IDiscordExtractFromCommandCallbackData>) => string | null;
+  finder: (data: IDiscordExtractFromCommandCallbackData) => string | null;
   message: string;
   prefixes: string | string[];
 }

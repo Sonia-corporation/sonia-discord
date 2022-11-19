@@ -22,15 +22,9 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
   protected _shortcuts: T[] | undefined;
 
   /**
-   * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
+   * @param {IDiscordCommandFlag} discordCommandFlag Default values
    */
-  protected constructor({
-    action,
-    description,
-    name,
-    opposites,
-    shortcuts,
-  }: Readonly<IDiscordCommandFlag<T, TAction>>) {
+  protected constructor({ action, description, name, opposites, shortcuts }: IDiscordCommandFlag<T, TAction>) {
     this._action = action;
     this._description = description;
     this._name = name;
@@ -50,7 +44,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
     return this._description;
   }
 
-  public setDescription(description: Readonly<string>): void {
+  public setDescription(description: string): void {
     this._description = description;
   }
 
@@ -66,7 +60,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
     return _.capitalize(_.toString(this.getName()));
   }
 
-  public setName(name: Readonly<T>): void {
+  public setName(name: T): void {
     this._name = name;
   }
 
@@ -74,7 +68,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
     return this._opposites;
   }
 
-  public setOpposites(opposites: Readonly<T>[] | Readonly<undefined>): void {
+  public setOpposites(opposites: T[] | undefined): void {
     this._opposites = opposites;
   }
 
@@ -83,10 +77,10 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
   }
 
   public getLowerCaseShortcuts(): string[] | undefined {
-    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string => _.toLower(_.toString(shortcut)));
+    return _.map(this.getShortcuts(), (shortcut: T): string => _.toLower(_.toString(shortcut)));
   }
 
-  public setShortcuts(shortcuts: Readonly<T>[] | Readonly<undefined>): void {
+  public setShortcuts(shortcuts: T[] | undefined): void {
     this._shortcuts = shortcuts;
   }
 
@@ -94,7 +88,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
     return this._type;
   }
 
-  public setType(type: Readonly<DiscordCommandFlagTypeEnum>): void {
+  public setType(type: DiscordCommandFlagTypeEnum): void {
     this._type = type;
   }
 
@@ -103,12 +97,10 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
    * Return the flag name as example
    * This is the flag name with his shortcuts and without a value
    * Include the prefix
-   *
    * @example
    * => `--alpha-flag`
    * => `--alpha-flag (or -e)`
    * => `--alpha-flag (or -e, -d)`
-   *
    * @returns {string} The flag name as example with his shortcuts
    */
   public getLowerCaseNameAndShortcutsExample(): string {
@@ -117,11 +109,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
 
     if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
       example += ` (or ${_.trimEnd(
-        _.reduce(
-          shortcuts,
-          (value: Readonly<string>, shortcut: Readonly<string>): string => `${value}-${shortcut}, `,
-          ``
-        ),
+        _.reduce(shortcuts, (value: string, shortcut: string): string => `${value}-${shortcut}, `, ``),
         `, `
       )})`;
     }
@@ -130,14 +118,14 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
   }
 
   public executeAction(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value: Readonly<string | null | undefined>,
-    discordCommandFlags: Readonly<DiscordCommandFlags<T>>
+    anyDiscordMessage: IAnyDiscordMessage,
+    value: string | null | undefined,
+    discordCommandFlags: DiscordCommandFlags<T>
   ): Promise<IDiscordCommandFlagResponse> {
     return this._action.execute(anyDiscordMessage, value, discordCommandFlags);
   }
 
-  public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;
+  public abstract isValid(messageFlag: IDiscordMessageFlag): boolean;
 
-  public abstract getInvalidFlagError(messageFlag: Readonly<IDiscordMessageFlag>): IDiscordCommandFlagError | null;
+  public abstract getInvalidFlagError(messageFlag: IDiscordMessageFlag): IDiscordCommandFlagError | null;
 }

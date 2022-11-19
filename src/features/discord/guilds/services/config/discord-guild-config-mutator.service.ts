@@ -14,7 +14,7 @@ import _ from 'lodash';
 export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordGuildConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IDiscordConfig>>): DiscordGuildConfigMutatorService {
+  public static getInstance(config?: IPartialNested<IDiscordConfig>): DiscordGuildConfigMutatorService {
     if (_.isNil(DiscordGuildConfigMutatorService._instance)) {
       DiscordGuildConfigMutatorService._instance = new DiscordGuildConfigMutatorService(config);
     }
@@ -22,7 +22,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     return DiscordGuildConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
+  public constructor(config?: IPartialNested<IDiscordConfig>) {
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -32,7 +32,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     DiscordGuildConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: IPartialNested<IDiscordConfig>): void {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
 
@@ -43,7 +43,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     }
   }
 
-  public updateGuild(guild?: Readonly<IPartialNested<IDiscordGuildConfig>>): void {
+  public updateGuild(guild?: IPartialNested<IDiscordGuildConfig>): void {
     if (!_.isNil(guild)) {
       this.updateSendCookiesOnCreateState(guild.shouldSendCookiesOnCreate);
       this.updateSendNoonMessageState(guild.shouldSendNoonMessage);
@@ -53,7 +53,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     }
   }
 
-  public updateSendCookiesOnCreateState(shouldSendCookiesOnCreate?: Readonly<boolean>): void {
+  public updateSendCookiesOnCreateState(shouldSendCookiesOnCreate?: boolean): void {
     DiscordGuildConfigCoreService.getInstance().shouldSendCookiesOnCreate =
       ConfigService.getInstance().getUpdatedBoolean({
         context: this._serviceName,
@@ -63,7 +63,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
       });
   }
 
-  public updateSendNoonMessageState(shouldSendNoonMessage?: Readonly<boolean>): void {
+  public updateSendNoonMessageState(shouldSendNoonMessage?: boolean): void {
     DiscordGuildConfigCoreService.getInstance().shouldSendNoonMessage = ConfigService.getInstance().getUpdatedBoolean({
       context: this._serviceName,
       newValue: shouldSendNoonMessage,
@@ -72,7 +72,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     });
   }
 
-  public updateWelcomeNewMembersState(shouldWelcomeNewMembers?: Readonly<boolean>): void {
+  public updateWelcomeNewMembersState(shouldWelcomeNewMembers?: boolean): void {
     DiscordGuildConfigCoreService.getInstance().shouldWelcomeNewMembers = ConfigService.getInstance().getUpdatedBoolean(
       {
         context: this._serviceName,
@@ -83,7 +83,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     );
   }
 
-  public updateSoniaGuildId(soniaGuildId?: Readonly<string>): void {
+  public updateSoniaGuildId(soniaGuildId?: string): void {
     DiscordGuildConfigCoreService.getInstance().soniaGuildId = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: soniaGuildId,
@@ -92,7 +92,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     });
   }
 
-  public updateSoniaPermanentGuildInviteUrl(soniaPermanentGuildInviteUrl?: Readonly<string>): void {
+  public updateSoniaPermanentGuildInviteUrl(soniaPermanentGuildInviteUrl?: string): void {
     DiscordGuildConfigCoreService.getInstance().soniaPermanentGuildInviteUrl =
       ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
