@@ -51,6 +51,8 @@ settings:
       project:
         - './tsconfig.app.json'
         - './tsconfig.spec.json'
+  jsdoc:
+    mode: typescript
 rules:
   progress/activate: 1
   no-new-native-nonconstructor: error
@@ -325,10 +327,80 @@ rules:
       ignoreReadBeforeAssign: false
   camelcase: off
   valid-jsdoc: off
-  'jsdoc/require-jsdoc': warn # @todo change it to error but we should fix all current jsdoc errors
+  jsdoc/require-jsdoc:
+    - warn # TODO change it to error but we should fix all current jsdoc errors
+    - publicOnly: true
+      exemptEmptyConstructors: true
+      exemptEmptyFunctions: false
+      checkConstructors: false
+      checkGetters: false
+      checkSetters: false
+      enableFixer: false # TODO change it to error but we should fix all current jsdoc errors
   curly:
     - error
     - all
+  jsdoc/check-access: error
+  jsdoc/check-alignment: error
+  # TODO enable back once ESLint 8 is properly fixed; see https://github.com/gajus/eslint-plugin-jsdoc#check-examples
+  jsdoc/check-examples: off
+  jsdoc/check-indentation:
+    - error
+    - excludeTags:
+        - param
+  jsdoc/check-param-names: error
+  jsdoc/check-property-names: error
+  jsdoc/check-syntax: error
+  jsdoc/require-param-description: error
+  jsdoc/require-param-name: error
+  jsdoc/require-param-type: error
+  jsdoc/require-param: error
+  jsdoc/require-property: error
+  jsdoc/require-property-description: error
+  jsdoc/require-property-name: error
+  jsdoc/require-property-type: error
+  jsdoc/require-returns-check: error
+  jsdoc/require-returns-description: error
+  jsdoc/require-returns-type: error
+  jsdoc/require-returns: error
+  jsdoc/sort-tags: error
+  jsdoc/check-tag-names: error
+  jsdoc/check-types: error
+  jsdoc/check-values: error
+  jsdoc/no-multi-asterisks: error
+  jsdoc/require-description-complete-sentence:
+    - error
+    - tags:
+        - see
+      newlineBeforeCapsAssumesBadSentenceEnd: true
+  jsdoc/require-description:
+    - error
+    - contexts:
+        - any
+      descriptionStyle: tag
+      checkConstructors: false
+      checkGetters: true
+      checkSetters: true
+  jsdoc/require-example: off
+  jsdoc/require-file-overview: off
+  jsdoc/multiline-blocks:
+    - error
+    - allowMultipleTags: true
+      noMultilineBlocks: false
+  jsdoc/require-hyphen-before-param-description:
+    - error
+    - never
+  jsdoc/require-asterisk-prefix:
+    - error
+    - always
+  jsdoc/empty-tags: error
+  jsdoc/no-bad-blocks: error
+  jsdoc/implements-on-classes: error
+  jsdoc/newline-after-description:
+    - error
+    - always
+  jsdoc/check-line-alignment:
+    - error
+    - always
   '@typescript-eslint/prefer-regexp-exec': error
   '@typescript-eslint/await-thenable': error
   '@typescript-eslint/prefer-readonly': error
@@ -468,6 +540,7 @@ overrides:
       - 'plugin:jest/style'
       - 'plugin:jest/all'
     rules:
+      jsdoc/require-description: off
       jest/max-nested-describe: off
       jest/prefer-expect-resolves: error
       jest/prefer-to-have-length: error
