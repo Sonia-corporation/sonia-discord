@@ -9,12 +9,24 @@ import { IAnyDiscordMessage } from '../../types/any-discord-message';
  * Core service common to all commands.
  */
 export abstract class DiscordMessageCommandCoreService extends AbstractService {
+  /**
+   * @description
+   * The command name.
+   * Used by the logger.
+   * @protected
+   */
   protected abstract readonly _commandName: string;
 
   protected constructor(serviceName: ServiceNameEnum) {
     super(serviceName);
   }
 
+  /**
+   * @description
+   * Process the given message to execute a command.
+   * @param   {IAnyDiscordMessage}                                           anyDiscordMessage The message that triggered the command.
+   * @returns {Promise<IDiscordMessageResponse | IDiscordMessageResponse[]>}                   Return a response or multiple responses.
+   */
   public handleResponse(
     anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
@@ -30,6 +42,12 @@ export abstract class DiscordMessageCommandCoreService extends AbstractService {
     return this.getMessageResponse(anyDiscordMessage);
   }
 
+  /**
+   * @description
+   * Get the response associated to the command.
+   * @param   {IAnyDiscordMessage}                                           anyDiscordMessage The message that triggered the command.
+   * @returns {Promise<IDiscordMessageResponse | IDiscordMessageResponse[]>}                   Return a response or multiple responses.
+   */
   public abstract getMessageResponse(
     anyDiscordMessage?: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]>;
