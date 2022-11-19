@@ -2,7 +2,7 @@ import { IObject } from '../../../types/object';
 
 /**
  * @description
- * GET /api/qotd
+ * GET /api/qotd.
  */
 export interface IQuoteOfTheDayApi extends IObject {
   // eslint-disable-next-line @typescript-eslint/naming-convention

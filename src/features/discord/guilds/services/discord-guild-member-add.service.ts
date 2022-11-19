@@ -137,14 +137,14 @@ export class DiscordGuildMemberAddService extends AbstractService {
         content: messageResponse.content,
       })
       .then((): void => {
-        // @todo add coverage
+        // TODO add coverage
         LoggerService.getInstance().log({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`welcome message for the new guild sent`),
         });
       })
       .catch((error: Error | string): void => {
-        // @todo add coverage
+        // TODO add coverage
         LoggerService.getInstance().error({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`message sending for the new guild member failed`),

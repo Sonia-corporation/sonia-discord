@@ -9,24 +9,14 @@ const OUTBOUND_MINUTE = -1;
 const FROM_START = 0;
 const LAST_CHAR = -1;
 
-/**
- * @param currentMinute
- */
 function isCurrentMinuteExceeded(currentMinute: number): boolean {
   return _.gt(currentMinute, MAX_MINUTES_IN_ONE_HOUR);
 }
 
-/**
- * @param minimumInterval
- * @param maximumInterval
- * @param currentMinute
- */
 function getRandomMinute(minimumInterval: number, maximumInterval: number, currentMinute: number): number {
   const randomMinute: number = _.random(minimumInterval, maximumInterval, false) + currentMinute;
 
-  /**
-   * Avoid consecutive values like 1,1,1,1 due to the inclusive random from Lodash
-   */
+  // Avoid consecutive values like 1,1,1,1 due to the inclusive random from Lodash.
   if (_.isEqual(randomMinute, currentMinute)) {
     return randomMinute + ONE_MINUTE;
   }
@@ -34,32 +24,18 @@ function getRandomMinute(minimumInterval: number, maximumInterval: number, curre
   return randomMinute;
 }
 
-/**
- * @param minutesRange
- */
 function getSafeMinutesRange(minutesRange: string): string {
   return minutesRange.slice(FROM_START, LAST_CHAR);
 }
 
-/**
- * @param currentMinute
- */
 function canIncreaseRange(currentMinute: number): boolean {
   return !_.isEqual(currentMinute, OUTBOUND_MINUTE);
 }
 
-/**
- * @param currentMinute
- * @param minutesRange
- */
 function addMinuteInRange(currentMinute: number, minutesRange: string): string {
   return `${minutesRange}${_.toString(currentMinute)},`;
 }
 
-/**
- * @param minimumInterval
- * @param maximumInterval
- */
 function getError(minimumInterval: number, maximumInterval: number): string | undefined {
   const errors: (string | null)[] = [
     getMinimumIntervalError(minimumInterval),
@@ -70,24 +46,14 @@ function getError(minimumInterval: number, maximumInterval: number): string | un
   return _.head(_.compact(errors));
 }
 
-/**
- * @param minimumInterval
- */
 function getMinimumIntervalError(minimumInterval: number): string | null {
   return getOutOfBoundIntervalError(minimumInterval, `Minimum`);
 }
 
-/**
- * @param maximumInterval
- */
 function getMaximumIntervalError(maximumInterval: number): string | null {
   return getOutOfBoundIntervalError(maximumInterval, `Maximum`);
 }
 
-/**
- * @param value
- * @param valueName
- */
 function getOutOfBoundIntervalError(value: number, valueName: string): string | null {
   if (_.lt(value, MINIMUM_MINUTES_IN_ONE_HOUR)) {
     return `${valueName} interval should be greater or equal to 0`;
@@ -98,10 +64,6 @@ function getOutOfBoundIntervalError(value: number, valueName: string): string | 
   return null;
 }
 
-/**
- * @param minimumInterval
- * @param maximumInterval
- */
 function getIntervalError(minimumInterval: number, maximumInterval: number): string | null {
   if (_.isEqual(minimumInterval, maximumInterval)) {
     return `Maximum interval should be greater than minimum interval`;
@@ -110,16 +72,14 @@ function getIntervalError(minimumInterval: number, maximumInterval: number): str
   return null;
 }
 
-// @todo fix valid-jsdoc error (dunno what is wrong)
-// eslint-disable-next-line valid-jsdoc
 /**
  * @description
- * Create a schedule rule for minutes only as a range of minutes
+ * Create a schedule rule for minutes only as a range of minutes.
+ * @param   {number} [minimumInterval=5]  Minimum interval range.
+ * @param   {number} [maximumInterval=30] Maximal interval range.
+ * @returns {string}                      A schedule rule for minutes only as a range of minutes.
  * @example
  * 8,16,24,32,58 * * * *
- * @param {number>} [minimumInterval=5] Minimum interval range
- * @param {number>} [maximumInterval=30] Maximal interval range
- * @returns {string} A schedule rule for minutes only as a range of minutes
  */
 export function getRandomRangeMinuteScheduleRule(
   minimumInterval: number = MINIMAL_RANGE_MINUTES,

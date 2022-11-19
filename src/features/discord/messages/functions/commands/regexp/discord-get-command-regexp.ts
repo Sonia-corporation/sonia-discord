@@ -2,8 +2,10 @@ import { IDiscordGetCommandRegexpData } from '../../../interfaces/commands/gette
 import xregexp from 'xregexp';
 
 /**
- * @param {IDiscordGetCommandRegexpData} data The data used as a command
- * @returns {RegExp} A RegExp matching a prefix with a command
+ * @description
+ * Return a regexp to identify a command.
+ * @param   {IDiscordGetCommandRegexpData} data The data used as a command.
+ * @returns {RegExp}                            A RegExp matching a prefix with a command.
  */
 export function discordGetCommandRegexp({ prefix, command }: IDiscordGetCommandRegexpData): RegExp {
   return xregexp(

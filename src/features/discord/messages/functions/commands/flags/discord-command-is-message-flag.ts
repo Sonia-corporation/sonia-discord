@@ -4,8 +4,10 @@ import _ from 'lodash';
 
 /**
  * @description
- * Check either or nor the given message flag is a flag or a shortcut flag
- * Based on the prefix
+ * Check either or nor the given message flag is a flag or a shortcut flag.
+ * Based on the prefix.
+ * @param   {IDiscordMessageFlag} messageFlag The message containing a flag.
+ * @returns {boolean}                         True when a flag.
  * @example
  * discordCommandIsMessageFlag('')             => false
  * discordCommandIsMessageFlag('dummy')        => false
@@ -13,8 +15,6 @@ import _ from 'lodash';
  * discordCommandIsMessageFlag('--dummy')      => true
  * discordCommandIsMessageFlag('--dummy=')     => true
  * discordCommandIsMessageFlag('--dummy=true') => true
- * @param {IDiscordMessageFlag} messageFlag The message containing a flag
- * @returns {boolean} true when a flag
  */
 export function discordCommandIsMessageFlag(
   messageFlag: IDiscordMessageFlag

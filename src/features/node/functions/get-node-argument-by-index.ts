@@ -4,9 +4,6 @@ import _ from 'lodash';
 
 const ONE_ARGUMENT_INDEX = 1;
 
-/**
- * @param argumentIndex
- */
 export function getNodeArgumentByIndex(argumentIndex: number): unknown | null {
   if (!isValidArgumentIndex(argumentIndex)) {
     return null;

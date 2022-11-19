@@ -139,7 +139,7 @@ export class DiscordMessageService extends AbstractService {
       .getClient()
       .on(`messageCreate`, (anyDiscordMessage: IAnyDiscordMessage): void => {
         this.sendMessage(anyDiscordMessage).catch((error: Error): void => {
-          // @todo add coverage
+          // TODO add coverage
           if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
             LoggerService.getInstance().debug({
               context: this._serviceName,

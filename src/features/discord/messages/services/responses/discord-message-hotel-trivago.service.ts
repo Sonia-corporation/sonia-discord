@@ -25,12 +25,11 @@ export class DiscordMessageHotelTrivagoService extends AbstractService {
 
   /**
    * @description
-   * Check if the hotel Trivago message can be executed
-   *
-   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
-   * Like it is really her mentioned and she has the rights to respond, etc
-   * @param {string} message The message to check if a response to hotel is possible
-   * @returns {boolean} Return true when she can respond to hotel
+   * Check if the hotel Trivago message can be executed.
+   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated.
+   * Like it is really her mentioned, and she has the rights to respond, etc.
+   * @param   {string}  message The message to check if a response to hotel is possible.
+   * @returns {boolean}         Return true when she can respond to hotel.
    */
   public hasCriteria(message: string): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
@@ -67,8 +66,8 @@ export class DiscordMessageHotelTrivagoService extends AbstractService {
   private _getMessageWithoutFirstMention(message: string): string {
     /**
      * @description
-     * This is important to only remove the first one
-     * We want only to respond on "<@!sonia-id> hotel" and not <@!sonia-id> hotel<@!other-id>"
+     * This is important to only remove the first one.
+     * We want only to respond on "<@!sonia-id> hotel" and not <@!sonia-id> hotel<@!other-id>".
      */
     return removeFirstDiscordMention(message);
   }

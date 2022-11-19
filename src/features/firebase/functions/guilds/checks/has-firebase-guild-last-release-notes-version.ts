@@ -7,10 +7,10 @@ import _ from 'lodash';
 
 /**
  * @description
- * Check if the given Firebase guild contains a [last release notes version]{@link IFirebaseGuildV2#lastReleaseNotesVersion}
- * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
- * @param {IFirebaseGuild} firebaseGuild The Firebase guild
- * @returns {boolean} true when the given guild is at least [v2]{@link FirebaseGuildVersionEnum.V2}
+ * Check if the given Firebase guild contains a [last release notes version]{@link IFirebaseGuildV2#lastReleaseNotesVersion}.
+ * @param   {IFirebaseGuild} firebaseGuild The Firebase guild.
+ * @returns {boolean}                      True when the given guild is at least [v2]{@link FirebaseGuildVersionEnum.V2}.
+ * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}.
  */
 export function hasFirebaseGuildLastReleaseNotesVersion(
   firebaseGuild: IFirebaseGuild

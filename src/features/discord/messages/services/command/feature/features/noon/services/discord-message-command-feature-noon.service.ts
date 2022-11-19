@@ -51,14 +51,13 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
 
   /**
    * @description
-   * This method should be called once the message command was validated entirely
-   * Including checking that all flags were valid
-   *
-   * It will trigger the action on flags
-   * Then return a response
-   * @param {IAnyDiscordMessage} anyDiscordMessage Original message
-   * @param {string} messageFlags A partial message containing only a string with flags
-   * @returns {Promise<IDiscordMessageResponse[]>} Some embed message to respond
+   * This method should be called once the message command was validated entirely.
+   * Including checking that all flags were valid.
+   * It will trigger the action on flags.
+   * Then return a response.
+   * @param   {IAnyDiscordMessage}                 anyDiscordMessage Original message.
+   * @param   {string}                             messageFlags      A partial message containing only a string with flags.
+   * @returns {Promise<IDiscordMessageResponse[]>}                   Some embed message to respond.
    */
   public getMessageResponse(
     anyDiscordMessage: IAnyDiscordMessage,

@@ -7,7 +7,7 @@ export class DiscordCommandFirstArgument<T extends string> {
   private _shortcuts: T[] | undefined;
 
   /**
-   * @param {DiscordCommandFirstArgument} discordCommandFirstArgument Default values
+   * @param {DiscordCommandFirstArgument} discordCommandFirstArgument Default values.
    */
   public constructor({ description, name, shortcuts }: IDiscordCommandFirstArgument<T>) {
     this._description = description;

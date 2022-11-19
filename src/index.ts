@@ -31,7 +31,7 @@ if (_.isEqual(process.env.NODE_ENV, `production`)) {
 
 /**
  * @description
- * Required to handle groups and unicode
+ * Required to handle groups and unicode.
  */
 xregexp.install({
   astral: true,

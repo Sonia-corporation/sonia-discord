@@ -2,12 +2,6 @@ import { IDiscordStrictlyContainsThisCommandWithPrefixData } from '../../../inte
 import { discordGetCommandRegexp } from '../regexp/discord-get-command-regexp';
 import xregexp from 'xregexp';
 
-/**
- * @param root0
- * @param root0.message
- * @param root0.command
- * @param root0.prefix
- */
 export function discordStrictlyContainsThisCommandWithPrefix({
   message,
   command,

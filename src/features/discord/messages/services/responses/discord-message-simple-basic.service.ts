@@ -24,12 +24,11 @@ export class DiscordMessageSimpleBasicService extends AbstractService {
 
   /**
    * @description
-   * Check if the simple basic message can be executed
-   *
-   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
-   * Like it is really her mentioned and she has the rights to respond, etc
-   * @param {string} message The message to check if a response to simple or basic is possible
-   * @returns {boolean} Return true when she can respond to simple or basic
+   * Check if the simple basic message can be executed.
+   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated.
+   * Like it is really her mentioned and she has the rights to respond, etc.
+   * @param   {string}  message The message to check if a response to simple or basic is possible.
+   * @returns {boolean}         Return true when she can respond to simple or basic.
    */
   public hasCriteria(message: string): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
@@ -67,11 +66,8 @@ export class DiscordMessageSimpleBasicService extends AbstractService {
   }
 
   private _getMessageWithoutFirstMention(message: string): string {
-    /**
-     * @description
-     * This is important to only remove the first one
-     * We want only to respond on "<@!sonia-id> any question?" and not <@!sonia-id> any question?<@!other-id>"
-     */
+    // This is important to only remove the first one
+    // We want only to respond on "<@!sonia-id> any question?" and not <@!sonia-id> any question?<@!other-id>".
     return removeFirstDiscordMention(message);
   }
 }

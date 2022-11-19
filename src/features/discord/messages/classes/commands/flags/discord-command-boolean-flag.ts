@@ -17,7 +17,7 @@ export class DiscordCommandBooleanFlag<T extends string> extends DiscordCommandF
   protected _type: DiscordCommandFlagTypeEnum.BOOLEAN = DiscordCommandFlagTypeEnum.BOOLEAN;
 
   /**
-   * @param {IDiscordCommandFlag} discordCommandFlag Default values
+   * @param {IDiscordCommandFlag} discordCommandFlag Default values.
    */
   public constructor(discordCommandFlag: IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>) {
     super(discordCommandFlag);
@@ -25,15 +25,15 @@ export class DiscordCommandBooleanFlag<T extends string> extends DiscordCommandF
 
   /**
    * @description
-   * Check if the flag value is a boolean
+   * Check if the flag value is a boolean.
+   * @param   {IDiscordMessageFlag} messageFlag A flag as a message.
+   * @returns {boolean}                         True if the flag value is valid.
    * @example
    * isValid('enabled')       => false
    * isValid('enabled=')      => false
    * isValid('enabled=dummy') => false
    * isValid('enabled=true')  => true
    * isValid('enabled=false') => true
-   * @param {IDiscordMessageFlag} messageFlag A flag as a message
-   * @returns {boolean} true if the flag value is valid
    */
   public isValid(messageFlag: IDiscordMessageFlag): boolean {
     const splittedFlag: string[] = _.split(messageFlag, `=`);

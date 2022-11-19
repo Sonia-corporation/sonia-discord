@@ -112,7 +112,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
 
           const updatedFirebaseGuild: IFirebaseGuildVFinal = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-          // @todo avoid casting
+          // TODO avoid casting
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           batch.update(queryDocumentSnapshot.ref, updatedFirebaseGuild);

@@ -25,12 +25,11 @@ export class DiscordMessagePingPongService extends AbstractService {
 
   /**
    * @description
-   * Check if the ping pong message can be executed
-   *
-   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
-   * Like it is really her mentioned and she has the rights to respond, etc
-   * @param {string} message The message to check if a response to ping is possible
-   * @returns {boolean} Return true when she can respond to ping
+   * Check if the ping pong message can be executed.
+   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated.
+   * Like it is really her mentioned, and she has the rights to respond, etc.
+   * @param   {string}  message The message to check if a response to ping is possible.
+   * @returns {boolean}         Return true when she can respond to ping.
    */
   public hasCriteria(message: string): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
@@ -65,11 +64,8 @@ export class DiscordMessagePingPongService extends AbstractService {
   }
 
   private _getMessageWithoutFirstMention(message: string): string {
-    /**
-     * @description
-     * This is important to only remove the first one
-     * We want only to respond on "<@!sonia-id> ping" and not <@!sonia-id> ping<@!other-id>"
-     */
+    // This is important to only remove the first one
+    // We want only to respond on "<@!sonia-id> ping" and not <@!sonia-id> ping<@!other-id>".
     return removeFirstDiscordMention(message);
   }
 }

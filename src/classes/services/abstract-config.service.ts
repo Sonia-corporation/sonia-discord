@@ -12,10 +12,8 @@ export abstract class AbstractConfigService<TConfig> extends AbstractService {
 
   /**
    * @description
-   * This method should be used to perform actions before the update of the config
-   *
-   * This is quite handy when you want to set up a default configuration
-   * Just before the config override it
+   * This method should be used to perform actions before the update of the config.
+   * This is quite handy when you want to set up a default configuration just before the config override it.
    */
   public preUpdateConfig(): void {
     // Avoid lint error :)
@@ -23,10 +21,8 @@ export abstract class AbstractConfigService<TConfig> extends AbstractService {
 
   /**
    * @description
-   * This method should be used to perform actions after the update of the config
-   *
-   * This is quite handy when you want to set up a default configuration
-   * Just after the config override it
+   * This method should be used to perform actions after the update of the config.
+   * This is quite handy when you want to set up a default configuration just after the config override it.
    */
   public postUpdateConfig(): void {
     // Avoid lint error :)

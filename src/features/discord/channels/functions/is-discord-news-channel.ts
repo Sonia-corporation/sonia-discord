@@ -1,8 +1,5 @@
 import { GuildBasedChannel, NewsChannel, TextBasedChannel } from 'discord.js';
 
-/**
- * @param channel
- */
 export function isDiscordNewsChannel(
   channel: GuildBasedChannel | TextBasedChannel | null | undefined
 ): channel is NewsChannel {

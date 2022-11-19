@@ -24,9 +24,9 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
 
   /**
    * @description
-   * Return the common options for the message
-   * You should at least add a title to make it useful
-   * @returns {IDiscordMessageResponse} A partial Discord message response
+   * Return the common options for the message.
+   * You should at least add a title to make it useful.
+   * @returns {IDiscordMessageResponse} A partial Discord message response.
    */
   public getCliErrorMessageResponse(): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {

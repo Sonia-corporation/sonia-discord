@@ -24,12 +24,11 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
 
   /**
    * @description
-   * Check if the any question pineapple pizza message can be executed
-   *
-   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated
-   * Like it is really her mentioned and she has the rights to respond, etc
-   * @param {string} message The message to check if a response to any question is possible
-   * @returns {boolean} Return true when she can respond to any question
+   * Check if the any question pineapple pizza message can be executed.
+   * Expect at this point that all criteria regarding the possibility of Sonia to respond are validated.
+   * Like it is really her mentioned, and she has the rights to respond, etc.
+   * @param   {string}  message The message to check if a response to any question is possible.
+   * @returns {boolean}         Return true when she can respond to any question.
    */
   public hasCriteria(message: string): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
@@ -54,11 +53,8 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
   }
 
   private _getMessageWithoutFirstMention(message: string): string {
-    /**
-     * @description
-     * This is important to only remove the first one
-     * We want only to respond on "<@!sonia-id> any question?" and not <@!sonia-id> any question?<@!other-id>"
-     */
+    // This is important to only remove the first one
+    // We want only to respond on "<@!sonia-id> any question?" and not <@!sonia-id> any question?<@!other-id>".
     return removeFirstDiscordMention(message);
   }
 }

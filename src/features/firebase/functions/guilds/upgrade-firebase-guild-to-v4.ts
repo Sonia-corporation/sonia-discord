@@ -2,11 +2,6 @@ import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-vers
 import { IFirebaseGuildV3 } from '../../interfaces/guilds/firebase-guild-v3';
 import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
 
-/**
- * @param root0
- * @param root0.id
- * @param root0.lastReleaseNotesVersion
- */
 export function upgradeFirebaseGuildToV4({ id, lastReleaseNotesVersion }: IFirebaseGuildV3): IFirebaseGuildV4 {
   return {
     channels: {},

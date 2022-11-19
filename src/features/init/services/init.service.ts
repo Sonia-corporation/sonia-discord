@@ -79,7 +79,7 @@ export class InitService extends AbstractService {
     this._isAppConfigured$.next(true);
   }
 
-  // @todo add coverage
+  // TODO add coverage
   public readEnvironment(): Promise<[true, [number | void, WriteResult[] | void]] | void> {
     const environmentPath = `${_.toString(appRootPath)}/src/environment/secret-environment.json`;
 
