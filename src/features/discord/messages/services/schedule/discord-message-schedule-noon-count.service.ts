@@ -31,13 +31,12 @@ export class DiscordMessageScheduleNoonCountService extends AbstractService {
 
   /**
    * @description
-   * Each array is like a guild (without or without messages)
-   * Each {@link Message} is a message sent to Discord on a channel
-   *
-   * The goal here is to count the number of guilds
-   * Then the number of messages (ak channels)
-   * Then the number of messages per guild
-   * @param {((Message | void)[] | void)[] | void} guildMessages The list received as a response when sending noon messages to all Discord guilds
+   * Each array is like a guild (without or without messages).
+   * Each {@link Message} is a message sent to Discord on a channel.
+   * The goal here is to count the number of guilds.
+   * Then the number of messages (ak channels).
+   * Then the number of messages per guild.
+   * @param {((Message | void)[] | void)[] | void} guildMessages The list received as a response when sending noon messages to all Discord guilds.
    */
   public countChannelsAndGuilds(guildMessages: ((Message | void)[] | void)[] | void): void {
     let totalGuildCount = DEFAULT_GUILD_COUNT;

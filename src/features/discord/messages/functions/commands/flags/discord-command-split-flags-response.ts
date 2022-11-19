@@ -6,9 +6,9 @@ import _ from 'lodash';
 
 /**
  * @description
- * Split between flags success and message responses
- * @param {IDiscordCommandFlagsResponse} discordCommandFlagsResponse The list of flags success and message responses
- * @returns {boolean} true when a flag
+ * Split between flags success and message responses.
+ * @param   {IDiscordCommandFlagsResponse} discordCommandFlagsResponse The list of flags success and message responses.
+ * @returns {boolean}                                                  True when a flag.
  */
 export function discordCommandSplitFlagsResponse(
   discordCommandFlagsResponse: IDiscordCommandFlagsResponse

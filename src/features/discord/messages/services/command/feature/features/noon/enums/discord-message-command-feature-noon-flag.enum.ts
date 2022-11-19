@@ -1,26 +1,31 @@
 export enum DiscordMessageCommandFeatureNoonFlagEnum {
   /**
-   * Shortcut for {@link DISABLED}
+   * @description
+   * Shortcut for {@link DISABLED}.
    */
   D = `d`,
   DISABLED = `disabled`,
   /**
-   * Shortcut for {@link ENABLED}
+   * @description
+   * Shortcut for {@link ENABLED}.
    */
   E = `e`,
   ENABLED = `enabled`,
   /**
-   * Shortcut for {@link HELP}
+   * @description
+   * Shortcut for {@link HELP}.
    */
   H = `h`,
   HELP = `help`,
   /**
-   * Shortcut for {@link HUMANIZE}
+   * @description
+   * Shortcut for {@link HUMANIZE}.
    */
   HU = `hu`,
   HUMANIZE = `humanize`,
   /**
-   * Shortcut for {@link STATUS}
+   * @description
+   * Shortcut for {@link STATUS}.
    */
   S = `s`,
   STATUS = `status`,

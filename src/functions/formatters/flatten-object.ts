@@ -1,10 +1,6 @@
 import { IObject } from '../../types/object';
 import _ from 'lodash';
 
-/**
- * @param object
- * @param path
- */
 function flatten(object: IObject | string[] | unknown, path: string[] = []): IObject {
   if (!_.isObject(object)) {
     return { [path.join(`.`)]: object };
@@ -17,9 +13,6 @@ function flatten(object: IObject | string[] | unknown, path: string[] = []): IOb
   );
 }
 
-/**
- * @param object
- */
 export function flattenObject(object: IObject): IObject {
   return flatten(object);
 }

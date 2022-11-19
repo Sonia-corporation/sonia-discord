@@ -2,12 +2,6 @@ import { discordContainsThisCommandWithPrefix } from './discord-contains-this-co
 import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from '../../../interfaces/commands/checks/discord-contains-this-command-with-one-of-these-prefixes-data';
 import _ from 'lodash';
 
-/**
- * @param root0
- * @param root0.prefixes
- * @param root0.commands
- * @param root0.message
- */
 export function discordContainsThisCommandWithOneOfThesePrefixes({
   prefixes,
   commands,

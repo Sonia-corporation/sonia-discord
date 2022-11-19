@@ -119,7 +119,7 @@ export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
 
     /**
      * @description
-     * Reverse the enabled state since there is no disabled state in the model
+     * Reverse the enabled state since there is no disabled state in the model.
      */
     return !isEnabled;
   }

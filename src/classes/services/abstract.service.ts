@@ -4,7 +4,7 @@ import { AutoUnsubscribe } from '../auto-unsubscribe';
 
 /**
  * @description
- * Log the creation of the service
+ * Log the creation of the service.
  */
 export abstract class AbstractService extends AutoUnsubscribe {
   protected readonly _serviceName: ServiceNameEnum;

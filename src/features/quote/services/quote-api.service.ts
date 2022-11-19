@@ -27,10 +27,10 @@ export class QuoteApiService extends AbstractService {
 
   /**
    * @description
-   * Call the endpoint to have a quote of the day
-   * Logs in case of error
-   * @param {Snowflake} messageId The original id of the message (to enhance the logs)
-   * @returns {Promise<IQuoteOfTheDayApi | IQuoteErrorApi>} A promise containing a quote of the day or an error
+   * Call the endpoint to have a quote of the day.
+   * Logs in case of error.
+   * @param   {Snowflake}                                   messageId The original id of the message (to enhance the logs).
+   * @returns {Promise<IQuoteOfTheDayApi | IQuoteErrorApi>}           A promise containing a quote of the day or an error.
    */
   public getQuoteOfTheDay(messageId: Snowflake): Promise<IQuoteOfTheDayApi | IQuoteErrorApi> {
     const url: string = this._getUrl(`qotd`);
@@ -76,9 +76,9 @@ export class QuoteApiService extends AbstractService {
 
   /**
    * @description
-   * Log the success
-   * @param {string} url The original endpoint called
-   * @param {Snowflake} messageId The original id of the message (to enhance the logs)
+   * Log the success.
+   * @param {string}    url       The original endpoint called.
+   * @param {Snowflake} messageId The original id of the message (to enhance the logs).
    * @private
    */
   private _handleSuccess(url: string, messageId: Snowflake): void {
@@ -94,10 +94,10 @@ export class QuoteApiService extends AbstractService {
 
   /**
    * @description
-   * Log the error
-   * @param {Error} error The original http error
-   * @param {string} url The original endpoint called
-   * @param {Snowflake} messageId The original id of the message (to enhance the logs)
+   * Log the error.
+   * @param {Error}     error     The original http error.
+   * @param {string}    url       The original endpoint called.
+   * @param {Snowflake} messageId The original id of the message (to enhance the logs).
    * @private
    */
   private _handleError(error: Error, url: string, messageId: Snowflake): never {

@@ -8,10 +8,10 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
 
 /**
  * @description
- * Upgrade the given object to the latest possible version of a [Firebase guild]{@link IFirebaseGuild}
- * Based on the [version]{@link IFirebaseGuild#version}
- * @param {IFirebaseGuild} firebaseGuild The [Firebase guild]{@link IFirebaseGuild} to update
- * @returns {IFirebaseGuild} Updated [Firebase guild]{@link IFirebaseGuild}
+ * Upgrade the given object to the latest possible version of a [Firebase guild]{@link IFirebaseGuild}.
+ * Based on the [version]{@link IFirebaseGuild#version}.
+ * @param   {IFirebaseGuild} firebaseGuild The [Firebase guild]{@link IFirebaseGuild} to update.
+ * @returns {IFirebaseGuild}               Updated [Firebase guild]{@link IFirebaseGuild}.
  */
 export function handleFirebaseGuildBreakingChange(firebaseGuild: IFirebaseGuild): IFirebaseGuildVFinal | never {
   if (firebaseGuild.version === FirebaseGuildVersionEnum.V5) {

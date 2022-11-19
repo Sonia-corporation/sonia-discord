@@ -410,7 +410,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
         });
 
         /**
-         * @todo fix this test on error
+         * TODO fix this test on error.
          */
         it.skip(`should reschedule the job with the new updated job rule`, (): void => {
           expect.assertions(2);

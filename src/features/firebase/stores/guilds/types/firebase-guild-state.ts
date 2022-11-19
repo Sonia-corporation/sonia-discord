@@ -4,7 +4,7 @@ import { Snowflake } from 'discord.js';
 export type IFirebaseGuildState = IFirebaseGuild & {
   /**
    * @description
-   * The Discord guild id
+   * The Discord guild id.
    */
   id: Snowflake;
 };

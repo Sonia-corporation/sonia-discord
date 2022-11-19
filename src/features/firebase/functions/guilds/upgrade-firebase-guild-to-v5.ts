@@ -6,12 +6,6 @@ import { IFirebaseGuildV5 } from '../../interfaces/guilds/firebase-guild-v5';
 import { IFirebaseGuildChannelVFinal } from '../../types/guilds/channels/firebase-guild-channel-v-final';
 import _ from 'lodash';
 
-/**
- * @param root0
- * @param root0.channels
- * @param root0.id
- * @param root0.lastReleaseNotesVersion
- */
 export function upgradeFirebaseGuildToV5({
   channels,
   id,

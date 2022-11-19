@@ -71,11 +71,14 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
   }
 
   /**
-   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
-   * @param {Snowflake} channelId The [id]{@link Snowflake} of the channel
-   * @param {boolean} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#releaseNotes#isEnabled}
-   * @param {IFirebaseGuildVFinal} firebaseGuild The current guild in the store
-   * @returns {IObject} A flatten object updating only the enabled state or a more complete object to also up-to-date the models
+   * @template Snowflake, Snowflake - A unique ID.
+   * @description
+   * Update the guild channel noon feature state.
+   * @param   {Snowflake}            channelId     The [id]{@link Snowflake} of the channel.
+   * @param   {boolean}              isEnabled     The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#releaseNotes#isEnabled}.
+   * @param   {IFirebaseGuildVFinal} firebaseGuild The current guild in the store.
+   * @returns {IObject}                            A flatten object updating only the enabled state or a more complete object to also up-to-date the models.
+   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}.
    */
   public getUpdatedGuild(
     channelId: IAnyDiscordChannel['id'],
@@ -170,18 +173,23 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
     }
 
     /**
-     * @todo remove the spread once TS handle this properly
-     * @see https://github.com/microsoft/TypeScript/issues/15300#issuecomment-436793742 for the destructuring part
+     * @description
+     * TODO remove the spread once TS handle this properly.
+     * @see Https://github.com/microsoft/TypeScript/issues/15300#issuecomment-436793742 for the destructuring part.
      */
     return flattenObject({ ...updatedFirebaseGuild });
   }
 
   /**
+   * @template Snowflake, Snowflake - A unique ID.
+   * @description
+   * Update the state of the release notes feature to either disable or enable it.
+   * Then return updated object.
+   * @param   {Snowflake} channelId The [id]{@link Snowflake} of the channel.
+   * @param   {boolean}   isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#releaseNotes#isEnabled}.
+   * @returns {IObject}             A flatten object updating only the enabled state.
    * @private
-   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
-   * @param {Snowflake} channelId The [id]{@link Snowflake} of the channel
-   * @param {boolean} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#releaseNotes#isEnabled}
-   * @returns {IObject} A flatten object updating only the enabled state
+   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}.
    */
   private _getUpdatedGuildWithPathOnly(channelId: IAnyDiscordChannel['id'], isEnabled: boolean): IObject {
     const flattenFirebaseGuild: IObject = {};

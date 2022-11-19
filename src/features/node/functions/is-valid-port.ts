@@ -5,9 +5,6 @@ export function isValidPort(port: undefined | null | boolean): false;
 export function isValidPort(port: string): port is string;
 export function isValidPort(port: number): port is number;
 export function isValidPort(port: unknown): port is string | number;
-/**
- * @param port
- */
 export function isValidPort(port: unknown): port is string | number {
   if (_.isNil(port)) {
     return false;

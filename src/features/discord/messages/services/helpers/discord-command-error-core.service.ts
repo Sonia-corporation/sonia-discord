@@ -7,8 +7,8 @@ import moment from 'moment-timezone';
 
 /**
  * @description
- * Service in common for other error services
- * Used to avoid code duplication
+ * Service in common for other error services.
+ * Used to avoid code duplication.
  */
 export abstract class DiscordCommandErrorCoreService extends AbstractService {
   protected constructor(serviceName: ServiceNameEnum) {

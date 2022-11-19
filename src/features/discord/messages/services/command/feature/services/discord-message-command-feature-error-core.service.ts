@@ -11,8 +11,8 @@ import _ from 'lodash';
 
 /**
  * @description
- * Service in common for other error services
- * Used to avoid code duplication
+ * Service in common for other error services.
+ * Used to avoid code duplication.
  */
 export abstract class DiscordMessageCommandFeatureErrorCoreService extends AbstractService {
   protected constructor(serviceName: ServiceNameEnum) {

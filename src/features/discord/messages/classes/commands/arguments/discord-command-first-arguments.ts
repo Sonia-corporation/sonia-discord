@@ -6,7 +6,8 @@ export class DiscordCommandFirstArguments<T extends string> {
   private _arguments: DiscordCommandFirstArgument<T>[] = [];
 
   /**
-   * @param {DiscordCommandFirstArgument<T>[]} discordCommandArguments Default values
+   * @template T, T - The list of feature names, including the shortcuts.
+   * @param {DiscordCommandFirstArgument<T>[]} discordCommandArguments Default values.
    */
   public constructor(discordCommandArguments: DiscordCommandFirstArgument<T>[]) {
     this._arguments = discordCommandArguments;

@@ -10,8 +10,8 @@ import _ from 'lodash';
 
 /**
  * @description
- * Common flag class
- * Contains all basic properties and methods for the flags
+ * Common flag class.
+ * Contains all basic properties and methods for the flags.
  */
 export abstract class DiscordCommandFlag<T extends string, TAction extends IDiscordCommandFlagAction<T>> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
@@ -22,7 +22,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
   protected _shortcuts: T[] | undefined;
 
   /**
-   * @param {IDiscordCommandFlag} discordCommandFlag Default values
+   * @param {IDiscordCommandFlag} discordCommandFlag Default values.
    */
   protected constructor({ action, description, name, opposites, shortcuts }: IDiscordCommandFlag<T, TAction>) {
     this._action = action;
@@ -94,14 +94,14 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
 
   /**
    * @description
-   * Return the flag name as example
-   * This is the flag name with his shortcuts and without a value
-   * Include the prefix
+   * Return the flag name as example.
+   * This is the flag name with his shortcuts and without a value.
+   * Include the prefix.
+   * @returns {string} The flag name as example with his shortcuts.
    * @example
    * => `--alpha-flag`
    * => `--alpha-flag (or -e)`
    * => `--alpha-flag (or -e, -d)`
-   * @returns {string} The flag name as example with his shortcuts
    */
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();

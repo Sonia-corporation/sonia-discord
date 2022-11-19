@@ -2,7 +2,9 @@ import { FirebaseGuildChannelVersionEnum } from '../../../enums/guilds/channels/
 import { Snowflake } from 'discord.js';
 
 /**
- * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+ * @description
+ * A simply Firebase guild channel with the default configuration.
+ * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}.
  */
 export interface INewFirebaseGuildChannel {
   features?: undefined;

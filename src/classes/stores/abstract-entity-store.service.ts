@@ -4,8 +4,8 @@ import { Store } from '@ngneat/elf';
 
 /**
  * @description
- * Log the creation of the service
- * Used for Entity Store only
+ * Log the creation of the service.
+ * Used for Entity Store only.
  */
 export abstract class AbstractEntityStoreService {
   protected abstract readonly _store$: Store;

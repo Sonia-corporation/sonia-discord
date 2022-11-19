@@ -73,8 +73,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
   /**
    * @description
-   * Wait Firebase to handle the breaking changes
-   * @returns {Observable<[boolean]>} An observable
+   * Wait Firebase to handle the breaking changes.
+   * @returns {Observable<[boolean]>} An observable.
    */
   public isReady$(): Observable<[true]> {
     return forkJoin([FirebaseGuildsBreakingChangeService.getInstance().hasFinished()]);

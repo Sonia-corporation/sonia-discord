@@ -5,10 +5,10 @@ import { IFirebaseGuildChannelFeatureVFinal } from '../../../../types/guilds/cha
 
 /**
  * @description
- * Upgrade the given object to the latest possible version of a [Firebase guild channel feature]{@link IFirebaseGuildChannelFeature}
- * Based on the [version]{@link IFirebaseGuildChannelFeature#version}
- * @param {IFirebaseGuildChannelFeature} firebaseGuildChannelFeature The [Firebase guild channel feature]{@link IFirebaseGuildChannelFeature} to update
- * @returns {IFirebaseGuildChannelFeature} Updated [Firebase guild channel feature]{@link IFirebaseGuildChannelFeature}
+ * Upgrade the given object to the latest possible version of a [Firebase guild channel feature]{@link IFirebaseGuildChannelFeature}.
+ * Based on the [version]{@link IFirebaseGuildChannelFeature#version}.
+ * @param   {IFirebaseGuildChannelFeature} firebaseGuildChannelFeature The [Firebase guild channel feature]{@link IFirebaseGuildChannelFeature} to update.
+ * @returns {IFirebaseGuildChannelFeature}                             Updated [Firebase guild channel feature]{@link IFirebaseGuildChannelFeature}.
  */
 export function handleFirebaseGuildChannelFeatureBreakingChange(
   firebaseGuildChannelFeature: IFirebaseGuildChannelFeature

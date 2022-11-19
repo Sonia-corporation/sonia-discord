@@ -6,10 +6,10 @@ import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
 
 /**
  * @description
- * Return a humanized version of class instances related to channels
- * Useful for the logs
- * @param {GuildBasedChannel | TextBasedChannel} channel The channel to humanize
- * @returns {string} The humanized channel
+ * Return a humanized version of class instances related to channels.
+ * Useful for the logs.
+ * @param   {GuildBasedChannel | TextBasedChannel} channel The channel to humanize.
+ * @returns {string}                                       The humanized channel.
  */
 export function getDiscordHumanizedChannel(channel: GuildBasedChannel | TextBasedChannel): string {
   if (isDiscordTextChannel(channel)) {
