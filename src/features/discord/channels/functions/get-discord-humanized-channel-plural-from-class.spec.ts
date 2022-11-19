@@ -4,6 +4,7 @@ import { DMChannel, NewsChannel, TextBasedChannel, TextChannel, ThreadChannel } 
 describe(`getDiscordHumanizedChannelPluralFromClass()`, (): void => {
   describe.each`
     channel                                    | channelName        | output
+    ${undefined}                               | ${`TextChannel`}   | ${`channels`}
     ${createInstance(TextChannel.prototype)}   | ${`TextChannel`}   | ${`text channels`}
     ${createInstance(DMChannel.prototype)}     | ${`DMChannel`}     | ${`private messages`}
     ${createInstance(NewsChannel.prototype)}   | ${`NewsChannel`}   | ${`news channels`}
