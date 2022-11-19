@@ -106,8 +106,8 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
       });
   }
 
-  public updateDevGuildIdWhitelist(whitelist?: Snowflake | undefined[]): void {
-    let updatedDevGuildIdWhitelist: string[] | undefined;
+  public updateDevGuildIdWhitelist(whitelist?: (Snowflake | undefined)[]): void {
+    let updatedDevGuildIdWhitelist: Snowflake[] | undefined;
 
     if (_.isArray(whitelist)) {
       updatedDevGuildIdWhitelist = removeUndefined(whitelist);

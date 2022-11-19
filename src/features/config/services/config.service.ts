@@ -14,6 +14,7 @@ import { IConfigUpdateStringInternal } from '../interfaces/config-update-string-
 import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
 import { IConfigUpdateStringOrArrayInternal } from '../interfaces/config-update-string-or-array-internal';
 import _ from 'lodash';
+import { MomentInput } from 'moment-timezone';
 
 export class ConfigService extends AbstractService {
   private static _instance: ConfigService;
@@ -58,7 +59,7 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
-  public getUpdatedDate<T = string>(configUpdateDate: IConfigUpdateDate<T>): T {
+  public getUpdatedDate<T extends MomentInput>(configUpdateDate: IConfigUpdateDate<T>): T {
     if (_.isString(configUpdateDate.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateDate.context,
@@ -197,7 +198,7 @@ export class ConfigService extends AbstractService {
     return message;
   }
 
-  private _getUpdatedDateMessage<T = string>({
+  private _getUpdatedDateMessage<T extends MomentInput>({
     valueName,
     isValueHidden,
     isValueDisplay,
@@ -212,7 +213,7 @@ export class ConfigService extends AbstractService {
         message = ChalkService.getInstance().text(
           `${message} to: ${ChalkService.getInstance().value(
             wrapInQuotes<T>(newValue)
-          )} ${ChalkService.getInstance().hint(`(${TimeService.getInstance().fromNow<T>(newValue, false)})`)}`
+          )} ${ChalkService.getInstance().hint(`(${TimeService.getInstance().fromNow(newValue, false)})`)}`
         );
       } else {
         message = ChalkService.getInstance().text(message);

@@ -1,7 +1,7 @@
 import { TimeService } from './time.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { CoreEventService } from '../../core/services/core-event.service';
-import moment from 'moment-timezone';
+import moment, { MomentInput } from 'moment-timezone';
 
 describe(`TimeService`, (): void => {
   let service: TimeService;
@@ -97,7 +97,7 @@ describe(`TimeService`, (): void => {
   });
 
   describe(`fromNow()`, (): void => {
-    let date: string;
+    let date: MomentInput;
     let isCapitalized: boolean;
 
     beforeEach((): void => {

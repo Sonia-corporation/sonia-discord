@@ -1,8 +1,8 @@
 import { fromNow } from './from-now';
-import moment from 'moment-timezone';
+import moment, { MomentInput } from 'moment-timezone';
 
 describe(`fromNow()`, (): void => {
-  let date: string;
+  let date: MomentInput;
   let isCapitalized: boolean;
 
   describe(`when the given date is an empty string`, (): void => {
