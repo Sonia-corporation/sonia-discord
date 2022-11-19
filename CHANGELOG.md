@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.100.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.100.0...1.100.1) (2022-11-18)
+
+
+### :bug: Bug Fixes
+
+* **dm:** allow Sonia to communicate through DMs ([42cd207](https://github.com/Sonia-corporation/sonia-discord/commit/42cd207a10e34f641d985cdab9aea5de296105e5)), closes [#1855](https://github.com/Sonia-corporation/sonia-discord/issues/1855)
+
 # [1.100.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.3...1.100.0) (2022-11-17)
 
 
