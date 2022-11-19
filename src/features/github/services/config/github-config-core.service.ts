@@ -16,6 +16,7 @@ export class GithubConfigCoreService extends AbstractService implements IGithubC
   }
 
   public bugReportUrl = `https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=bug&template=bug_report.md&projects=sonia-corporation/sonia-discord/1&title=[BUG]%20`;
+  public featureRequestUrl = `https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+`;
   public personalAccessToken: IPersonalAccessToken = `unknown`;
 
   public constructor() {

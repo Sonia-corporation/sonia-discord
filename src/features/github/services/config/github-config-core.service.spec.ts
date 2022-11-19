@@ -57,6 +57,16 @@ describe(`GithubConfigCoreService`, (): void => {
     );
   });
 
+  it(`should have a feature request url for the GitHub Sonia discord repository with a feature request label and a feature request template`, (): void => {
+    expect.assertions(1);
+
+    service = GithubConfigCoreService.getInstance();
+
+    expect(service.featureRequestUrl).toBe(
+      `https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+`
+    );
+  });
+
   it(`should have an unknown personal access token`, (): void => {
     expect.assertions(1);
 

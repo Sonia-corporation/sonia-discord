@@ -35,6 +35,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
   public updateConfig(config?: IPartialNested<IGithubConfig>): void {
     if (!_.isNil(config)) {
       this.updateBugReportUrl(config.bugReportUrl);
+      this.updateFeatureRequestUrl(config.featureRequestUrl);
       this.updatePersonalAccessToken(config.personalAccessToken);
 
       LoggerService.getInstance().debug({
@@ -50,6 +51,15 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
       newValue: bugReportUrl,
       oldValue: GithubConfigService.getInstance().getBugReportUrl(),
       valueName: GithubConfigValueNameEnum.BUG_REPORT_URL,
+    });
+  }
+
+  public updateFeatureRequestUrl(featureRequestUrl?: string): void {
+    GithubConfigCoreService.getInstance().featureRequestUrl = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      newValue: featureRequestUrl,
+      oldValue: GithubConfigService.getInstance().getFeatureRequestUrl(),
+      valueName: GithubConfigValueNameEnum.FEATURE_REQUEST_URL,
     });
   }
 
