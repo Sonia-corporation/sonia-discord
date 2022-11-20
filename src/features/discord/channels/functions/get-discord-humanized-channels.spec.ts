@@ -8,9 +8,9 @@ describe(`getDiscordHumanizedChannels()`, (): void => {
     ${[DiscordChannelEnum.DM]}                                                                 | ${`private message`}
     ${[DiscordChannelEnum.NEWS]}                                                               | ${`news channel`}
     ${[DiscordChannelEnum.THREAD]}                                                             | ${`thread`}
-    ${DiscordChannelEnum.CATEGORY}                                                             | ${`category channel`}
-    ${DiscordChannelEnum.STAGE}                                                                | ${`stage channel`}
-    ${DiscordChannelEnum.VOICE}                                                                | ${`voice channel`}
+    ${[DiscordChannelEnum.CATEGORY]}                                                           | ${`category channel`}
+    ${[DiscordChannelEnum.STAGE]}                                                              | ${`stage channel`}
+    ${[DiscordChannelEnum.VOICE]}                                                              | ${`voice channel`}
     ${[DiscordChannelEnum.TEXT, DiscordChannelEnum.TEXT]}                                      | ${`text channel and text channel`}
     ${[DiscordChannelEnum.DM, DiscordChannelEnum.DM]}                                          | ${`private message and private message`}
     ${[DiscordChannelEnum.NEWS, DiscordChannelEnum.NEWS]}                                      | ${`news channel and news channel`}

@@ -8,9 +8,9 @@ describe(`getDiscordHumanizedChannelsPlural()`, (): void => {
     ${[DiscordChannelEnum.DM]}                                                                 | ${`private messages`}
     ${[DiscordChannelEnum.NEWS]}                                                               | ${`news channels`}
     ${[DiscordChannelEnum.THREAD]}                                                             | ${`threads`}
-    ${DiscordChannelEnum.CATEGORY}                                                             | ${`category channels`}
-    ${DiscordChannelEnum.STAGE}                                                                | ${`stage channels`}
-    ${DiscordChannelEnum.VOICE}                                                                | ${`voice channels`}
+    ${[DiscordChannelEnum.CATEGORY]}                                                           | ${`category channels`}
+    ${[DiscordChannelEnum.STAGE]}                                                              | ${`stage channels`}
+    ${[DiscordChannelEnum.VOICE]}                                                              | ${`voice channels`}
     ${[DiscordChannelEnum.TEXT, DiscordChannelEnum.TEXT]}                                      | ${`text channels and text channels`}
     ${[DiscordChannelEnum.DM, DiscordChannelEnum.DM]}                                          | ${`private messages and private messages`}
     ${[DiscordChannelEnum.NEWS, DiscordChannelEnum.NEWS]}                                      | ${`news channels and news channels`}
