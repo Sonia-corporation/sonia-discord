@@ -18,60 +18,60 @@ export class LoggerService {
 
   private readonly _logPrefix = `● `;
 
-  public error(loggerLog: Readonly<ILoggerLog>): void {
+  public error(loggerLog: ILoggerLog): void {
     this._log({
       ...loggerLog,
       loggerLogType: LoggerConfigLevelEnum.ERROR,
     });
   }
 
-  public warning(loggerLog: Readonly<ILoggerLog>): void {
+  public warning(loggerLog: ILoggerLog): void {
     this._log({
       ...loggerLog,
       loggerLogType: LoggerConfigLevelEnum.WARNING,
     });
   }
 
-  public success(loggerLog: Readonly<ILoggerLog>): void {
+  public success(loggerLog: ILoggerLog): void {
     this._log({
       ...loggerLog,
       loggerLogType: LoggerConfigLevelEnum.SUCCESS,
     });
   }
 
-  public log(loggerLog: Readonly<ILoggerLog>): void {
+  public log(loggerLog: ILoggerLog): void {
     this._log({
       ...loggerLog,
       loggerLogType: LoggerConfigLevelEnum.LOG,
     });
   }
 
-  public debug(loggerLog: Readonly<ILoggerLog>): void {
+  public debug(loggerLog: ILoggerLog): void {
     this._log({
       ...loggerLog,
       loggerLogType: LoggerConfigLevelEnum.DEBUG,
     });
   }
 
-  public serviceCreated(loggerServiceCreated: Readonly<ILoggerServiceCreated>): void {
+  public serviceCreated(loggerServiceCreated: ILoggerServiceCreated): void {
     this.debug({
       context: loggerServiceCreated.service,
       message: `created`,
     });
   }
 
-  public getStringArray(array: Readonly<string>[]): string {
+  public getStringArray(array: string[]): string {
     return `[ ${_.join(
-      _.map(array, (value: Readonly<string>): string => wrapInQuotes(value)),
+      _.map(array, (value: string): string => wrapInQuotes(value)),
       `, `
     )} ]`;
   }
 
-  public getValueUpdateWithHint(text: Readonly<string>, value: Readonly<string>, hint: Readonly<string>): string {
+  public getValueUpdateWithHint(text: string, value: string, hint: string): string {
     return `${text}${value}${hint}`;
   }
 
-  public getHiddenValueUpdate(text: Readonly<string>, isStringValue = false): string {
+  public getHiddenValueUpdate(text: string, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -81,7 +81,7 @@ export class LoggerService {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  public getHiddenValueArrayUpdate(text: Readonly<string>, isStringValue = false): string {
+  public getHiddenValueArrayUpdate(text: string, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -93,14 +93,11 @@ export class LoggerService {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  public getSnowflakeContext(
-    context: Readonly<string>,
-    message: Readonly<string | null | undefined> | unknown
-  ): string {
+  public getSnowflakeContext(context: string, message: string | null | undefined | unknown): string {
     return `[${context}] ${_.toString(message)}`;
   }
 
-  private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
+  private _log(loggerLogInternal: ILoggerLogInternal): void {
     const logTypePrefix: string = this._getLogTypePrefix();
 
     if (_.isString(loggerLogInternal.context) && !_.isEmpty(loggerLogInternal.context)) {
@@ -114,7 +111,7 @@ export class LoggerService {
     }
   }
 
-  private _context(name: Readonly<string>, hasExtendedContext: Readonly<boolean> = false): string {
+  private _context(name: string, hasExtendedContext = false): string {
     let message = `[${name}][now-format]`;
 
     if (_.isEqual(hasExtendedContext, false) || !_.isBoolean(hasExtendedContext)) {

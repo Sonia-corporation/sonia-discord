@@ -1,31 +1,39 @@
-import { isDiscordDmChannel } from './is-discord-dm-channel';
-import { isDiscordNewsChannel } from './is-discord-news-channel';
-import { isDiscordTextChannel } from './is-discord-text-channel';
-import { isDiscordThreadChannel } from './is-discord-thread-channel';
-import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
+import { DiscordChannelEnum } from '../enums/discord-channel.enum';
 
 /**
  * @description
- * Return a humanized version of class instances related to channels
- * Useful for the logs
- * @param {GuildBasedChannel | TextBasedChannel} channel The channel to humanize
- * @returns {string} The humanized channel
+ * Return a humanized version of the given channel.
+ * Useful for the logs or to display them to the users.
+ * @param   {DiscordChannelEnum} channel The channel to humanize.
+ * @returns {string}                     The humanized channel.
  */
-export function getDiscordHumanizedChannel(channel: Readonly<GuildBasedChannel | TextBasedChannel>): string {
-  if (isDiscordTextChannel(channel)) {
+export function getDiscordHumanizedChannel(channel?: DiscordChannelEnum): string {
+  if (channel === DiscordChannelEnum.TEXT) {
     return `text channel`;
   }
 
-  if (isDiscordDmChannel(channel)) {
+  if (channel === DiscordChannelEnum.DM) {
     return `private message`;
   }
 
-  if (isDiscordNewsChannel(channel)) {
+  if (channel === DiscordChannelEnum.NEWS) {
     return `news channel`;
   }
 
-  if (isDiscordThreadChannel(channel)) {
+  if (channel === DiscordChannelEnum.THREAD) {
     return `thread`;
+  }
+
+  if (channel === DiscordChannelEnum.CATEGORY) {
+    return `category channel`;
+  }
+
+  if (channel === DiscordChannelEnum.STAGE) {
+    return `stage channel`;
+  }
+
+  if (channel === DiscordChannelEnum.VOICE) {
+    return `voice channel`;
   }
 
   return `channel`;

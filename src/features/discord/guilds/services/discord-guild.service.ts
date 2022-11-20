@@ -30,10 +30,10 @@ export class DiscordGuildService extends AbstractService {
     return DiscordClientService.getInstance().getClient().guilds.cache.toJSON();
   }
 
-  public getGuildById(guildId: Readonly<Snowflake>): Guild | undefined {
+  public getGuildById(guildId: Snowflake): Guild | undefined {
     return DiscordClientService.getInstance()
       .getClient()
-      .guilds.cache.find((guild: Readonly<Guild>): boolean => _.isEqual(guild.id, guildId));
+      .guilds.cache.find((guild: Guild): boolean => _.isEqual(guild.id, guildId));
   }
 
   private _listen(): Promise<void> {

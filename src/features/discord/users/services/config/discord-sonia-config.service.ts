@@ -56,7 +56,7 @@ export class DiscordSoniaConfigService extends AbstractService {
     return DiscordSoniaConfigCoreService.getInstance().devGuildIdWhitelist;
   }
 
-  public isGuildWhitelistedInDev({ id }: Readonly<Guild>): boolean {
+  public isGuildWhitelistedInDev({ id }: Guild): boolean {
     return _.includes(this.getDevGuildIdWhitelist(), id);
   }
 

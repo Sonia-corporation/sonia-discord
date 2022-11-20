@@ -4,8 +4,8 @@ import { IDiscordCommandFlagResponse } from '../../../types/commands/flags/disco
 
 export abstract class DiscordCommandFlagActionBoolean<T extends string> {
   public abstract execute: (
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value: Readonly<string | null | undefined>,
-    discordCommandFlags: Readonly<DiscordCommandFlags<T>>
+    anyDiscordMessage: IAnyDiscordMessage,
+    value: string | null | undefined,
+    discordCommandFlags: DiscordCommandFlags<T>
   ) => Promise<IDiscordCommandFlagResponse>;
 }

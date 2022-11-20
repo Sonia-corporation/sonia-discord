@@ -90,10 +90,10 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getGuildsCount(): Promise<number> {
-    return this.getGuilds().then(({ size }: Readonly<QuerySnapshot<IFirebaseGuild>>): number => size);
+    return this.getGuilds().then(({ size }: QuerySnapshot<IFirebaseGuild>): number => size);
   }
 
-  public hasGuild(guildId: Readonly<Snowflake>): Promise<boolean> {
+  public hasGuild(guildId: Snowflake): Promise<boolean> {
     const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
@@ -116,7 +116,7 @@ export class FirebaseGuildsService extends AbstractService {
         ({
           // eslint-disable-next-line @typescript-eslint/naming-convention
           exists,
-        }: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<boolean> => Promise.resolve(exists)
+        }: DocumentSnapshot<IFirebaseGuild>): Promise<boolean> => Promise.resolve(exists)
       )
       .catch((): Promise<boolean> => {
         LoggerService.getInstance().error({
@@ -130,7 +130,7 @@ export class FirebaseGuildsService extends AbstractService {
       });
   }
 
-  public getGuild(guildId: Readonly<Snowflake>): Promise<IFirebaseGuild | null | undefined> {
+  public getGuild(guildId: Snowflake): Promise<IFirebaseGuild | null | undefined> {
     const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
@@ -149,15 +149,13 @@ export class FirebaseGuildsService extends AbstractService {
     return collectionReference
       .doc(guildId)
       .get()
-      .then(
-        (documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<IFirebaseGuild | null | undefined> => {
-          if (!_.isEqual(documentSnapshot.exists, true)) {
-            return Promise.resolve(null);
-          }
-
-          return Promise.resolve(documentSnapshot.data());
+      .then((documentSnapshot: DocumentSnapshot<IFirebaseGuild>): Promise<IFirebaseGuild | null | undefined> => {
+        if (!_.isEqual(documentSnapshot.exists, true)) {
+          return Promise.resolve(null);
         }
-      )
+
+        return Promise.resolve(documentSnapshot.data());
+      })
       .catch((): Promise<null> => {
         LoggerService.getInstance().error({
           context: this._serviceName,
@@ -170,7 +168,7 @@ export class FirebaseGuildsService extends AbstractService {
       });
   }
 
-  public addGuild({ id }: Readonly<Guild>): Promise<WriteResult> {
+  public addGuild({ id }: Guild): Promise<WriteResult> {
     const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
@@ -198,7 +196,7 @@ export class FirebaseGuildsService extends AbstractService {
           id,
         })
       )
-      .then((writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
+      .then((writeResult: WriteResult): Promise<WriteResult> => {
         LoggerService.getInstance().success({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} created`),
@@ -215,7 +213,7 @@ export class FirebaseGuildsService extends AbstractService {
   public isReady(): Promise<true> {
     return firstValueFrom(
       this.isReady$().pipe(
-        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+        filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
@@ -230,7 +228,7 @@ export class FirebaseGuildsService extends AbstractService {
     return this._onGuildsChange$.asObservable();
   }
 
-  public notifyOnGuildsChange(guilds: Readonly<IFirebaseGuild>[]): void {
+  public notifyOnGuildsChange(guilds: IFirebaseGuild[]): void {
     this._onGuildsChange$.next(guilds);
   }
 
@@ -278,7 +276,7 @@ export class FirebaseGuildsService extends AbstractService {
 
         this.notifyOnGuildsChange(firebaseGuilds);
       },
-      (error: Readonly<Error>): void => {
+      (error: Error): void => {
         LoggerService.getInstance().error({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`Firebase guilds watcher catch an error`),
@@ -318,7 +316,7 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   private _logGuildCount(): Promise<number> {
-    return this.getGuildsCount().then((count: Readonly<number>): Promise<number> => {
+    return this.getGuildsCount().then((count: number): Promise<number> => {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(

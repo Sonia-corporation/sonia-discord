@@ -13,7 +13,7 @@ import _ from 'lodash';
 export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerConfig> {
   private static _instance: LoggerConfigMutatorService;
 
-  public static getInstance(config?: Readonly<Partial<ILoggerConfig>>): LoggerConfigMutatorService {
+  public static getInstance(config?: Partial<ILoggerConfig>): LoggerConfigMutatorService {
     if (_.isNil(LoggerConfigMutatorService._instance)) {
       LoggerConfigMutatorService._instance = new LoggerConfigMutatorService(config);
     }
@@ -21,7 +21,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     return LoggerConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
+  public constructor(config?: Partial<ILoggerConfig>) {
     super(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -31,7 +31,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     LoggerConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
+  public updateConfig(config?: Partial<ILoggerConfig>): void {
     if (!_.isNil(config)) {
       this.updateEnabledState(config.isEnabled);
       this.updateLevel(config.level);
@@ -44,7 +44,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     }
   }
 
-  public updateEnabledState(isEnabled?: Readonly<boolean>): void {
+  public updateEnabledState(isEnabled?: boolean): void {
     LoggerConfigCoreService.getInstance().isEnabled = ConfigService.getInstance().getUpdatedBoolean({
       context: this._serviceName,
       newValue: isEnabled,
@@ -53,7 +53,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     });
   }
 
-  public updateLevel(level?: Readonly<LoggerConfigLevelEnum>): void {
+  public updateLevel(level?: LoggerConfigLevelEnum): void {
     LoggerConfigCoreService.getInstance().level = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: level,
@@ -62,7 +62,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     });
   }
 
-  public updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs?: Readonly<boolean>): void {
+  public updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs?: boolean): void {
     LoggerConfigCoreService.getInstance().shouldDisplayMoreDebugLogs = ConfigService.getInstance().getUpdatedBoolean({
       context: this._serviceName,
       newValue: shouldDisplayMoreDebugLogs,

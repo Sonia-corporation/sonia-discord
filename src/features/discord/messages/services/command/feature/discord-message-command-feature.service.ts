@@ -10,10 +10,10 @@ import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './servi
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
 import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
-import { AbstractService } from '../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
 import { ChalkService } from '../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordChannelEnum } from '../../../../channels/enums/discord-channel.enum';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
 import { discordGetCommandFirstArgument } from '../../../functions/commands/getters/discord-get-command-first-argument';
@@ -24,10 +24,11 @@ import { IDiscordCommandFlagsDuplicated } from '../../../types/commands/flags/di
 import { IDiscordCommandFlagsErrors } from '../../../types/commands/flags/discord-command-flags-errors';
 import { IDiscordCommandFlagsOpposite } from '../../../types/commands/flags/discord-command-flags-opposite';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
 import { Message } from 'discord.js';
 import _ from 'lodash';
 
-export class DiscordMessageCommandFeatureService extends AbstractService {
+export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandFeatureService;
 
   public static getInstance(): DiscordMessageCommandFeatureService {
@@ -38,6 +39,12 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     return DiscordMessageCommandFeatureService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+  ]);
+  protected readonly _commandName: string = `feature`;
+
   private readonly _commands: DiscordMessageCommandEnum[] = [
     DiscordMessageCommandEnum.FEATURE,
     DiscordMessageCommandEnum.F,
@@ -47,20 +54,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE);
   }
 
-  public handleResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `feature command detected`),
-    });
-
-    return this.getMessageResponse(anyDiscordMessage);
-  }
-
   public getMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (!_.isString(anyDiscordMessage.content)) {
       return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
@@ -107,7 +102,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     );
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: this._commands,
       message,
@@ -115,13 +110,13 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     });
   }
 
-  public hasFlags(message: Readonly<string>): boolean {
+  public hasFlags(message: string): boolean {
     const flags: string | null = this.getFlags(message);
 
     return !_.isNil(flags);
   }
 
-  public getFlags(message: Readonly<string>): string | null {
+  public getFlags(message: string): string | null {
     return discordGetCommandFlags({
       commands: this._commands,
       message,
@@ -129,7 +124,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     });
   }
 
-  private _getFeatureName(message: Readonly<string>): string | null {
+  private _getFeatureName(message: string): string | null {
     return discordGetCommandFirstArgument({
       commands: this._commands,
       message,
@@ -138,8 +133,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getEmptyFlagsErrorMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>
+    anyDiscordMessage: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -158,9 +153,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getWrongFlagsErrorMessageResponse(
-    { id }: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
-    flagsErrors: Readonly<IDiscordCommandFlagsErrors>
+    { id }: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum,
+    flagsErrors: IDiscordCommandFlagsErrors
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -175,9 +170,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getDuplicatedFlagsErrorMessageResponse(
-    { id }: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
-    flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>
+    { id }: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum,
+    flagsDuplicated: IDiscordCommandFlagsDuplicated
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -192,9 +187,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getOppositeFlagsErrorMessageResponse(
-    { id }: Readonly<IAnyDiscordMessage>,
-    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
+    { id }: IAnyDiscordMessage,
+    featureName: DiscordMessageCommandFeatureNameEnum,
+    oppositeFlags: IDiscordCommandFlagsOpposite
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -208,9 +203,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     return DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance().getMessageResponse(oppositeFlags);
   }
 
-  private _getNoonMessageResponse(
-    message: Readonly<Message>
-  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+  private _getNoonMessageResponse(message: Message): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     const messageFlags: string | null = this.getFlags(message.content);
 
     if (_.isNil(messageFlags)) {
@@ -250,7 +243,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getReleaseNotesMessageResponse(
-    message: Readonly<Message>
+    message: Message
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     const messageFlags: string | null = this.getFlags(message.content);
 

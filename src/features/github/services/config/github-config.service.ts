@@ -23,12 +23,17 @@ export class GithubConfigService extends AbstractService {
   public getConfig(): IGithubConfig {
     return {
       bugReportUrl: this.getBugReportUrl(),
+      featureRequestUrl: this.getFeatureRequestUrl(),
       personalAccessToken: this.getPersonalAccessToken(),
     };
   }
 
   public getBugReportUrl(): string {
     return GithubConfigCoreService.getInstance().bugReportUrl;
+  }
+
+  public getFeatureRequestUrl(): string {
+    return GithubConfigCoreService.getInstance().featureRequestUrl;
   }
 
   public getPersonalAccessToken(): IPersonalAccessToken | never {

@@ -8,7 +8,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
 import { IAppReleaseTypeResponsesFactoryPattern } from '../../../app/types/app-release-type-responses-factory-pattern';
-import { getDiscordHumanizedChannel } from '../../../discord/channels/functions/get-discord-humanized-channel';
+import { getDiscordHumanizedChannelFromClass } from '../../../discord/channels/functions/get-discord-humanized-channel-from-class';
 import { isDiscordTextChannel } from '../../../discord/channels/functions/is-discord-text-channel';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
 import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
@@ -73,8 +73,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
   /**
    * @description
-   * Wait Firebase to handle the breaking changes
-   * @returns {Observable<[boolean]>} An observable
+   * Wait Firebase to handle the breaking changes.
+   * @returns {Observable<[boolean]>} An observable.
    */
   public isReady$(): Observable<[true]> {
     return forkJoin([FirebaseGuildsBreakingChangeService.getInstance().hasFinished()]);
@@ -90,7 +90,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     );
   }
 
-  public sendNewReleaseNotesFromFirebaseGuild({ id }: Readonly<IFirebaseGuild>): Promise<(Message | null)[]> {
+  public sendNewReleaseNotesFromFirebaseGuild({ id }: IFirebaseGuild): Promise<(Message | null)[]> {
     if (_.isNil(id)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
@@ -117,9 +117,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public sendMessageByChannel(
-    channel: Readonly<IFirebaseGuildChannel>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    guild: Readonly<Guild>
+    channel: IFirebaseGuildChannel,
+    firebaseGuild: IFirebaseGuildVFinal,
+    guild: Guild
   ): Promise<Message | void> {
     if (
       !FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService.getInstance().isEnabled(channel, firebaseGuild)
@@ -148,7 +148,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return this.sendMessageResponse(guildBasedChannel);
   }
 
-  public async sendMessageResponse(guildBasedChannel: Readonly<GuildBasedChannel>): Promise<Message | void> {
+  public async sendMessageResponse(guildBasedChannel: GuildBasedChannel): Promise<Message | void> {
     if (!isDiscordTextChannel(guildBasedChannel)) {
       this._logGuildChannelNotTextChannel(guildBasedChannel);
       LoggerService.getInstance().warning({
@@ -157,7 +157,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           `The channel ${ChalkService.getInstance().value(
             guildBasedChannel.name
           )} is not a text channel. The support for ${ChalkService.getInstance().value(
-            getDiscordHumanizedChannel(guildBasedChannel)
+            getDiscordHumanizedChannelFromClass(guildBasedChannel)
           )} is not yet there.`
         ),
       });
@@ -183,7 +183,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
         return Promise.resolve(message);
       })
-      .catch((error: Readonly<string>): Promise<void> => {
+      .catch((error: string): Promise<void> => {
         this._onMessageError(error, guildBasedChannel);
 
         return Promise.reject(error);
@@ -193,7 +193,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   public getMessageResponse(): Promise<IDiscordMessageResponse | null> {
     return DiscordMessageCommandReleaseNotesService.getInstance()
       .getMessageResponse()
-      .then((messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+      .then((messageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> => {
         const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
         const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
         const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern = {
@@ -235,12 +235,12 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       });
   }
 
-  public sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<(Message | null)[]> {
+  public sendNewReleaseNotesFromDiscordGuild(guild: Guild): Promise<(Message | null)[]> {
     this._logFetchingFirebaseGuild(guild);
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
-      .then((firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | null)[]> => {
+      .then((firebaseGuild: IFirebaseGuild | null | undefined): Promise<(Message | null)[]> => {
         this._logFirebaseGuildFetched(guild);
 
         if (!this.isValidGuild(firebaseGuild)) {
@@ -254,7 +254,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         return Promise.all(
           _.map(
             firebaseGuild.channels,
-            (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | null> =>
+            (channel: IFirebaseGuildChannel): Promise<Message | null> =>
               this.sendMessageByChannel(channel, firebaseGuild, guild)
                 .then((message: Message | void): Promise<Message | null> => {
                   if (message) {
@@ -269,9 +269,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       });
   }
 
-  public isValidGuild(
-    firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
-  ): firebaseGuild is IFirebaseGuildVFinal {
+  public isValidGuild(firebaseGuild: IFirebaseGuild | null | undefined): firebaseGuild is IFirebaseGuildVFinal {
     return !_.isNil(firebaseGuild) && isUpToDateFirebaseGuild(firebaseGuild);
   }
 
@@ -303,7 +301,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
           const messagePromises: Promise<(Message | null)[] | void>[] = [];
 
-          _.forEach(firebaseGuilds, (firebaseGuild: Readonly<IFirebaseGuild>): void => {
+          _.forEach(firebaseGuilds, (firebaseGuild: IFirebaseGuild): void => {
             messagePromises.push(
               this.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch((): Promise<void> => {
                 LoggerService.getInstance().error({
@@ -393,7 +391,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return Promise.resolve();
   }
 
-  private _shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild: Readonly<IFirebaseGuild>): boolean {
+  private _shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild: IFirebaseGuild): boolean {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
     if (hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild)) {
@@ -407,38 +405,35 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return false;
   }
 
-  private _logFetchingFirebaseGuild({ id }: Readonly<Guild>): void {
+  private _logFetchingFirebaseGuild({ id }: Guild): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`fetching Firebase guild ${ChalkService.getInstance().value(id)}`),
     });
   }
 
-  private _logFirebaseGuildFetched({ id }: Readonly<Guild>): void {
+  private _logFirebaseGuildFetched({ id }: Guild): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} fetched`),
     });
   }
 
-  private _logInvalidFirebaseGuild({ id }: Readonly<Guild>): void {
+  private _logInvalidFirebaseGuild({ id }: Guild): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} is invalid`),
     });
   }
 
-  private _logValidFirebaseGuild({ id }: Readonly<Guild>): void {
+  private _logValidFirebaseGuild({ id }: Guild): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} is valid`),
     });
   }
 
-  private _logFirebaseGuildChannelReleaseNotesDisabled(
-    { id }: Readonly<Guild>,
-    guildChannel: Readonly<IFirebaseGuildChannel>
-  ): void {
+  private _logFirebaseGuildChannelReleaseNotesDisabled({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -449,10 +444,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logFirebaseGuildChannelReleaseNotesEnabled(
-    { id }: Readonly<Guild>,
-    guildChannel: Readonly<IFirebaseGuildChannel>
-  ): void {
+  private _logFirebaseGuildChannelReleaseNotesEnabled({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -463,7 +455,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logInValidDiscordGuildChannel({ id }: Readonly<Guild>, guildChannel: Readonly<IFirebaseGuildChannel>): void {
+  private _logInValidDiscordGuildChannel({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -474,7 +466,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logValidDiscordGuildChannel({ id }: Readonly<Guild>, guildChannel: Readonly<IFirebaseGuildChannel>): void {
+  private _logValidDiscordGuildChannel({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -485,7 +477,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logGuildChannelNotTextChannel({ id }: Readonly<GuildBasedChannel>): void {
+  private _logGuildChannelNotTextChannel({ id }: GuildBasedChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -494,7 +486,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logSendingMessagesForReleaseNotes({ id }: Readonly<TextChannel>): void {
+  private _logSendingMessagesForReleaseNotes({ id }: TextChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -503,7 +495,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logReleaseNotesMessageSent({ id }: Readonly<TextChannel>): void {
+  private _logReleaseNotesMessageSent({ id }: TextChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -512,12 +504,12 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _onMessageError(error: Readonly<string>, guildChannel: Readonly<TextChannel>): void {
+  private _onMessageError(error: string, guildChannel: TextChannel): void {
     this._messageErrorLog(error, guildChannel);
     this._sendMessageToSoniaDiscord(error);
   }
 
-  private _messageErrorLog(error: Readonly<string>, { id }: Readonly<TextChannel>): void {
+  private _messageErrorLog(error: string, { id }: TextChannel): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -530,7 +522,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _sendMessageToSoniaDiscord(error: Readonly<string>): void {
+  private _sendMessageToSoniaDiscord(error: string): void {
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),

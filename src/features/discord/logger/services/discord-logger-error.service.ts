@@ -33,7 +33,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE);
   }
 
-  public handleError(error: Readonly<Error | string>): void {
+  public handleError(error: Error | string): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(error),
@@ -49,7 +49,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     });
   }
 
-  public getErrorMessageResponse(error: Readonly<Error | string>): IDiscordMessageResponse {
+  public getErrorMessageResponse(error: Error | string): IDiscordMessageResponse {
     return {
       options: {
         embeds: [this._getMessageEmbed(error)],
@@ -57,7 +57,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbed(error: Readonly<Error | string>): MessageEmbedOptions {
+  private _getMessageEmbed(error: Error | string): MessageEmbedOptions {
     const messageEmbedOptions: MessageEmbedOptions = {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -102,7 +102,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     return moment().toDate();
   }
 
-  private _getMessageEmbedTitle(error: Readonly<Error | string>): string {
+  private _getMessageEmbedTitle(error: Error | string): string {
     if (_.isString(error)) {
       return error;
     }
@@ -110,11 +110,11 @@ export class DiscordLoggerErrorService extends AbstractService {
     return error.name;
   }
 
-  private _getMessageEmbedDescription({ message }: Readonly<Error>): string {
+  private _getMessageEmbedDescription({ message }: Error): string {
     return message;
   }
 
-  private _getMessageEmbedFields({ stack }: Readonly<Error>): EmbedFieldData[] | undefined {
+  private _getMessageEmbedFields({ stack }: Error): EmbedFieldData[] | undefined {
     if (_.isNil(stack)) {
       return undefined;
     }
@@ -122,7 +122,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     return [this._getMessageEmbedFieldError(stack)];
   }
 
-  private _getMessageEmbedFieldError(stack: Readonly<string>): EmbedFieldData {
+  private _getMessageEmbedFieldError(stack: string): EmbedFieldData {
     return {
       name: `My blood trace`,
       value: ellipsis(stack),

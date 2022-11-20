@@ -24,7 +24,7 @@ export class AppConfigQueryService extends AbstractService {
     super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
   }
 
-  public getFirstReleaseDateFormatted(format?: Readonly<string>): string {
+  public getFirstReleaseDateFormatted(format?: string): string {
     const firstReleaseDate: string = AppConfigService.getInstance().getFirstReleaseDate();
 
     if (isValidDate(firstReleaseDate)) {
@@ -60,7 +60,7 @@ export class AppConfigQueryService extends AbstractService {
     return TimeService.getInstance().fromNow(releaseDate);
   }
 
-  public getTotalReleaseCountHumanized(releaseWord: Readonly<string> = `version`): string {
+  public getTotalReleaseCountHumanized(releaseWord = `version`): string {
     const totalReleaseCount: number = AppConfigService.getInstance().getTotalReleaseCount();
     let sentence = `${_.toString(totalReleaseCount)} ${releaseWord}`;
 

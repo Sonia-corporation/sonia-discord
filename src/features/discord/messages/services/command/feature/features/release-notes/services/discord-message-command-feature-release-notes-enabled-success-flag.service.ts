@@ -21,10 +21,7 @@ export class DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService e
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE);
   }
 
-  public getFlag(
-    shouldEnable: Readonly<boolean>,
-    isEnabled: Readonly<boolean | undefined>
-  ): IDiscordCommandFlagSuccess {
+  public getFlag(shouldEnable: boolean, isEnabled: boolean | undefined): IDiscordCommandFlagSuccess {
     if (_.isNil(isEnabled)) {
       return this._getFlagWhenNotConfigured(shouldEnable);
     } else if (_.isEqual(isEnabled, true)) {
@@ -34,7 +31,7 @@ export class DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService e
     return this._getFlagWhenDisabled(shouldEnable);
   }
 
-  private _getFlagWhenNotConfigured(shouldEnable: Readonly<boolean>): IDiscordCommandFlagSuccess {
+  private _getFlagWhenNotConfigured(shouldEnable: boolean): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
         description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
@@ -48,7 +45,7 @@ export class DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService e
     };
   }
 
-  private _getFlagWhenEnabled(shouldEnable: Readonly<boolean>): IDiscordCommandFlagSuccess {
+  private _getFlagWhenEnabled(shouldEnable: boolean): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
         description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
@@ -62,7 +59,7 @@ export class DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService e
     };
   }
 
-  private _getFlagWhenDisabled(shouldEnable: Readonly<boolean>): IDiscordCommandFlagSuccess {
+  private _getFlagWhenDisabled(shouldEnable: boolean): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
         description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,

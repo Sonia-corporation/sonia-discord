@@ -1,6 +1,3 @@
-/**
- * @param token
- */
-export function getBearer(token: Readonly<string>): string {
+export function getBearer(token: string): string {
   return `bearer ${token}`;
 }

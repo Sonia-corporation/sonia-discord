@@ -29,19 +29,19 @@ export class FirebaseGuildsChannelsService extends FirebaseUpdateCoreService<
   }
 
   public isUpToDate(
-    channel: Readonly<IFirebaseGuildChannel | IFirebaseGuildChannelVFinal>
+    channel: IFirebaseGuildChannel | IFirebaseGuildChannelVFinal
   ): channel is IFirebaseGuildChannelVFinal {
     return _.isEqual(channel.version, FIREBASE_GUILD_CHANNEL_CURRENT_VERSION);
   }
 
-  public create({ id }: Readonly<ICreateFirebaseGuildChannel>): INewFirebaseGuildChannel {
+  public create({ id }: ICreateFirebaseGuildChannel): INewFirebaseGuildChannel {
     return {
       id,
       version: FIREBASE_GUILD_CHANNEL_CURRENT_VERSION,
     };
   }
 
-  public upgrade(channel: Readonly<IFirebaseGuildChannel>): IFirebaseGuildChannelVFinal {
+  public upgrade(channel: IFirebaseGuildChannel): IFirebaseGuildChannelVFinal {
     return handleFirebaseGuildChannelBreakingChange(channel);
   }
 }

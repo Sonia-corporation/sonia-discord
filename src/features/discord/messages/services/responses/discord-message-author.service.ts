@@ -22,7 +22,7 @@ export class DiscordMessageAuthorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE);
   }
 
-  public reply({ author }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public reply({ author }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     let response = `Il est midi!`;
 
     if (DiscordAuthorService.getInstance().isValid(author)) {

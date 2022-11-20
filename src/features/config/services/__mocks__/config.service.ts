@@ -16,7 +16,7 @@ export class ConfigService {
     return ConfigService._instance;
   }
 
-  public getUpdatedNumber(configUpdateNumber: Readonly<IConfigUpdateNumber>): number {
+  public getUpdatedNumber(configUpdateNumber: IConfigUpdateNumber): number {
     if (_.isNumber(configUpdateNumber.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateNumber.context,
@@ -29,7 +29,7 @@ export class ConfigService {
     return configUpdateNumber.oldValue;
   }
 
-  public getUpdatedString(configUpdateString: Readonly<IConfigUpdateString>): string {
+  public getUpdatedString(configUpdateString: IConfigUpdateString): string {
     if (!_.isString(configUpdateString.newValue)) {
       return configUpdateString.oldValue;
     }
@@ -52,7 +52,7 @@ export class ConfigService {
     return configUpdateString.newValue;
   }
 
-  public getUpdatedBoolean(configUpdateString: Readonly<IConfigUpdateBoolean>): boolean {
+  public getUpdatedBoolean(configUpdateString: IConfigUpdateBoolean): boolean {
     if (!_.isBoolean(configUpdateString.newValue)) {
       return configUpdateString.oldValue;
     }

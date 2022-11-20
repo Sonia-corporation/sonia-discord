@@ -14,6 +14,7 @@ import { IConfigUpdateStringInternal } from '../interfaces/config-update-string-
 import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
 import { IConfigUpdateStringOrArrayInternal } from '../interfaces/config-update-string-or-array-internal';
 import _ from 'lodash';
+import { MomentInput } from 'moment-timezone';
 
 export class ConfigService extends AbstractService {
   private static _instance: ConfigService;
@@ -30,7 +31,7 @@ export class ConfigService extends AbstractService {
     super(ServiceNameEnum.CONFIG_SERVICE);
   }
 
-  public getUpdatedNumber({ context, newValue, oldValue, valueName }: Readonly<IConfigUpdateNumber>): number {
+  public getUpdatedNumber({ context, newValue, oldValue, valueName }: IConfigUpdateNumber): number {
     if (_.isNumber(newValue)) {
       LoggerService.getInstance().log({
         context,
@@ -45,7 +46,7 @@ export class ConfigService extends AbstractService {
     return oldValue;
   }
 
-  public getUpdatedString<T = string>(configUpdateString: Readonly<IConfigUpdateString<T>>): T {
+  public getUpdatedString<T = string>(configUpdateString: IConfigUpdateString<T>): T {
     if (_.isString(configUpdateString.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateString.context,
@@ -58,7 +59,7 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
-  public getUpdatedDate<T = string>(configUpdateDate: Readonly<IConfigUpdateDate<T>>): T {
+  public getUpdatedDate<T extends MomentInput>(configUpdateDate: IConfigUpdateDate<T>): T {
     if (_.isString(configUpdateDate.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateDate.context,
@@ -71,7 +72,7 @@ export class ConfigService extends AbstractService {
     return configUpdateDate.oldValue;
   }
 
-  public getUpdatedStringOrArray<T = string>(configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>): T {
+  public getUpdatedStringOrArray<T = string>(configUpdateStringOrArray: IConfigUpdateStringOrArray<T>): T {
     if (_.isString(configUpdateStringOrArray.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateStringOrArray.context,
@@ -91,7 +92,7 @@ export class ConfigService extends AbstractService {
     return configUpdateStringOrArray.oldValue;
   }
 
-  public getUpdatedArray<TValue = string>(configUpdateArray: Readonly<IConfigUpdateArray<TValue>>): TValue[] {
+  public getUpdatedArray<TValue = string>(configUpdateArray: IConfigUpdateArray<TValue>): TValue[] {
     if (_.isArray(configUpdateArray.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateArray.context,
@@ -111,7 +112,7 @@ export class ConfigService extends AbstractService {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     oldValue,
     valueName,
-  }: Readonly<IConfigUpdateBoolean>): boolean {
+  }: IConfigUpdateBoolean): boolean {
     if (_.isBoolean(newValue)) {
       LoggerService.getInstance().log({
         context,
@@ -131,7 +132,7 @@ export class ConfigService extends AbstractService {
     isValueHidden,
     newValue,
     valueName,
-  }: Readonly<IConfigUpdateStringInternal<T>>): string {
+  }: IConfigUpdateStringInternal<T>): string {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
@@ -154,7 +155,7 @@ export class ConfigService extends AbstractService {
     isValueHidden,
     isValueDisplay,
     newValue,
-  }: Readonly<IConfigUpdateStringOrArrayInternal<T>>): string {
+  }: IConfigUpdateStringOrArrayInternal<T>): string {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
@@ -177,7 +178,7 @@ export class ConfigService extends AbstractService {
     isValueHidden,
     isValueDisplay,
     newValue,
-  }: Readonly<IConfigUpdateArray<TValue>>): string {
+  }: IConfigUpdateArray<TValue>): string {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
@@ -197,12 +198,12 @@ export class ConfigService extends AbstractService {
     return message;
   }
 
-  private _getUpdatedDateMessage<T = string>({
+  private _getUpdatedDateMessage<T extends MomentInput>({
     valueName,
     isValueHidden,
     isValueDisplay,
     newValue,
-  }: Readonly<IConfigUpdateDateInternal<T>>): string {
+  }: IConfigUpdateDateInternal<T>): string {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
@@ -212,7 +213,7 @@ export class ConfigService extends AbstractService {
         message = ChalkService.getInstance().text(
           `${message} to: ${ChalkService.getInstance().value(
             wrapInQuotes<T>(newValue)
-          )} ${ChalkService.getInstance().hint(`(${TimeService.getInstance().fromNow<T>(newValue, false)})`)}`
+          )} ${ChalkService.getInstance().hint(`(${TimeService.getInstance().fromNow(newValue, false)})`)}`
         );
       } else {
         message = ChalkService.getInstance().text(message);

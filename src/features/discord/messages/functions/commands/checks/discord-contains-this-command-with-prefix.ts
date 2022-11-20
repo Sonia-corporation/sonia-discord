@@ -3,17 +3,11 @@ import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-messa
 import { IDiscordContainsThisCommandWithPrefixData } from '../../../interfaces/commands/checks/discord-contains-this-command-with-prefix-data';
 import _ from 'lodash';
 
-/**
- * @param root0
- * @param root0.commands
- * @param root0.message
- * @param root0.prefix
- */
 export function discordContainsThisCommandWithPrefix({
   commands,
   message,
   prefix,
-}: Readonly<IDiscordContainsThisCommandWithPrefixData>): boolean {
+}: IDiscordContainsThisCommandWithPrefixData): boolean {
   let containsThisCommandWithPrefix = false;
 
   if (_.isString(commands)) {
@@ -25,7 +19,7 @@ export function discordContainsThisCommandWithPrefix({
       prefix,
     });
   } else if (_.isArray(commands)) {
-    _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>): false | void => {
+    _.forEach(commands, (command: DiscordMessageCommandEnum): false | void => {
       if (
         discordStrictlyContainsThisCommandWithPrefix({
           command,

@@ -40,22 +40,22 @@ export class DiscordGuildCreateService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(guild: Readonly<Guild>): Promise<Message | void> {
+  public sendMessage(guild: Guild): Promise<Message | void> {
     return this._sendCookieMessage(guild);
   }
 
-  public addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult | void> {
+  public addFirebaseGuild(guild: Guild): Promise<WriteResult | void> {
     return firstValueFrom(
       FirebaseGuildsService.getInstance()
         .isReady$()
         .pipe(
-          filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+          filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
           take(ONE_EMITTER),
           mergeMap(
             (): Promise<WriteResult | void> =>
               FirebaseGuildsService.getInstance()
                 .hasGuild(guild.id)
-                .then((hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
+                .then((hasGuild: boolean): Promise<WriteResult | void> => {
                   if (_.isEqual(hasGuild, false)) {
                     return this._addFirebaseGuild(guild).catch((): void => {
                       LoggerService.getInstance().debug({
@@ -77,7 +77,7 @@ export class DiscordGuildCreateService extends AbstractService {
     );
   }
 
-  private _addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult> {
+  private _addFirebaseGuild(guild: Guild): Promise<WriteResult> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`guild not yet created on Firebase`),
@@ -85,7 +85,7 @@ export class DiscordGuildCreateService extends AbstractService {
 
     return FirebaseGuildsService.getInstance()
       .addGuild(guild)
-      .then((writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
+      .then((writeResult: WriteResult): Promise<WriteResult> => {
         LoggerService.getInstance().success({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`guild added into Firebase`),
@@ -95,7 +95,7 @@ export class DiscordGuildCreateService extends AbstractService {
       });
   }
 
-  private _sendCookieMessage(guild: Readonly<Guild>): Promise<Message | void> {
+  private _sendCookieMessage(guild: Guild): Promise<Message | void> {
     if (!this._canSendCookiesMessage()) {
       return Promise.reject(new Error(`Can not send cookies message`));
     }
@@ -113,7 +113,7 @@ export class DiscordGuildCreateService extends AbstractService {
   private _listen(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(`guildCreate`, (guild: Readonly<Guild>): void => {
+      .on(`guildCreate`, (guild: Guild): void => {
         LoggerService.getInstance().debug({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`${wrapInQuotes(`guildCreate`)} event triggered`),
@@ -161,7 +161,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildBasedChannel>): Promise<Message | void> {
+  private _sendCookieMessageToChannel(guildChannel: GuildBasedChannel): Promise<Message | void> {
     if (!isDiscordWritableChannel(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
@@ -188,7 +188,7 @@ export class DiscordGuildCreateService extends AbstractService {
 
     return this._getMessageResponse()
       .then(
-        ({ content, options }: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
+        ({ content, options }: IDiscordMessageResponse): Promise<Message | void> =>
           guildChannel
             .send({
               ...options,
@@ -202,7 +202,7 @@ export class DiscordGuildCreateService extends AbstractService {
 
               return Promise.resolve(message);
             })
-            .catch((error: Readonly<Error | string>): Promise<void> => {
+            .catch((error: Error | string): Promise<void> => {
               LoggerService.getInstance().error({
                 context: this._serviceName,
                 message: ChalkService.getInstance().text(`cookies message sending for the create guild failed`),
@@ -219,7 +219,7 @@ export class DiscordGuildCreateService extends AbstractService {
               return Promise.reject(error);
             })
       )
-      .catch((error: Readonly<Error | string>): Promise<void> => Promise.reject(error));
+      .catch((error: Error | string): Promise<void> => Promise.reject(error));
   }
 
   private _getMessageResponse(): Promise<IDiscordMessageResponse> {

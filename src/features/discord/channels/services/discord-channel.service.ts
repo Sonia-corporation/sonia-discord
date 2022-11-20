@@ -22,19 +22,19 @@ export class DiscordChannelService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
   }
 
-  public isValid(channel: Readonly<TextBasedChannel | null | undefined>): channel is IAnyDiscordChannel {
+  public isValid(channel: TextBasedChannel | null | undefined): channel is IAnyDiscordChannel {
     return !!(this.isText(channel) || this.isDm(channel) || this.isThread(channel));
   }
 
-  public isText(channel: Readonly<TextBasedChannel | null | undefined>): channel is TextChannel {
+  public isText(channel: TextBasedChannel | null | undefined): channel is TextChannel {
     return isDiscordTextChannel(channel);
   }
 
-  public isDm(channel: Readonly<TextBasedChannel | null | undefined>): channel is DMChannel {
+  public isDm(channel: TextBasedChannel | null | undefined): channel is DMChannel {
     return isDiscordDmChannel(channel);
   }
 
-  public isThread(channel: Readonly<TextBasedChannel | null | undefined>): channel is ThreadChannel {
+  public isThread(channel: TextBasedChannel | null | undefined): channel is ThreadChannel {
     return isDiscordThreadChannel(channel);
   }
 }

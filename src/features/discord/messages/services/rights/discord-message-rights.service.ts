@@ -20,7 +20,7 @@ export class DiscordMessageRightsService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_RIGHTS_SERVICE);
   }
 
-  public isSoniaAuthorizedForThisGuild(guild: Readonly<Guild>): boolean {
+  public isSoniaAuthorizedForThisGuild(guild: Guild): boolean {
     if (AppConfigService.getInstance().isProduction()) {
       return true;
     }

@@ -25,7 +25,7 @@ export class ReleaseTypeService extends AbstractService {
     super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
   }
 
-  public getReleaseType(releaseNotes: Readonly<string>): AppConfigReleaseTypeEnum {
+  public getReleaseType(releaseNotes: string): AppConfigReleaseTypeEnum {
     const counts: IReleaseTypeCounts = this._getCounts(releaseNotes);
 
     if (this._hasMultipleCounterSet(counts)) {
@@ -43,19 +43,19 @@ export class ReleaseTypeService extends AbstractService {
     return AppConfigReleaseTypeEnum.UNKNOWN;
   }
 
-  private _getBugFixesCount(releaseNotes: Readonly<string>): number {
+  private _getBugFixesCount(releaseNotes: string): number {
     return this._getCount(releaseNotes, ReleaseTypeBlockNameEnum.BUG_FIXES);
   }
 
-  private _getFeaturesCount(releaseNotes: Readonly<string>): number {
+  private _getFeaturesCount(releaseNotes: string): number {
     return this._getCount(releaseNotes, ReleaseTypeBlockNameEnum.FEATURES);
   }
 
-  private _getPerformanceImprovementsCount(releaseNotes: Readonly<string>): number {
+  private _getPerformanceImprovementsCount(releaseNotes: string): number {
     return this._getCount(releaseNotes, ReleaseTypeBlockNameEnum.PERFORMANCE_IMPROVEMENTS);
   }
 
-  private _getCounts(releaseNotes: Readonly<string>): IReleaseTypeCounts {
+  private _getCounts(releaseNotes: string): IReleaseTypeCounts {
     return {
       bugFixes: this._getBugFixesCount(releaseNotes),
       features: this._getFeaturesCount(releaseNotes),
@@ -63,18 +63,15 @@ export class ReleaseTypeService extends AbstractService {
     };
   }
 
-  private _hasMultipleCounterSet(counts: Readonly<IReleaseTypeCounts>): boolean {
-    return _.gte(_.size(_.filter(counts, (count: Readonly<number>): boolean => _.gt(count, ZERO))), TWO);
+  private _hasMultipleCounterSet(counts: IReleaseTypeCounts): boolean {
+    return _.gte(_.size(_.filter(counts, (count: number): boolean => _.gt(count, ZERO))), TWO);
   }
 
-  private _extractBlock(
-    releaseNotes: Readonly<string>,
-    blockName: Readonly<ReleaseTypeBlockNameEnum>
-  ): string | undefined {
+  private _extractBlock(releaseNotes: string, blockName: ReleaseTypeBlockNameEnum): string | undefined {
     return _.head(getReleaseTypeBlockRegexp(blockName).exec(releaseNotes));
   }
 
-  private _countBlockRows(block: Readonly<string>): number {
+  private _countBlockRows(block: string): number {
     const blockWithRows: string | undefined = _.head(getReleaseTypeBlockRowsRegexp().exec(block));
 
     if (_.isNil(blockWithRows)) {
@@ -84,7 +81,7 @@ export class ReleaseTypeService extends AbstractService {
     return _.size(_.split(blockWithRows, `\n`));
   }
 
-  private _getCount(releaseNotes: Readonly<string>, blockName: Readonly<ReleaseTypeBlockNameEnum>): number {
+  private _getCount(releaseNotes: string, blockName: ReleaseTypeBlockNameEnum): number {
     const block: string | undefined = this._extractBlock(releaseNotes, blockName);
 
     if (_.isNil(block)) {

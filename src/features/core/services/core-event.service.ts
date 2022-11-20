@@ -24,7 +24,7 @@ export class CoreEventService extends AutoUnsubscribe {
     this._listenServiceCreated();
   }
 
-  public notifyServiceCreated(serviceName: Readonly<ServiceNameEnum>): void {
+  public notifyServiceCreated(serviceName: ServiceNameEnum): void {
     this._serviceCreated$.next(serviceName);
   }
 
@@ -39,7 +39,7 @@ export class CoreEventService extends AutoUnsubscribe {
   private _listenServiceCreated(): void {
     this._registerSubscription(
       this._serviceCreated$.subscribe({
-        next: (serviceName: Readonly<ServiceNameEnum>): void => {
+        next: (serviceName: ServiceNameEnum): void => {
           this._createdServices.push(serviceName);
         },
       })

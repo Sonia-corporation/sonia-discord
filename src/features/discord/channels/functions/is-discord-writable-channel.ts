@@ -5,10 +5,14 @@ import { IAnyDiscordWritableChannel } from '../types/any-discord-writable-channe
 import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
 
 /**
- * @param channel
+ * @description
+ * Check if the given channel is writable channel.
+ * A writable channel is either a text channel, a news channel or a thread.
+ * @param   {GuildBasedChannel | TextBasedChannel | null | undefined} channel The channel to check.
+ * @returns {boolean}                                                         Return true when the channel is writable.
  */
 export function isDiscordWritableChannel(
-  channel: Readonly<GuildBasedChannel | TextBasedChannel | null | undefined>
+  channel: GuildBasedChannel | TextBasedChannel | null | undefined
 ): channel is IAnyDiscordWritableChannel {
   return isDiscordTextChannel(channel) || isDiscordNewsChannel(channel) || isDiscordThreadChannel(channel);
 }

@@ -28,12 +28,12 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
   }
 
-  public handleError(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): void {
+  public handleError(error: unknown, anyDiscordMessage: IAnyDiscordMessage): void {
     this._logOnError(error, anyDiscordMessage);
     this._sendMessage(error, anyDiscordMessage);
   }
 
-  private _sendMessage(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): void {
+  private _sendMessage(error: unknown, anyDiscordMessage: IAnyDiscordMessage): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(error, anyDiscordMessage);
 
     this._sendMessageToOriginalChannel(anyDiscordMessage, messageResponse);
@@ -41,8 +41,8 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
   }
 
   private _sendMessageToOriginalChannel(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    { content, options }: Readonly<IDiscordMessageResponse>
+    anyDiscordMessage: IAnyDiscordMessage,
+    { content, options }: IDiscordMessageResponse
   ): void {
     if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       anyDiscordMessage.channel
@@ -65,14 +65,14 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     }
   }
 
-  private _sendMessageToSoniaDiscord(messageResponse: Readonly<IDiscordMessageResponse>): void {
+  private _sendMessageToSoniaDiscord(messageResponse: IDiscordMessageResponse): void {
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse,
     });
   }
 
-  private _logOnError(error: unknown, { id }: Readonly<IAnyDiscordMessage>): void {
+  private _logOnError(error: unknown, { id }: IAnyDiscordMessage): void {
     if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
@@ -88,17 +88,11 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     });
   }
 
-  private _getMessageResponse(
-    error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse {
+  private _getMessageResponse(error: unknown, anyDiscordMessage: IAnyDiscordMessage): IDiscordMessageResponse {
     return this._getErrorMessageResponse(error, anyDiscordMessage);
   }
 
-  private _getErrorMessageResponse(
-    error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse {
+  private _getErrorMessageResponse(error: unknown, anyDiscordMessage: IAnyDiscordMessage): IDiscordMessageResponse {
     const options: MessageEmbedOptions = {
       fields: this._getMessageEmbedFields(error, anyDiscordMessage),
       title: this._getCustomMessageEmbedTitle(),
@@ -111,7 +105,7 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     };
   }
 
-  private _getMessageEmbedFields(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): EmbedFieldData[] {
+  private _getMessageEmbedFields(error: unknown, anyDiscordMessage: IAnyDiscordMessage): EmbedFieldData[] {
     return [
       this._getMessageEmbedFieldMessageId(anyDiscordMessage),
       this._getMessageEmbedFieldError(error),
@@ -119,7 +113,7 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     ];
   }
 
-  private _getMessageEmbedFieldMessageId({ id }: Readonly<IAnyDiscordMessage>): EmbedFieldData {
+  private _getMessageEmbedFieldMessageId({ id }: IAnyDiscordMessage): EmbedFieldData {
     return {
       name: `The message's id that killed me`,
       value: id,

@@ -61,7 +61,7 @@ export class DiscordClientService extends AbstractService {
   public isReady(): Promise<true> {
     return firstValueFrom(
       this.isReady$().pipe(
-        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+        filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )

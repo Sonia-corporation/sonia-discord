@@ -6,17 +6,7 @@ import { discordGetCommandWithFirstArgumentRegexp } from '../regexp/discord-get-
 import _ from 'lodash';
 import xregexp, { ExecArray } from 'xregexp';
 
-/**
- * @param root0
- * @param root0.command
- * @param root0.message
- * @param root0.prefix
- */
-function getFirstArgument({
-  command,
-  message,
-  prefix,
-}: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
+function getFirstArgument({ command, message, prefix }: IDiscordExtractFromCommandCallbackData): string | null {
   const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandWithFirstArgumentRegexp({
@@ -32,17 +22,11 @@ function getFirstArgument({
   return execArray.groups.argument1;
 }
 
-/**
- * @param root0
- * @param root0.commands
- * @param root0.message
- * @param root0.prefixes
- */
 export function discordGetCommandFirstArgument({
   commands,
   message,
   prefixes,
-}: Readonly<IDiscordGetCommandFirstArgumentData>): string | null {
+}: IDiscordGetCommandFirstArgumentData): string | null {
   return discordExtractFromCommand({
     commands,
     finder: getFirstArgument,

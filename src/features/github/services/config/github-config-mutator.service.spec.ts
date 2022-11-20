@@ -90,6 +90,15 @@ describe(`GithubConfigMutatorService`, (): void => {
         expect(githubConfigCoreService.bugReportUrl).toBe(`bugReportUrl`);
       });
 
+      it(`should not update the current feature request url`, (): void => {
+        expect.assertions(1);
+        githubConfigCoreService.featureRequestUrl = `featureRequestUrl`;
+
+        service = new GithubConfigMutatorService(config);
+
+        expect(githubConfigCoreService.featureRequestUrl).toBe(`featureRequestUrl`);
+      });
+
       it(`should not update the current personal access token`, (): void => {
         expect.assertions(1);
         githubConfigCoreService.personalAccessToken = `personalAccessToken`;
@@ -104,6 +113,7 @@ describe(`GithubConfigMutatorService`, (): void => {
       beforeEach((): void => {
         config = {
           bugReportUrl: `dummy-bug-report-url`,
+          featureRequestUrl: `dummy-feature-request-url`,
           personalAccessToken: `dummy-personal-access-token`,
         };
       });
@@ -115,6 +125,15 @@ describe(`GithubConfigMutatorService`, (): void => {
         service = new GithubConfigMutatorService(config);
 
         expect(githubConfigCoreService.bugReportUrl).toBe(`dummy-bug-report-url`);
+      });
+
+      it(`should override the feature request url`, (): void => {
+        expect.assertions(1);
+        githubConfigCoreService.featureRequestUrl = `featureRequestUrl`;
+
+        service = new GithubConfigMutatorService(config);
+
+        expect(githubConfigCoreService.featureRequestUrl).toBe(`dummy-feature-request-url`);
       });
 
       it(`should override the personal access token`, (): void => {
@@ -177,17 +196,19 @@ describe(`GithubConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = GithubConfigMutatorService.getInstance();
       githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
+      githubConfigCoreService.featureRequestUrl = `dummy-feature-request-url`;
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
 
       loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       service.updateConfig();
 
       expect(githubConfigCoreService.bugReportUrl).toBe(`dummy-bug-report-url`);
+      expect(githubConfigCoreService.featureRequestUrl).toBe(`dummy-feature-request-url`);
       expect(githubConfigCoreService.personalAccessToken).toBe(`dummy-personal-access-token`);
     });
 
@@ -205,11 +226,12 @@ describe(`GithubConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         service.updateConfig(config);
 
         expect(githubConfigCoreService.bugReportUrl).toBe(`dummy-bug-report-url`);
+        expect(githubConfigCoreService.featureRequestUrl).toBe(`dummy-feature-request-url`);
         expect(githubConfigCoreService.personalAccessToken).toBe(`dummy-personal-access-token`);
       });
 
@@ -235,6 +257,33 @@ describe(`GithubConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(githubConfigCoreService.bugReportUrl).toBe(`bug-report-url`);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[GithubConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
+    });
+
+    describe(`when the given config contains a feature request url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          featureRequestUrl: `feature-request-url`,
+        };
+      });
+
+      it(`should update the config feature request url`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(githubConfigCoreService.featureRequestUrl).toBe(`feature-request-url`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -312,6 +361,44 @@ describe(`GithubConfigMutatorService`, (): void => {
       service.updateBugReportUrl(bugReportUrl);
 
       expect(githubConfigCoreService.bugReportUrl).toBe(`bug-report-url`);
+    });
+  });
+
+  describe(`updateFeatureRequestUrl()`, (): void => {
+    let featureRequestUrl: string;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = GithubConfigMutatorService.getInstance();
+      featureRequestUrl = `feature-request-url`;
+      githubConfigCoreService.featureRequestUrl = `dummy-feature-request-url`;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`feature-request-url`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateFeatureRequestUrl(featureRequestUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `GithubConfigMutatorService`,
+        newValue: `feature-request-url`,
+        oldValue: `dummy-feature-request-url`,
+        valueName: `feature request url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the GitHub config feature request url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateFeatureRequestUrl(featureRequestUrl);
+
+      expect(githubConfigCoreService.featureRequestUrl).toBe(`feature-request-url`);
     });
   });
 

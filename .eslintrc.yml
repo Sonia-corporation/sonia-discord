@@ -51,6 +51,8 @@ settings:
       project:
         - './tsconfig.app.json'
         - './tsconfig.spec.json'
+  jsdoc:
+    mode: typescript
 rules:
   progress/activate: 1
   no-new-native-nonconstructor: error
@@ -295,6 +297,9 @@ rules:
   import/no-unresolved: error
   prefer-template: error
   no-useless-concat: error
+  no-native-reassign: error
+  no-global-assign: error
+  no-param-reassign: error
   no-constant-condition:
     - error
     - checkLoops: true
@@ -322,10 +327,87 @@ rules:
       ignoreReadBeforeAssign: false
   camelcase: off
   valid-jsdoc: off
-  'jsdoc/require-jsdoc': warn # @todo change it to error but we should fix all current jsdoc errors
+  jsdoc/require-jsdoc:
+    - warn # TODO change it to error but we should fix all current jsdoc errors
+    - publicOnly: true
+      exemptEmptyConstructors: true
+      exemptEmptyFunctions: false
+      checkConstructors: false
+      checkGetters: false
+      checkSetters: false
+      enableFixer: false # TODO change it to error but we should fix all current jsdoc errors
+      require:
+        ArrowFunctionExpression: true
+        ClassDeclaration: true
+        ClassExpression: true
+        FunctionDeclaration: true
+        FunctionExpression: true
+        MethodDefinition: true
   curly:
     - error
     - all
+  jsdoc/check-access: error
+  jsdoc/check-alignment: error
+  # TODO enable back once ESLint 8 is properly fixed; see https://github.com/gajus/eslint-plugin-jsdoc#check-examples
+  jsdoc/check-examples: off
+  jsdoc/check-indentation:
+    - error
+    - excludeTags:
+        - param
+  jsdoc/check-param-names: error
+  jsdoc/check-property-names: error
+  jsdoc/check-syntax: error
+  jsdoc/require-param-description: error
+  jsdoc/require-param-name: error
+  jsdoc/require-param-type: error
+  jsdoc/require-param: error
+  jsdoc/require-property: error
+  jsdoc/require-property-description: error
+  jsdoc/require-property-name: error
+  jsdoc/require-property-type: error
+  jsdoc/require-returns-check: error
+  jsdoc/require-returns-description: error
+  jsdoc/require-returns-type: error
+  jsdoc/require-returns: error
+  jsdoc/sort-tags: error
+  jsdoc/check-tag-names: error
+  jsdoc/check-types: error
+  jsdoc/check-values: error
+  jsdoc/no-multi-asterisks: error
+  jsdoc/require-description-complete-sentence:
+    - error
+    - tags:
+        - see
+      newlineBeforeCapsAssumesBadSentenceEnd: true
+  jsdoc/require-description:
+    - error
+    - contexts:
+        - any
+      descriptionStyle: tag
+      checkConstructors: false
+      checkGetters: true
+      checkSetters: true
+  jsdoc/require-example: off
+  jsdoc/require-file-overview: off
+  jsdoc/multiline-blocks:
+    - error
+    - allowMultipleTags: true
+      noMultilineBlocks: false
+  jsdoc/require-hyphen-before-param-description:
+    - error
+    - never
+  jsdoc/require-asterisk-prefix:
+    - error
+    - always
+  jsdoc/empty-tags: error
+  jsdoc/no-bad-blocks: error
+  jsdoc/implements-on-classes: error
+  jsdoc/newline-after-description:
+    - error
+    - always
+  jsdoc/check-line-alignment:
+    - error
+    - always
   '@typescript-eslint/prefer-regexp-exec': error
   '@typescript-eslint/await-thenable': error
   '@typescript-eslint/prefer-readonly': error
@@ -334,10 +416,7 @@ rules:
     - path: never
       types: never
       lib: never
-  '@typescript-eslint/prefer-readonly-parameter-types': # @todo change it to error once the nested object issue is resolved (https://github.com/typescript-eslint/typescript-eslint/issues/2823)
-    - warn
-    - ignoreInferredTypes: true
-      checkParameterProperties: false
+  '@typescript-eslint/prefer-readonly-parameter-types': off
   '@typescript-eslint/no-empty-interface':
     - error
     - allowSingleExtends: false
@@ -347,7 +426,14 @@ rules:
       allowBoolean: false
       allowAny: false
       allowNullish: false
-  '@typescript-eslint/ban-types': error
+  '@typescript-eslint/ban-types':
+    - error
+    - types:
+        Readonly:
+          message: 'Sonia rule - Useless due to no-param-reassign rule'
+        ReadonlyArray:
+          message: 'Sonia rule - Useless due to no-param-reassign rule'
+      extendDefaults: true
   '@typescript-eslint/restrict-plus-operands':
     - error
     - checkCompoundAssignments: true
@@ -461,6 +547,7 @@ overrides:
       - 'plugin:jest/style'
       - 'plugin:jest/all'
     rules:
+      jsdoc/require-description: off
       jest/max-nested-describe: off
       jest/prefer-expect-resolves: error
       jest/prefer-to-have-length: error
@@ -486,12 +573,6 @@ overrides:
             - afterEach
       no-magic-numbers: off
       '@typescript-eslint/no-magic-numbers': off
-      '@typescript-eslint/ban-types':
-        - error
-        - types:
-            Readonly:
-              message: 'Sonia rule - This is useless inside the tests'
-          extendDefaults: true
       '@typescript-eslint/naming-convention':
         - error
         - selector: default

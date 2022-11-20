@@ -2,13 +2,9 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../enums/guilds
 import { IFirebaseGuildChannelFeatureV1 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v1';
 import { IFirebaseGuildChannelFeatureV2 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v2';
 
-/**
- * @param root0
- * @param root0.noon
- */
 export function upgradeFirebaseGuildChannelFeatureToV2({
   noon,
-}: Readonly<IFirebaseGuildChannelFeatureV1>): IFirebaseGuildChannelFeatureV2 {
+}: IFirebaseGuildChannelFeatureV1): IFirebaseGuildChannelFeatureV2 {
   return {
     noon,
     releaseNotes: undefined,

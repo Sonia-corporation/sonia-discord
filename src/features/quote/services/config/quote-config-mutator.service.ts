@@ -15,7 +15,7 @@ import _ from 'lodash';
 export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfig> {
   private static _instance: QuoteConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IQuoteConfig>>): QuoteConfigMutatorService {
+  public static getInstance(config?: IPartialNested<IQuoteConfig>): QuoteConfigMutatorService {
     if (_.isNil(QuoteConfigMutatorService._instance)) {
       QuoteConfigMutatorService._instance = new QuoteConfigMutatorService(config);
     }
@@ -23,7 +23,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     return QuoteConfigMutatorService._instance;
   }
 
-  public constructor(config?: Readonly<IPartialNested<IQuoteConfig>>) {
+  public constructor(config?: IPartialNested<IQuoteConfig>) {
     super(ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -33,7 +33,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     QuoteConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IQuoteConfig>>): void {
+  public updateConfig(config?: IPartialNested<IQuoteConfig>): void {
     if (!_.isNil(config)) {
       this.updateApiKey(config.apiKey);
       this.updateAuthorIconUrl(config.authorIconUrl);
@@ -47,7 +47,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     }
   }
 
-  public updateApiKey(apiKey?: Readonly<string>): void {
+  public updateApiKey(apiKey?: string): void {
     QuoteConfigCoreService.getInstance().apiKey = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueHidden: true,
@@ -57,7 +57,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     });
   }
 
-  public updateAuthorIconUrl(authorIconUrl?: Readonly<IconEnum>): void {
+  public updateAuthorIconUrl(authorIconUrl?: IconEnum): void {
     QuoteConfigCoreService.getInstance().authorIconUrl = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: authorIconUrl,
@@ -66,7 +66,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     });
   }
 
-  public updateImageColor(imageColor?: Readonly<ColorEnum>): void {
+  public updateImageColor(imageColor?: ColorEnum): void {
     QuoteConfigCoreService.getInstance().imageColor = ConfigService.getInstance().getUpdatedNumber({
       context: this._serviceName,
       newValue: imageColor,
@@ -75,7 +75,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     });
   }
 
-  public updateImageUrl(imageUrl?: Readonly<IconEnum>): void {
+  public updateImageUrl(imageUrl?: IconEnum): void {
     QuoteConfigCoreService.getInstance().imageUrl = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       newValue: imageUrl,

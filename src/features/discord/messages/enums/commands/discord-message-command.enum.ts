@@ -1,46 +1,55 @@
 export enum DiscordMessageCommandEnum {
   VERSION = `version`,
   /**
-   * Shortcut for {@link VERSION}
+   * @description
+   * Shortcut for {@link VERSION}.
    */
   V = `v`,
   ERROR = `error`,
   /**
-   * Alias for {@link ERROR}
+   * @description
+   * Alias for {@link ERROR}.
    */
   BUG = `bug`,
   HELP = `help`,
   /**
-   * Shortcut for {@link HELP}
+   * @description
+   * Shortcut for {@link HELP}.
    */
   H = `h`,
   COOKIE = `cookie`,
   /**
-   * Alias for {@link COOKIE}
+   * @description
+   * Alias for {@link COOKIE}.
    */
   COOKIES = `cookies`,
   /**
-   * Shortcut for {@link COOKIE}
+   * @description
+   * Shortcut for {@link COOKIE}.
    */
   C = `c`,
   LUNCH = `lunch`,
   /**
-   * Shortcut for {@link LUNCH}
+   * @description
+   * Shortcut for {@link LUNCH}.
    */
   L = `l`,
   RELEASE_NOTES = `release-notes`,
   /**
-   * Shortcut for {@link RELEASE_NOTES}
+   * @description
+   * Shortcut for {@link RELEASE_NOTES}.
    */
   R = `r`,
   FEATURE = `feature`,
   /**
-   * Shortcut for {@link FEATURE}
+   * @description
+   * Shortcut for {@lin k FEATURE}.
    */
   F = `f`,
   QUOTE = `quote`,
   /**
-   * Shortcut for {@link QUOTE}
+   * @description
+   * Shortcut for {@link QUOTE}.
    */
   Q = `q`,
 }

@@ -27,12 +27,12 @@ export class DiscordMentionService extends AbstractService {
   public isForEveryone({
     // eslint-disable-next-line @typescript-eslint/naming-convention
     everyone,
-  }: Readonly<IAnyDiscordMessageMentions>): boolean {
+  }: IAnyDiscordMessageMentions): boolean {
     return _.isEqual(everyone, true);
   }
 
   public isUserMentioned(
-    anyDiscordMessageMentions: Readonly<IAnyDiscordMessageMentions>,
+    anyDiscordMessageMentions: IAnyDiscordMessageMentions,
     user: User | GuildMember | Role
   ): boolean {
     return anyDiscordMessageMentions.has(user);

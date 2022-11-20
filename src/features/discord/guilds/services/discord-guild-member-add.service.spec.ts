@@ -176,6 +176,6 @@ describe(`DiscordGuildMemberAddService`, (): void => {
       expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledWith(member.guild);
     });
 
-    // @todo add more coverage but only once there is a feature to configure on which channel we should send a message
+    // TODO add more coverage but only once there is a feature to configure on which channel we should send a message
   });
 });

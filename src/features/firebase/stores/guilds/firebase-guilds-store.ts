@@ -24,7 +24,7 @@ export class FirebaseGuildsStore extends AbstractEntityStoreService {
     super(ServiceNameEnum.FIREBASE_GUILDS_STORE);
   }
 
-  update(...reducers: ReadonlyArray<Reducer<EntitiesState<EntitiesRef<'entities', 'ids', 'idKey'>>>>): void {
+  update(...reducers: Reducer<EntitiesState<EntitiesRef<'entities', 'ids', 'idKey'>>>[]): void {
     this._store$.update(...reducers);
   }
 

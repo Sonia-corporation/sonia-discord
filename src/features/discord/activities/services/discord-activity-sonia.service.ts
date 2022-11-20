@@ -49,7 +49,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._createSchedule();
   }
 
-  public setPresence(presenceActivity: Readonly<IDiscordPresenceActivity>): Presence {
+  public setPresence(presenceActivity: IDiscordPresenceActivity): Presence {
     const clientUser: ClientUser | null = DiscordClientService.getInstance().getClient().user;
 
     if (_.isNil(clientUser)) {
@@ -106,7 +106,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logNextJobDate();
   }
 
-  private _logJobRule(rule: Readonly<string>, jobName: Readonly<string>): void {
+  private _logJobRule(rule: string, jobName: string): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`${jobName} rule: ${ChalkService.getInstance().value(rule)}`),
@@ -157,7 +157,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logJobDate(this._job, `next`);
   }
 
-  private _logJobDate(job: Readonly<Job | undefined>, jobName: Readonly<string>): void {
+  private _logJobDate(job: Job | undefined, jobName: string): void {
     if (!_.isNil(job)) {
       LoggerService.getInstance().logJobDate({
         context: this._serviceName,
@@ -177,7 +177,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     return DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+        filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
         map((): Presence => this.setRandomPresence()),
         take(ONE_EMITTER),
         tap({

@@ -2,12 +2,12 @@ import _ from 'lodash';
 
 /**
  * @description
- * Parse the release notes to remove all useless information related to GitHub
- * Basically, from a correct GitHub POV release note to a humanized one, adapted to be displayed in the messages
- * @param {Readonly<string>} releaseNotes The GitHub release notes
- * @returns {string} The humanized release notes
+ * Parse the release notes to remove all useless information related to GitHub.
+ * Basically, from a correct GitHub POV release note to a humanized one, adapted to be displayed in the messages.
+ * @param   {string} releaseNotes The GitHub release notes.
+ * @returns {string}              The humanized release notes.
  */
-export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string {
+export function getHumanizedReleaseNotes(releaseNotes: string): string {
   let updatedReleaseNotes: string = _.clone(releaseNotes);
 
   // Remove "\r"
@@ -23,7 +23,7 @@ export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string
 
   // Change the h3
   // Like "* **logs:**"
-  updatedReleaseNotes = _.replace(updatedReleaseNotes, /###\s.+?\n/gim, (h3: Readonly<string>): string => {
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /###\s.+?\n/gim, (h3: string): string => {
     let updatedH3: string = _.clone(h3);
 
     // Replace the "### :???: " by "### "
@@ -40,18 +40,14 @@ export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string
 
   // Change the title bullet
   // Like "* **logs:**"
-  updatedReleaseNotes = _.replace(
-    updatedReleaseNotes,
-    /(\*\s\*\*.+?\*\*)/gim,
-    (titleBullet: Readonly<string>): string => {
-      let updatedTitleBullet: string = _.clone(titleBullet);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /(\*\s\*\*.+?\*\*)/gim, (titleBullet: string): string => {
+    let updatedTitleBullet: string = _.clone(titleBullet);
 
-      // Replace the "* " by ""
-      updatedTitleBullet = _.replace(updatedTitleBullet, /\*\s/i, ``);
+    // Replace the "* " by ""
+    updatedTitleBullet = _.replace(updatedTitleBullet, /\*\s/i, ``);
 
-      return updatedTitleBullet;
-    }
-  );
+    return updatedTitleBullet;
+  });
 
   // Remove the links
   updatedReleaseNotes = _.replace(updatedReleaseNotes, /(\(.+?\)|\[.+?]|\))/gim, ``);

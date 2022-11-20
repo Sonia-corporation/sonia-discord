@@ -2,7 +2,7 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
-import { getDiscordHumanizedChannel } from '../functions/get-discord-humanized-channel';
+import { getDiscordHumanizedChannelFromClass } from '../functions/get-discord-humanized-channel-from-class';
 import { DMChannel, NewsChannel, TextChannel, ThreadChannel } from 'discord.js';
 import _ from 'lodash';
 
@@ -21,12 +21,12 @@ export class DiscordChannelTypingService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE);
   }
 
-  public sendTyping(channel: Readonly<TextChannel | DMChannel | NewsChannel | ThreadChannel>): Promise<void> {
-    return channel.sendTyping().catch((error: Readonly<Error>): Promise<void> => {
+  public sendTyping(channel: TextChannel | DMChannel | NewsChannel | ThreadChannel): Promise<void> {
+    return channel.sendTyping().catch((error: Error): Promise<void> => {
       LoggerService.getInstance().error({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `failed to show a typing indicator for the ${getDiscordHumanizedChannel(
+          `failed to show a typing indicator for the ${getDiscordHumanizedChannelFromClass(
             channel
           )} ${ChalkService.getInstance().value(channel.id)}`
         ),

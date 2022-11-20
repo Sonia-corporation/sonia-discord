@@ -37,7 +37,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   public getMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (!DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       return Promise.reject(new Error(`Invalid author`));
@@ -51,7 +51,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   public getDiscordMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordMentionService.getInstance().isForEveryone(discordMessage.mentions)) {
       return this._getEveryoneMentionMessageResponse(discordMessage);
@@ -71,7 +71,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   public getAnyDiscordMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -87,7 +87,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   public getSoniaMentionMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -120,7 +120,7 @@ export class DiscordMessageTextService extends AbstractService {
     return DiscordMessageAuthorService.getInstance().reply(discordMessage);
   }
 
-  private _getEveryoneMentionMessageResponse({ id }: Readonly<IDiscordMessage>): Promise<IDiscordMessageResponse> {
+  private _getEveryoneMentionMessageResponse({ id }: IDiscordMessage): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -135,7 +135,7 @@ export class DiscordMessageTextService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  private _getEveryoneMentionMessageResponseWithEnvPrefix(response: Readonly<string>): string {
+  private _getEveryoneMentionMessageResponseWithEnvPrefix(response: string): string {
     if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({
         asMention: true,
@@ -149,7 +149,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getCommandMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -161,7 +161,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getPingPongMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -173,7 +173,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getHotelTrivagoMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -185,7 +185,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getAnyQuestionPineapplePizzaMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -200,7 +200,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getSimpleBasicMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+    discordMessage: IDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,

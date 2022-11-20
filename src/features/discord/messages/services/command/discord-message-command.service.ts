@@ -28,7 +28,7 @@ export class DiscordMessageCommandService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE);
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     if (DiscordMessageCommandVersionService.getInstance().hasCommand(message)) {
       return true;
     } else if (DiscordMessageCommandErrorService.getInstance().hasCommand(message)) {
@@ -50,42 +50,56 @@ export class DiscordMessageCommandService extends AbstractService {
     return false;
   }
 
-  public handleVersionCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleVersionCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandVersionService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleErrorCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleErrorCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandErrorService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleHelpCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleHelpCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandHelpService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleCookieCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleCookieCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandCookieService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleLunchCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleLunchCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandLunchService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleReleaseNotesCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleReleaseNotesCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandReleaseNotesService.getInstance().handleResponse(anyDiscordMessage);
   }
 
-  public handleQuoteCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleQuoteCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandQuoteService.getInstance().handleResponse(anyDiscordMessage);
   }
 
   public handleFeatureCommand(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandFeatureService.getInstance().handleResponse(anyDiscordMessage);
   }
 
   public handleCommands(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordMessageContentService.getInstance().hasContent(anyDiscordMessage.content)) {
       if (DiscordMessageCommandFeatureService.getInstance().hasCommand(anyDiscordMessage.content)) {

@@ -22,12 +22,10 @@ jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
 /**
  * @description
- * There is a fucking weird thing going on here
+ * There is a fucking weird thing going on here.
  * A memory leak occur with test like:
- * "expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});"
- *
- * It crash Jest
- * Only for this method...
+ * "expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});".
+ * It crash Jest, only for this method...
  */
 describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
   let service: DiscordMessageCommandFeatureReleaseNotesDisabled<string>;

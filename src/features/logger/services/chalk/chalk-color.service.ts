@@ -41,7 +41,7 @@ export class ChalkColorService extends AbstractService {
     });
   }
 
-  private _getHumanizedColorLevel(chalkLevel: Readonly<chalk.Level>): string | never {
+  private _getHumanizedColorLevel(chalkLevel: chalk.Level): string | never {
     if (_.gte(chalkLevel, MINIMUM_CHALK_LEVEL) && _.lte(chalkLevel, MAXIMUM_CHALK_LEVEL)) {
       return CHALK_LEVELS_HUMANIZED[chalkLevel];
     }

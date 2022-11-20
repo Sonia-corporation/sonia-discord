@@ -6,21 +6,19 @@ import _ from 'lodash';
 
 /**
  * @description
- * Split between flags success and message responses
- *
- * @param {Readonly<IDiscordCommandFlagsResponse>} discordCommandFlagsResponse The list of flags success and message responses
- *
- * @returns {boolean} true when a flag
+ * Split between flags success and message responses.
+ * @param   {IDiscordCommandFlagsResponse} discordCommandFlagsResponse The list of flags success and message responses.
+ * @returns {boolean}                                                  True when a flag.
  */
 export function discordCommandSplitFlagsResponse(
-  discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>
+  discordCommandFlagsResponse: IDiscordCommandFlagsResponse
 ): IDiscordCommandSplittedFlagsResponse {
   const discordCommandSplittedFlagsResponse: IDiscordCommandSplittedFlagsResponse = {
     commandFlagsSuccess: [],
     messageResponses: [],
   };
 
-  _.forEach(discordCommandFlagsResponse, (discordCommandFlagResponse: Readonly<IDiscordCommandFlagResponse>): void => {
+  _.forEach(discordCommandFlagsResponse, (discordCommandFlagResponse: IDiscordCommandFlagResponse): void => {
     if (discordCommandIsFlagSuccess(discordCommandFlagResponse)) {
       discordCommandSplittedFlagsResponse.commandFlagsSuccess.push(discordCommandFlagResponse);
     } else {

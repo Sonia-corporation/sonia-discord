@@ -41,7 +41,7 @@ export class FirebaseGuildsStoreService extends AbstractService {
     FirebaseGuildsStore.getInstance().update(deleteAllEntities());
   }
 
-  public getEntity(id: Readonly<Snowflake>): IFirebaseGuild | undefined {
+  public getEntity(id: Snowflake): IFirebaseGuild | undefined {
     return FirebaseGuildsStore.getInstance().query(getEntity(id));
   }
 

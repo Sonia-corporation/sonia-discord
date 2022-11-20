@@ -39,7 +39,7 @@ export class LoggerService extends AutoUnsubscribe {
     });
   }
 
-  public error(loggerLog: Readonly<ILoggerLog>): void {
+  public error(loggerLog: ILoggerLog): void {
     if (this._isErrorEnabled()) {
       this._log({
         ...loggerLog,
@@ -48,7 +48,7 @@ export class LoggerService extends AutoUnsubscribe {
     }
   }
 
-  public warning(loggerLog: Readonly<ILoggerLog>): void {
+  public warning(loggerLog: ILoggerLog): void {
     if (this._isWarningEnabled()) {
       this._log({
         ...loggerLog,
@@ -57,7 +57,7 @@ export class LoggerService extends AutoUnsubscribe {
     }
   }
 
-  public success(loggerLog: Readonly<ILoggerLog>): void {
+  public success(loggerLog: ILoggerLog): void {
     if (this._isSuccessEnabled()) {
       this._log({
         ...loggerLog,
@@ -66,7 +66,7 @@ export class LoggerService extends AutoUnsubscribe {
     }
   }
 
-  public log(loggerLog: Readonly<ILoggerLog>): void {
+  public log(loggerLog: ILoggerLog): void {
     if (this._isLogEnabled()) {
       this._log({
         ...loggerLog,
@@ -75,7 +75,7 @@ export class LoggerService extends AutoUnsubscribe {
     }
   }
 
-  public debug(loggerLog: Readonly<ILoggerLog>): void {
+  public debug(loggerLog: ILoggerLog): void {
     if (this._isDebugEnabled()) {
       this._log({
         ...loggerLog,
@@ -84,27 +84,27 @@ export class LoggerService extends AutoUnsubscribe {
     }
   }
 
-  public serviceCreated({ service }: Readonly<ILoggerServiceCreated>): void {
+  public serviceCreated({ service }: ILoggerServiceCreated): void {
     this.debug({
       context: service,
       message: ChalkService.getInstance().text(`created`),
     });
   }
 
-  public getStringArray<T = string>(array: Readonly<T[]>): string {
+  public getStringArray<T = string>(array: T[]): string {
     return `[ ${_.join(
-      _.map(array, (value: Readonly<T>): string => wrapInQuotes<T>(value)),
+      _.map(array, (value: T): string => wrapInQuotes<T>(value)),
       `, `
     )} ]`;
   }
 
-  public getValueUpdateWithHint(text: Readonly<string>, value: Readonly<string>, hint: Readonly<string>): string {
+  public getValueUpdateWithHint(text: string, value: string, hint: string): string {
     return `${ChalkService.getInstance().text(text)}${ChalkService.getInstance().value(
       value
     )}${ChalkService.getInstance().hint(hint)}`;
   }
 
-  public getHiddenValueUpdate(text: Readonly<string>, isStringValue = false): string {
+  public getHiddenValueUpdate(text: string, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -114,7 +114,7 @@ export class LoggerService extends AutoUnsubscribe {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  public getHiddenValueArrayUpdate(text: Readonly<string>, isStringValue = false): string {
+  public getHiddenValueArrayUpdate(text: string, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -126,14 +126,11 @@ export class LoggerService extends AutoUnsubscribe {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  public getSnowflakeContext(
-    context: Readonly<string>,
-    message: Readonly<string | null | undefined> | unknown
-  ): string {
+  public getSnowflakeContext(context: string, message: string | null | undefined | unknown): string {
     return `${ChalkService.getInstance().context(`[${context}] `)}${ChalkService.getInstance().text(message)}`;
   }
 
-  public logJobDate({ context, jobName, jobDateHumanized, jobDate }: Readonly<IJobDateLog>): void {
+  public logJobDate({ context, jobName, jobDateHumanized, jobDate }: IJobDateLog): void {
     this.debug({
       context,
       message: ChalkService.getInstance().text(
@@ -144,7 +141,7 @@ export class LoggerService extends AutoUnsubscribe {
     });
   }
 
-  private _log({ loggerLogType, context, hasExtendedContext, message }: Readonly<ILoggerLogInternal>): void {
+  private _log({ loggerLogType, context, hasExtendedContext, message }: ILoggerLogInternal): void {
     if (_.isEqual(LoggerConfigService.getInstance().isEnabled(), true)) {
       const logTypePrefix: string = this._getLogTypePrefix(loggerLogType);
 
@@ -156,7 +153,7 @@ export class LoggerService extends AutoUnsubscribe {
     }
   }
 
-  private _context(name: Readonly<string>, hasExtendedContext: Readonly<boolean> = false): string {
+  private _context(name: string, hasExtendedContext = false): string {
     let message = `[${name}][${TimeService.getInstance().now(`HH:mm:ss:SSS`)}]`;
 
     if (_.isEqual(hasExtendedContext, false) || !_.isBoolean(hasExtendedContext)) {
@@ -166,7 +163,7 @@ export class LoggerService extends AutoUnsubscribe {
     return ChalkService.getInstance().context(message);
   }
 
-  private _getLogTypePrefix(logType: Readonly<LoggerConfigLevelEnum>): string {
+  private _getLogTypePrefix(logType: LoggerConfigLevelEnum): string {
     return ChalkService.getInstance()[logType](this._logPrefix);
   }
 
@@ -198,7 +195,7 @@ export class LoggerService extends AutoUnsubscribe {
   private _logAlreadyCreatedServices(): void {
     const createdServices: ServiceNameEnum[] = CoreEventService.getInstance().getCreatedServices();
 
-    _.forEach(createdServices, (createdService: Readonly<ServiceNameEnum>): void => {
+    _.forEach(createdServices, (createdService: ServiceNameEnum): void => {
       this.serviceCreated({
         service: createdService,
       });
@@ -210,7 +207,7 @@ export class LoggerService extends AutoUnsubscribe {
       CoreEventService.getInstance()
         .serviceCreated$()
         .subscribe({
-          next: (createdService: Readonly<ServiceNameEnum>): void => {
+          next: (createdService: ServiceNameEnum): void => {
             this.serviceCreated({
               service: createdService,
             });

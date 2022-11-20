@@ -25,9 +25,9 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
   }
 
   public getMessageResponse(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
+    totalGuildCount: number,
+    guildCount: number,
+    channelCount: number
   ): IDiscordMessageResponse {
     return {
       options: {
@@ -36,11 +36,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
     };
   }
 
-  private _getMessageEmbed(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
-  ): MessageEmbedOptions {
+  private _getMessageEmbed(totalGuildCount: number, guildCount: number, channelCount: number): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -60,11 +56,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
     return DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageColor();
   }
 
-  private _getMessageEmbedDescription(
-    totalGuildCount: Readonly<number>,
-    guildCount: Readonly<number>,
-    channelCount: Readonly<number>
-  ): string {
+  private _getMessageEmbedDescription(totalGuildCount: number, guildCount: number, channelCount: number): string {
     return FirebaseGuildsNewVersionCountHumanizedService.getInstance().getHumanizedCount(
       totalGuildCount,
       guildCount,

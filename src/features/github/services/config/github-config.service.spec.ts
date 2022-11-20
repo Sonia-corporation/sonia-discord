@@ -55,6 +55,7 @@ describe(`GithubConfigService`, (): void => {
     beforeEach((): void => {
       service = GithubConfigService.getInstance();
       githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
+      githubConfigCoreService.featureRequestUrl = `dummy-feature-request-url`;
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
     });
 
@@ -65,6 +66,7 @@ describe(`GithubConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         bugReportUrl: `dummy-bug-report-url`,
+        featureRequestUrl: `dummy-feature-request-url`,
         personalAccessToken: `dummy-personal-access-token`,
       } as IGithubConfig);
     });
@@ -82,6 +84,21 @@ describe(`GithubConfigService`, (): void => {
       const result = service.getBugReportUrl();
 
       expect(result).toBe(`dummy-bug-report-url`);
+    });
+  });
+
+  describe(`getFeatureRequestUrl()`, (): void => {
+    beforeEach((): void => {
+      service = GithubConfigService.getInstance();
+      githubConfigCoreService.featureRequestUrl = `dummy-feature-request-url`;
+    });
+
+    it(`should return the GitHub config feature request url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getFeatureRequestUrl();
+
+      expect(result).toBe(`dummy-feature-request-url`);
     });
   });
 

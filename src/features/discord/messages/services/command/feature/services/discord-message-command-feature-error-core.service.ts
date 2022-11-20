@@ -11,11 +11,11 @@ import _ from 'lodash';
 
 /**
  * @description
- * Service in common for other error services
- * Used to avoid code duplication
+ * Service in common for other error services.
+ * Used to avoid code duplication.
  */
 export abstract class DiscordMessageCommandFeatureErrorCoreService extends AbstractService {
-  protected constructor(serviceName: Readonly<ServiceNameEnum>) {
+  protected constructor(serviceName: ServiceNameEnum) {
     super(serviceName);
   }
 
@@ -40,8 +40,8 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
   }
 
   protected _getMessageEmbedFieldFeatureExample(
-    { content }: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[]
+    { content }: IAnyDiscordMessage,
+    commands: DiscordMessageCommandEnum[]
   ): EmbedFieldData {
     const randomFeature: string | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getRandomArgumentUsageExample();
     let userCommand: string | null = discordGetCommandAndPrefix({

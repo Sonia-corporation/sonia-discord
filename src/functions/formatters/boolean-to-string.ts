@@ -1,6 +1,3 @@
-/**
- * @param isTrue
- */
-export function booleanToString(isTrue: Readonly<boolean>): `true` | `false` {
-  return isTrue === true ? `true` : `false`;
+export function booleanToString(isTrue: boolean): `true` | `false` {
+  return isTrue ? `true` : `false`;
 }

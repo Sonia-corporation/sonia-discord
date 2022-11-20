@@ -6,16 +6,14 @@ import xregexp from 'xregexp';
  * For the flag part it allows:
  * - Shortcut flag (-flag)
  * - Normal flag (--flag)
- * - Value flag (--flag=xxx)
- *
- * @param {Readonly<IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData>} data The data used as a command
- *
- * @returns {RegExp} A RegExp matching a prefix with a command, one argument and at least one flag
+ * - Value flag (--flag=xxx).
+ * @param   {IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData} data The data used as a command.
+ * @returns {RegExp}                                                     A RegExp matching a prefix with a command, one argument and at least one flag.
  */
 export function discordGetCommandWithFirstArgumentAndFlagsRegexp({
   prefix,
   command,
-}: Readonly<IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData>): RegExp {
+}: IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData): RegExp {
   return xregexp(
     `
     (?<prefix>\\${prefix})                                           # Command prefix

@@ -26,12 +26,10 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_DUPLICATED_FLAGS_ERROR_SERVICE);
   }
 
-  public getMessageResponse(
-    flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>
-  ): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(flagsDuplicated: IDiscordCommandFlagsDuplicated): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+      .then((cliErrorMessageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
           options: {
             embeds: [this._getMessageEmbed(flagsDuplicated)],
@@ -42,7 +40,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
       });
   }
 
-  private _getMessageEmbed(flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>): MessageEmbedOptions {
+  private _getMessageEmbed(flagsDuplicated: IDiscordCommandFlagsDuplicated): MessageEmbedOptions {
     return {
       description: this._getMessageEmbedDescription(flagsDuplicated),
       fields: this._getMessageEmbedFields(flagsDuplicated),
@@ -51,7 +49,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
     };
   }
 
-  private _getMessageEmbedDescription(flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>): string {
+  private _getMessageEmbedDescription(flagsDuplicated: IDiscordCommandFlagsDuplicated): string {
     const flagsDuplicatedCount: number = this._getFlagsDuplicatedCount(flagsDuplicated);
 
     return `${wrapInBold(flagsDuplicatedCount)} duplicated flag${
@@ -59,13 +57,13 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
     } found.`;
   }
 
-  private _getFlagsDuplicatedCount(flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>): number {
+  private _getFlagsDuplicatedCount(flagsDuplicated: IDiscordCommandFlagsDuplicated): number {
     return _.size(flagsDuplicated);
   }
 
-  private _getMessageEmbedFields(flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>): EmbedFieldData[] {
+  private _getMessageEmbedFields(flagsDuplicated: IDiscordCommandFlagsDuplicated): EmbedFieldData[] {
     return _.concat(
-      _.map(flagsDuplicated, ({ name, description }: Readonly<IDiscordCommandFlagDuplicated>): EmbedFieldData => {
+      _.map(flagsDuplicated, ({ name, description }: IDiscordCommandFlagDuplicated): EmbedFieldData => {
         return {
           inline: false,
           name,

@@ -27,12 +27,12 @@ export class QuoteApiService extends AbstractService {
 
   /**
    * @description
-   * Call the endpoint to have a quote of the day
-   * Logs in case of error
-   * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
-   * @returns {Promise<IQuoteOfTheDayApi | IQuoteErrorApi>} A promise containing a quote of the day or an error
+   * Call the endpoint to have a quote of the day.
+   * Logs in case of error.
+   * @param   {Snowflake}                                   messageId The original id of the message (to enhance the logs).
+   * @returns {Promise<IQuoteOfTheDayApi | IQuoteErrorApi>}           A promise containing a quote of the day or an error.
    */
-  public getQuoteOfTheDay(messageId: Readonly<Snowflake>): Promise<IQuoteOfTheDayApi | IQuoteErrorApi> {
+  public getQuoteOfTheDay(messageId: Snowflake): Promise<IQuoteOfTheDayApi | IQuoteErrorApi> {
     const url: string = this._getUrl(`qotd`);
 
     LoggerService.getInstance().debug({
@@ -45,29 +45,24 @@ export class QuoteApiService extends AbstractService {
     });
 
     return this._getRequest<IQuoteOfTheDayApi | IQuoteErrorApi>(url)
-      .then(
-        ({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi | IQuoteErrorApi>>): IQuoteOfTheDayApi | IQuoteErrorApi => {
-          this._handleSuccess(url, messageId);
+      .then(({ data }: AxiosResponse<IQuoteOfTheDayApi | IQuoteErrorApi>): IQuoteOfTheDayApi | IQuoteErrorApi => {
+        this._handleSuccess(url, messageId);
 
-          return data;
-        }
-      )
-      .catch((error: Readonly<Error>): never => {
+        return data;
+      })
+      .catch((error: Error): never => {
         this._handleError(error, url, messageId);
       });
   }
 
-  private _getRequest<TData>(
-    url: Readonly<string>,
-    config?: Readonly<AxiosRequestConfig>
-  ): Promise<AxiosResponse<TData>> {
+  private _getRequest<TData>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<TData>> {
     return axios.get(url, {
       headers: this._getCommonHeaders(),
       ...config,
     });
   }
 
-  private _getUrl(endpoint: Readonly<string>): string {
+  private _getUrl(endpoint: string): string {
     return `${QUOTE_API_URL}${endpoint}`;
   }
 
@@ -81,12 +76,12 @@ export class QuoteApiService extends AbstractService {
 
   /**
    * @description
-   * Log the success
-   * @param {Readonly<string>} url The original endpoint called
-   * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
+   * Log the success.
+   * @param {string}    url       The original endpoint called.
+   * @param {Snowflake} messageId The original id of the message (to enhance the logs).
    * @private
    */
-  private _handleSuccess(url: Readonly<string>, messageId: Readonly<Snowflake>): void {
+  private _handleSuccess(url: string, messageId: Snowflake): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -99,13 +94,13 @@ export class QuoteApiService extends AbstractService {
 
   /**
    * @description
-   * Log the error
-   * @param {Readonly<Error>} error The original http error
-   * @param {Readonly<string>} url The original endpoint called
-   * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
+   * Log the error.
+   * @param {Error}     error     The original http error.
+   * @param {string}    url       The original endpoint called.
+   * @param {Snowflake} messageId The original id of the message (to enhance the logs).
    * @private
    */
-  private _handleError(error: Readonly<Error>, url: Readonly<string>, messageId: Readonly<Snowflake>): never {
+  private _handleError(error: Error, url: string, messageId: Snowflake): never {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,

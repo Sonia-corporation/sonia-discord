@@ -1,12 +1,11 @@
-import { AbstractService } from '../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
-import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordChannelEnum } from '../../../../channels/enums/discord-channel.enum';
 import { DiscordSoniaService } from '../../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
-import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
 import {
   EmbedFieldData,
   MessageEmbedAuthor,
@@ -17,7 +16,7 @@ import {
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-export class DiscordMessageCommandErrorService extends AbstractService {
+export class DiscordMessageCommandErrorService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandErrorService;
 
   public static getInstance(): DiscordMessageCommandErrorService {
@@ -28,18 +27,15 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     return DiscordMessageCommandErrorService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+    DiscordChannelEnum.THREAD,
+  ]);
+  protected readonly _commandName: string = `error`;
+
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE);
-  }
-
-  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `error command detected`),
-    });
-
-    return this.getMessageResponse();
   }
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
@@ -52,7 +48,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  public hasCommand(message: Readonly<string>): boolean {
+  public hasCommand(message: string): boolean {
     return discordHasThisCommand({
       commands: [DiscordMessageCommandEnum.ERROR, DiscordMessageCommandEnum.BUG],
       message,

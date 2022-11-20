@@ -28,7 +28,7 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesService extends FirebaseU
   }
 
   public isUpToDate(
-    releaseNotes: Readonly<IFirebaseGuildChannelFeatureReleaseNotes>
+    releaseNotes: IFirebaseGuildChannelFeatureReleaseNotes
   ): releaseNotes is IFirebaseGuildChannelFeatureReleaseNotesVFinal {
     return _.isEqual(releaseNotes.version, FIREBASE_GUILD_CHANNEL_FEATURE_RELEASE_NOTES_CURRENT_VERSION);
   }
@@ -40,7 +40,7 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesService extends FirebaseU
   }
 
   public upgrade(
-    releaseNotes: Readonly<IFirebaseGuildChannelFeatureReleaseNotes>
+    releaseNotes: IFirebaseGuildChannelFeatureReleaseNotes
   ): IFirebaseGuildChannelFeatureReleaseNotesVFinal {
     return releaseNotes;
   }

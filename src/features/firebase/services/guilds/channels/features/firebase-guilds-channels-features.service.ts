@@ -27,7 +27,7 @@ export class FirebaseGuildsChannelsFeaturesService extends FirebaseUpdateCoreSer
     super(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE);
   }
 
-  public isUpToDate(feature: Readonly<IFirebaseGuildChannelFeature>): feature is IFirebaseGuildChannelFeatureVFinal {
+  public isUpToDate(feature: IFirebaseGuildChannelFeature): feature is IFirebaseGuildChannelFeatureVFinal {
     return _.isEqual(feature.version, FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION);
   }
 
@@ -37,7 +37,7 @@ export class FirebaseGuildsChannelsFeaturesService extends FirebaseUpdateCoreSer
     };
   }
 
-  public upgrade(feature: Readonly<IFirebaseGuildChannelFeature>): IFirebaseGuildChannelFeatureVFinal {
+  public upgrade(feature: IFirebaseGuildChannelFeature): IFirebaseGuildChannelFeatureVFinal {
     return handleFirebaseGuildChannelFeatureBreakingChange(feature);
   }
 }

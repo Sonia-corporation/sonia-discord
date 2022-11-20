@@ -17,35 +17,32 @@ export class DiscordCommandValuelessFlag<T extends string> extends DiscordComman
   protected _type: DiscordCommandFlagTypeEnum.VALUELESS = DiscordCommandFlagTypeEnum.VALUELESS;
 
   /**
-   * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
+   * @param {IDiscordCommandFlag} discordCommandFlag Default values.
    */
-  public constructor(discordCommandFlag: Readonly<IDiscordCommandFlag<T, DiscordCommandFlagActionValueless<T>>>) {
+  public constructor(discordCommandFlag: IDiscordCommandFlag<T, DiscordCommandFlagActionValueless<T>>) {
     super(discordCommandFlag);
   }
 
   /**
    * @description
-   * Check if the flag is valueless
-   *
+   * Check if the flag is valueless.
+   * @param   {IDiscordMessageFlag} messageFlag A flag as a message.
+   * @returns {boolean}                         True if the flag value is valid.
    * @example
    * isValid('help')       => true
    * isValid('help=')      => false
    * isValid('help=dummy') => false
    * isValid('help=true')  => false
    * isValid('help=false') => false
-   *
-   * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
-   *
-   * @returns {boolean} true if the flag value is valid
    */
-  public isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
+  public isValid(messageFlag: IDiscordMessageFlag): boolean {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
     return !_.gt(splittedFlagSize, ONE_WORD) && !_.isEmpty(_.head(splittedFlag));
   }
 
-  public getInvalidFlagError(messageFlag: Readonly<IDiscordMessageFlag>): IDiscordCommandFlagError | null {
+  public getInvalidFlagError(messageFlag: IDiscordMessageFlag): IDiscordCommandFlagError | null {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 

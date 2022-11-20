@@ -6,16 +6,13 @@ import _ from 'lodash';
 
 /**
  * @description
- * Check if the given Firebase guild contains some [channels]{@link IFirebaseGuildV3#channels}
- *
- * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
- *
- * @param {Readonly<IFirebaseGuild>} firebaseGuild The Firebase guild
- *
- * @returns {boolean} true when the given guild is at least [v4]{@link FirebaseGuildVersionEnum.V4}
+ * Check if the given Firebase guild contains some [channels]{@link IFirebaseGuildV3#channels}.
+ * @param   {IFirebaseGuild} firebaseGuild The Firebase guild.
+ * @returns {boolean}                      True when the given guild is at least [v4]{@link FirebaseGuildVersionEnum.V4}.
+ * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}.
  */
 export function hasFirebaseGuildChannels(
-  firebaseGuild: Readonly<IFirebaseGuild>
+  firebaseGuild: IFirebaseGuild
 ): firebaseGuild is IFirebaseGuildV4 | IFirebaseGuildV5 {
   return _.includes([FirebaseGuildVersionEnum.V4, FirebaseGuildVersionEnum.V5], firebaseGuild.version);
 }
