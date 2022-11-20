@@ -1,19 +1,18 @@
-import { AbstractService } from '../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
-import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { DiscordChannelEnum } from '../../../../../channels/enums/discord-channel.enum';
 import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandEnum } from '../../../../enums/commands/discord-message-command.enum';
 import { discordHasThisCommand } from '../../../../functions/commands/checks/discord-has-this-command';
 import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
-import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
+import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
 import { DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-cookie-description-messages';
 import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from '../constants/discord-message-command-cookie-title-messages';
 import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-export class DiscordMessageCommandCookieService extends AbstractService {
+export class DiscordMessageCommandCookieService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandCookieService;
 
   public static getInstance(): DiscordMessageCommandCookieService {
@@ -24,18 +23,15 @@ export class DiscordMessageCommandCookieService extends AbstractService {
     return DiscordMessageCommandCookieService._instance;
   }
 
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+    DiscordChannelEnum.THREAD,
+  ]);
+  protected readonly _commandName: string = `cookie`;
+
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE);
-  }
-
-  public handleResponse({ id }: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `cookie command detected`),
-    });
-
-    return this.getMessageResponse();
   }
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {

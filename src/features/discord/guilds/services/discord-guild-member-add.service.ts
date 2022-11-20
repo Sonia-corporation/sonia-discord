@@ -7,7 +7,7 @@ import { AppConfigService } from '../../../app/services/config/app-config.servic
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { ProfileConfigService } from '../../../profile/services/config/profile-config.service';
-import { getDiscordHumanizedChannel } from '../../channels/functions/get-discord-humanized-channel';
+import { getDiscordHumanizedChannelFromClass } from '../../channels/functions/get-discord-humanized-channel-from-class';
 import { isDiscordTextChannel } from '../../channels/functions/is-discord-text-channel';
 import { DiscordChannelGuildService } from '../../channels/services/discord-channel-guild.service';
 import { IAnyDiscordWritableChannel } from '../../channels/types/any-discord-writable-channel';
@@ -118,7 +118,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
           `The channel ${ChalkService.getInstance().value(
             primaryGuildBasedChannel.name
           )} is not a text channel. The support for ${ChalkService.getInstance().value(
-            getDiscordHumanizedChannel(primaryGuildBasedChannel)
+            getDiscordHumanizedChannelFromClass(primaryGuildBasedChannel)
           )} is not yet there.`
         ),
       });

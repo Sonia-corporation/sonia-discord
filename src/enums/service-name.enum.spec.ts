@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have 122 members`, (): void => {
+  it(`should have 124 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toBe(122);
+    expect(getEnumLength(ServiceNameEnum)).toBe(124);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -374,6 +374,22 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE).toBe(`DiscordMessageCommandService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE).toBe(
+      `DiscordMessageCommandVerifyChannelRightService`
+    );
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_WARNING_UNSUPPORTED_CHANNEL_TYPE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_WARNING_UNSUPPORTED_CHANNEL_TYPE_SERVICE).toBe(
+      `DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService`
+    );
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_VERSION_SERVICE"`, (): void => {

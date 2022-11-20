@@ -8,7 +8,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
 import { IAppReleaseTypeResponsesFactoryPattern } from '../../../app/types/app-release-type-responses-factory-pattern';
-import { getDiscordHumanizedChannel } from '../../../discord/channels/functions/get-discord-humanized-channel';
+import { getDiscordHumanizedChannelFromClass } from '../../../discord/channels/functions/get-discord-humanized-channel-from-class';
 import { isDiscordTextChannel } from '../../../discord/channels/functions/is-discord-text-channel';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
 import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
@@ -157,7 +157,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           `The channel ${ChalkService.getInstance().value(
             guildBasedChannel.name
           )} is not a text channel. The support for ${ChalkService.getInstance().value(
-            getDiscordHumanizedChannel(guildBasedChannel)
+            getDiscordHumanizedChannelFromClass(guildBasedChannel)
           )} is not yet there.`
         ),
       });
