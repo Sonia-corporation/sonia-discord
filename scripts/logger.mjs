@@ -1,6 +1,6 @@
+import * as CHALK from './chalk.mjs';
 import _ from 'lodash';
 import MOMENT from 'moment-timezone';
-import * as CHALK from './chalk.mjs';
 
 const LOG_PREFIX = `● `;
 
