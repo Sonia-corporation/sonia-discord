@@ -24,5 +24,17 @@ export function getDiscordHumanizedChannelPlural(channel?: DiscordChannelEnum): 
     return `threads`;
   }
 
+  if (channel === DiscordChannelEnum.CATEGORY) {
+    return `category channels`;
+  }
+
+  if (channel === DiscordChannelEnum.STAGE) {
+    return `stage channels`;
+  }
+
+  if (channel === DiscordChannelEnum.VOICE) {
+    return `voice channels`;
+  }
+
   return `channels`;
 }

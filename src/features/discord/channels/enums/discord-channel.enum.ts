@@ -3,4 +3,7 @@ export enum DiscordChannelEnum {
   TEXT = `text`,
   NEWS = `news`,
   THREAD = `thread`,
+  CATEGORY = `category`,
+  STAGE = `stage`,
+  VOICE = `voice`,
 }

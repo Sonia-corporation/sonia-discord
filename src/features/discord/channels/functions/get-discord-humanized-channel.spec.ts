@@ -3,12 +3,15 @@ import { DiscordChannelEnum } from '../enums/discord-channel.enum';
 
 describe(`getDiscordHumanizedChannel()`, (): void => {
   describe.each`
-    channel                      | output
-    ${undefined}                 | ${`channel`}
-    ${DiscordChannelEnum.TEXT}   | ${`text channel`}
-    ${DiscordChannelEnum.DM}     | ${`private message`}
-    ${DiscordChannelEnum.NEWS}   | ${`news channel`}
-    ${DiscordChannelEnum.THREAD} | ${`thread`}
+    channel                        | output
+    ${undefined}                   | ${`channel`}
+    ${DiscordChannelEnum.TEXT}     | ${`text channel`}
+    ${DiscordChannelEnum.DM}       | ${`private message`}
+    ${DiscordChannelEnum.NEWS}     | ${`news channel`}
+    ${DiscordChannelEnum.THREAD}   | ${`thread`}
+    ${DiscordChannelEnum.CATEGORY} | ${`category channel`}
+    ${DiscordChannelEnum.STAGE}    | ${`stage channel`}
+    ${DiscordChannelEnum.VOICE}    | ${`voice channel`}
   `(`when the channel is $channel`, ({ channel, output }: IMatrix): void => {
     it(`should return ${output}`, (): void => {
       expect.assertions(1);

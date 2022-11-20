@@ -2,10 +2,10 @@ import { DiscordChannelEnum } from './discord-channel.enum';
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordChannelEnum`, (): void => {
-  it(`should have 4 members`, (): void => {
+  it(`should have 7 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordChannelEnum)).toBe(4);
+    expect(getEnumLength(DiscordChannelEnum)).toBe(7);
   });
 
   it(`should have a member "DM"`, (): void => {
@@ -30,5 +30,23 @@ describe(`DiscordChannelEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordChannelEnum.THREAD).toBe(`thread`);
+  });
+
+  it(`should have a member "CATEGORY"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordChannelEnum.CATEGORY).toBe(`category`);
+  });
+
+  it(`should have a member "STAGE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordChannelEnum.STAGE).toBe(`stage`);
+  });
+
+  it(`should have a member "VOICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordChannelEnum.VOICE).toBe(`voice`);
   });
 });
