@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+# [1.101.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.100.1...1.101.0) (2022-11-20)
+
+
+### :rocket: Features
+
+* **commands:** disallow some commands on channel types that make no sense ([d4256ca](https://github.com/Sonia-corporation/sonia-discord/commit/d4256ca188d39d51cc8ab329988b38a56eedb496)), closes [#1863](https://github.com/Sonia-corporation/sonia-discord/issues/1863)
+  For now, text channels, DM channels and thread channels are only covered.
+The feature command is disabled for thread channels.
+
 ## [1.100.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.100.0...1.100.1) (2022-11-18)
 
 
