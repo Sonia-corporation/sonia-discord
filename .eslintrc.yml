@@ -336,6 +336,13 @@ rules:
       checkGetters: false
       checkSetters: false
       enableFixer: false # TODO change it to error but we should fix all current jsdoc errors
+      require:
+        ArrowFunctionExpression: true
+        ClassDeclaration: true
+        ClassExpression: true
+        FunctionDeclaration: true
+        FunctionExpression: true
+        MethodDefinition: true
   curly:
     - error
     - all

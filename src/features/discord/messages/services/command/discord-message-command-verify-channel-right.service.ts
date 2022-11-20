@@ -41,40 +41,54 @@ export class DiscordMessageCommandVerifyChannelRightService extends AbstractServ
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE);
   }
 
-  public verify({ channel, id }: IAnyDiscordMessage, allowedChannels: Set<DiscordChannelEnum>): boolean {
-    if (isDiscordDmChannel(channel)) {
+  /**
+   * @description
+   * Check if the given message channel is allowed to execute the command related to the message.
+   * @param   {IAnyDiscordMessage}      message         The message that trigger a command.
+   * @param   {Set<DiscordChannelEnum>} allowedChannels A list of channels allowed to execute the related command.
+   * @returns {boolean}                                 Return true when the command related to the message can be executed.
+   */
+  public verify(message: IAnyDiscordMessage, allowedChannels: Set<DiscordChannelEnum>): boolean {
+    if (isDiscordDmChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.DM);
     }
 
-    if (isDiscordTextChannel(channel)) {
+    if (isDiscordTextChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.TEXT);
     }
 
-    if (isDiscordThreadChannel(channel)) {
+    if (isDiscordThreadChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.THREAD);
     }
 
-    if (isDiscordNewsChannel(channel)) {
+    if (isDiscordNewsChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.NEWS);
     }
 
-    if (isDiscordCategoryChannel(channel)) {
+    if (isDiscordCategoryChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.CATEGORY);
     }
 
-    if (isDiscordStageChannel(channel)) {
+    if (isDiscordStageChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.STAGE);
     }
 
-    if (isDiscordVoiceChannel(channel)) {
+    if (isDiscordVoiceChannel(message.channel)) {
       return allowedChannels.has(DiscordChannelEnum.VOICE);
     }
 
-    DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService.getInstance().warn(id);
+    DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService.getInstance().warn(message.id);
 
     return false;
   }
 
+  /**
+   * @description
+   * Get an error message response to explain why the command cannot be executed on this channel type.
+   * @param   {IAnyDiscordMessage}               anyDiscordMessage The message that trigger a command.
+   * @param   {Set<DiscordChannelEnum>}          allowedChannels   A list of channels allowed to execute the related command.
+   * @returns {Promise<IDiscordMessageResponse>}                   Return an error message response to explain why the command is not allowed.
+   */
   public getErrorMessageResponse(
     anyDiscordMessage: IAnyDiscordMessage,
     allowedChannels: Set<DiscordChannelEnum>

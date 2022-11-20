@@ -34,6 +34,13 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_WARNING_UNSUPPORTED_CHANNEL_TYPE_SERVICE);
   }
 
+  /**
+   * @description
+   * Useful to warn when a channel type is not yet supported.
+   * Log a warning.
+   * Send a message to the warnings channel on the Sonia's guild.
+   * @param {Snowflake} messageId The ID of the message that had an unsupported channel type.
+   */
   public warn(messageId: Snowflake): void {
     LoggerService.getInstance().warning({
       context: this._serviceName,
