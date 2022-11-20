@@ -1,13 +1,17 @@
+import { DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService } from './discord-message-command-verify-channel-right-warning-unsupported-channel-type.service';
 import { AbstractService } from '../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { GithubConfigService } from '../../../../github/services/config/github-config.service';
 import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum';
 import { getDiscordHumanizedChannelPluralFromClass } from '../../../channels/functions/get-discord-humanized-channel-plural-from-class';
 import { getDiscordHumanizedChannelsPlural } from '../../../channels/functions/get-discord-humanized-channels-plural';
+import { isDiscordCategoryChannel } from '../../../channels/functions/is-discord-category-channel';
 import { isDiscordDmChannel } from '../../../channels/functions/is-discord-dm-channel';
 import { isDiscordNewsChannel } from '../../../channels/functions/is-discord-news-channel';
+import { isDiscordStageChannel } from '../../../channels/functions/is-discord-stage-channel';
 import { isDiscordTextChannel } from '../../../channels/functions/is-discord-text-channel';
 import { isDiscordThreadChannel } from '../../../channels/functions/is-discord-thread-channel';
+import { isDiscordVoiceChannel } from '../../../channels/functions/is-discord-voice-channel';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
@@ -37,7 +41,7 @@ export class DiscordMessageCommandVerifyChannelRightService extends AbstractServ
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE);
   }
 
-  public verify({ channel }: IAnyDiscordMessage, allowedChannels: Set<DiscordChannelEnum>): boolean {
+  public verify({ channel, id }: IAnyDiscordMessage, allowedChannels: Set<DiscordChannelEnum>): boolean {
     if (isDiscordDmChannel(channel)) {
       return allowedChannels.has(DiscordChannelEnum.DM);
     }
@@ -53,6 +57,20 @@ export class DiscordMessageCommandVerifyChannelRightService extends AbstractServ
     if (isDiscordNewsChannel(channel)) {
       return allowedChannels.has(DiscordChannelEnum.NEWS);
     }
+
+    if (isDiscordCategoryChannel(channel)) {
+      return allowedChannels.has(DiscordChannelEnum.CATEGORY);
+    }
+
+    if (isDiscordStageChannel(channel)) {
+      return allowedChannels.has(DiscordChannelEnum.STAGE);
+    }
+
+    if (isDiscordVoiceChannel(channel)) {
+      return allowedChannels.has(DiscordChannelEnum.VOICE);
+    }
+
+    DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService.getInstance().warn(id);
 
     return false;
   }

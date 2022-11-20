@@ -1,3 +1,4 @@
+import { DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService } from './discord-message-command-verify-channel-right-warning-unsupported-channel-type.service';
 import { DiscordMessageCommandVerifyChannelRightService } from './discord-message-command-verify-channel-right.service';
 import { ColorEnum } from '../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../enums/icon.enum';
@@ -7,20 +8,35 @@ import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail, TextChannel } from 'discord.js';
+import {
+  CategoryChannel,
+  DMChannel,
+  EmbedFieldData,
+  MessageEmbedAuthor,
+  MessageEmbedFooter,
+  MessageEmbedThumbnail,
+  NewsChannel,
+  StageChannel,
+  TextChannel,
+  ThreadChannel,
+  VoiceChannel,
+} from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
   let service: DiscordMessageCommandVerifyChannelRightService;
   let coreEventService: CoreEventService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
+  let discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService: DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
+    discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService =
+      DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -62,6 +78,374 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
     });
   });
 
+  describe(`verify()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let allowedChannels: Set<DiscordChannelEnum>;
+
+    let discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandVerifyChannelRightService();
+
+      discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy = jest
+        .spyOn(discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService, `warn`)
+        .mockImplementation();
+    });
+
+    describe(`when the message is from a text channel and the text channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(TextChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a text channel and the text channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(TextChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.TEXT]);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from a DM channel and the DM channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(DMChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a DM channel and the DM channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(DMChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.DM]);
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from a thread channel and the thread channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(ThreadChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a thread channel and the thread channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(ThreadChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.THREAD]);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from a news channel and the news channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(NewsChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a news channel and the news channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(NewsChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.NEWS]);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from a category channel and the category channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(CategoryChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a category channel and the category channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(CategoryChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.CATEGORY]);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from a stage channel and the stage channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(StageChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a stage channel and the stage channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(StageChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.STAGE]);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from a voice channel and the voice channel is not allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(VoiceChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(1);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+
+    describe(`when the message is from a voice channel and the voice channel is allowed`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: createInstance(VoiceChannel.prototype),
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.VOICE]);
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeTrue();
+      });
+    });
+
+    describe(`when the message is from an unsupported channel`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: undefined,
+          id: `dummy-id`,
+        });
+        allowedChannels = new Set<DiscordChannelEnum>();
+      });
+
+      it(`should log and send a warning to Sonia warnings channel`, (): void => {
+        expect.assertions(2);
+
+        service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(
+          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
+        ).toHaveBeenCalledTimes(1);
+        expect(discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy).toHaveBeenCalledWith(
+          `dummy-id`
+        );
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.verify(anyDiscordMessage, allowedChannels);
+
+        expect(result).toBeFalse();
+      });
+    });
+  });
+
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let allowedChannels: Set<DiscordChannelEnum>;
@@ -91,7 +475,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
     describe(`when the channel is a text channel and the allowed channels is containing only a text channel`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
           channel: createInstance(TextChannel.prototype),
           id: `dummy-id`,
         });
@@ -100,7 +484,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
@@ -243,7 +627,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
     describe(`when the channel is a text channel and the allowed channels is containing a text channel, a DM channel, and a news channel`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
           channel: createInstance(TextChannel.prototype),
           id: `dummy-id`,
         });
@@ -256,7 +640,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
