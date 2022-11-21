@@ -7,9 +7,6 @@ import MOMENT from 'moment-timezone';
 
 const CONTEXT = `build-update-app-initialization-date`;
 
-/**
- * @param environment
- */
 function updateEnvironmentAppInitializationDate(environment) {
   if (!_.has(environment, `app`)) {
     environment.app = {};
