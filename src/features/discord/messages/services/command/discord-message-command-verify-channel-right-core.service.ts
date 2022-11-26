@@ -26,7 +26,7 @@ import moment from 'moment-timezone';
 export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends AbstractService {
   /**
    * @description
-   * Check if the given message channel is allowed to execute the command related to the message.
+   * Check if the given message channel is allowed to execute the sub-command related to the message.
    * @param   {IAnyDiscordMessage}      message         The message that trigger a sub-command.
    * @param   {Set<DiscordChannelEnum>} allowedChannels A list of channels allowed to execute the related sub-command.
    * @returns {boolean | undefined}                     Return true when the sub-command related to the message can be executed.
