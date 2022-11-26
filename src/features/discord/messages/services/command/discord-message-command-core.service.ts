@@ -63,7 +63,10 @@ export abstract class DiscordMessageCommandCoreService extends AbstractService {
    * @returns {boolean}                              Return true when the command can be processed as expected.
    */
   public canSendMessageResponseToThisChannel(anyDiscordMessage: IAnyDiscordMessage): boolean {
-    return DiscordMessageCommandVerifyChannelRightService.getInstance().verify(anyDiscordMessage, this.allowedChannels);
+    return (
+      DiscordMessageCommandVerifyChannelRightService.getInstance().verify(anyDiscordMessage, this.allowedChannels) ??
+      false
+    );
   }
 
   /**
