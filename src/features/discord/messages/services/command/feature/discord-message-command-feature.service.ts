@@ -1,15 +1,6 @@
-import { DiscordMessageCommandFeatureNameEnum } from './enums/discord-message-command-feature-name.enum';
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from './features/noon/constants/discord-message-command-feature-noon-flags';
-import { DiscordMessageCommandFeatureNoonService } from './features/noon/services/discord-message-command-feature-noon.service';
-import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from './features/release-notes/constants/discord-message-command-feature-release-notes-flags';
-import { DiscordMessageCommandFeatureReleaseNotesService } from './features/release-notes/services/discord-message-command-feature-release-notes.service';
-import { DiscordMessageCommandFeatureEmptyContentErrorService } from './services/discord-message-command-feature-empty-content-error.service';
-import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-empty-feature-name-error.service';
-import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-wrong-feature-name-error.service';
-import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './services/flags/discord-message-command-feature-duplicated-flags-error.service';
-import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
-import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
-import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
+/* eslint-disable import/order */
+import { Message } from 'discord.js';
+import _ from 'lodash';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
 import { ChalkService } from '../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../logger/services/logger.service';
@@ -25,8 +16,18 @@ import { IDiscordCommandFlagsErrors } from '../../../types/commands/flags/discor
 import { IDiscordCommandFlagsOpposite } from '../../../types/commands/flags/discord-command-flags-opposite';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
-import { Message } from 'discord.js';
-import _ from 'lodash';
+import { DiscordMessageCommandFeatureNameEnum } from './enums/discord-message-command-feature-name.enum';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from './features/noon/constants/discord-message-command-feature-noon-flags';
+import { DiscordMessageCommandFeatureNoonService } from './features/noon/services/discord-message-command-feature-noon.service';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from './features/release-notes/constants/discord-message-command-feature-release-notes-flags';
+import { DiscordMessageCommandFeatureReleaseNotesService } from './features/release-notes/services/discord-message-command-feature-release-notes.service';
+import { DiscordMessageCommandFeatureEmptyContentErrorService } from './services/discord-message-command-feature-empty-content-error.service';
+import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-empty-feature-name-error.service';
+import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-wrong-feature-name-error.service';
+import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './services/flags/discord-message-command-feature-duplicated-flags-error.service';
+import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
+import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
+import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
 
 export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandFeatureService;
@@ -61,7 +62,7 @@ export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCo
       return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
     }
 
-    // Small type hack but the other way is to use instanceof and it's not nice for the testing purposes
+    // Small type hack but the other way is to use instanceof, and it's not nice for the testing purposes
     const message: Message = anyDiscordMessage as Message;
     const featureName: string | null = this._getFeatureName(message.content);
 
@@ -203,7 +204,16 @@ export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCo
     return DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance().getMessageResponse(oppositeFlags);
   }
 
-  private _getNoonMessageResponse(message: Message): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+  private async _getNoonMessageResponse(
+    message: Message
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    const verifiedResult: IDiscordMessageResponse | undefined =
+      await DiscordMessageCommandFeatureNoonService.getInstance().verifyMessage(message);
+
+    if (!_.isNil(verifiedResult)) {
+      return verifiedResult;
+    }
+
     const messageFlags: string | null = this.getFlags(message.content);
 
     if (_.isNil(messageFlags)) {
@@ -242,9 +252,16 @@ export class DiscordMessageCommandFeatureService extends DiscordMessageCommandCo
     return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(message, messageFlags);
   }
 
-  private _getReleaseNotesMessageResponse(
+  private async _getReleaseNotesMessageResponse(
     message: Message
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    const verifiedResult: IDiscordMessageResponse | undefined =
+      await DiscordMessageCommandFeatureReleaseNotesService.getInstance().verifyMessage(message);
+
+    if (!_.isNil(verifiedResult)) {
+      return verifiedResult;
+    }
+
     const messageFlags: string | null = this.getFlags(message.content);
 
     if (_.isNil(messageFlags)) {

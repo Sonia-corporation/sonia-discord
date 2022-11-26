@@ -1,5 +1,4 @@
-import { DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService } from './discord-message-command-verify-channel-right-warning-unsupported-channel-type.service';
-import { DiscordMessageCommandVerifyChannelRightService } from './discord-message-command-verify-channel-right.service';
+import { DiscordMessageSubCommandVerifyChannelRightService } from './discord-message-sub-command-verify-channel-right.service';
 import { ColorEnum } from '../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
@@ -24,34 +23,31 @@ import {
 import moment from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
 
-describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
-  let service: DiscordMessageCommandVerifyChannelRightService;
+describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
+  let service: DiscordMessageSubCommandVerifyChannelRightService;
   let coreEventService: CoreEventService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
-  let discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService: DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
-    discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService =
-      DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandVerifyChannelRight service`, (): void => {
+    it(`should create a DiscordMessageSubCommandVerifyChannelRight service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandVerifyChannelRightService.getInstance();
+      service = DiscordMessageSubCommandVerifyChannelRightService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordMessageCommandVerifyChannelRightService));
+      expect(service).toStrictEqual(expect.any(DiscordMessageSubCommandVerifyChannelRightService));
     });
 
-    it(`should return the created DiscordMessageCommandVerifyChannelRight service`, (): void => {
+    it(`should return the created DiscordMessageSubCommandVerifyChannelRight service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageCommandVerifyChannelRightService.getInstance();
+      const result = DiscordMessageSubCommandVerifyChannelRightService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -66,14 +62,14 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageCommandVerifyChannelRight service creation`, (): void => {
+    it(`should notify the DiscordMessageSubCommandVerifyChannelRight service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageCommandVerifyChannelRightService();
+      service = new DiscordMessageSubCommandVerifyChannelRightService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_SUB_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE
       );
     });
   });
@@ -82,14 +78,8 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let allowedChannels: Set<DiscordChannelEnum>;
 
-    let discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy: jest.SpyInstance;
-
     beforeEach((): void => {
-      service = new DiscordMessageCommandVerifyChannelRightService();
-
-      discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy = jest
-        .spyOn(discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService, `warn`)
-        .mockImplementation();
+      service = new DiscordMessageSubCommandVerifyChannelRightService();
     });
 
     describe(`when the message is from a text channel and the text channel is not allowed`, (): void => {
@@ -99,16 +89,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
-      });
-
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
       });
 
       it(`should return false`, (): void => {
@@ -165,16 +145,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.DM]);
       });
 
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
-      });
-
       it(`should return true`, (): void => {
         expect.assertions(1);
 
@@ -191,16 +161,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
-      });
-
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
       });
 
       it(`should return false`, (): void => {
@@ -239,16 +199,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         allowedChannels = new Set<DiscordChannelEnum>();
       });
 
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
-      });
-
       it(`should return false`, (): void => {
         expect.assertions(1);
 
@@ -283,16 +233,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
-      });
-
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
       });
 
       it(`should return false`, (): void => {
@@ -331,16 +271,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         allowedChannels = new Set<DiscordChannelEnum>();
       });
 
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
-      });
-
       it(`should return false`, (): void => {
         expect.assertions(1);
 
@@ -375,16 +305,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
-      });
-
-      it(`should not log and not send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(1);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).not.toHaveBeenCalled();
       });
 
       it(`should return false`, (): void => {
@@ -423,19 +343,6 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         allowedChannels = new Set<DiscordChannelEnum>();
       });
 
-      it(`should log and send a warning to Sonia warnings channel`, (): void => {
-        expect.assertions(2);
-
-        service.verify(anyDiscordMessage, allowedChannels);
-
-        expect(
-          discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy
-        ).toHaveBeenCalledTimes(1);
-        expect(discordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeServiceWarnSpy).toHaveBeenCalledWith(
-          `dummy-id`
-        );
-      });
-
       it(`should return false`, (): void => {
         expect.assertions(1);
 
@@ -456,7 +363,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandVerifyChannelRightService();
+      service = new DiscordMessageSubCommandVerifyChannelRightService();
 
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
@@ -516,7 +423,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Wrong channel!`,
-          value: `This command is not allowed on text channels.`,
+          value: `This sub-command is not allowed on text channels.`,
         } as EmbedFieldData);
       });
 
@@ -527,7 +434,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Allowed channels`,
-          value: `You can use this command only on text channels.`,
+          value: `You can use this sub-command only on text channels.`,
         } as EmbedFieldData);
       });
 
@@ -538,7 +445,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Help me to get better!`,
-          value: `If you think that using this command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
+          value: `If you think that using this sub-command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
         } as EmbedFieldData);
       });
 
@@ -672,7 +579,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Wrong channel!`,
-          value: `This command is not allowed on text channels.`,
+          value: `This sub-command is not allowed on text channels.`,
         } as EmbedFieldData);
       });
 
@@ -683,7 +590,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Allowed channels`,
-          value: `You can use this command only on text channels, private messages, and news channels.`,
+          value: `You can use this sub-command only on text channels, private messages, and news channels.`,
         } as EmbedFieldData);
       });
 
@@ -694,7 +601,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Help me to get better!`,
-          value: `If you think that using this command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
+          value: `If you think that using this sub-command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
         } as EmbedFieldData);
       });
 
