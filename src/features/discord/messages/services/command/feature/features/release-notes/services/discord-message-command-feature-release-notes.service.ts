@@ -1,7 +1,7 @@
 import { DiscordMessageCommandFeatureReleaseNotesConfigService } from './config/discord-message-command-feature-release-notes-config.service';
-import { AbstractService } from '../../../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../../../enums/service-name.enum';
 import { wrapInBold } from '../../../../../../../../../functions/formatters/wrap-in-bold';
+import { DiscordChannelEnum } from '../../../../../../../channels/enums/discord-channel.enum';
 import { DiscordSoniaService } from '../../../../../../../users/services/discord-sonia.service';
 import { IDiscordCommandSplittedFlagsResponse } from '../../../../../../classes/commands/flags/discord-command-splitted-flags-response';
 import { discordCommandSplitFlagsResponse } from '../../../../../../functions/commands/flags/discord-command-split-flags-response';
@@ -10,6 +10,7 @@ import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-me
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { IDiscordCommandFlagsResponse } from '../../../../../../types/commands/flags/discord-command-flags-response';
 import { IDiscordCommandFlagsSuccess } from '../../../../../../types/commands/flags/discord-command-flags-success';
+import { DiscordMessageSubCommandCoreService } from '../../../../discord-message-sub-command-core.service';
 import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from '../constants/discord-message-command-feature-release-notes-flags';
 import { IDiscordMessageCommandFeatureNameReleaseNotes } from '../types/discord-message-command-feature-name-release-notes';
@@ -25,7 +26,7 @@ import moment from 'moment-timezone';
 
 const ONE_FLAG_SUCCESS = 1;
 
-export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractService {
+export class DiscordMessageCommandFeatureReleaseNotesService extends DiscordMessageSubCommandCoreService {
   private static _instance: DiscordMessageCommandFeatureReleaseNotesService;
 
   public static getInstance(): DiscordMessageCommandFeatureReleaseNotesService {
@@ -35,6 +36,11 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
 
     return DiscordMessageCommandFeatureReleaseNotesService._instance;
   }
+
+  public readonly allowedChannels: Set<DiscordChannelEnum> = new Set<DiscordChannelEnum>([
+    DiscordChannelEnum.DM,
+    DiscordChannelEnum.TEXT,
+  ]);
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_SERVICE);

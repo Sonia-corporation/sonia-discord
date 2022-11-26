@@ -55,6 +55,7 @@ export enum ServiceNameEnum {
   DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE = `DiscordMessageCommandReleaseNotesService`,
   DISCORD_MESSAGE_COMMAND_SERVICE = `DiscordMessageCommandService`,
   DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE = `DiscordMessageCommandVerifyChannelRightService`,
+  DISCORD_MESSAGE_SUB_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE = `DiscordMessageSubCommandVerifyChannelRightService`,
   DISCORD_MESSAGE_COMMAND_VERIFY_CHANNEL_RIGHT_WARNING_UNSUPPORTED_CHANNEL_TYPE_SERVICE = `DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeService`,
   DISCORD_MESSAGE_COMMAND_VERSION_SERVICE = `DiscordMessageCommandVersionService`,
   DISCORD_MESSAGE_CONFIG_CORE_SERVICE = `DiscordMessageConfigCoreService`,
