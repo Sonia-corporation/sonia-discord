@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.102.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.102.0...1.102.1) (2022-11-26)
+
+
+### :bug: Bug Fixes
+
+* **sonia:** fix an issue that is causing the bot to be broken ([#1885](https://github.com/Sonia-corporation/sonia-discord/issues/1885)) ([38b9d95](https://github.com/Sonia-corporation/sonia-discord/commit/38b9d9505644d0bfb3fc8bb5dc350c6f81a01be1))
+
 # [1.102.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.101.0...1.102.0) (2022-11-26)
 
 
