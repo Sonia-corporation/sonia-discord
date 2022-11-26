@@ -1,8 +1,5 @@
 import { AbstractService } from '../../../../../classes/services/abstract.service';
-import { GithubConfigService } from '../../../../github/services/config/github-config.service';
 import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum';
-import { getDiscordHumanizedChannelPluralFromClass } from '../../../channels/functions/get-discord-humanized-channel-plural-from-class';
-import { getDiscordHumanizedChannelsPlural } from '../../../channels/functions/get-discord-humanized-channels-plural';
 import { isDiscordCategoryChannel } from '../../../channels/functions/is-discord-category-channel';
 import { isDiscordDmChannel } from '../../../channels/functions/is-discord-dm-channel';
 import { isDiscordNewsChannel } from '../../../channels/functions/is-discord-news-channel';
@@ -117,31 +114,6 @@ export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends
     ];
   }
 
-  protected _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData {
-    return {
-      name: `Wrong channel!`,
-      value: `This sub-command is not allowed on ${getDiscordHumanizedChannelPluralFromClass(channel)}.`,
-    };
-  }
-
-  protected _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData {
-    return {
-      name: `Allowed channels`,
-      value: `You can use this sub-command only on ${getDiscordHumanizedChannelsPlural(Array.from(allowedChannels))}.`,
-    };
-  }
-
-  protected _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData {
-    const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
-
-    return {
-      name: `Help me to get better!`,
-      value: `If you think that using this sub-command on ${getDiscordHumanizedChannelPluralFromClass(
-        channel
-      )} should be allowed, do not hesitate to submit a [feature request](${githubFeatureRequestUrl}).`,
-    };
-  }
-
   protected _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
@@ -164,4 +136,10 @@ export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends
   protected _getMessageEmbedTitle(): string {
     return `I cannot let you do that!`;
   }
+
+  protected abstract _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData;
+
+  protected abstract _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData;
+
+  protected abstract _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData;
 }
