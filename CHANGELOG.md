@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.102.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.101.0...1.102.0) (2022-11-26)
+
+
+### :rocket: Features
+
+* **commands:** disallow some features on channel types that make no sense ([0796dfa](https://github.com/Sonia-corporation/sonia-discord/commit/0796dfa15c048fffd761f7c810514b2a62e1d874)), closes [#1853](https://github.com/Sonia-corporation/sonia-discord/issues/1853)
+
 # [1.101.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.100.1...1.101.0) (2022-11-20)
 
 
