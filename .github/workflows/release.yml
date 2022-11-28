@@ -90,7 +90,7 @@ jobs:
         run: echo 'The current tag is not the same after the release. A new tag has been created'
       - name: Create PR from master to develop
         if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
-        uses: peter-evans/create-pull-request@331d02c7e2104af23ad5974d4d5cbc58a3e6dc77 # v4
+        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04 # v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'chore(develop): merge master into develop due to new version ${{ steps.latest-tag.outputs.tag }}'
