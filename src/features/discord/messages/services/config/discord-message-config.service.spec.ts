@@ -8,6 +8,7 @@ import { IDiscordMessageCommandCliErrorConfig } from '../../../interfaces/discor
 import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
 import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-message-command-cookie-config';
 import { IDiscordMessageCommandErrorConfig } from '../../../interfaces/discord-message-command-error-config';
+import { IDiscordMessageCommandHeartbeatConfig } from '../../../interfaces/discord-message-command-heartbeat-config';
 import { IDiscordMessageCommandHelpConfig } from '../../../interfaces/discord-message-command-help-config';
 import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
 import { IDiscordMessageCommandReleaseNotesConfig } from '../../../interfaces/discord-message-command-release-notes-config';
@@ -81,6 +82,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
         },
+        heartbeat: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         help: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -143,6 +148,10 @@ describe(`DiscordMessageConfigService`, (): void => {
             imageUrl: IconEnum.WARNING_SHIELD,
           },
           error: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          heartbeat: {
             imageColor: ColorEnum.CANDY,
             imageUrl: IconEnum.WARNING_SHIELD,
           },
@@ -210,6 +219,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
         },
+        heartbeat: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         help: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -263,6 +276,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: IconEnum.WARNING_SHIELD,
         },
         error: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        heartbeat: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
         },
@@ -404,6 +421,57 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommandCookieImageUrl();
 
       expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+    });
+  });
+
+  describe(`getMessageCommandHeartbeat()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.heartbeat = {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.HEART_WITH_PULSE,
+      };
+    });
+
+    it(`should return the Discord message config command heartbeat`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandHeartbeat();
+
+      expect(result).toStrictEqual({
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.HEART_WITH_PULSE,
+      } as IDiscordMessageCommandHeartbeatConfig);
+    });
+  });
+
+  describe(`getMessageCommandHeartbeatImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.heartbeat.imageColor = ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command heartbeat image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandHeartbeatImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandHeartbeatImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.heartbeat.imageUrl = IconEnum.HEART_WITH_PULSE;
+    });
+
+    it(`should return the Discord message config command heartbeat image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandHeartbeatImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.HEART_WITH_PULSE);
     });
   });
 

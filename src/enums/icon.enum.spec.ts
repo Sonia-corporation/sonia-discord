@@ -2,10 +2,10 @@ import { IconEnum } from './icon.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`IconEnum`, (): void => {
-  it(`should have 16 members`, (): void => {
+  it(`should have 17 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(IconEnum)).toBe(16);
+    expect(getEnumLength(IconEnum)).toBe(17);
   });
 
   it(`should have a member "ALARM"`, (): void => {
@@ -104,5 +104,11 @@ describe(`IconEnum`, (): void => {
     expect.assertions(1);
 
     expect(IconEnum.WARNING_SHIELD).toBe(`https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`);
+  });
+
+  it(`should have a member "HEART_WITH_PULSE"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.HEART_WITH_PULSE).toBe(`https://i.ibb.co/x3fnqGb/icons8-heart-with-pulse-512.png`);
   });
 });

@@ -16,6 +16,7 @@ import { IDiscordMessageCommandCliErrorConfig } from '../../../interfaces/discor
 import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
 import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-message-command-cookie-config';
 import { IDiscordMessageCommandErrorConfig } from '../../../interfaces/discord-message-command-error-config';
+import { IDiscordMessageCommandHeartbeatConfig } from '../../../interfaces/discord-message-command-heartbeat-config';
 import { IDiscordMessageCommandHelpConfig } from '../../../interfaces/discord-message-command-help-config';
 import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
 import { IDiscordMessageCommandReleaseNotesBugFixesConfig } from '../../../interfaces/discord-message-command-release-notes-bug-fixes-config';
@@ -60,6 +61,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageUrl: IconEnum.GIRL,
             },
             error: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+            heartbeat: {
               imageColor: ColorEnum.CANDY,
               imageUrl: IconEnum.GIRL,
             },
@@ -189,6 +194,24 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service = new DiscordMessageConfigMutatorService(config);
 
         expect(discordMessageConfigCoreService.command.cookie.imageUrl).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should not update the current command heartbeat image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.heartbeat.imageColor = ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat.imageColor).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command heartbeat image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.heartbeat.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat.imageUrl).toStrictEqual(IconEnum.GIRL);
       });
 
       it(`should not update the current command error image color`, (): void => {
@@ -420,6 +443,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageColor: ColorEnum.CANDY,
                 imageUrl: IconEnum.GIRL,
               },
+              heartbeat: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
               help: {
                 imageColor: ColorEnum.CANDY,
                 imageUrl: IconEnum.GIRL,
@@ -502,6 +529,24 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service = new DiscordMessageConfigMutatorService(config);
 
         expect(discordMessageConfigCoreService.command.cookie.imageUrl).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should override the command heartbeat image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.heartbeat.imageColor = ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat.imageColor).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command heartbeat image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.heartbeat.imageUrl = IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat.imageUrl).toStrictEqual(IconEnum.GIRL);
       });
 
       it(`should override the command error image color`, (): void => {
@@ -778,6 +823,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
         },
+        heartbeat: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
         help: {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
@@ -841,6 +890,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.COOKIES,
         },
         error: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
+        heartbeat: {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
         },
@@ -921,6 +974,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageColor: ColorEnum.SKY,
             imageUrl: IconEnum.COOKIES,
           },
+          heartbeat: {
+            imageColor: ColorEnum.SKY,
+            imageUrl: IconEnum.COOKIES,
+          },
           help: {
             imageColor: ColorEnum.SKY,
             imageUrl: IconEnum.COOKIES,
@@ -993,6 +1050,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageColor: ColorEnum.MINT,
                 imageUrl: IconEnum.ERROR,
               },
+              heartbeat: {
+                imageColor: ColorEnum.MINT,
+                imageUrl: IconEnum.ERROR,
+              },
               help: {
                 imageColor: ColorEnum.MINT,
                 imageUrl: IconEnum.ERROR,
@@ -1051,6 +1112,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.ERROR,
           },
+          heartbeat: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.ERROR,
+          },
           help: {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.ERROR,
@@ -1094,7 +1159,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(24);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(26);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[DiscordMessageConfigMutatorService][now-format] text-configuration updated`
         );
@@ -1152,6 +1217,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
         },
         error: {
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+        },
+        heartbeat: {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
         },
@@ -1224,6 +1293,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
           },
+          heartbeat: {
+            imageColor: ColorEnum.SUN,
+            imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+          },
           help: {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
@@ -1287,6 +1360,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageColor: ColorEnum.MINT,
               imageUrl: IconEnum.GIRL,
             },
+            heartbeat: {
+              imageColor: ColorEnum.MINT,
+              imageUrl: IconEnum.GIRL,
+            },
             help: {
               imageColor: ColorEnum.MINT,
               imageUrl: IconEnum.GIRL,
@@ -1341,6 +1418,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.GIRL,
           },
           error: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.GIRL,
+          },
+          heartbeat: {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.GIRL,
           },
@@ -1446,6 +1527,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.INFORMATION,
         },
+        heartbeat: {
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.INFORMATION,
+        },
         help: {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.INFORMATION,
@@ -1504,6 +1589,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.INFORMATION,
           },
           error: {
+            imageColor: ColorEnum.SUN,
+            imageUrl: IconEnum.INFORMATION,
+          },
+          heartbeat: {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.INFORMATION,
           },
@@ -1587,6 +1676,28 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.MINT,
           imageUrl: IconEnum.INFORMATION,
         } as IDiscordMessageCommandCookieConfig);
+      });
+    });
+
+    describe(`when the given config contains a heartbeat`, (): void => {
+      beforeEach((): void => {
+        config = {
+          heartbeat: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.INFORMATION,
+          },
+        };
+      });
+
+      it(`should update the config command heartbeat`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat).toStrictEqual({
+          imageColor: ColorEnum.MINT,
+          imageUrl: IconEnum.INFORMATION,
+        } as IDiscordMessageCommandHeartbeatConfig);
       });
     });
 
@@ -2016,6 +2127,139 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       service.updateMessageCommandCookieImageUrl(imageUrl);
 
       expect(discordMessageConfigCoreService.command.cookie.imageUrl).toStrictEqual(IconEnum.GIRL);
+    });
+  });
+
+  describe(`updateMessageCommandHeartbeat()`, (): void => {
+    let config: IPartialNested<IDiscordMessageCommandHeartbeatConfig> | undefined;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      discordMessageConfigCoreService.command.heartbeat = {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.HEART_WITH_PULSE,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandHeartbeat(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat).toStrictEqual({
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.HEART_WITH_PULSE,
+        } as IDiscordMessageCommandHeartbeatConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: ColorEnum.MINT,
+        };
+      });
+
+      it(`should update the config command heartbeat image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandHeartbeat(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat.imageColor).toStrictEqual(ColorEnum.MINT);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: IconEnum.INFORMATION,
+        };
+      });
+
+      it(`should update the config command heartbeat image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandHeartbeat(config);
+
+        expect(discordMessageConfigCoreService.command.heartbeat.imageUrl).toStrictEqual(IconEnum.INFORMATION);
+      });
+    });
+  });
+
+  describe(`updateMessageCommandHeartbeatImageColor()`, (): void => {
+    let imageColor: ColorEnum;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      imageColor = ColorEnum.SUN;
+      discordMessageConfigCoreService.command.heartbeat.imageColor = ColorEnum.CANDY;
+
+      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedNumber`).mockReturnValue(ColorEnum.SUN);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandHeartbeatImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: ColorEnum.SUN,
+        oldValue: ColorEnum.CANDY,
+        valueName: `message command heartbeat image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config command heartbeat image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandHeartbeatImageColor(imageColor);
+
+      expect(discordMessageConfigCoreService.command.heartbeat.imageColor).toStrictEqual(ColorEnum.SUN);
+    });
+  });
+
+  describe(`updateMessageCommandHeartbeatImageUrl()`, (): void => {
+    let imageUrl: IconEnum;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      imageUrl = IconEnum.GIRL;
+      discordMessageConfigCoreService.command.heartbeat.imageUrl = IconEnum.INFORMATION;
+
+      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(IconEnum.GIRL);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandHeartbeatImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: IconEnum.GIRL,
+        oldValue: IconEnum.INFORMATION,
+        valueName: `message command heartbeat image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config command heartbeat image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandHeartbeatImageUrl(imageUrl);
+
+      expect(discordMessageConfigCoreService.command.heartbeat.imageUrl).toStrictEqual(IconEnum.GIRL);
     });
   });
 

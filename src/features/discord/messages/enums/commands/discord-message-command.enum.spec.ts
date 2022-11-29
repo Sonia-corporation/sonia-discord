@@ -2,10 +2,10 @@ import { DiscordMessageCommandEnum } from './discord-message-command.enum';
 import { getEnumLength } from '../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandEnum`, (): void => {
-  it(`should have 17 members`, (): void => {
+  it(`should have 19 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandEnum)).toBe(17);
+    expect(getEnumLength(DiscordMessageCommandEnum)).toBe(19);
   });
 
   it(`should have a member "VERSION"`, (): void => {
@@ -42,6 +42,18 @@ describe(`DiscordMessageCommandEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandEnum.H).toBe(`h`);
+  });
+
+  it(`should have a member "HEARTBEAT"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.HEARTBEAT).toBe(`heartbeat`);
+  });
+
+  it(`should have a member "HB"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.HB).toBe(`hb`);
   });
 
   it(`should have a member "COOKIE"`, (): void => {

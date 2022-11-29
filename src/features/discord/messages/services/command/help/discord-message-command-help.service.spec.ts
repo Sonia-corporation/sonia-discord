@@ -425,12 +425,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with 9 fields`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with 10 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields).toHaveLength(9);
+        expect(result.options.embeds?.[0]?.fields).toHaveLength(10);
       });
 
       it(`should return a Discord message response embed with a cookie field`, async (): Promise<void> => {
@@ -521,12 +521,23 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with a more help field`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with a heartbeat field`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
 
         expect(result.options.embeds?.[0]?.fields?.[8]).toStrictEqual({
+          name: `Heartbeat (*heartbeat* or *hb*)`,
+          value: `Display my current heartbeat.`,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed with a more help field`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embeds?.[0]?.fields?.[9]).toStrictEqual({
           name: `Further help`,
           value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,
