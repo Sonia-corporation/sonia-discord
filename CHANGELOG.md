@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.103.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.102.1...1.103.0) (2022-11-30)
+
+
+### :rocket: Features
+
+* **commands:** add new command `heartbeat` ([f971804](https://github.com/Sonia-corporation/sonia-discord/commit/f9718041498bb41c120e9b727313808540c5210f)), closes [#1883](https://github.com/Sonia-corporation/sonia-discord/issues/1883)
+  The heartbeat is just the humanized name to say ping.
+
 ## [1.102.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.102.0...1.102.1) (2022-11-26)
 
 
