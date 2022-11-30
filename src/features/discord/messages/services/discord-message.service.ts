@@ -232,7 +232,7 @@ export class DiscordMessageService extends AbstractService {
 
   private _sendMessage(
     anyDiscordMessage: IAnyDiscordMessage,
-    { content, options }: IDiscordMessageResponse
+    { content, options, afterSending }: IDiscordMessageResponse
   ): Promise<Message | void> {
     if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       throw new Error(`Discord message channel not valid`);
@@ -249,12 +249,39 @@ export class DiscordMessageService extends AbstractService {
         ...options,
         content,
       })
-      .then((message: Message): Promise<Message> => {
+      .then(async (message: Message): Promise<Message> => {
         LoggerService.getInstance().log({
           context: this._serviceName,
           hasExtendedContext: true,
           message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
         });
+
+        // Callback once the message is sent.
+        if (_.isFunction(afterSending)) {
+          if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+            LoggerService.getInstance().debug({
+              context: this._serviceName,
+              hasExtendedContext: true,
+              message: LoggerService.getInstance().getSnowflakeContext(
+                anyDiscordMessage.id,
+                `executing callback ${ChalkService.getInstance().value(`afterSending`)}...`
+              ),
+            });
+          }
+
+          await afterSending(anyDiscordMessage, message);
+
+          if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+            LoggerService.getInstance().debug({
+              context: this._serviceName,
+              hasExtendedContext: true,
+              message: LoggerService.getInstance().getSnowflakeContext(
+                anyDiscordMessage.id,
+                `callback ${ChalkService.getInstance().value(`afterSending`)} executed`
+              ),
+            });
+          }
+        }
 
         return Promise.resolve(message);
       })
