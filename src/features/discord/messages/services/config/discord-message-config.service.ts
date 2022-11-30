@@ -6,6 +6,8 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { IDiscordMessageCommandCliErrorConfig } from '../../../interfaces/discord-message-command-cli-error-config';
 import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
 import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-message-command-cookie-config';
+import { IDiscordMessageCommandErrorConfig } from '../../../interfaces/discord-message-command-error-config';
+import { IDiscordMessageCommandHeartbeatConfig } from '../../../interfaces/discord-message-command-heartbeat-config';
 import { IDiscordMessageCommandHelpConfig } from '../../../interfaces/discord-message-command-help-config';
 import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
 import { IDiscordMessageCommandReleaseNotesConfig } from '../../../interfaces/discord-message-command-release-notes-config';
@@ -15,6 +17,11 @@ import { IDiscordMessageErrorConfig } from '../../../interfaces/discord-message-
 import { IDiscordMessageWarningConfig } from '../../../interfaces/discord-message-warning-config';
 import _ from 'lodash';
 
+/**
+ * @description
+ * The service to get the configuration for the commands.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export class DiscordMessageConfigService extends AbstractService {
   private static _instance: DiscordMessageConfigService;
 
@@ -66,7 +73,19 @@ export class DiscordMessageConfigService extends AbstractService {
     return DiscordMessageConfigCoreService.getInstance().command.cookie.imageUrl;
   }
 
-  public getMessageCommandError(): IDiscordMessageCommandCookieConfig {
+  public getMessageCommandHeartbeat(): IDiscordMessageCommandHeartbeatConfig {
+    return DiscordMessageConfigCoreService.getInstance().command.heartbeat;
+  }
+
+  public getMessageCommandHeartbeatImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.heartbeat.imageColor;
+  }
+
+  public getMessageCommandHeartbeatImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.heartbeat.imageUrl;
+  }
+
+  public getMessageCommandError(): IDiscordMessageCommandErrorConfig {
     return DiscordMessageConfigCoreService.getInstance().command.error;
   }
 

@@ -8,6 +8,11 @@ import { IDiscordMessageErrorConfig } from '../../../interfaces/discord-message-
 import { IDiscordMessageWarningConfig } from '../../../interfaces/discord-message-warning-config';
 import _ from 'lodash';
 
+/**
+ * @description
+ * The core service used for the commands.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export class DiscordMessageConfigCoreService extends AbstractService implements IDiscordMessageConfig {
   private static _instance: DiscordMessageConfigCoreService;
 
@@ -31,6 +36,10 @@ export class DiscordMessageConfigCoreService extends AbstractService implements 
     error: {
       imageColor: ColorEnum.CANDY,
       imageUrl: IconEnum.ERROR,
+    },
+    heartbeat: {
+      imageColor: ColorEnum.CANDY,
+      imageUrl: IconEnum.HEART_WITH_PULSE,
     },
     help: {
       imageColor: ColorEnum.MINT,

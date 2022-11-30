@@ -1,6 +1,7 @@
 import { DiscordMessageCommandCookieService } from './cookie/services/discord-message-command-cookie.service';
 import { DiscordMessageCommandErrorService } from './error/discord-message-command-error.service';
 import { DiscordMessageCommandFeatureService } from './feature/discord-message-command-feature.service';
+import { DiscordMessageCommandHeartbeatService } from './heartbeat/services/discord-message-command-heartbeat.service';
 import { DiscordMessageCommandHelpService } from './help/discord-message-command-help.service';
 import { DiscordMessageCommandLunchService } from './lunch/services/discord-message-command-lunch.service';
 import { DiscordMessageCommandQuoteService } from './quote/services/discord-message-command-quote.service';
@@ -13,6 +14,11 @@ import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import _ from 'lodash';
 
+/**
+ * @description
+ * The main service used to handle all the commands.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export class DiscordMessageCommandService extends AbstractService {
   private static _instance: DiscordMessageCommandService;
 
@@ -45,6 +51,8 @@ export class DiscordMessageCommandService extends AbstractService {
       return true;
     } else if (DiscordMessageCommandFeatureService.getInstance().hasCommand(message)) {
       return true;
+    } else if (DiscordMessageCommandHeartbeatService.getInstance().hasCommand(message)) {
+      return true;
     }
 
     return false;
@@ -72,6 +80,12 @@ export class DiscordMessageCommandService extends AbstractService {
     anyDiscordMessage: IAnyDiscordMessage
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandCookieService.getInstance().handleResponse(anyDiscordMessage);
+  }
+
+  public handleHeartbeatCommand(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    return DiscordMessageCommandHeartbeatService.getInstance().handleResponse(anyDiscordMessage);
   }
 
   public handleLunchCommand(
@@ -118,6 +132,8 @@ export class DiscordMessageCommandService extends AbstractService {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
       } else if (DiscordMessageCommandQuoteService.getInstance().hasCommand(anyDiscordMessage.content)) {
         return this.handleQuoteCommand(anyDiscordMessage);
+      } else if (DiscordMessageCommandHeartbeatService.getInstance().hasCommand(anyDiscordMessage.content)) {
+        return this.handleHeartbeatCommand(anyDiscordMessage);
       }
     }
 

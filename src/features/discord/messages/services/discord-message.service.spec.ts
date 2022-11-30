@@ -103,10 +103,10 @@ describe(`DiscordMessageService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageService();
       discordClientServiceGetClientOnMock = jest.fn();
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
@@ -138,7 +138,7 @@ describe(`DiscordMessageService`, (): void => {
             listener(anyDiscordMessage);
           }
         );
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
 
@@ -181,7 +181,7 @@ describe(`DiscordMessageService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
 
@@ -425,7 +425,7 @@ describe(`DiscordMessageService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageService();
       anyDiscordMessageChannelSendMock = jest.fn().mockRejectedValue(new Error(`Fake test error: send`));
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,
         },
@@ -435,6 +435,7 @@ describe(`DiscordMessageService`, (): void => {
         id: `dummy-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
+        afterSending: undefined,
         content: `dummy-response`,
         options: {},
       });
@@ -462,11 +463,12 @@ describe(`DiscordMessageService`, (): void => {
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`).mockImplementation();
       discordMentionServiceIsValidSpy = jest.spyOn(discordMentionService, `isValid`).mockImplementation();
       discordMentionServiceIsForEveryone = jest.spyOn(discordMentionService, `isForEveryone`).mockImplementation();
-      jest.spyOn(discordSoniaService, `getSonia`).mockReturnValue(createMock<ISonia>());
+      jest.spyOn(discordSoniaService, `getSonia`).mockReturnValue(createHydratedMock<ISonia>());
       discordSoniaServiceIsValidSpy = jest.spyOn(discordSoniaService, `isValid`).mockImplementation();
       discordMentionServiceIsUserMentionedSpy = jest
         .spyOn(discordMentionService, `isUserMentioned`)
         .mockImplementation();
+      jest.spyOn(loggerConfigService, `shouldDisplayMoreDebugLogs`).mockReturnValue(true);
     });
 
     describe(`when the given discord message is not DM message`, (): void => {
@@ -862,6 +864,54 @@ describe(`DiscordMessageService`, (): void => {
                   } as ILoggerLog);
                 });
 
+                describe(`when the "afterSending" callback exist`, (): void => {
+                  let afterSendingMock: jest.Mock;
+
+                  beforeEach((): void => {
+                    afterSendingMock = jest.fn().mockResolvedValue(undefined);
+                    discordMessageResponse = createHydratedMock<IDiscordMessageResponse>({
+                      afterSending: afterSendingMock,
+                      content: `dummy-response`,
+                      options: {},
+                    });
+                    discordMessageTextServiceGetMessageSpy.mockResolvedValue(discordMessageResponse);
+                  });
+
+                  it(`should log about executing the callback`, async (): Promise<void> => {
+                    expect.assertions(2);
+
+                    await service.handleChannelMessage(anyDiscordMessage);
+
+                    expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-executing callback value-afterSending...`,
+                    } as ILoggerLog);
+                  });
+
+                  it(`should execute the after sending callback`, async (): Promise<void> => {
+                    expect.assertions(1);
+
+                    await service.handleChannelMessage(anyDiscordMessage);
+
+                    expect(afterSendingMock).toHaveBeenCalledTimes(1);
+                  });
+
+                  it(`should log about successfully executed the callback`, async (): Promise<void> => {
+                    expect.assertions(2);
+
+                    await service.handleChannelMessage(anyDiscordMessage);
+
+                    expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(4, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-callback value-afterSending executed`,
+                    } as ILoggerLog);
+                  });
+                });
+
                 it(`should not handle the error`, async (): Promise<void> => {
                   expect.assertions(2);
 
@@ -962,6 +1012,7 @@ describe(`DiscordMessageService`, (): void => {
                 const messageC: string | MessagePayload | MessageOptions = {
                   content: `dummy-response-c`,
                 };
+                // TODO should be 3 calls; weird!
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(6);
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, messageA);
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, messageB);
@@ -1056,6 +1107,89 @@ describe(`DiscordMessageService`, (): void => {
                     hasExtendedContext: true,
                     message: `context-[dummy-id] text-message sent`,
                   } as ILoggerLog);
+                });
+
+                describe(`when the "afterSending" callback exist`, (): void => {
+                  let afterSendingMock: jest.Mock;
+
+                  beforeEach((): void => {
+                    afterSendingMock = jest.fn().mockResolvedValue(undefined);
+                    discordMessageResponseA = createMock<IDiscordMessageResponse>({
+                      afterSending: afterSendingMock,
+                      content: `dummy-response-a`,
+                      options: {},
+                    });
+                    discordMessageResponseB = createMock<IDiscordMessageResponse>({
+                      afterSending: afterSendingMock,
+                      content: `dummy-response-b`,
+                      options: {},
+                    });
+                    discordMessageResponseC = createMock<IDiscordMessageResponse>({
+                      afterSending: afterSendingMock,
+                      content: `dummy-response-c`,
+                      options: {},
+                    });
+                    discordMessageResponses = [
+                      discordMessageResponseA,
+                      discordMessageResponseB,
+                      discordMessageResponseC,
+                    ];
+                    discordMessageTextServiceGetMessageSpy.mockResolvedValue(discordMessageResponses);
+                  });
+
+                  it(`should log about executing the callback`, async (): Promise<void> => {
+                    expect.assertions(4);
+
+                    await service.handleChannelMessage(anyDiscordMessage);
+
+                    expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(10);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(5, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-executing callback value-afterSending...`,
+                    } as ILoggerLog);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(6, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-executing callback value-afterSending...`,
+                    } as ILoggerLog);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(7, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-executing callback value-afterSending...`,
+                    } as ILoggerLog);
+                  });
+
+                  it(`should execute the after sending callback`, async (): Promise<void> => {
+                    expect.assertions(1);
+
+                    await service.handleChannelMessage(anyDiscordMessage);
+
+                    expect(afterSendingMock).toHaveBeenCalledTimes(3);
+                  });
+
+                  it(`should log about successfully executed the callback`, async (): Promise<void> => {
+                    expect.assertions(4);
+
+                    await service.handleChannelMessage(anyDiscordMessage);
+
+                    expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(10);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(8, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-callback value-afterSending executed`,
+                    } as ILoggerLog);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(9, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-callback value-afterSending executed`,
+                    } as ILoggerLog);
+                    expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(10, {
+                      context: `DiscordMessageService`,
+                      hasExtendedContext: true,
+                      message: `context-[dummy-id] text-callback value-afterSending executed`,
+                    } as ILoggerLog);
+                  });
                 });
 
                 it(`should not handle the error`, async (): Promise<void> => {
@@ -1200,7 +1334,7 @@ describe(`DiscordMessageService`, (): void => {
             beforeEach((): void => {
               anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
-              anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
                 },
@@ -1237,7 +1371,7 @@ describe(`DiscordMessageService`, (): void => {
             beforeEach((): void => {
               anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
-              anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
                 },
@@ -1257,6 +1391,54 @@ describe(`DiscordMessageService`, (): void => {
                 hasExtendedContext: true,
                 message: `context-[dummy-id] text-message sent`,
               } as ILoggerLog);
+            });
+
+            describe(`when the "afterSending" callback exist`, (): void => {
+              let afterSendingMock: jest.Mock;
+
+              beforeEach((): void => {
+                afterSendingMock = jest.fn().mockResolvedValue(undefined);
+                discordMessageResponse = createHydratedMock<IDiscordMessageResponse>({
+                  afterSending: afterSendingMock,
+                  content: `dummy-response`,
+                  options: {},
+                });
+                discordMessageDmServiceGetMessageSpy.mockResolvedValue(discordMessageResponse);
+              });
+
+              it(`should log about executing the callback`, async (): Promise<void> => {
+                expect.assertions(2);
+
+                await service.handleChannelMessage(anyDiscordMessage);
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+                expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                  context: `DiscordMessageService`,
+                  hasExtendedContext: true,
+                  message: `context-[dummy-id] text-executing callback value-afterSending...`,
+                } as ILoggerLog);
+              });
+
+              it(`should execute the after sending callback`, async (): Promise<void> => {
+                expect.assertions(1);
+
+                await service.handleChannelMessage(anyDiscordMessage);
+
+                expect(afterSendingMock).toHaveBeenCalledTimes(1);
+              });
+
+              it(`should log about successfully executed the callback`, async (): Promise<void> => {
+                expect.assertions(2);
+
+                await service.handleChannelMessage(anyDiscordMessage);
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+                expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(4, {
+                  context: `DiscordMessageService`,
+                  hasExtendedContext: true,
+                  message: `context-[dummy-id] text-callback value-afterSending executed`,
+                } as ILoggerLog);
+              });
             });
 
             it(`should not handle the error`, async (): Promise<void> => {
