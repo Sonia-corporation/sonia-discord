@@ -1,3 +1,8 @@
+/**
+ * @description
+ * The image color and URL used by the messages used for a command.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export enum DiscordMessageConfigValueNameEnum {
   COMMAND_CLI_ERROR_IMAGE_COLOR = `message command CLI error image color`,
   COMMAND_CLI_ERROR_IMAGE_URL = `message command CLI error image url`,
@@ -13,6 +18,8 @@ export enum DiscordMessageConfigValueNameEnum {
   COMMAND_HELP_IMAGE_URL = `message command help image url`,
   COMMAND_LUNCH_IMAGE_COLOR = `message command lunch image color`,
   COMMAND_LUNCH_IMAGE_URL = `message command lunch image url`,
+  COMMAND_HEARTBEAT_IMAGE_COLOR = `message command heartbeat image color`,
+  COMMAND_HEARTBEAT_IMAGE_URL = `message command heartbeat image url`,
   COMMAND_PREFIX = `message command prefix`,
   COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_COLOR = `message command release notes bug fixes image color`,
   COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_URL = `message command release notes bug fixes image url`,

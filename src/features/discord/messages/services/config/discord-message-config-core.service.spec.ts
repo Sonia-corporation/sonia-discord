@@ -81,6 +81,22 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     expect(service.command.cookie.imageUrl).toBe(`https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`);
   });
 
+  it(`should have a specific color for the image of the heartbeat command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.heartbeat.imageColor).toBe(15562905);
+  });
+
+  it(`should have a specific url for the image of the heartbeat command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.heartbeat.imageUrl).toBe(`https://i.ibb.co/x3fnqGb/icons8-heart-with-pulse-512.png`);
+  });
+
   it(`should have a specific color for the image of the error command`, (): void => {
     expect.assertions(1);
 

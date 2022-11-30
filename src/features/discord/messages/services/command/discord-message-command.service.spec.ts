@@ -2,6 +2,7 @@ import { DiscordMessageCommandCookieService } from './cookie/services/discord-me
 import { DiscordMessageCommandService } from './discord-message-command.service';
 import { DiscordMessageCommandErrorService } from './error/discord-message-command-error.service';
 import { DiscordMessageCommandFeatureService } from './feature/discord-message-command-feature.service';
+import { DiscordMessageCommandHeartbeatService } from './heartbeat/services/discord-message-command-heartbeat.service';
 import { DiscordMessageCommandHelpService } from './help/discord-message-command-help.service';
 import { DiscordMessageCommandLunchService } from './lunch/services/discord-message-command-lunch.service';
 import { DiscordMessageCommandQuoteService } from './quote/services/discord-message-command-quote.service';
@@ -24,6 +25,7 @@ describe(`DiscordMessageCommandService`, (): void => {
   let discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService;
   let discordMessageCommandQuoteService: DiscordMessageCommandQuoteService;
   let discordMessageCommandFeatureService: DiscordMessageCommandFeatureService;
+  let discordMessageCommandHeartbeatService: DiscordMessageCommandHeartbeatService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let coreEventService: CoreEventService;
 
@@ -38,6 +40,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
     discordMessageCommandQuoteService = DiscordMessageCommandQuoteService.getInstance();
     discordMessageCommandFeatureService = DiscordMessageCommandFeatureService.getInstance();
+    discordMessageCommandHeartbeatService = DiscordMessageCommandHeartbeatService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     coreEventService = CoreEventService.getInstance();
 
@@ -378,6 +381,34 @@ describe(`DiscordMessageCommandService`, (): void => {
         expect(result).toBe(true);
       });
     });
+
+    describe(`when the given message contains the heartbeat command`, (): void => {
+      beforeEach((): void => {
+        message = `-heartbeat`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCommand(message);
+
+        expect(result).toBe(true);
+      });
+    });
+
+    describe(`when the given message contains the shortcut heartbeat command`, (): void => {
+      beforeEach((): void => {
+        message = `-hb`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCommand(message);
+
+        expect(result).toBe(true);
+      });
+    });
   });
 
   describe(`handleVersionCommand()`, (): void => {
@@ -511,6 +542,40 @@ describe(`DiscordMessageCommandService`, (): void => {
       expect.assertions(1);
 
       const result = await service.handleCookieCommand(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`handleHeartbeatCommand()`, (): void => {
+    let anyDiscordMessage: Message;
+    let discordMessageResponse: IDiscordMessageResponse;
+
+    let discordMessageCommandHeartbeatServiceResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
+
+      discordMessageCommandHeartbeatServiceResponseSpy = jest
+        .spyOn(discordMessageCommandHeartbeatService, `handleResponse`)
+        .mockResolvedValue(discordMessageResponse);
+    });
+
+    it(`should handle the message command heartbeat`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.handleHeartbeatCommand(anyDiscordMessage);
+
+      expect(discordMessageCommandHeartbeatServiceResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandHeartbeatServiceResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+    });
+
+    it(`should return a message response`, async (): Promise<void> => {
+      expect.assertions(1);
+
+      const result = await service.handleHeartbeatCommand(anyDiscordMessage);
 
       expect(result).toStrictEqual(discordMessageResponse);
     });
@@ -664,6 +729,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandReleaseNotesServiceHandleResponseSpy: jest.SpyInstance;
     let discordMessageCommandQuoteServiceHandleResponseSpy: jest.SpyInstance;
     let discordMessageCommandFeatureServiceHandleResponseSpy: jest.SpyInstance;
+    let discordMessageCommandHeartbeatServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
@@ -695,6 +761,9 @@ describe(`DiscordMessageCommandService`, (): void => {
       discordMessageCommandFeatureServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandFeatureService, `handleResponse`)
         .mockResolvedValue(discordMessageResponse);
+      discordMessageCommandHeartbeatServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandHeartbeatService, `handleResponse`)
+        .mockResolvedValue(discordMessageResponse);
     });
 
     describe(`when the given discord message has no content`, (): void => {
@@ -703,7 +772,7 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
 
       it(`should not handle the commands`, async (): Promise<void> => {
-        expect.assertions(9);
+        expect.assertions(10);
 
         await expect(service.handleCommands(anyDiscordMessage)).rejects.toThrow(
           new Error(`Could not handle the command`)
@@ -717,6 +786,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
         expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
         expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+        expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
       });
 
       it(`should throw an error`, async (): Promise<void> => {
@@ -739,7 +809,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the commands`, async (): Promise<void> => {
-          expect.assertions(9);
+          expect.assertions(10);
 
           await expect(service.handleCommands(anyDiscordMessage)).rejects.toThrow(
             new Error(`Could not handle the command`)
@@ -753,6 +823,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should throw an error`, async (): Promise<void> => {
@@ -779,7 +850,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -790,6 +861,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the version command`, async (): Promise<void> => {
@@ -816,7 +888,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -827,6 +899,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the error command`, async (): Promise<void> => {
@@ -853,7 +926,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -864,6 +937,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the help command`, async (): Promise<void> => {
@@ -890,7 +964,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -901,6 +975,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the help command`, async (): Promise<void> => {
@@ -927,7 +1002,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -938,6 +1013,45 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
+        });
+
+        it(`should return the Discord message response for the cookie command`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.handleCommands(anyDiscordMessage);
+
+          expect(result).toStrictEqual(discordMessageResponse);
+        });
+      });
+
+      describe(`when the message contains the heartbeat command`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `-heartbeat`;
+        });
+
+        it(`should handle the heartbeat command`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should not handle the other commands`, async (): Promise<void> => {
+          expect.assertions(8);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(discordMessageCommandVersionServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandErrorServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHelpServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandLunchServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandCookieServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the cookie command`, async (): Promise<void> => {
@@ -964,7 +1078,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -975,6 +1089,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the lunch command`, async (): Promise<void> => {
@@ -1001,7 +1116,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -1012,6 +1127,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandLunchServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the release notes command`, async (): Promise<void> => {
@@ -1038,7 +1154,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -1049,6 +1165,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandLunchServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandFeatureServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the quote command`, async (): Promise<void> => {
@@ -1075,7 +1192,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -1086,6 +1203,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandLunchServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the feature command`, async (): Promise<void> => {
@@ -1112,7 +1230,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -1123,6 +1241,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandLunchServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the feature command`, async (): Promise<void> => {
@@ -1149,7 +1268,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
 
         it(`should not handle the other commands`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await service.handleCommands(anyDiscordMessage);
 
@@ -1160,6 +1279,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(discordMessageCommandLunchServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandReleaseNotesServiceHandleResponseSpy).not.toHaveBeenCalled();
           expect(discordMessageCommandQuoteServiceHandleResponseSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandHeartbeatServiceHandleResponseSpy).not.toHaveBeenCalled();
         });
 
         it(`should return the Discord message response for the feature command`, async (): Promise<void> => {

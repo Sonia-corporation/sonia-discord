@@ -299,6 +299,7 @@ Here is the list of linked features:
 
 - [sonia-link-001](#sonia-link-001)
 - [sonia-link-002](#sonia-link-002)
+- [sonia-link-003](#sonia-link-003)
 
 ### sonia-link-001
 
@@ -320,3 +321,7 @@ In fact we had to choose between two strategies:
 We chose to only update the minimum as possible (solution 2) to avoid potential issues with multiple parallel asynchronous updates.  
 So the main drawback is that the types are gone and any breaking change is not so easily spotted.  
 Use this reminder to avoid to miss something when a breaking change occur.
+
+### sonia-link-003
+
+A helper to find what needs to be changed when a new command is added.

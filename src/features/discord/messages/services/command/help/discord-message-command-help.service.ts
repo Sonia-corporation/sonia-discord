@@ -9,6 +9,11 @@ import { DiscordMessageCommandCoreService } from '../discord-message-command-cor
 import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 import _ from 'lodash';
 
+/**
+ * @description
+ * Help command main service.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreService {
   private static _instance: DiscordMessageCommandHelpService;
 
@@ -75,6 +80,7 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
       this._getMessageEmbedFieldQuote(),
       this._getMessageEmbedFieldReleaseNotes(),
       this._getMessageEmbedFieldVersion(),
+      this._getMessageEmbedFieldHeartbeat(),
       this._getMessageEmbedFieldMoreHelp(),
     ];
   }
@@ -132,6 +138,13 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     return {
       name: `Version (*version* or *v*)`,
       value: `Display my current application version.`,
+    };
+  }
+
+  private _getMessageEmbedFieldHeartbeat(): EmbedFieldData {
+    return {
+      name: `Heartbeat (*heartbeat* or *hb*)`,
+      value: `Display my current heartbeat.`,
     };
   }
 

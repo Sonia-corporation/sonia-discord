@@ -142,17 +142,34 @@ describe(`DiscordMessageErrorService`, (): void => {
         loggerConfigServiceShouldDisplayMoreDebugLogsSpy.mockReturnValue(true);
       });
 
-      it(`should log about the message sending fail`, (): void => {
-        expect.assertions(2);
+      describe(`when a custom log message is not provided`, (): void => {
+        it(`should log about the message sending fail`, (): void => {
+          expect.assertions(2);
 
-        service.handleError(error, anyDiscordMessage);
+          service.handleError(error, anyDiscordMessage);
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
-        expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
-          context: `DiscordMessageErrorService`,
-          hasExtendedContext: true,
-          message: `context-[dummy-id] text-message sending failed`,
-        } as ILoggerLog);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
+            context: `DiscordMessageErrorService`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-message sending failed`,
+          } as ILoggerLog);
+        });
+      });
+
+      describe(`when a custom log message is provided`, (): void => {
+        it(`should log the custom message`, (): void => {
+          expect.assertions(2);
+
+          service.handleError(error, anyDiscordMessage, `custom log message`);
+
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
+            context: `DiscordMessageErrorService`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-custom log message`,
+          } as ILoggerLog);
+        });
       });
     });
 

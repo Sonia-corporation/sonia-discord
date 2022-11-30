@@ -15,4 +15,5 @@ export enum IconEnum {
   RESTAURANT = `https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`,
   THE_FLASH_SIGN = `https://i.ibb.co/JkmQvS1/icons8-the-flash-sign-512.png`,
   WARNING_SHIELD = `https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`,
+  HEART_WITH_PULSE = `https://i.ibb.co/x3fnqGb/icons8-heart-with-pulse-512.png`,
 }

@@ -153,6 +153,22 @@ Sonia will send you a message containing:
 - `@Sonia !help`
 - `@Sonia !H`
 
+#### Heartbeat
+
+**Commands:**
+
+- heartbeat
+- hb _(shortcut)_
+
+Sonia will send you a message containing:
+
+- Her heartbeat (her ping).
+
+**Example:**
+
+- `@Sonia !heartbeat`
+- `@Sonia !hb`
+
 #### Lunch
 
 **Commands:**

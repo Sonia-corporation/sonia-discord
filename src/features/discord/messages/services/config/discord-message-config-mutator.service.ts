@@ -14,6 +14,7 @@ import { IDiscordMessageCommandCliErrorConfig } from '../../../interfaces/discor
 import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
 import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-message-command-cookie-config';
 import { IDiscordMessageCommandErrorConfig } from '../../../interfaces/discord-message-command-error-config';
+import { IDiscordMessageCommandHeartbeatConfig } from '../../../interfaces/discord-message-command-heartbeat-config';
 import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
 import { IDiscordMessageCommandReleaseNotesConfig } from '../../../interfaces/discord-message-command-release-notes-config';
 import { IDiscordMessageCommandReleaseNotesMixedConfig } from '../../../interfaces/discord-message-command-release-notes-mixed-config';
@@ -25,6 +26,11 @@ import { IDiscordMessageWarningConfig } from '../../../interfaces/discord-messag
 import { DiscordMessageConfigValueNameEnum } from '../../enums/discord-message-config-value-name.enum';
 import _ from 'lodash';
 
+/**
+ * @description
+ * The service used to modify the config for the commands.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export class DiscordMessageConfigMutatorService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordMessageConfigMutatorService;
 
@@ -75,6 +81,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<ID
       this.updateMessageCommandReleaseNotes(command.releaseNotes);
       this.updateMessageCommandVersion(command.version);
       this.updateMessageCommandLunch(command.lunch);
+      this.updateMessageCommandHeartbeat(command.heartbeat);
     }
   }
 
@@ -212,6 +219,33 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<ID
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_URL,
       }
     );
+  }
+
+  public updateMessageCommandHeartbeat(heartbeat?: IPartialNested<IDiscordMessageCommandHeartbeatConfig>): void {
+    if (!_.isNil(heartbeat)) {
+      this.updateMessageCommandHeartbeatImageColor(heartbeat.imageColor);
+      this.updateMessageCommandHeartbeatImageUrl(heartbeat.imageUrl);
+    }
+  }
+
+  public updateMessageCommandHeartbeatImageColor(imageColor?: ColorEnum): void {
+    DiscordMessageConfigCoreService.getInstance().command.heartbeat.imageColor =
+      ConfigService.getInstance().getUpdatedNumber({
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandHeartbeatImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_HEARTBEAT_IMAGE_COLOR,
+      });
+  }
+
+  public updateMessageCommandHeartbeatImageUrl(imageUrl?: IconEnum): void {
+    DiscordMessageConfigCoreService.getInstance().command.heartbeat.imageUrl =
+      ConfigService.getInstance().getUpdatedString({
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandHeartbeatImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_HEARTBEAT_IMAGE_URL,
+      });
   }
 
   public updateMessageCommandPrefix(prefix?: string | (string | undefined)[]): void {

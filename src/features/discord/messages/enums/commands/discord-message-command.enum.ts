@@ -1,3 +1,8 @@
+/**
+ * @description
+ * The list of commands with their shortcuts.
+ * @see [sonia-link-003]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-003}.
+ */
 export enum DiscordMessageCommandEnum {
   VERSION = `version`,
   /**
@@ -12,11 +17,17 @@ export enum DiscordMessageCommandEnum {
    */
   BUG = `bug`,
   HELP = `help`,
+  HEARTBEAT = `heartbeat`,
   /**
    * @description
    * Shortcut for {@link HELP}.
    */
   H = `h`,
+  /**
+   * @description
+   * Shortcut for {@link HEARTBEAT}.
+   */
+  HB = `hb`,
   COOKIE = `cookie`,
   /**
    * @description

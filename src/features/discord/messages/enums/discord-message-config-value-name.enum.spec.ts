@@ -2,10 +2,10 @@ import { DiscordMessageConfigValueNameEnum } from './discord-message-config-valu
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageConfigValueNameEnum`, (): void => {
-  it(`should have 31 members`, (): void => {
+  it(`should have 33 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toBe(31);
+    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toBe(33);
   });
 
   it(`should have a member "COMMAND_CLI_ERROR_IMAGE_COLOR"`, (): void => {
@@ -220,5 +220,19 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageConfigValueNameEnum.WARNING_IMAGE_URL).toBe(`message warning image url`);
+  });
+
+  it(`should have a member "COMMAND_HEARTBEAT_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_HEARTBEAT_IMAGE_COLOR).toBe(
+      `message command heartbeat image color`
+    );
+  });
+
+  it(`should have a member "COMMAND_HEARTBEAT_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_HEARTBEAT_IMAGE_URL).toBe(`message command heartbeat image url`);
   });
 });
