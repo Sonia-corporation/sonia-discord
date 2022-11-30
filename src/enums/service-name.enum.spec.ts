@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have 126 members`, (): void => {
+  it(`should have 127 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toBe(126);
+    expect(getEnumLength(ServiceNameEnum)).toBe(127);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -200,6 +200,14 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HEARTBEAT_SERVICE).toBe(`DiscordMessageCommandHeartbeatService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_HEARTBEAT_UPDATE_ERROR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HEARTBEAT_UPDATE_ERROR_SERVICE).toBe(
+      `DiscordMessageCommandHeartbeatUpdateErrorService`
+    );
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_ERROR_SERVICE"`, (): void => {

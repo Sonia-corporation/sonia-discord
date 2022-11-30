@@ -28,8 +28,18 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
   }
 
-  public handleError(error: unknown, anyDiscordMessage: IAnyDiscordMessage): void {
-    this._logOnError(error, anyDiscordMessage);
+  /**
+   * @description
+   * Provide a simple and yet good UX to handle an error.
+   * The error will be sent to the channel that caused it.
+   * It will also be sent to the Sonia Guild errors channel.
+   * It will also be logged.
+   * @param {unknown}            error             The error that happened.
+   * @param {IAnyDiscordMessage} anyDiscordMessage The original message.
+   * @param {string}             logMessage        The custom error message to display (optional). The default is "message sending failed".
+   */
+  public handleError(error: unknown, anyDiscordMessage: IAnyDiscordMessage, logMessage?: string): void {
+    this._logOnError(error, anyDiscordMessage, logMessage);
     this._sendMessage(error, anyDiscordMessage);
   }
 
@@ -72,12 +82,15 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     });
   }
 
-  private _logOnError(error: unknown, { id }: IAnyDiscordMessage): void {
+  private _logOnError(error: unknown, { id }: IAnyDiscordMessage, logMessage?: string): void {
     if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
         hasExtendedContext: true,
-        message: LoggerService.getInstance().getSnowflakeContext(id, `message sending failed`),
+        message: LoggerService.getInstance().getSnowflakeContext(
+          id,
+          _.isString(logMessage) ? logMessage : `message sending failed`
+        ),
       });
     }
 

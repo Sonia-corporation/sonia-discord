@@ -1,3 +1,4 @@
+import { DiscordMessageCommandHeartbeatUpdateErrorService } from './discord-message-command-heartbeat-update-error.service';
 import { DiscordMessageCommandHeartbeatService } from './discord-message-command-heartbeat.service';
 import { ColorEnum } from '../../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../../enums/icon.enum';
@@ -18,7 +19,11 @@ import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_TITLE_MESSAGES } from '../constants/d
 import {
   Client,
   DMChannel,
+  EmbedField,
   EmbedFieldData,
+  Message,
+  MessageEditOptions,
+  MessageEmbed,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedThumbnail,
@@ -39,6 +44,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
   let discordMessageConfigService: DiscordMessageConfigService;
   let discordMessageCommandVerifyChannelRightService: DiscordMessageCommandVerifyChannelRightService;
   let discordClientService: DiscordClientService;
+  let discordMessageCommandHeartbeatUpdateErrorService: DiscordMessageCommandHeartbeatUpdateErrorService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -47,6 +53,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     discordMessageCommandVerifyChannelRightService = DiscordMessageCommandVerifyChannelRightService.getInstance();
     discordClientService = DiscordClientService.getInstance();
+    discordMessageCommandHeartbeatUpdateErrorService = DiscordMessageCommandHeartbeatUpdateErrorService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -272,7 +279,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
         name: `My roundtrip latency`,
-        value: `unknown`,
+        value: `Calculating...`,
       } as EmbedFieldData);
     });
 
@@ -1533,6 +1540,181 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
           expect(result).toBe(true);
         });
       });
+    });
+  });
+
+  describe(`afterSending()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let message: Message;
+    let messageEmbed: MessageEmbed;
+
+    let loggerServiceLogSpy: jest.SpyInstance;
+    let loggerServiceSuccessSpy: jest.SpyInstance;
+    let discordMessageCommandHeartbeatUpdateErrorServiceHandleErrorSpy: jest.SpyInstance;
+    let editMock: jest.Mock;
+    let setFieldsMock: jest.Mock;
+    let mapMock: jest.Mock;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandHeartbeatService();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+        id: `dummy-id`,
+      });
+      editMock = jest.fn().mockRejectedValue(createHydratedMock<Message>());
+      setFieldsMock = jest.fn();
+      mapMock = jest.fn();
+      messageEmbed = createHydratedMock<MessageEmbed>({
+        fields: {
+          map: mapMock,
+        },
+        setFields: setFieldsMock,
+      });
+      message = createHydratedMock<Message>({
+        edit: editMock,
+        embeds: [messageEmbed],
+      });
+
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      loggerServiceSuccessSpy = jest.spyOn(loggerService, `success`).mockImplementation();
+      discordMessageCommandHeartbeatUpdateErrorServiceHandleErrorSpy = jest
+        .spyOn(discordMessageCommandHeartbeatUpdateErrorService, `handleError`)
+        .mockImplementation();
+    });
+
+    it(`should log`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.afterSending(anyDiscordMessage, message);
+
+      const loggerLog: ILoggerLog = {
+        context: `DiscordMessageCommandHeartbeatService`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-edit the embed message to update the roundtrip latency for the heartbeat command`,
+      };
+      expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceLogSpy).toHaveBeenCalledWith(loggerLog);
+    });
+
+    it(`should edit the embed message to calculate the roundtrip latency`, async (): Promise<void> => {
+      expect.assertions(4);
+
+      await service.afterSending(anyDiscordMessage, message);
+
+      // TODO make it better to really ensure the modification happened
+      const messageEditOptions: MessageEditOptions = {
+        embeds: [messageEmbed],
+      };
+      expect(mapMock).toHaveBeenCalledTimes(1);
+      expect(setFieldsMock).toHaveBeenCalledTimes(1);
+      expect(editMock).toHaveBeenCalledTimes(1);
+      expect(editMock).toHaveBeenCalledWith(messageEditOptions);
+    });
+
+    describe(`when the update failed`, (): void => {
+      beforeEach((): void => {
+        editMock.mockRejectedValue(new Error(`edit error`));
+      });
+
+      it(`should handle the update error`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await service.afterSending(anyDiscordMessage, message);
+
+        expect(discordMessageCommandHeartbeatUpdateErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageCommandHeartbeatUpdateErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
+          anyDiscordMessage,
+          new Error(`edit error`)
+        );
+      });
+
+      it(`should not log a success`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await service.afterSending(anyDiscordMessage, message);
+
+        expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the update was successful`, (): void => {
+      beforeEach((): void => {
+        editMock.mockResolvedValue(`ok`);
+      });
+
+      it(`should log a success`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await service.afterSending(anyDiscordMessage, message);
+
+        const loggerLog: ILoggerLog = {
+          context: `DiscordMessageCommandHeartbeatService`,
+          hasExtendedContext: true,
+          message: `context-[dummy-id] text-embed message updated with the roundtrip latency of the heartbeat command`,
+        };
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledWith(loggerLog);
+      });
+
+      it(`should not handle it as an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await service.afterSending(anyDiscordMessage, message);
+
+        expect(discordMessageCommandHeartbeatUpdateErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe(`getRoundtripLatencyEmbedField()`, (): void => {
+    let field: EmbedField;
+    let message: Message;
+    let anyDiscordMessage: IAnyDiscordMessage;
+
+    let loggerServiceLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandHeartbeatService();
+      field = createHydratedMock<EmbedField>({
+        inline: false,
+        name: `dummy-name`,
+        value: `dummy-value`,
+      });
+      message = createHydratedMock<Message>({
+        createdTimestamp: 6500,
+      });
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+        createdTimestamp: 5000,
+        id: `dummy-id`,
+      });
+
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+    });
+
+    it(`should log the heartbeat`, (): void => {
+      expect.assertions(2);
+
+      service.getRoundtripLatencyEmbedField(field, message, anyDiscordMessage);
+
+      const loggerLog: ILoggerLog = {
+        context: `DiscordMessageCommandHeartbeatService`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-heartbeat: value-1,500 ms`,
+      };
+      expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceLogSpy).toHaveBeenCalledWith(loggerLog);
+    });
+
+    it(`should return the same embed field with a new value set as the difference between the two messages creation timestamp`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getRoundtripLatencyEmbedField(field, message, anyDiscordMessage);
+
+      const resultEmbedField: EmbedField = {
+        inline: false,
+        name: `dummy-name`,
+        value: `1,500 ms`,
+      };
+      expect(result).toStrictEqual(resultEmbedField);
     });
   });
 });

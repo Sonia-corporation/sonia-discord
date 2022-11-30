@@ -31,6 +31,7 @@ export enum ServiceNameEnum {
   DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE = `DiscordMessageCommandCliErrorService`,
   DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE = `DiscordMessageCommandCookieService`,
   DISCORD_MESSAGE_COMMAND_HEARTBEAT_SERVICE = `DiscordMessageCommandHeartbeatService`,
+  DISCORD_MESSAGE_COMMAND_HEARTBEAT_UPDATE_ERROR_SERVICE = `DiscordMessageCommandHeartbeatUpdateErrorService`,
   DISCORD_MESSAGE_COMMAND_ERROR_SERVICE = `DiscordMessageCommandErrorService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_DUPLICATED_FLAGS_ERROR_SERVICE = `DiscordMessageCommandFeatureDuplicatedFlagsErrorService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE = `DiscordMessageCommandFeatureEmptyContentErrorService`,
