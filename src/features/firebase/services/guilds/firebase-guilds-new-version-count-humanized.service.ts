@@ -80,8 +80,8 @@ export class FirebaseGuildsNewVersionCountHumanizedService extends AbstractServi
   private _getCountForLogs(totalGuildCount: number, guildCount: number, channelCount: number): string {
     return `${ChalkService.getInstance().value(channelCount)} release note message${
       _.gt(channelCount, ONE_CHANNEL) ? `s` : ``
-    } sent over ${ChalkService.getInstance().value(guildCount)} guild${
-      _.gt(guildCount, ONE_GUILD) ? `s` : ``
-    } of ${ChalkService.getInstance().value(totalGuildCount)}`;
+    } sent over ${ChalkService.getInstance().value(guildCount)} of ${ChalkService.getInstance().value(
+      totalGuildCount
+    )} guild${_.gt(totalGuildCount, ONE_GUILD) ? `s` : ``}`;
   }
 }
