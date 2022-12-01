@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have 127 members`, (): void => {
+  it(`should have 146 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toBe(127);
+    expect(getEnumLength(ServiceNameEnum)).toBe(146);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -128,6 +128,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE).toBe(`DiscordGuildCreateService`);
   });
 
+  it(`should have a member "DISCORD_DM_FIREBASE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_DM_FIREBASE_SERVICE).toBe(`DiscordDmFirebaseService`);
+  });
+
   it(`should have a member "DISCORD_GUILD_MEMBER_ADD_SERVICE"`, (): void => {
     expect.assertions(1);
 
@@ -138,6 +144,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.DISCORD_GUILD_SERVICE).toBe(`DiscordGuildService`);
+  });
+
+  it(`should have a member "DISCORD_USER_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_USER_SERVICE).toBe(`DiscordUserService`);
   });
 
   it(`should have a member "DISCORD_GUILD_SONIA_SERVICE"`, (): void => {
@@ -674,6 +686,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.FIREBASE_GUILDS_SERVICE).toBe(`FirebaseGuildsService`);
   });
 
+  it(`should have a member "FIREBASE_STORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_STORE_SERVICE).toBe(`FirebaseStoreService`);
+  });
+
   it(`should have a member "FIREBASE_GUILDS_STORE"`, (): void => {
     expect.assertions(1);
 
@@ -690,6 +708,112 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE).toBe(`FirebaseGuildsStoreService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_BREAKING_CHANGES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_BREAKING_CHANGE_SERVICE).toBe(`FirebaseDmsBreakingChangeService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_NOON_ENABLED_SERVICE).toBe(`FirebaseDmsFeaturesNoonEnabledService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_FEATURES_NOON_ENABLED_STATE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_NOON_ENABLED_STATE_SERVICE).toBe(
+      `FirebaseDmsFeaturesNoonEnabledStateService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_DMS_FEATURES_NOON_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_NOON_SERVICE).toBe(`FirebaseDmsFeaturesNoonService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_COMMANDS_FEATURE_RELEASE_NOTES_ENABLED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_RELEASE_NOTES_ENABLED_SERVICE).toBe(
+      `FirebaseDmsFeaturesReleaseNotesEnabledService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_DMS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE).toBe(
+      `FirebaseDmsFeaturesReleaseNotesEnabledStateService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_DMS_FEATURES_RELEASE_NOTES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_RELEASE_NOTES_SERVICE).toBe(`FirebaseDmsFeaturesReleaseNotesService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_FEATURES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_FEATURES_SERVICE).toBe(`FirebaseDmsFeaturesService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_SERVICE).toBe(`FirebaseDmsService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_NEW_VERSION_COUNT_HUMANIZED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_NEW_VERSION_COUNT_HUMANIZED_SERVICE).toBe(
+      `FirebaseDmsNewVersionCountHumanizedService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_DMS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE).toBe(
+      `FirebaseDmsNewVersionCountMessageResponseService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_DMS_NEW_VERSION_COUNT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_NEW_VERSION_COUNT_SERVICE).toBe(`FirebaseDmsNewVersionCountService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_NEW_VERSION_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_NEW_VERSION_SERVICE).toBe(`FirebaseDmsNewVersionService`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_STORE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_STORE).toBe(`FirebaseDmsStore`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_STORE_QUERY"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_STORE_QUERY).toBe(`FirebaseDmsStoreQuery`);
+  });
+
+  it(`should have a member "FIREBASE_DMS_STORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_DMS_STORE_SERVICE).toBe(`FirebaseDmsStoreService`);
   });
 
   it(`should have a member "FIREBASE_SERVICE"`, (): void => {

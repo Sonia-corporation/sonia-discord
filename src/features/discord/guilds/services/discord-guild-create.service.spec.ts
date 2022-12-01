@@ -18,7 +18,6 @@ import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-c
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
 import { Client, Guild, Message, MessageOptions, MessagePayload, NewsChannel, TextChannel } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
-import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`./discord-guild-sonia.service`);
@@ -552,7 +551,6 @@ describe(`DiscordGuildCreateService`, (): void => {
     let guild: Guild;
     let writeResult: WriteResult;
 
-    let firebaseGuildsServiceIsReady$Spy: jest.SpyInstance;
     let firebaseGuildsServiceHasGuildSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceSuccessSpy: jest.SpyInstance;
@@ -565,7 +563,6 @@ describe(`DiscordGuildCreateService`, (): void => {
       });
       writeResult = createMock<WriteResult>();
 
-      firebaseGuildsServiceIsReady$Spy = jest.spyOn(firebaseGuildsService, `isReady$`).mockReturnValue(of(true));
       firebaseGuildsServiceHasGuildSpy = jest
         .spyOn(firebaseGuildsService, `hasGuild`)
         .mockRejectedValue(new Error(`error`));
@@ -576,150 +573,121 @@ describe(`DiscordGuildCreateService`, (): void => {
         .mockRejectedValue(new Error(`error`));
     });
 
-    it(`should wait for the Firebase app to be ready`, async (): Promise<void> => {
+    it(`should check if the Firebase app has the given guild`, async (): Promise<void> => {
       expect.assertions(3);
 
       await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
-      expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledWith();
+      expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledWith(`dummy-id`);
     });
 
-    describe(`when the Firebase app failed to be ready`, (): void => {
+    describe(`when the check for the Firebase guild has failed`, (): void => {
       beforeEach((): void => {
-        firebaseGuildsServiceIsReady$Spy.mockReturnValue(throwError(new Error(`error`)));
+        firebaseGuildsServiceHasGuildSpy.mockRejectedValue(new Error(`error`));
       });
 
-      it(`should not check if the Firebase app has the given guild`, async (): Promise<void> => {
+      it(`should not add the guild into Firebase`, async (): Promise<void> => {
         expect.assertions(2);
 
         await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
-        expect(firebaseGuildsServiceHasGuildSpy).not.toHaveBeenCalled();
+        expect(firebaseGuildsServiceAddGuildSpy).not.toHaveBeenCalled();
       });
     });
 
-    describe(`when the Firebase app was ready`, (): void => {
-      beforeEach((): void => {
-        firebaseGuildsServiceIsReady$Spy.mockReturnValue(of(true));
-      });
-
-      it(`should check if the Firebase app has the given guild`, async (): Promise<void> => {
-        expect.assertions(3);
-
-        await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
-
-        expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledTimes(1);
-        expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledWith(`dummy-id`);
-      });
-
-      describe(`when the check for the Firebase guild has failed`, (): void => {
+    describe(`when the check for the Firebase guild was successful`, (): void => {
+      describe(`when the guild is already in Firebase`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsServiceHasGuildSpy.mockRejectedValue(new Error(`error`));
+          firebaseGuildsServiceHasGuildSpy.mockResolvedValue(true);
+        });
+
+        it(`should log that the guild was already created`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.addFirebaseGuild(guild);
+
+          expect(result).toBeUndefined();
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `DiscordGuildCreateService`,
+            message: `text-Firebase guild already created`,
+          } as ILoggerLog);
         });
 
         it(`should not add the guild into Firebase`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
+          const result = await service.addFirebaseGuild(guild);
 
+          expect(result).toBeUndefined();
           expect(firebaseGuildsServiceAddGuildSpy).not.toHaveBeenCalled();
         });
       });
 
-      describe(`when the check for the Firebase guild was successful`, (): void => {
-        describe(`when the guild is already in Firebase`, (): void => {
-          beforeEach((): void => {
-            firebaseGuildsServiceHasGuildSpy.mockResolvedValue(true);
-          });
-
-          it(`should log that the guild was already created`, async (): Promise<void> => {
-            expect.assertions(3);
-
-            const result = await service.addFirebaseGuild(guild);
-
-            expect(result).toBeUndefined();
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-              context: `DiscordGuildCreateService`,
-              message: `text-Firebase guild already created`,
-            } as ILoggerLog);
-          });
-
-          it(`should not add the guild into Firebase`, async (): Promise<void> => {
-            expect.assertions(2);
-
-            const result = await service.addFirebaseGuild(guild);
-
-            expect(result).toBeUndefined();
-            expect(firebaseGuildsServiceAddGuildSpy).not.toHaveBeenCalled();
-          });
+      describe(`when the guild is not in Firebase`, (): void => {
+        beforeEach((): void => {
+          firebaseGuildsServiceHasGuildSpy.mockResolvedValue(false);
         });
 
-        describe(`when the guild is not in Firebase`, (): void => {
+        it(`should log that the guild was not already created`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.addFirebaseGuild(guild);
+
+          expect(result).toBeUndefined();
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+            context: `DiscordGuildCreateService`,
+            message: `text-guild not yet created on Firebase`,
+          } as ILoggerLog);
+        });
+
+        it(`should add the guild into Firebase`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.addFirebaseGuild(guild);
+
+          expect(result).toBeUndefined();
+          expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledWith(guild);
+        });
+
+        describe(`when the guild was not successfully added into Firebase`, (): void => {
           beforeEach((): void => {
-            firebaseGuildsServiceHasGuildSpy.mockResolvedValue(false);
+            firebaseGuildsServiceAddGuildSpy.mockRejectedValue(new Error(`error`));
           });
 
-          it(`should log that the guild was not already created`, async (): Promise<void> => {
+          it(`should log that the guild could not be added to Firestore`, async (): Promise<void> => {
             expect.assertions(3);
 
             const result = await service.addFirebaseGuild(guild);
 
             expect(result).toBeUndefined();
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
               context: `DiscordGuildCreateService`,
-              message: `text-guild not yet created on Firebase`,
+              message: `text-could not add the guild into Firestore`,
             } as ILoggerLog);
           });
+        });
 
-          it(`should add the guild into Firebase`, async (): Promise<void> => {
+        describe(`when the guild was successfully added into Firebase`, (): void => {
+          beforeEach((): void => {
+            firebaseGuildsServiceAddGuildSpy.mockResolvedValue(writeResult);
+          });
+
+          it(`should log about the success of adding the guild into Firebase`, async (): Promise<void> => {
             expect.assertions(3);
 
             const result = await service.addFirebaseGuild(guild);
 
-            expect(result).toBeUndefined();
-            expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledTimes(1);
-            expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledWith(guild);
-          });
-
-          describe(`when the guild was not successfully added into Firebase`, (): void => {
-            beforeEach((): void => {
-              firebaseGuildsServiceAddGuildSpy.mockRejectedValue(new Error(`error`));
-            });
-
-            it(`should log that the guild could not be added to Firestore`, async (): Promise<void> => {
-              expect.assertions(3);
-
-              const result = await service.addFirebaseGuild(guild);
-
-              expect(result).toBeUndefined();
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
-                context: `DiscordGuildCreateService`,
-                message: `text-could not add the guild into Firestore`,
-              } as ILoggerLog);
-            });
-          });
-
-          describe(`when the guild was successfully added into Firebase`, (): void => {
-            beforeEach((): void => {
-              firebaseGuildsServiceAddGuildSpy.mockResolvedValue(writeResult);
-            });
-
-            it(`should log about the success of adding the guild into Firebase`, async (): Promise<void> => {
-              expect.assertions(3);
-
-              const result = await service.addFirebaseGuild(guild);
-
-              expect(result).toStrictEqual(writeResult);
-              expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
-              expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
-                context: `DiscordGuildCreateService`,
-                message: `text-guild added into Firebase`,
-              } as ILoggerLog);
-            });
+            expect(result).toStrictEqual(writeResult);
+            expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+              context: `DiscordGuildCreateService`,
+              message: `text-guild added into Firebase`,
+            } as ILoggerLog);
           });
         });
       });

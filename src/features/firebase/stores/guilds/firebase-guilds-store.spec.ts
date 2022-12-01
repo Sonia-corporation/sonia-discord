@@ -1,6 +1,7 @@
 import { FirebaseGuildsStore } from './firebase-guilds-store';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
+import { addEntities, getEntity } from '@ngneat/elf-entities';
 
 describe(`FirebaseGuildsStore`, (): void => {
   let service: FirebaseGuildsStore;
@@ -44,6 +45,40 @@ describe(`FirebaseGuildsStore`, (): void => {
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_GUILDS_STORE);
+    });
+  });
+
+  describe(`update()`, (): void => {
+    let store$UpdateSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      store$UpdateSpy = jest.spyOn(service.store$, `update`).mockImplementation();
+    });
+
+    it(`should update the element(s) in the store with the given reducer`, (): void => {
+      expect.assertions(2);
+
+      service.update(addEntities([]));
+
+      expect(store$UpdateSpy).toHaveBeenCalledTimes(1);
+      expect(store$UpdateSpy).toHaveBeenCalledWith(expect.toBeFunction());
+    });
+  });
+
+  describe(`query()`, (): void => {
+    let store$QuerySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      store$QuerySpy = jest.spyOn(service.store$, `query`).mockImplementation();
+    });
+
+    it(`should select the element(s) in the store with the given selector`, (): void => {
+      expect.assertions(2);
+
+      service.query(getEntity(`dummy-id`));
+
+      expect(store$QuerySpy).toHaveBeenCalledTimes(1);
+      expect(store$QuerySpy).toHaveBeenCalledWith(expect.toBeFunction());
     });
   });
 });

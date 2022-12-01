@@ -47,5 +47,6 @@
     <orderEntry type="library" name="ngneat" level="project" />
     <orderEntry type="library" name="compare-versions" level="project" />
     <orderEntry type="library" name="humanize-plus" level="project" />
+    <orderEntry type="library" name="discordjs" level="project" />
   </component>
 </module>

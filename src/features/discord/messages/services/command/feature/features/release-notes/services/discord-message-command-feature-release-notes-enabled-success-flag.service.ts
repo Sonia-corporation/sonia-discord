@@ -1,5 +1,7 @@
 import { AbstractService } from '../../../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../../../enums/service-name.enum';
+import { replaceInTemplate } from '../../../../../../../../../functions/formatters/replace-in-template';
+import { IDiscordHumanizedChannel } from '../../../../../../../channels/types/discord-humanized-channel';
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum } from '../enums/discord-message-command-release-notes-flag-success-description.enum';
 import { DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum } from '../enums/discord-message-command-release-notes-flag-success-title.enum';
@@ -21,54 +23,94 @@ export class DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService e
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE);
   }
 
-  public getFlag(shouldEnable: boolean, isEnabled: boolean | undefined): IDiscordCommandFlagSuccess {
+  public getFlag(
+    shouldEnable: boolean,
+    isEnabled: boolean | undefined,
+    humanizedChannel: IDiscordHumanizedChannel
+  ): IDiscordCommandFlagSuccess {
     if (_.isNil(isEnabled)) {
-      return this._getFlagWhenNotConfigured(shouldEnable);
+      return this._getFlagWhenNotConfigured(shouldEnable, humanizedChannel);
     } else if (_.isEqual(isEnabled, true)) {
-      return this._getFlagWhenEnabled(shouldEnable);
+      return this._getFlagWhenEnabled(shouldEnable, humanizedChannel);
     }
 
-    return this._getFlagWhenDisabled(shouldEnable);
+    return this._getFlagWhenDisabled(shouldEnable, humanizedChannel);
   }
 
-  private _getFlagWhenNotConfigured(shouldEnable: boolean): IDiscordCommandFlagSuccess {
+  private _getFlagWhenNotConfigured(
+    shouldEnable: boolean,
+    humanizedChannel: IDiscordHumanizedChannel
+  ): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
-        description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
+        description: replaceInTemplate(
+          DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
+          {
+            channelType: humanizedChannel,
+          }
+        ),
         name: DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_ENABLED,
       };
     }
 
     return {
-      description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED,
+      description: replaceInTemplate(
+        DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED,
+        {
+          channelType: humanizedChannel,
+        }
+      ),
       name: DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_DISABLED,
     };
   }
 
-  private _getFlagWhenEnabled(shouldEnable: boolean): IDiscordCommandFlagSuccess {
+  private _getFlagWhenEnabled(
+    shouldEnable: boolean,
+    humanizedChannel: IDiscordHumanizedChannel
+  ): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
-        description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
+        description: replaceInTemplate(
+          DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
+          {
+            channelType: humanizedChannel,
+          }
+        ),
         name: DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_ENABLED,
       };
     }
 
     return {
-      description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED,
+      description: replaceInTemplate(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED, {
+        channelType: humanizedChannel,
+      }),
       name: DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_DISABLED,
     };
   }
 
-  private _getFlagWhenDisabled(shouldEnable: boolean): IDiscordCommandFlagSuccess {
+  private _getFlagWhenDisabled(
+    shouldEnable: boolean,
+    humanizedChannel: IDiscordHumanizedChannel
+  ): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
-        description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,
+        description: replaceInTemplate(
+          DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,
+          {
+            channelType: humanizedChannel,
+          }
+        ),
         name: DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_ENABLED,
       };
     }
 
     return {
-      description: DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED,
+      description: replaceInTemplate(
+        DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED,
+        {
+          channelType: humanizedChannel,
+        }
+      ),
       name: DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_DISABLED,
     };
   }

@@ -27,13 +27,13 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
     super(ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     QuoteConfigCoreService.getInstance();
     QuoteConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IQuoteConfig>): void {
+  public override updateConfig(config?: IPartialNested<IQuoteConfig>): void {
     if (!_.isNil(config)) {
       this.updateApiKey(config.apiKey);
       this.updateAuthorIconUrl(config.authorIconUrl);

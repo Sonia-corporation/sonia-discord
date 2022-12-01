@@ -1,16 +1,23 @@
 import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
 import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
+import { FirebaseDmsFeaturesService } from '../../../../../../../../firebase/services/dms/features/firebase-dms-features.service';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
+import { FirebaseDmsStoreService } from '../../../../../../../../firebase/stores/dms/services/firebase-dms-store.service';
 import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
+import { IFirebaseDm } from '../../../../../../../../firebase/types/dms/firebase-dm';
+import { IFirebaseDmVFinal } from '../../../../../../../../firebase/types/dms/firebase-dm-v-final';
 import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { isDiscordDmChannel } from '../../../../../../../channels/functions/is-discord-dm-channel';
 import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
+import { wrapUserIdIntoMention } from '../../../../../../../mentions/functions/wrap-user-id-into-mention';
 import { DiscordCommandFlagActionValueless } from '../../../../../../classes/commands/flags/discord-command-flag-action-valueless';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
 import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
@@ -22,7 +29,23 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
   public execute(anyDiscordMessage: IAnyDiscordMessage): Promise<IDiscordMessageResponse> {
     this._logExecuteAction(anyDiscordMessage.id);
 
-    return this.isEnabled(anyDiscordMessage).then(
+    if (isDiscordDmChannel(anyDiscordMessage.channel)) {
+      return this.isEnabledForThisDm(anyDiscordMessage).then(
+        (isEnabled: boolean | undefined): Promise<IDiscordMessageResponse> => {
+          if (_.isNil(anyDiscordMessage.author)) {
+            return Promise.reject(new Error(`Firebase author invalid`));
+          }
+
+          if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
+            return Promise.reject(new Error(`Firebase channel invalid`));
+          }
+
+          return this.getMessageResponse(isEnabled);
+        }
+      );
+    }
+
+    return this.isEnabledForThisGuild(anyDiscordMessage).then(
       (isEnabled: boolean | undefined): Promise<IDiscordMessageResponse> => {
         if (_.isNil(anyDiscordMessage.guild)) {
           return Promise.reject(new Error(`Firebase guild invalid`));
@@ -37,9 +60,25 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
     );
   }
 
-  public isEnabled(anyDiscordMessage: IAnyDiscordMessage): Promise<boolean | undefined> {
+  public isEnabledForThisDm(anyDiscordMessage: IAnyDiscordMessage): Promise<boolean | undefined> {
+    if (_.isNil(anyDiscordMessage.author)) {
+      return this._getNoAuthorMessageError(anyDiscordMessage);
+    }
+
+    const firebaseDm: IFirebaseDm | undefined = FirebaseDmsStoreService.getInstance().getEntity(
+      anyDiscordMessage.author.id
+    );
+
+    if (_.isNil(firebaseDm)) {
+      return this._getNoFirebaseDmError(anyDiscordMessage, anyDiscordMessage.author.id);
+    }
+
+    return Promise.resolve(this._isReleaseNotesEnabledForThisDm(firebaseDm));
+  }
+
+  public isEnabledForThisGuild(anyDiscordMessage: IAnyDiscordMessage): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
-      return this._getNoGuildMessageError(anyDiscordMessage.id);
+      return this._getNoGuildMessageError(anyDiscordMessage);
     }
 
     const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreService.getInstance().getEntity(
@@ -47,10 +86,10 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
     );
 
     if (_.isNil(firebaseGuild)) {
-      return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
+      return this._getNoFirebaseGuildError(anyDiscordMessage, anyDiscordMessage.guild.id);
     }
 
-    return Promise.resolve(this._isReleaseNotesEnabled(firebaseGuild, anyDiscordMessage.channel.id));
+    return Promise.resolve(this._isReleaseNotesEnabledForThisGuild(firebaseGuild, anyDiscordMessage.channel.id));
   }
 
   public getMessageResponse(isEnabled: boolean | undefined): Promise<IDiscordMessageResponse> {
@@ -70,7 +109,18 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
     return `The release notes feature is disabled.`;
   }
 
-  private _isReleaseNotesEnabled(firebaseGuild: IFirebaseGuild, channelId: Snowflake): boolean | undefined {
+  private _isReleaseNotesEnabledForThisDm(firebaseDm: IFirebaseDm): boolean | undefined {
+    if (
+      !FirebaseDmsFeaturesService.getInstance().isValid(firebaseDm.features) ||
+      !FirebaseDmsFeaturesService.getInstance().isUpToDate(firebaseDm.features)
+    ) {
+      return undefined;
+    }
+
+    return this._getFirebaseEnabledStateForThisDm(firebaseDm);
+  }
+
+  private _isReleaseNotesEnabledForThisGuild(firebaseGuild: IFirebaseGuild, channelId: Snowflake): boolean | undefined {
     const firebaseGuildChannel: IFirebaseGuildChannel | undefined = this._getFirebaseGuildChannel(
       firebaseGuild,
       channelId
@@ -83,10 +133,14 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
       return undefined;
     }
 
-    return this._getFirebaseEnabledState(firebaseGuildChannel);
+    return this._getFirebaseEnabledStateForThisGuild(firebaseGuildChannel);
   }
 
-  private _getFirebaseEnabledState(firebaseGuildChannel: IFirebaseGuildChannelVFinal): boolean | undefined {
+  private _getFirebaseEnabledStateForThisDm(firebaseDm: IFirebaseDmVFinal): boolean | undefined {
+    return firebaseDm.features?.releaseNotes?.isEnabled;
+  }
+
+  private _getFirebaseEnabledStateForThisGuild(firebaseGuildChannel: IFirebaseGuildChannelVFinal): boolean | undefined {
     return firebaseGuildChannel.features?.releaseNotes?.isEnabled;
   }
 
@@ -101,30 +155,52 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
     return _.get(firebaseGuild.channels, channelId);
   }
 
-  private _getNoFirebaseGuildError(discordMessageId: Snowflake, guildId: Snowflake): Promise<never> {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        discordMessageId,
-        `could not find the guild ${ChalkService.getInstance().value(guildId)} in Firebase`
-      ),
-    });
+  private _getNoFirebaseDmError(anyDiscordMessage: IAnyDiscordMessage, userId: Snowflake): Promise<never> {
+    const error: Error = new Error(`Could not find the DM ${wrapUserIdIntoMention(userId)} in Firebase`);
 
-    return Promise.reject(new Error(`Could not find the guild ${guildId} in Firebase`));
+    DiscordMessageErrorService.getInstance().handleError(
+      error,
+      anyDiscordMessage,
+      `could not find the DM ${ChalkService.getInstance().value(userId)} in Firebase`
+    );
+
+    return Promise.reject(error);
   }
 
-  private _getNoGuildMessageError(discordMessageId: Snowflake): Promise<never> {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        discordMessageId,
-        `could not get the guild from the message`
-      ),
-    });
+  private _getNoFirebaseGuildError(anyDiscordMessage: IAnyDiscordMessage, guildId: Snowflake): Promise<never> {
+    const error: Error = new Error(`Could not find the guild ${guildId} in Firebase`);
 
-    return Promise.reject(new Error(`Could not get the guild from the message`));
+    DiscordMessageErrorService.getInstance().handleError(
+      error,
+      anyDiscordMessage,
+      `could not find the guild ${ChalkService.getInstance().value(guildId)} in Firebase`
+    );
+
+    return Promise.reject(error);
+  }
+
+  private _getNoAuthorMessageError(anyDiscordMessage: IAnyDiscordMessage): Promise<never> {
+    const error: Error = new Error(`Could not get the author from the message`);
+
+    DiscordMessageErrorService.getInstance().handleError(
+      error,
+      anyDiscordMessage,
+      `could not get the author from the message`
+    );
+
+    return Promise.reject(error);
+  }
+
+  private _getNoGuildMessageError(anyDiscordMessage: IAnyDiscordMessage): Promise<never> {
+    const error: Error = new Error(`Could not get the guild from the message`);
+
+    DiscordMessageErrorService.getInstance().handleError(
+      error,
+      anyDiscordMessage,
+      `could not get the guild from the message`
+    );
+
+    return Promise.reject(error);
   }
 
   private _logExecuteAction(discordMessageId: Snowflake): void {

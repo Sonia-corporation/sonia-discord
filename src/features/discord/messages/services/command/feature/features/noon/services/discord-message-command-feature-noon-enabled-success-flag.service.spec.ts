@@ -1,6 +1,7 @@
 import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from './discord-message-command-feature-noon-enabled-success-flag.service';
 import { ServiceNameEnum } from '../../../../../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../../../../../core/services/core-event.service';
+import { IDiscordHumanizedChannel } from '../../../../../../../channels/types/discord-humanized-channel';
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -55,9 +56,11 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
   describe(`getFlag()`, (): void => {
     let shouldEnable: boolean;
     let isEnabled: boolean | undefined;
+    let humanizedChannel: IDiscordHumanizedChannel;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonEnabledSuccessFlagService();
+      humanizedChannel = `text channel`;
     });
 
     describe(`when the current state is undefined`, (): void => {
@@ -73,10 +76,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
         it(`should return a message indicating that the new state is enabled and the old one was not configured yet`, (): void => {
           expect.assertions(1);
 
-          const result = service.getFlag(shouldEnable, isEnabled);
+          const result = service.getFlag(shouldEnable, isEnabled, humanizedChannel);
 
           expect(result).toStrictEqual({
-            description: `The noon feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The noon feature was not configured yet and is now enabled on this text channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -90,10 +93,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
         it(`should return a message indicating that the new state is disabled and the old one was not configured yet`, (): void => {
           expect.assertions(1);
 
-          const result = service.getFlag(shouldEnable, isEnabled);
+          const result = service.getFlag(shouldEnable, isEnabled, humanizedChannel);
 
           expect(result).toStrictEqual({
-            description: `The noon feature was not configured yet and is now disabled on this channel.`,
+            description: `The noon feature was not configured yet and is now disabled on this text channel.`,
             name: `Noon feature disabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -113,10 +116,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
         it(`should return a message indicating that the new state is enabled and the old one was enabled`, (): void => {
           expect.assertions(1);
 
-          const result = service.getFlag(shouldEnable, isEnabled);
+          const result = service.getFlag(shouldEnable, isEnabled, humanizedChannel);
 
           expect(result).toStrictEqual({
-            description: `The noon feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The noon feature was already enabled on this text channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -130,10 +133,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
         it(`should return a message indicating that the new state is disabled and the old one was enabled`, (): void => {
           expect.assertions(1);
 
-          const result = service.getFlag(shouldEnable, isEnabled);
+          const result = service.getFlag(shouldEnable, isEnabled, humanizedChannel);
 
           expect(result).toStrictEqual({
-            description: `The noon feature is now disabled on this channel.`,
+            description: `The noon feature is now disabled on this text channel.`,
             name: `Noon feature disabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -153,10 +156,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
         it(`should return a message indicating that the new state is enabled and the old one was disabled`, (): void => {
           expect.assertions(1);
 
-          const result = service.getFlag(shouldEnable, isEnabled);
+          const result = service.getFlag(shouldEnable, isEnabled, humanizedChannel);
 
           expect(result).toStrictEqual({
-            description: `The noon feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The noon feature is now enabled on this text channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -170,10 +173,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
         it(`should return a message indicating that the new state is disabled and the old one was disabled`, (): void => {
           expect.assertions(1);
 
-          const result = service.getFlag(shouldEnable, isEnabled);
+          const result = service.getFlag(shouldEnable, isEnabled, humanizedChannel);
 
           expect(result).toStrictEqual({
-            description: `The noon feature was already disabled on this channel.`,
+            description: `The noon feature was already disabled on this text channel.`,
             name: `Noon feature disabled`,
           } as IDiscordCommandFlagSuccess);
         });

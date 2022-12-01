@@ -31,7 +31,7 @@ export class DiscordMessageCommandVerifyChannelRightService extends DiscordMessa
    * @param   {Set<DiscordChannelEnum>} allowedChannels A list of channels allowed to execute the related command.
    * @returns {boolean | undefined}                     Return true when the command related to the message can be executed.
    */
-  public verify(message: IAnyDiscordMessage, allowedChannels: Set<DiscordChannelEnum>): boolean | undefined {
+  public override verify(message: IAnyDiscordMessage, allowedChannels: Set<DiscordChannelEnum>): boolean | undefined {
     const isAllowed: boolean | undefined = super.verify(message, allowedChannels);
 
     if (_.isUndefined(isAllowed)) {
@@ -41,21 +41,21 @@ export class DiscordMessageCommandVerifyChannelRightService extends DiscordMessa
     return isAllowed;
   }
 
-  protected _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData {
+  protected override _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData {
     return {
       name: `Wrong channel!`,
       value: `This command is not allowed on ${getDiscordHumanizedChannelPluralFromClass(channel)}.`,
     };
   }
 
-  protected _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData {
+  protected override _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData {
     return {
       name: `Allowed channels`,
       value: `You can use this command only on ${getDiscordHumanizedChannelsPlural(Array.from(allowedChannels))}.`,
     };
   }
 
-  protected _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData {
+  protected override _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData {
     const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
 
     return {

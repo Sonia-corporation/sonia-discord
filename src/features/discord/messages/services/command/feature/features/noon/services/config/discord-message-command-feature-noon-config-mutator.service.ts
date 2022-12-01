@@ -31,13 +31,13 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     DiscordMessageCommandFeatureNoonConfigCoreService.getInstance();
     DiscordMessageCommandFeatureNoonConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>): void {
+  public override updateConfig(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>): void {
     if (!_.isNil(config)) {
       this.updateNoon(config.noon);
 

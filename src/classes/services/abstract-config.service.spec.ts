@@ -16,7 +16,7 @@ class DummyService extends AbstractConfigService<IDummy> {
     super(serviceName, config);
   }
 
-  public updateConfig(_config?: IPartialNested<IDummy>): void {
+  public override updateConfig(_config?: IPartialNested<IDummy>): void {
     // Avoid lint error :)
   }
 }

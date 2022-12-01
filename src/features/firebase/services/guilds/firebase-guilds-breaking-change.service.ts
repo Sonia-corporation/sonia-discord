@@ -2,7 +2,6 @@ import { FirebaseGuildsService } from './firebase-guilds.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { DiscordClientService } from '../../../discord/services/discord-client.service';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FIREBASE_GUILD_CURRENT_VERSION } from '../../constants/guilds/firebase-guild-current-version';
@@ -12,8 +11,8 @@ import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { QueryDocumentSnapshot, QuerySnapshot, WriteBatch, WriteResult } from 'firebase-admin/firestore';
 import _ from 'lodash';
-import { BehaviorSubject, firstValueFrom, forkJoin, Observable } from 'rxjs';
-import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 
 const NO_GUILD = 0;
 const ONE_GUILD = 1;
@@ -35,10 +34,10 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE);
   }
 
-  public init(): Promise<WriteResult[] | void> {
-    return firstValueFrom(this._updateAllFirebaseGuilds$()).then((): void => {
-      this.notifyHasFinished();
-    });
+  public async init(): Promise<WriteResult[] | void> {
+    await this._updateAllFirebaseGuilds();
+
+    this.notifyHasFinished();
   }
 
   public hasFinished$(): Observable<boolean> {
@@ -59,34 +58,19 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     this._hasFinished$.next(true);
   }
 
-  public isReady$(): Observable<[true, true]> {
-    return forkJoin([FirebaseGuildsService.getInstance().isReady(), DiscordClientService.getInstance().isReady()]);
-  }
+  private async _updateAllFirebaseGuilds(): Promise<WriteResult[] | void> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(`handling breaking changes for all Firebase guilds...`),
+    });
 
-  private _updateAllFirebaseGuilds$(): Observable<WriteResult[] | void> {
-    return this.isReady$().pipe(
-      take(ONE_EMITTER),
-      tap({
-        next: (): void => {
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`handling breaking changes for all Firebase guilds...`),
-          });
-        },
-      }),
-      mergeMap((): Promise<QuerySnapshot<IFirebaseGuild>> => FirebaseGuildsService.getInstance().getGuilds()),
-      mergeMap((querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<WriteResult[] | void> => {
-        LoggerService.getInstance().debug({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(`guilds fetched`),
-        });
+    const querySnapshot: QuerySnapshot<IFirebaseGuild> = await FirebaseGuildsService.getInstance().getGuilds();
 
-        return this._updateAllFirebaseGuilds(querySnapshot);
-      })
-    );
-  }
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(`guilds fetched`),
+    });
 
-  private _updateAllFirebaseGuilds(querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<WriteResult[] | void> {
     const batch: WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (_.isNil(batch)) {

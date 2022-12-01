@@ -10,7 +10,8 @@ interface IDummy {
 }
 
 class DummyService extends AbstractEntityStoreService {
-  protected readonly _store$ = createStore({ name: `dummy` }, withEntities<IDummy>());
+  // eslint-disable-next-line rxjs/no-exposed-subjects
+  public override readonly store$ = createStore({ name: `dummy` }, withEntities<IDummy>());
 
   public constructor(serviceName: ServiceNameEnum) {
     super(serviceName);
