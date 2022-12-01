@@ -466,12 +466,23 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with a help field`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with a heartbeat field`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
 
         expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
+          name: `Heartbeat (*heartbeat* or *hb*)`,
+          value: `Display my current heartbeat.`,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed with a help field`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
           name: `Help (*help* or *h*)`,
           value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
         } as EmbedFieldData);
@@ -482,7 +493,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[5]).toStrictEqual({
           name: `Lunch (*lunch* or *l*)`,
           value: `There is a time to eat.`,
         } as EmbedFieldData);
@@ -493,7 +504,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[5]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[6]).toStrictEqual({
           name: `Quote (*quote* or *q*)`,
           value: `I quote others only in order to better express myself.`,
         } as EmbedFieldData);
@@ -504,7 +515,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[6]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[7]).toStrictEqual({
           name: `Release notes (*release-notes* or *r*)`,
           value: `Display the last version release notes.`,
         } as EmbedFieldData);
@@ -515,20 +526,9 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[7]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[8]).toStrictEqual({
           name: `Version (*version* or *v*)`,
           value: `Display my current application version.`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a heartbeat field`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embeds?.[0]?.fields?.[8]).toStrictEqual({
-          name: `Heartbeat (*heartbeat* or *hb*)`,
-          value: `Display my current heartbeat.`,
         } as EmbedFieldData);
       });
 
