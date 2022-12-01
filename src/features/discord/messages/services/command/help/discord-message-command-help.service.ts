@@ -71,16 +71,17 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
+    // Sort the fields by alphabetical order of the commands!
     return [
       this._getMessageEmbedFieldCookie(),
       this._getMessageEmbedFieldError(),
       this._getMessageEmbedFieldFeature(),
+      this._getMessageEmbedFieldHeartbeat(),
       this._getMessageEmbedFieldHelp(),
       this._getMessageEmbedFieldLunch(),
       this._getMessageEmbedFieldQuote(),
       this._getMessageEmbedFieldReleaseNotes(),
       this._getMessageEmbedFieldVersion(),
-      this._getMessageEmbedFieldHeartbeat(),
       this._getMessageEmbedFieldMoreHelp(),
     ];
   }
@@ -103,6 +104,13 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     return {
       name: `Feature (*feature* or *f*)`,
       value: `Change my behavior on this guild or on this channel. Help me to be better! I have some cool abilities you know!`,
+    };
+  }
+
+  private _getMessageEmbedFieldHeartbeat(): EmbedFieldData {
+    return {
+      name: `Heartbeat (*heartbeat* or *hb*)`,
+      value: `Display my current heartbeat.`,
     };
   }
 
@@ -138,13 +146,6 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     return {
       name: `Version (*version* or *v*)`,
       value: `Display my current application version.`,
-    };
-  }
-
-  private _getMessageEmbedFieldHeartbeat(): EmbedFieldData {
-    return {
-      name: `Heartbeat (*heartbeat* or *hb*)`,
-      value: `Display my current heartbeat.`,
     };
   }
 
