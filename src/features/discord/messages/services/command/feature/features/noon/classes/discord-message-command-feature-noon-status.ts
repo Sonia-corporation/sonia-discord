@@ -44,7 +44,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     );
 
     if (_.isNil(firebaseGuild)) {
-      return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
+      return this._getNoFirebaseGuildError(anyDiscordMessage, anyDiscordMessage.guild.id);
     }
 
     return Promise.resolve(this._isNoonEnabled(firebaseGuild, anyDiscordMessage.channel.id));
@@ -95,17 +95,16 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return _.get(firebaseGuild.channels, channelId);
   }
 
-  private _getNoFirebaseGuildError(discordMessageId: Snowflake, guildId: Snowflake): Promise<never> {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        discordMessageId,
-        `could not find the guild ${ChalkService.getInstance().value(guildId)} in Firebase`
-      ),
-    });
+  private _getNoFirebaseGuildError(anyDiscordMessage: IAnyDiscordMessage, guildId: Snowflake): Promise<never> {
+    const error: Error = new Error(`Could not find the guild ${guildId} in Firebase`);
 
-    return Promise.reject(new Error(`Could not find the guild ${guildId} in Firebase`));
+    DiscordMessageErrorService.getInstance().handleError(
+      error,
+      anyDiscordMessage,
+      `could not find the guild ${ChalkService.getInstance().value(guildId)} in Firebase`
+    );
+
+    return Promise.reject(error);
   }
 
   private _getNoGuildMessageError(anyDiscordMessage: IAnyDiscordMessage): Promise<never> {

@@ -262,7 +262,6 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let firebaseGuildVFinal: IFirebaseGuild;
 
-    let loggerServiceErrorSpy: jest.SpyInstance;
     let firebaseGuildsStoreQueryGetEntitySpy: jest.SpyInstance;
     let discordMessageErrorServiceHandleErrorSpy: jest.SpyInstance;
 
@@ -271,7 +270,6 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
       firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>();
 
-      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
         .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
@@ -341,19 +339,19 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
           firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(undefined);
         });
 
-        it(`should log about the empty guild in Firebase`, async (): Promise<void> => {
+        it(`should log and send an error message both in the channel and the Sonia guild errors channel`, async (): Promise<void> => {
           expect.assertions(3);
 
           await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
             new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-            context: `DiscordMessageCommandFeatureNoonStatus`,
-            hasExtendedContext: true,
-            message: `context-[dummy-id] text-could not find the guild value-dummy-guild-id in Firebase`,
-          } as ILoggerLog);
+          expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
+            new Error(`Could not find the guild dummy-guild-id in Firebase`),
+            anyDiscordMessage,
+            `could not find the guild value-dummy-guild-id in Firebase`
+          );
         });
 
         it(`should throw an error`, async (): Promise<void> => {
