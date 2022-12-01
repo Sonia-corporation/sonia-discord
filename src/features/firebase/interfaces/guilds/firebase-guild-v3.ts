@@ -25,7 +25,7 @@ export interface IFirebaseGuildV3 {
 
   /**
    * @description
-   * The entity version used to perform clean update when a breaking change occur.
+   * The entity version used to perform a clean update when a breaking change occur.
    */
   version?: FirebaseGuildVersionEnum.V3 | undefined;
 }
