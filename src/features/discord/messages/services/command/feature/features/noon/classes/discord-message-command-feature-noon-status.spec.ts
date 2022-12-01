@@ -11,6 +11,7 @@ import { LoggerService } from '../../../../../../../../logger/services/logger.se
 import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
 import { Message } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
@@ -22,11 +23,13 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
   let loggerService: LoggerService;
   let firebaseGuildsStoreService: FirebaseGuildsStoreService;
   let discordChannelService: DiscordChannelService;
+  let discordMessageErrorService: DiscordMessageErrorService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreService = FirebaseGuildsStoreService.getInstance();
     discordChannelService = DiscordChannelService.getInstance();
+    discordMessageErrorService = DiscordMessageErrorService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -259,18 +262,20 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let firebaseGuildVFinal: IFirebaseGuild;
 
-    let loggerServiceErrorSpy: jest.SpyInstance;
     let firebaseGuildsStoreQueryGetEntitySpy: jest.SpyInstance;
+    let discordMessageErrorServiceHandleErrorSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonStatus();
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
       firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>();
 
-      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
         .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
+      discordMessageErrorServiceHandleErrorSpy = jest
+        .spyOn(discordMessageErrorService, `handleError`)
+        .mockImplementation();
     });
 
     describe(`when the given Discord message guild is null`, (): void => {
@@ -281,19 +286,19 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         });
       });
 
-      it(`should log about the empty guild`, async (): Promise<void> => {
+      it(`should log and send an error message both in the channel and the Sonia guild errors channel`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
           new Error(`Could not get the guild from the message`)
         );
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-          context: `DiscordMessageCommandFeatureNoonStatus`,
-          hasExtendedContext: true,
-          message: `context-[dummy-id] text-could not get the guild from the message`,
-        } as ILoggerLog);
+        expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
+          new Error(`Could not get the guild from the message`),
+          anyDiscordMessage,
+          `could not get the guild from the message`
+        );
       });
 
       it(`should throw an error`, async (): Promise<void> => {
@@ -334,19 +339,19 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
           firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(undefined);
         });
 
-        it(`should log about the empty guild in Firebase`, async (): Promise<void> => {
+        it(`should log and send an error message both in the channel and the Sonia guild errors channel`, async (): Promise<void> => {
           expect.assertions(3);
 
           await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
             new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-            context: `DiscordMessageCommandFeatureNoonStatus`,
-            hasExtendedContext: true,
-            message: `context-[dummy-id] text-could not find the guild value-dummy-guild-id in Firebase`,
-          } as ILoggerLog);
+          expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
+            new Error(`Could not find the guild dummy-guild-id in Firebase`),
+            anyDiscordMessage,
+            `could not find the guild value-dummy-guild-id in Firebase`
+          );
         });
 
         it(`should throw an error`, async (): Promise<void> => {
