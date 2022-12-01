@@ -9,6 +9,7 @@ import { DiscordChannelService } from '../../../../../../../channels/services/di
 import { DiscordCommandFlagActionValueless } from '../../../../../../classes/commands/flags/discord-command-flag-action-valueless';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
 import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
@@ -35,7 +36,7 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
 
   public isEnabled(anyDiscordMessage: IAnyDiscordMessage): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
-      return this._getNoGuildMessageError(anyDiscordMessage.id);
+      return this._getNoGuildMessageError(anyDiscordMessage);
     }
 
     const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreService.getInstance().getEntity(
@@ -107,17 +108,16 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
     return Promise.reject(new Error(`Could not find the guild ${guildId} in Firebase`));
   }
 
-  private _getNoGuildMessageError(discordMessageId: Snowflake): Promise<never> {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        discordMessageId,
-        `could not get the guild from the message`
-      ),
-    });
+  private _getNoGuildMessageError(anyDiscordMessage: IAnyDiscordMessage): Promise<never> {
+    const error: Error = new Error(`Could not get the guild from the message`);
 
-    return Promise.reject(new Error(`Could not get the guild from the message`));
+    DiscordMessageErrorService.getInstance().handleError(
+      error,
+      anyDiscordMessage,
+      `could not get the guild from the message`
+    );
+
+    return Promise.reject(error);
   }
 
   private _logExecuteAction(discordMessageId: Snowflake): void {
