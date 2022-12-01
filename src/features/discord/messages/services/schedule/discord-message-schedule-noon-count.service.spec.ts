@@ -244,7 +244,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
-          message: `text-value-1 noon message sent over value-1 guild of value-1`,
+          message: `text-value-1 noon message sent over value-1 of value-1 guild`,
         } as ILoggerLog);
       });
     });
@@ -262,7 +262,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
-          message: `text-value-2 noon messages sent over value-2 guilds of value-2`,
+          message: `text-value-2 noon messages sent over value-2 of value-2 guilds`,
         } as ILoggerLog);
       });
     });
@@ -287,7 +287,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
-          message: `text-value-4 noon messages sent over value-3 guilds of value-6`,
+          message: `text-value-4 noon messages sent over value-3 of value-6 guilds`,
         } as ILoggerLog);
       });
     });

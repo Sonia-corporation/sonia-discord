@@ -709,7 +709,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-1 noon message sent over value-0 guild of value-1`);
+            expect(result).toBe(`value-1 noon message sent over value-0 of value-1 guild`);
           });
         });
 
@@ -723,7 +723,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-2 noon messages sent over value-0 guild of value-1`);
+            expect(result).toBe(`value-2 noon messages sent over value-0 of value-1 guild`);
           });
         });
       });
@@ -757,7 +757,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-1 noon message sent over value-1 guild of value-1`);
+            expect(result).toBe(`value-1 noon message sent over value-1 of value-1 guild`);
           });
         });
 
@@ -771,7 +771,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-2 noon messages sent over value-1 guild of value-1`);
+            expect(result).toBe(`value-2 noon messages sent over value-1 of value-1 guild`);
           });
         });
       });
@@ -805,7 +805,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-1 noon message sent over value-2 guilds of value-1`);
+            expect(result).toBe(`value-1 noon message sent over value-2 of value-1 guild`);
           });
         });
 
@@ -819,7 +819,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-2 noon messages sent over value-2 guilds of value-1`);
+            expect(result).toBe(`value-2 noon messages sent over value-2 of value-1 guild`);
           });
         });
       });
@@ -859,7 +859,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-1 noon message sent over value-0 guild of value-2`);
+            expect(result).toBe(`value-1 noon message sent over value-0 of value-2 guilds`);
           });
         });
 
@@ -873,7 +873,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-2 noon messages sent over value-0 guild of value-2`);
+            expect(result).toBe(`value-2 noon messages sent over value-0 of value-2 guilds`);
           });
         });
       });
@@ -907,7 +907,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-1 noon message sent over value-1 guild of value-2`);
+            expect(result).toBe(`value-1 noon message sent over value-1 of value-2 guilds`);
           });
         });
 
@@ -921,7 +921,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-2 noon messages sent over value-1 guild of value-2`);
+            expect(result).toBe(`value-2 noon messages sent over value-1 of value-2 guilds`);
           });
         });
       });
@@ -955,7 +955,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-1 noon message sent over value-2 guilds of value-2`);
+            expect(result).toBe(`value-1 noon message sent over value-2 of value-2 guilds`);
           });
         });
 
@@ -969,7 +969,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toBe(`value-2 noon messages sent over value-2 guilds of value-2`);
+            expect(result).toBe(`value-2 noon messages sent over value-2 of value-2 guilds`);
           });
         });
       });
