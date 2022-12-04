@@ -155,7 +155,7 @@
   "dependencies": {
     "@ngneat/effects": "1.1.1",
     "@ngneat/elf": "2.3.0",
-    "@ngneat/elf-entities": "4.4.2",
+    "@ngneat/elf-entities": "4.4.3",
     "@scout_apm/scout-apm": "0.2.3",
     "app-root-path": "3.1.0",
     "axios": "1.1.3",
