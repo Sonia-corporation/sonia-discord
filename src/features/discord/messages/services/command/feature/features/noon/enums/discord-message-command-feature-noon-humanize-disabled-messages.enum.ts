@@ -8,7 +8,7 @@ export enum DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum {
   DUH_IT_IS_NOT_EVEN_ENABLED = `Duh? It's not even enabled!`,
   I_AM_NOT_PLANING_ON_SPAMMING_YOU = `I am not planing on spamming you.`,
   I_JUST_LOVE_WHEN_IT_IS_NOON_ALLOW_ME = `I just love when it's noon. Allow me!`,
-  I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL = `I swear I am not planing do spam this channel at all.`,
+  I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_TYPE_AT_ALL = `I swear I am not planing do spam this {{ channelType }} at all.`,
   I_WANT_TO_TELL_YOU_WHEN_IT_IS_NOON_BUT_YOU_NEED_TO_ALLOW_ME_FIRST = `I want to tell you when it's noon but you need to allow me first!`,
   I_WILL_LEAVE_YOU_ALONE = `I will leave you alone.`,
   I_WILL_LEAVE_YOU_ALONE_DO_NOT_WORRY = `I will leave you alone, don't worry.`,

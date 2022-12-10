@@ -8,7 +8,7 @@ import { Store } from '@ngneat/elf';
  * Used for Entity Store only.
  */
 export abstract class AbstractEntityStoreService {
-  protected abstract readonly _store$: Store;
+  public abstract readonly store$: Store;
   protected readonly _serviceName: ServiceNameEnum;
 
   protected constructor(serviceName: ServiceNameEnum) {

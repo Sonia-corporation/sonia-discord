@@ -6,6 +6,6 @@ import { Snowflake } from 'discord.js';
 export interface INewFirebaseGuild {
   channels: IObject<IFirebaseGuildChannelVFinal>;
   id: Snowflake;
-  lastReleaseNotesVersion?: string;
+  lastReleaseNotesVersion: string;
   version: FirebaseGuildVersionEnum.V5;
 }

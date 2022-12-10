@@ -12,7 +12,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void
     expect.assertions(1);
 
     expect(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED).toBe(
-      `The release notes feature was not configured yet and is now enabled on this channel. A message will be sent each time a new release is deployed.`
+      `The release notes feature was not configured yet and is now enabled on this {{ channelType }}. A message will be sent each time a new release is deployed.`
     );
   });
 
@@ -20,7 +20,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void
     expect.assertions(1);
 
     expect(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED).toBe(
-      `The release notes feature was not configured yet and is now disabled on this channel.`
+      `The release notes feature was not configured yet and is now disabled on this {{ channelType }}.`
     );
   });
 
@@ -28,7 +28,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void
     expect.assertions(1);
 
     expect(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED).toBe(
-      `The release notes feature was already enabled on this channel. A message will be sent each time a new release is deployed.`
+      `The release notes feature was already enabled on this {{ channelType }}. A message will be sent each time a new release is deployed.`
     );
   });
 
@@ -36,7 +36,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void
     expect.assertions(1);
 
     expect(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED).toBe(
-      `The release notes feature is now disabled on this channel.`
+      `The release notes feature is now disabled on this {{ channelType }}.`
     );
   });
 
@@ -44,7 +44,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void
     expect.assertions(1);
 
     expect(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED).toBe(
-      `The release notes feature is now enabled on this channel. A message will be sent each time a new release is deployed.`
+      `The release notes feature is now enabled on this {{ channelType }}. A message will be sent each time a new release is deployed.`
     );
   });
 
@@ -52,7 +52,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void
     expect.assertions(1);
 
     expect(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED).toBe(
-      `The release notes feature was already disabled on this channel.`
+      `The release notes feature was already disabled on this {{ channelType }}.`
     );
   });
 });

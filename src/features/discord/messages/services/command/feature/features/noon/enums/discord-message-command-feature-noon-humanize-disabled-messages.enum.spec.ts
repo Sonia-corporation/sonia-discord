@@ -80,12 +80,12 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
     );
   });
 
-  it(`should have a member "I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL"`, (): void => {
+  it(`should have a member "I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_TYPE_AT_ALL"`, (): void => {
     expect.assertions(1);
 
     expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL
-    ).toBe(`I swear I am not planing do spam this channel at all.`);
+      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_TYPE_AT_ALL
+    ).toBe(`I swear I am not planing do spam this {{ channelType }} at all.`);
   });
 
   it(`should have a member "I_WANT_TO_TELL_YOU_WHEN_IT_IS_NOON_BUT_YOU_NEED_TO_ALLOW_ME_FIRST"`, (): void => {

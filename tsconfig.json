@@ -31,6 +31,7 @@
     "lib": ["es2018", "dom"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "noImplicitOverride": true,
     "plugins": [
       {
         "transform": "ts-auto-mock/transformer",

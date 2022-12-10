@@ -30,13 +30,13 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     DiscordSoniaConfigCoreService.getInstance();
     DiscordSoniaConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IDiscordConfig>): void {
+  public override updateConfig(config?: IPartialNested<IDiscordConfig>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 

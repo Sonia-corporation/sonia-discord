@@ -13,6 +13,7 @@ import { DiscordLoggerService } from '../logger/services/discord-logger.service'
 import { DiscordMessageService } from '../messages/services/discord-message.service';
 import { DiscordMessageScheduleNoonService } from '../messages/services/schedule/discord-message-schedule-noon.service';
 import { DiscordSoniaService } from '../users/services/discord-sonia.service';
+import { DiscordUserService } from '../users/services/discord-user.service';
 import { Presence } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
 
@@ -64,6 +65,7 @@ describe(`DiscordService`, (): void => {
   describe(`init()`, (): void => {
     let discordLoggerService: DiscordLoggerService;
     let discordGuildService: DiscordGuildService;
+    let discordUserService: DiscordUserService;
     let discordGuildMemberAddService: DiscordGuildMemberAddService;
     let discordGuildCreateService: DiscordGuildCreateService;
     let discordMessageService: DiscordMessageService;
@@ -78,6 +80,8 @@ describe(`DiscordService`, (): void => {
     let discordLoggerServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildServiceGetInstanceSpy: jest.SpyInstance;
     let discordGuildServiceGetInstanceInitSpy: jest.SpyInstance<Promise<void>>;
+    let discordUserServiceGetInstanceSpy: jest.SpyInstance;
+    let discordUserServiceGetInstanceInitSpy: jest.SpyInstance<Promise<void>>;
     let discordGuildMemberAddServiceGetInstanceSpy: jest.SpyInstance;
     let discordGuildMemberAddServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildCreateServiceGetInstanceSpy: jest.SpyInstance;
@@ -99,6 +103,7 @@ describe(`DiscordService`, (): void => {
       service = new DiscordService();
       discordLoggerService = createMock<DiscordLoggerService>();
       discordGuildService = createMock<DiscordGuildService>();
+      discordUserService = createMock<DiscordUserService>();
       discordGuildMemberAddService = createMock<DiscordGuildMemberAddService>();
       discordGuildCreateService = createMock<DiscordGuildCreateService>();
       discordMessageService = createMock<DiscordMessageService>();
@@ -117,6 +122,10 @@ describe(`DiscordService`, (): void => {
         .spyOn(DiscordGuildService, `getInstance`)
         .mockReturnValue(discordGuildService);
       discordGuildServiceGetInstanceInitSpy = jest.spyOn(discordGuildService, `init`).mockResolvedValue();
+      discordUserServiceGetInstanceSpy = jest
+        .spyOn(DiscordUserService, `getInstance`)
+        .mockReturnValue(discordUserService);
+      discordUserServiceGetInstanceInitSpy = jest.spyOn(discordUserService, `init`).mockResolvedValue();
       discordGuildMemberAddServiceGetInstanceSpy = jest
         .spyOn(DiscordGuildMemberAddService, `getInstance`)
         .mockReturnValue(discordGuildMemberAddService);
@@ -183,6 +192,16 @@ describe(`DiscordService`, (): void => {
       expect(discordGuildServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
       expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create and initialize the DiscordUser service`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await service.init();
+
+      expect(discordUserServiceGetInstanceSpy).toHaveBeenCalledWith();
+      expect(discordUserServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordUserServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
     it(`should create and initialize the DiscordGuildMemberAdd service`, async (): Promise<void> => {

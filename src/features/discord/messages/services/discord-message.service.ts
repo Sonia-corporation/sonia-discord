@@ -10,6 +10,7 @@ import { LoggerConfigService } from '../../../logger/services/config/logger-conf
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordChannelTypingService } from '../../channels/services/discord-channel-typing.service';
 import { DiscordChannelService } from '../../channels/services/discord-channel.service';
+import { DiscordDmFirebaseService } from '../../dms/services/discord-dm-firebase.service';
 import { DiscordMentionService } from '../../mentions/services/discord-mention.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordAuthorService } from '../../users/services/discord-author.service';
@@ -77,9 +78,12 @@ export class DiscordMessageService extends AbstractService {
     return this.handleChannelMessage(anyDiscordMessage);
   }
 
-  public handleChannelMessage(anyDiscordMessage: IAnyDiscordMessage): Promise<(Message | void) | (Message | void)[]> {
+  public async handleChannelMessage(
+    anyDiscordMessage: IAnyDiscordMessage
+  ): Promise<(Message | void) | (Message | void)[]> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
       void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
+      await DiscordDmFirebaseService.getInstance().addDmToFirebase(anyDiscordMessage);
 
       return this._dmMessage(anyDiscordMessage);
     } else if (

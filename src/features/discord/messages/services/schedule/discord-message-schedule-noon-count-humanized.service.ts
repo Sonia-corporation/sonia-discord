@@ -80,8 +80,8 @@ export class DiscordMessageScheduleNoonCountHumanizedService extends AbstractSer
   private _getCountForLogs(totalGuildCount: number, guildCount: number, channelCount: number): string {
     return `${ChalkService.getInstance().value(channelCount)} noon message${
       _.gt(channelCount, ONE_CHANNEL) ? `s` : ``
-    } sent over ${ChalkService.getInstance().value(guildCount)} guild${
-      _.gt(guildCount, ONE_GUILD) ? `s` : ``
-    } of ${ChalkService.getInstance().value(totalGuildCount)}`;
+    } sent over ${ChalkService.getInstance().value(guildCount)} of ${ChalkService.getInstance().value(
+      totalGuildCount
+    )} guild${_.gt(totalGuildCount, ONE_GUILD) ? `s` : ``}`;
   }
 }

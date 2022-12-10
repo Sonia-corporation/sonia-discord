@@ -10,6 +10,7 @@ import { LoggerConfigService } from '../../../logger/services/config/logger-conf
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordChannelTypingService } from '../../channels/services/discord-channel-typing.service';
 import { DiscordChannelService } from '../../channels/services/discord-channel.service';
+import { DiscordDmFirebaseService } from '../../dms/services/discord-dm-firebase.service';
 import { DiscordMentionService } from '../../mentions/services/discord-mention.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordAuthorService } from '../../users/services/discord-author.service';
@@ -37,6 +38,7 @@ describe(`DiscordMessageService`, (): void => {
   let discordSoniaService: DiscordSoniaService;
   let discordMessageRightsService: DiscordMessageRightsService;
   let loggerConfigService: LoggerConfigService;
+  let discordDmFirebaseService: DiscordDmFirebaseService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -52,6 +54,7 @@ describe(`DiscordMessageService`, (): void => {
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageRightsService = DiscordMessageRightsService.getInstance();
     loggerConfigService = LoggerConfigService.getInstance();
+    discordDmFirebaseService = DiscordDmFirebaseService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -421,6 +424,7 @@ describe(`DiscordMessageService`, (): void => {
     let discordMentionServiceIsForEveryone: jest.SpyInstance;
     let discordSoniaServiceIsValidSpy: jest.SpyInstance;
     let discordMentionServiceIsUserMentionedSpy: jest.SpyInstance;
+    let discordDmFirebaseServiceAddDmToFirebaseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageService();
@@ -468,6 +472,9 @@ describe(`DiscordMessageService`, (): void => {
       discordMentionServiceIsUserMentionedSpy = jest
         .spyOn(discordMentionService, `isUserMentioned`)
         .mockImplementation();
+      discordDmFirebaseServiceAddDmToFirebaseSpy = jest
+        .spyOn(discordDmFirebaseService, `addDmToFirebase`)
+        .mockResolvedValue();
       jest.spyOn(loggerConfigService, `shouldDisplayMoreDebugLogs`).mockReturnValue(true);
     });
 
@@ -482,13 +489,14 @@ describe(`DiscordMessageService`, (): void => {
         });
 
         it(`should do nothing`, async (): Promise<void> => {
-          expect.assertions(7);
+          expect.assertions(8);
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
             new Error(`Discord message is not a DM channel nor a text channel nor a thread`)
           );
 
           expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();
+          expect(discordDmFirebaseServiceAddDmToFirebaseSpy).not.toHaveBeenCalled();
           expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
           expect(anyDiscordMessageChannelSendMock).not.toHaveBeenCalled();
           expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
@@ -537,13 +545,14 @@ describe(`DiscordMessageService`, (): void => {
           });
 
           it(`should do nothing`, async (): Promise<void> => {
-            expect.assertions(6);
+            expect.assertions(7);
 
             await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
               new Error(`Sonia is not authorized for this guild`)
             );
 
             expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();
+            expect(discordDmFirebaseServiceAddDmToFirebaseSpy).not.toHaveBeenCalled();
             expect(anyDiscordMessageChannelSendMock).not.toHaveBeenCalled();
             expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
             expect(loggerServiceLogSpy).not.toHaveBeenCalled();
@@ -657,6 +666,16 @@ describe(`DiscordMessageService`, (): void => {
                   expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
                   expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
                 });
+
+                it(`should not add the author to the Firebase DM store`, async (): Promise<void> => {
+                  expect.assertions(2);
+
+                  await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`getMessage error`)
+                  );
+
+                  expect(discordDmFirebaseServiceAddDmToFirebaseSpy).not.toHaveBeenCalled();
+                });
               });
             });
 
@@ -674,6 +693,16 @@ describe(`DiscordMessageService`, (): void => {
 
                 expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
                 expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
+              });
+
+              it(`should not add the author to the Firebase DM store`, async (): Promise<void> => {
+                expect.assertions(2);
+
+                await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`getMessage error`)
+                );
+
+                expect(discordDmFirebaseServiceAddDmToFirebaseSpy).not.toHaveBeenCalled();
               });
             });
           });
@@ -1219,6 +1248,15 @@ describe(`DiscordMessageService`, (): void => {
 
         expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
         expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
+      });
+
+      it(`should add the author to the Firebase DM store`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
+
+        expect(discordDmFirebaseServiceAddDmToFirebaseSpy).toHaveBeenCalledTimes(1);
+        expect(discordDmFirebaseServiceAddDmToFirebaseSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
 
       it(`should log about the DM message`, async (): Promise<void> => {

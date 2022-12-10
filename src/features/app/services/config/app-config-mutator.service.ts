@@ -36,14 +36,14 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return this;
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     TimeService.getInstance();
     AppConfigCoreService.getInstance();
     AppConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IAppUpdatableConfig>): void {
+  public override updateConfig(config?: IPartialNested<IAppUpdatableConfig>): void {
     if (!_.isNil(config)) {
       this.updateFirstReleaseDate(config.firstReleaseDate);
       this.updateInitializationDate(config.initializationDate);

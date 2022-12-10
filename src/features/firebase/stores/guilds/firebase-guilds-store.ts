@@ -18,17 +18,21 @@ export class FirebaseGuildsStore extends AbstractEntityStoreService {
     return FirebaseGuildsStore._instance;
   }
 
-  protected readonly _store$: Store = createStore({ name: StoreNameEnum.GUILDS }, withEntities<IFirebaseGuildState>());
+  // eslint-disable-next-line rxjs/no-exposed-subjects
+  public override readonly store$: Store = createStore(
+    { name: StoreNameEnum.GUILDS },
+    withEntities<IFirebaseGuildState>()
+  );
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_STORE);
   }
 
   update(...reducers: Reducer<EntitiesState<EntitiesRef<'entities', 'ids', 'idKey'>>>[]): void {
-    this._store$.update(...reducers);
+    this.store$.update(...reducers);
   }
 
   query<TR>(selector: Query<EntitiesState<EntitiesRef<'entities', 'ids', 'idKey'>>, TR>): TR {
-    return this._store$.query(selector);
+    return this.store$.query(selector);
   }
 }

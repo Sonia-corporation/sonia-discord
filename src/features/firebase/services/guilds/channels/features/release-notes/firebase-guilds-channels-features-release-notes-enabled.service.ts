@@ -233,14 +233,18 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
   private _logFullyUpToDateFirebaseGuild(id: Guild['id'] | undefined): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(`Firebase guild ${_.toString(id)} is up-to-date`),
+      message: ChalkService.getInstance().text(
+        `Firebase guild ${ChalkService.getInstance().value(_.toString(id))} is up-to-date`
+      ),
     });
   }
 
   private _logNotUpToDateFirebaseGuild(id: Guild['id'] | undefined): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(`Firebase guild ${_.toString(id)} is not up-to-date`),
+      message: ChalkService.getInstance().text(
+        `Firebase guild ${ChalkService.getInstance().value(_.toString(id))} is not up-to-date`
+      ),
     });
   }
 }

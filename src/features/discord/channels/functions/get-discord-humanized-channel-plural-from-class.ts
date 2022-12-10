@@ -7,6 +7,7 @@ import { isDiscordTextChannel } from './is-discord-text-channel';
 import { isDiscordThreadChannel } from './is-discord-thread-channel';
 import { isDiscordVoiceChannel } from './is-discord-voice-channel';
 import { DiscordChannelEnum } from '../enums/discord-channel.enum';
+import { IDiscordHumanizedChannels } from '../types/discord-humanized-channel-plural';
 import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
 
 /**
@@ -14,9 +15,11 @@ import { GuildBasedChannel, TextBasedChannel } from 'discord.js';
  * Return a humanized version of class instances related to channels, pluralized.
  * Useful for the logs or to display them to the users.
  * @param   {GuildBasedChannel | TextBasedChannel} channel The channel to humanize.
- * @returns {string}                                       The humanized channel as plural.
+ * @returns {IDiscordHumanizedChannels}                    The humanized channel as plural.
  */
-export function getDiscordHumanizedChannelPluralFromClass(channel: GuildBasedChannel | TextBasedChannel): string {
+export function getDiscordHumanizedChannelPluralFromClass(
+  channel: GuildBasedChannel | TextBasedChannel
+): IDiscordHumanizedChannels {
   if (isDiscordTextChannel(channel)) {
     return getDiscordHumanizedChannelPlural(DiscordChannelEnum.TEXT);
   }

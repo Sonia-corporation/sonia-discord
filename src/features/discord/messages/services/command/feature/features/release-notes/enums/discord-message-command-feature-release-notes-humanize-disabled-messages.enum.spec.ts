@@ -125,7 +125,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum`,
 
     expect(
       DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum.I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL
-    ).toBe(`I swear I am not planing do spam this channel at all.`);
+    ).toBe(`I swear I am not planing do spam this {{ channelType }} at all.`);
   });
 
   it(`should have a member "I_WANT_TO_TELL_YOU_WHEN_THERE_IS_A_NEW_RELEASE_NOTE_BUT_YOU_NEED_TO_ALLOW_ME_FIRST"`, (): void => {

@@ -26,13 +26,13 @@ export class GithubConfigMutatorService extends AbstractConfigService<IGithubCon
     super(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     GithubConfigCoreService.getInstance();
     GithubConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IGithubConfig>): void {
+  public override updateConfig(config?: IPartialNested<IGithubConfig>): void {
     if (!_.isNil(config)) {
       this.updateBugReportUrl(config.bugReportUrl);
       this.updateFeatureRequestUrl(config.featureRequestUrl);

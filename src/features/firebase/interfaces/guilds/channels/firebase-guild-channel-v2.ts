@@ -23,7 +23,7 @@ export interface IFirebaseGuildChannelV2 {
 
   /**
    * @description
-   * The entity version used to perform clean update when a breaking change occur.
+   * The entity version used to perform a clean update when a breaking change occur.
    */
   version?: FirebaseGuildChannelVersionEnum.V2 | undefined;
 }

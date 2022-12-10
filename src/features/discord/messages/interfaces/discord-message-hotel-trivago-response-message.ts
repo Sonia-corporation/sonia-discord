@@ -1,5 +1,5 @@
 import { IObject } from '../../../../types/object';
 
 export interface IDiscordMessageHotelTrivagoResponseMessage extends IObject {
-  trivago: string;
+  readonly trivago: string;
 }
