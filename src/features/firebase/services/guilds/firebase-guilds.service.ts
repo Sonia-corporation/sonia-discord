@@ -1,29 +1,24 @@
 import { AbstractService } from '../../../../classes/services/abstract.service';
-import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { DiscordClientService } from '../../../discord/services/discord-client.service';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FirebaseCollectionEnum } from '../../enums/firebase-collection.enum';
 import { createFirebaseGuild } from '../../functions/guilds/create-firebase-guild';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
-import { FirebaseAppService } from '../firebase-app.service';
+import { FirebaseStoreService } from '../firebase-store.service';
 import { Guild, Snowflake } from 'discord.js';
-import { App } from 'firebase-admin/app';
 import {
   CollectionReference,
   DocumentSnapshot,
   Firestore,
-  getFirestore,
   QueryDocumentSnapshot,
   QuerySnapshot,
   WriteBatch,
   WriteResult,
 } from 'firebase-admin/firestore';
 import _ from 'lodash';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
-import { filter, map, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const ONE_GUILD = 1;
 
@@ -38,20 +33,20 @@ export class FirebaseGuildsService extends AbstractService {
     return FirebaseGuildsService._instance;
   }
 
-  private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private readonly _onGuildsChange$: BehaviorSubject<IFirebaseGuild[]> = new BehaviorSubject<IFirebaseGuild[]>([]);
-  private _store: Firestore | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_SERVICE);
   }
 
-  public init(): Promise<number> {
-    return this._setStore().then((): Promise<number> => this._logGuildCount());
+  public async init(): Promise<void> {
+    await this._logGuildCount();
   }
 
   public getCollectionReference(): CollectionReference<IFirebaseGuild> | undefined {
-    if (_.isNil(this._store)) {
+    const store: Firestore | undefined = FirebaseStoreService.getInstance().getStore();
+
+    if (_.isNil(store)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
         message: ChalkService.getInstance().text(`store not set`),
@@ -60,7 +55,7 @@ export class FirebaseGuildsService extends AbstractService {
       return undefined;
     }
 
-    return this._store.collection(FirebaseCollectionEnum.GUILDS);
+    return store.collection(FirebaseCollectionEnum.GUILDS);
   }
 
   public getGuilds(): Promise<QuerySnapshot<IFirebaseGuild> | never> {
@@ -206,24 +201,6 @@ export class FirebaseGuildsService extends AbstractService {
       });
   }
 
-  public isReady$(): Observable<boolean> {
-    return this._isReady$.asObservable();
-  }
-
-  public isReady(): Promise<true> {
-    return firstValueFrom(
-      this.isReady$().pipe(
-        filter((isReady: boolean): boolean => _.isEqual(isReady, true)),
-        take(ONE_EMITTER),
-        map((): true => true)
-      )
-    );
-  }
-
-  public notifyIsReady(): void {
-    this._isReady$.next(true);
-  }
-
   public onGuildsChange$(): Observable<IFirebaseGuild[]> {
     return this._onGuildsChange$.asObservable();
   }
@@ -233,11 +210,13 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getBatch(): WriteBatch | undefined {
-    if (_.isNil(this._store)) {
+    const store: Firestore | undefined = FirebaseStoreService.getInstance().getStore();
+
+    if (_.isNil(store)) {
       return undefined;
     }
 
-    return this._store.batch();
+    return store.batch();
   }
 
   public watchGuilds(): void {
@@ -287,32 +266,6 @@ export class FirebaseGuildsService extends AbstractService {
         });
       }
     );
-  }
-
-  private _setStore(): Promise<true> {
-    return DiscordClientService.getInstance()
-      .isReady()
-      .then((): Promise<true> => {
-        const app: App | undefined = FirebaseAppService.getInstance().getApp();
-
-        if (_.isNil(app)) {
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`app is unset`),
-          });
-
-          throw new Error(`app is unset`);
-        }
-
-        this._store = getFirestore(app);
-
-        this._store.settings({
-          ignoreUndefinedProperties: true,
-        });
-        this.notifyIsReady();
-
-        return Promise.resolve(true);
-      });
   }
 
   private _logGuildCount(): Promise<number> {

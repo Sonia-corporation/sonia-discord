@@ -60,6 +60,11 @@ export class DiscordSoniaConfigService extends AbstractService {
     return _.includes(this.getDevGuildIdWhitelist(), id);
   }
 
+  /**
+   * @description
+   * Return the Discord ID of the Sonia bot.
+   * @returns {Snowflake} Return the Discord ID of the Sonia bot.
+   */
   public getId(): Snowflake {
     return DiscordSoniaConfigCoreService.getInstance().id;
   }

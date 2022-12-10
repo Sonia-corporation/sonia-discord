@@ -12,7 +12,7 @@ export enum DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum
   EACH_TIME_IT_SMY_BIRTHDAY_I_WIN_A_NEW_PERK_YOU_KNOW = `Each time it's my birthday I win a new perk, you know?`,
   I_AM_NOT_PLANING_ON_SPAMMING_YOU = `I am not planing on spamming you.`,
   I_JUST_LOVE_WHEN_THERE_IS_A_NEW_RELEASE_NOTE_ALLOW_ME = `I just love when there is a new release note. Allow me!`,
-  I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL = `I swear I am not planing do spam this channel at all.`,
+  I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL = `I swear I am not planing do spam this {{ channelType }} at all.`,
   I_WANT_TO_TELL_YOU_WHEN_THERE_IS_A_NEW_RELEASE_NOTE_BUT_YOU_NEED_TO_ALLOW_ME_FIRST = `I want to tell you when there is a new release note but you need to allow me first!`,
   I_WILL_LEAVE_YOU_ALONE = `I will leave you alone.`,
   I_WILL_LEAVE_YOU_ALONE_DO_NOT_WORRY = `I will leave you alone, don't worry.`,

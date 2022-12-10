@@ -24,6 +24,11 @@ export class DiscordSoniaConfigCoreService extends AbstractService implements ID
     url: `https://github.com/Sonia-corporation?type=source`,
   };
   public devGuildIdWhitelist: Snowflake[] = [];
+
+  /**
+   * @description
+   * The Discord ID of the Sonia bot.
+   */
   public id = `unknown`;
   public secretToken = `unknown`;
 

@@ -32,13 +32,13 @@ export class ServerConfigMutatorService extends AbstractConfigService<IServerCon
     return this;
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     ServerConfigCoreService.getInstance();
     ServerConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IServerConfig>): void {
+  public override updateConfig(config?: IPartialNested<IServerConfig>): void {
     if (!_.isNil(config)) {
       this.updatePort(config.port);
 

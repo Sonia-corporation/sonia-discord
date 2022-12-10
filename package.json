@@ -153,6 +153,7 @@
     "install-git-hooks": "husky install && shx rm -rf .git/hooks && shx ln -s ../.husky .git/hooks"
   },
   "dependencies": {
+    "@discordjs/builders": "1.4.0",
     "@ngneat/effects": "1.1.1",
     "@ngneat/elf": "2.3.0",
     "@ngneat/elf-entities": "4.4.3",

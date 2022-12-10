@@ -11,6 +11,7 @@ import { DiscordLoggerService } from '../logger/services/discord-logger.service'
 import { DiscordMessageService } from '../messages/services/discord-message.service';
 import { DiscordMessageScheduleNoonService } from '../messages/services/schedule/discord-message-schedule-noon.service';
 import { DiscordSoniaService } from '../users/services/discord-sonia.service';
+import { DiscordUserService } from '../users/services/discord-user.service';
 import _ from 'lodash';
 
 export class DiscordService extends AbstractService {
@@ -32,6 +33,7 @@ export class DiscordService extends AbstractService {
     DiscordSoniaService.getInstance();
     DiscordLoggerService.getInstance().init();
     void DiscordGuildService.getInstance().init();
+    void DiscordUserService.getInstance().init();
     DiscordGuildMemberAddService.getInstance().init();
     DiscordGuildCreateService.getInstance().init();
     DiscordMessageService.getInstance().init();

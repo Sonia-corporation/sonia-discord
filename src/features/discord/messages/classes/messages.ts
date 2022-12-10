@@ -1,4 +1,4 @@
-import { replaceInterpolation } from '../../../../functions/formatters/replace-interpolation';
+import { replaceInTemplate } from '../../../../functions/formatters/replace-in-template';
 import { IObject } from '../../../../types/object';
 import { IMessageConfig } from '../interfaces/message-config';
 import _ from 'lodash';
@@ -64,6 +64,6 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
    * // -> 'a message with a dummy'
    */
   public getHumanizedRandomMessage(params: TParams | undefined = this.getParams()): string {
-    return replaceInterpolation(this.getRandomMessage(), params ?? {});
+    return replaceInTemplate(this.getRandomMessage() ?? ``, params ?? {});
   }
 }

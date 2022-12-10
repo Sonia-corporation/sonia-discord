@@ -24,21 +24,21 @@ export class DiscordMessageSubCommandVerifyChannelRightService extends DiscordMe
     super(ServiceNameEnum.DISCORD_MESSAGE_SUB_COMMAND_VERIFY_CHANNEL_RIGHT_SERVICE);
   }
 
-  protected _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData {
+  protected override _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData {
     return {
       name: `Wrong channel!`,
       value: `This sub-command is not allowed on ${getDiscordHumanizedChannelPluralFromClass(channel)}.`,
     };
   }
 
-  protected _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData {
+  protected override _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData {
     return {
       name: `Allowed channels`,
       value: `You can use this sub-command only on ${getDiscordHumanizedChannelsPlural(Array.from(allowedChannels))}.`,
     };
   }
 
-  protected _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData {
+  protected override _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData {
     const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
 
     return {

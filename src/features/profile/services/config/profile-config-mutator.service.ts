@@ -23,13 +23,13 @@ export class ProfileConfigMutatorService extends AbstractConfigService<IProfileC
     super(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     ProfileConfigCoreService.getInstance();
     ProfileConfigService.getInstance();
   }
 
-  public updateConfig(config?: Partial<IProfileConfig>): void {
+  public override updateConfig(config?: Partial<IProfileConfig>): void {
     if (!_.isNil(config)) {
       this.updateDiscordId(config.discordId);
       this.updateNickname(config.nickname);

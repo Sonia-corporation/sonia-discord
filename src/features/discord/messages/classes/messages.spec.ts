@@ -227,24 +227,22 @@ describe(`Messages`, (): void => {
         });
 
         describe(`when there is no given params`, (): void => {
-          it(`should return the default message instead without replacing the variable`, (): void => {
+          it(`should throw`, (): void => {
             expect.assertions(1);
 
-            const result = messages.getHumanizedRandomMessage();
-
-            expect(result).toBe(`dummy message with {{ variable }}`);
+            expect((): string => messages.getHumanizedRandomMessage()).toThrow(new Error(`variable is not defined`));
           });
         });
 
         describe(`when there is a given params but not matching the replacement`, (): void => {
-          it(`should return the default message instead without replacing the variable`, (): void => {
+          it(`should throw`, (): void => {
             expect.assertions(1);
 
-            const result = messages.getHumanizedRandomMessage({
-              key2: `value2`,
-            });
-
-            expect(result).toBe(`dummy message with {{ variable }}`);
+            expect((): string =>
+              messages.getHumanizedRandomMessage({
+                key2: `value2`,
+              })
+            ).toThrow(new Error(`variable is not defined`));
           });
         });
 
@@ -269,24 +267,22 @@ describe(`Messages`, (): void => {
         });
 
         describe(`when there is no given params`, (): void => {
-          it(`should return the default message instead without replacing the variable`, (): void => {
+          it(`should throw`, (): void => {
             expect.assertions(1);
 
-            const result = messages.getHumanizedRandomMessage();
-
-            expect(result).toBe(`dummy message with {{ variable }}`);
+            expect((): string => messages.getHumanizedRandomMessage()).toThrow(new Error(`variable is not defined`));
           });
         });
 
         describe(`when there is a given params but not matching the replacement`, (): void => {
-          it(`should return the default message instead without replacing the variable`, (): void => {
+          it(`should throw`, (): void => {
             expect.assertions(1);
 
-            const result = messages.getHumanizedRandomMessage({
-              key2: `value2`,
-            });
-
-            expect(result).toBe(`dummy message with {{ variable }}`);
+            expect((): string =>
+              messages.getHumanizedRandomMessage({
+                key2: `value2`,
+              })
+            ).toThrow(new Error(`variable is not defined`));
           });
         });
 
@@ -321,14 +317,14 @@ describe(`Messages`, (): void => {
         });
 
         describe(`when there is a given params but not matching the replacement`, (): void => {
-          it(`should return the default message instead without replacing the variable`, (): void => {
+          it(`should throw`, (): void => {
             expect.assertions(1);
 
-            const result = messages.getHumanizedRandomMessage({
-              key2: `value2`,
-            });
-
-            expect(result).toBe(`dummy message with {{ variable }}`);
+            expect((): string =>
+              messages.getHumanizedRandomMessage({
+                key2: `value2`,
+              })
+            ).toThrow(new Error(`variable is not defined`));
           });
         });
 

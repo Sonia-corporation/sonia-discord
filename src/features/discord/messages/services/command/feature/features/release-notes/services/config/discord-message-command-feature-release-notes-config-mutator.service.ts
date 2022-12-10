@@ -31,13 +31,13 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
     DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>): void {
+  public override updateConfig(config?: IPartialNested<IDiscordMessageCommandFeatureConfig>): void {
     if (!_.isNil(config)) {
       this.updateReleaseNotes(config.releaseNotes?.unknown);
 

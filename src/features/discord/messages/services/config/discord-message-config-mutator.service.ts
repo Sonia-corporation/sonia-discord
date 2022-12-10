@@ -46,13 +46,13 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<ID
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     DiscordMessageConfigCoreService.getInstance();
     DiscordMessageConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IDiscordConfig>): void {
+  public override updateConfig(config?: IPartialNested<IDiscordConfig>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
 

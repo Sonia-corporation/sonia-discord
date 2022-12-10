@@ -1,13 +1,14 @@
 import { DiscordChannelEnum } from '../enums/discord-channel.enum';
+import { IDiscordHumanizedChannel } from '../types/discord-humanized-channel';
 
 /**
  * @description
  * Return a humanized version of the given channel.
  * Useful for the logs or to display them to the users.
- * @param   {DiscordChannelEnum} channel The channel to humanize.
- * @returns {string}                     The humanized channel.
+ * @param   {DiscordChannelEnum}       channel The channel to humanize.
+ * @returns {IDiscordHumanizedChannel}         The humanized channel.
  */
-export function getDiscordHumanizedChannel(channel?: DiscordChannelEnum): string {
+export function getDiscordHumanizedChannel(channel?: DiscordChannelEnum): IDiscordHumanizedChannel {
   if (channel === DiscordChannelEnum.TEXT) {
     return `text channel`;
   }

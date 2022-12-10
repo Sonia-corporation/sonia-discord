@@ -25,13 +25,13 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     super(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     LoggerConfigCoreService.getInstance();
     LoggerConfigService.getInstance();
   }
 
-  public updateConfig(config?: Partial<ILoggerConfig>): void {
+  public override updateConfig(config?: Partial<ILoggerConfig>): void {
     if (!_.isNil(config)) {
       this.updateEnabledState(config.isEnabled);
       this.updateLevel(config.level);

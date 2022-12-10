@@ -2,7 +2,7 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../enums/guilds
 
 /**
  * @description
- * A simply Firebase guild channel feature with the default configuration.
+ * A simple Firebase guild channel feature with the default configuration.
  * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}.
  */
 export interface INewFirebaseGuildChannelFeature {

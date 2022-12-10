@@ -12,7 +12,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandNoonFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED).toBe(
-      `The noon feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`
+      `The noon feature was not configured yet and is now enabled on this {{ channelType }}. A message will be sent each day at noon (12 A.M) on Paris timezone.`
     );
   });
 
@@ -20,7 +20,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandNoonFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED).toBe(
-      `The noon feature was not configured yet and is now disabled on this channel.`
+      `The noon feature was not configured yet and is now disabled on this {{ channelType }}.`
     );
   });
 
@@ -28,7 +28,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandNoonFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED).toBe(
-      `The noon feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`
+      `The noon feature was already enabled on this {{ channelType }}. A message will be sent each day at noon (12 A.M) on Paris timezone.`
     );
   });
 
@@ -36,7 +36,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandNoonFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED).toBe(
-      `The noon feature is now disabled on this channel.`
+      `The noon feature is now disabled on this {{ channelType }}.`
     );
   });
 
@@ -44,7 +44,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandNoonFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED).toBe(
-      `The noon feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`
+      `The noon feature is now enabled on this {{ channelType }}. A message will be sent each day at noon (12 A.M) on Paris timezone.`
     );
   });
 
@@ -52,7 +52,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandNoonFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED).toBe(
-      `The noon feature was already disabled on this channel.`
+      `The noon feature was already disabled on this {{ channelType }}.`
     );
   });
 });

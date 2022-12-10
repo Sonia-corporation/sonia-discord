@@ -1,7 +1,7 @@
-import { AbstractService } from '../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.service';
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
+import { FirebaseAbstractStoreService } from '../../services/firebase-abstract-store.service';
 import { FirebaseGuildsStore } from '../firebase-guilds-store';
 import { emitOnce } from '@ngneat/elf';
 import { addEntities, deleteAllEntities, getEntity, upsertEntities } from '@ngneat/elf-entities';
@@ -10,7 +10,7 @@ import _ from 'lodash';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-export class FirebaseGuildsStoreService extends AbstractService {
+export class FirebaseGuildsStoreService extends FirebaseAbstractStoreService<IFirebaseGuild> {
   private static _instance: FirebaseGuildsStoreService;
 
   public static getInstance(): FirebaseGuildsStoreService {

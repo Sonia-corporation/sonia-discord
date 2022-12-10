@@ -26,13 +26,13 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE, config);
   }
 
-  public preUpdateConfig(): void {
+  public override preUpdateConfig(): void {
     LoggerService.getInstance();
     DiscordGuildConfigCoreService.getInstance();
     DiscordGuildConfigService.getInstance();
   }
 
-  public updateConfig(config?: IPartialNested<IDiscordConfig>): void {
+  public override updateConfig(config?: IPartialNested<IDiscordConfig>): void {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
 
