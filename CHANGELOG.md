@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+# [1.104.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.103.0...1.104.0) (2022-12-10)
+
+
+### :rocket: Features
+
+* **features:** add a proper support for DMs ([885922a](https://github.com/Sonia-corporation/sonia-discord/commit/885922a2c280c5cf23b8255dd86ac13eb6d4d2e7)), closes [#1895](https://github.com/Sonia-corporation/sonia-discord/issues/1895)
+* **noon:** send an error message if the guild cannot be found in the message ([04b7466](https://github.com/Sonia-corporation/sonia-discord/commit/04b7466a4ac17d82194b8994b5d08ccd920025e4)), closes [#1896](https://github.com/Sonia-corporation/sonia-discord/issues/1896)
+* **help:** sort the list of commands ([83a37ee](https://github.com/Sonia-corporation/sonia-discord/commit/83a37ee7cb3bb7e8b759e5d9f1cb9f88fde34194)), closes [#1897](https://github.com/Sonia-corporation/sonia-discord/issues/1897)
+
 # [1.103.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.102.1...1.103.0) (2022-11-30)
 
 
