@@ -16,7 +16,16 @@ import { DiscordMessageRightsService } from '../../messages/services/rights/disc
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
-import { Client, Guild, Message, MessageOptions, MessagePayload, NewsChannel, TextChannel } from 'discord.js';
+import {
+  ChannelType,
+  Client,
+  Guild,
+  Message,
+  MessageOptions,
+  MessagePayload,
+  NewsChannel,
+  TextChannel,
+} from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
 import { createMock } from 'ts-auto-mock';
 
@@ -401,7 +410,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         describe(`when the primary guild channel is not a text channel`, (): void => {
           beforeEach((): void => {
             primaryGuildChannel = createMock<NewsChannel>({
-              type: `GUILD_NEWS`,
+              type: ChannelType.GuildNews,
             });
 
             isDiscordTextChannelSpy.mockReturnValue(false);
@@ -433,7 +442,7 @@ describe(`DiscordGuildCreateService`, (): void => {
           beforeEach((): void => {
             primaryGuildChannel = createMock<TextChannel>({
               send: guildChannelSendMock,
-              type: `GUILD_TEXT`,
+              type: ChannelType.GuildText,
             });
 
             isDiscordTextChannelSpy.mockReturnValue(true);

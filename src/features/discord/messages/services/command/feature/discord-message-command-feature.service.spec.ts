@@ -1,6 +1,7 @@
 /* eslint-disable import/order */
 import {
   CategoryChannel,
+  ChannelType,
   DMChannel,
   GuildBasedChannel,
   NewsChannel,
@@ -129,7 +130,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
         id: `dummy-id`,
       });
 
@@ -244,7 +245,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
+          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
         });
       });
 
@@ -260,7 +261,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
         });
       });
 
@@ -276,7 +277,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -292,7 +295,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews }),
+          channel: createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews }),
         });
       });
 
@@ -313,7 +316,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -725,9 +728,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           });
 
           describe.each`
-            channel                                               | channelType
-            ${createInstance<TextChannel>(TextChannel.prototype)} | ${`text channels`}
-            ${createInstance<DMChannel>(DMChannel.prototype)}     | ${`DM channels`}
+            channel                                                             | channelType
+            ${createHydratedMock<TextChannel>({ type: ChannelType.GuildText })} | ${`text channels`}
+            ${createHydratedMock<DMChannel>({ type: ChannelType.DM })}          | ${`DM channels`}
           `(
             `when the message comes from an unsupported channel ($channelType)`,
             ({ channel }: IChannelMatrix): void => {
@@ -1651,12 +1654,17 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           );
 
           describe.each`
-            channel                                                   | channelType
-            ${createInstance<NewsChannel>(NewsChannel.prototype)}     | ${`news channels`}
-            ${createInstance<NewsChannel>(VoiceChannel.prototype)}    | ${`voice channels`}
-            ${createInstance<NewsChannel>(CategoryChannel.prototype)} | ${`category channels`}
-            ${createInstance<NewsChannel>(StageChannel.prototype)}    | ${`stage channels`}
-            ${createInstance<NewsChannel>(ThreadChannel.prototype)}   | ${`threads`}
+            channel                                                                        | channelType
+            ${createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews })}            | ${`news channels`}
+            ${createHydratedMock<VoiceChannel>({ type: ChannelType.GuildVoice })}          | ${`voice channels`}
+            ${createHydratedMock<CategoryChannel>({ type: ChannelType.GuildCategory })}    | ${`category channels`}
+            ${createHydratedMock<StageChannel>({ type: ChannelType.GuildStageVoice })}     | ${`stage channels`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.PublicThread })}       | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.PrivateThread })}      | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.AnnouncementThread })} | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.GuildNewsThread })}    | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.PublicThread })}       | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.PrivateThread })}      | ${`threads`}
           `(
             `when the message comes from an unsupported channel ($channelType)`,
             ({ channel, channelType }: IChannelMatrix): void => {
@@ -1733,9 +1741,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           });
 
           describe.each`
-            channel                                               | channelType
-            ${createInstance<TextChannel>(TextChannel.prototype)} | ${`text channels`}
-            ${createInstance<DMChannel>(DMChannel.prototype)}     | ${`DM channels`}
+            channel | channelType
+            ${createHydratedMock<TextChannel>({
+  type: ChannelType.GuildText,
+})} | ${`text channels`}
+            ${createHydratedMock<DMChannel>({
+  type: ChannelType.DM,
+})} | ${`DM channels`}
           `(
             `when the message comes from an unsupported channel ($channelType)`,
             ({ channel }: IChannelMatrix): void => {
@@ -2648,12 +2660,17 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           );
 
           describe.each`
-            channel                                                   | channelType
-            ${createInstance<NewsChannel>(NewsChannel.prototype)}     | ${`news channels`}
-            ${createInstance<NewsChannel>(VoiceChannel.prototype)}    | ${`voice channels`}
-            ${createInstance<NewsChannel>(CategoryChannel.prototype)} | ${`category channels`}
-            ${createInstance<NewsChannel>(StageChannel.prototype)}    | ${`stage channels`}
-            ${createInstance<NewsChannel>(ThreadChannel.prototype)}   | ${`threads`}
+            channel                                                                        | channelType
+            ${createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews })}            | ${`news channels`}
+            ${createHydratedMock<VoiceChannel>({ type: ChannelType.GuildVoice })}          | ${`voice channels`}
+            ${createHydratedMock<CategoryChannel>({ type: ChannelType.GuildCategory })}    | ${`category channels`}
+            ${createHydratedMock<StageChannel>({ type: ChannelType.GuildStageVoice })}     | ${`stage channels`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.GuildPublicThread })}  | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.GuildPrivateThread })} | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.AnnouncementThread })} | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.GuildNewsThread })}    | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.PublicThread })}       | ${`threads`}
+            ${createHydratedMock<ThreadChannel>({ type: ChannelType.PrivateThread })}      | ${`threads`}
           `(
             `when the message comes from an unsupported channel ($channelType)`,
             ({ channel, channelType }: IChannelMatrix): void => {

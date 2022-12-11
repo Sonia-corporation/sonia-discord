@@ -79,7 +79,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHumanize();
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
         id: `dummy-id`,
       });
 
@@ -115,7 +115,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     describe(`when the message was sent from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
+          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
           id: `dummy-id`,
         });
 
@@ -156,7 +156,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
+              channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
               id: `dummy-id`,
             });
 
@@ -176,7 +176,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
               author: {
                 id: `dummy-author-id`,
               },
-              channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
+              channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
               id: `dummy-id`,
             });
 
@@ -245,7 +245,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     describe(`when the message was not sent from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
 

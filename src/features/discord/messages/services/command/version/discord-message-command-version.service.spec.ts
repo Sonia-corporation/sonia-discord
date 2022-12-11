@@ -15,16 +15,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandVerifyChannelRightService } from '../discord-message-command-verify-channel-right.service';
-import {
-  DMChannel,
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  NewsChannel,
-  TextChannel,
-  ThreadChannel,
-} from 'discord.js';
+import { ChannelType, EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -106,7 +97,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -221,7 +212,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -237,7 +228,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -253,7 +244,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -269,7 +262,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews }),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -290,7 +283,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,

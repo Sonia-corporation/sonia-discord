@@ -17,6 +17,7 @@ import { DiscordMessageCommandVerifyChannelRightService } from '../../discord-me
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-heartbeat-description-messages';
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_TITLE_MESSAGES } from '../constants/discord-message-command-heartbeat-title-messages';
 import {
+  ChannelType,
   Client,
   DMChannel,
   EmbedField,
@@ -29,7 +30,6 @@ import {
   MessageEmbedThumbnail,
   NewsChannel,
   TextChannel,
-  ThreadChannel,
 } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
@@ -110,7 +110,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
         id: `dummy-id`,
       });
 
@@ -402,7 +402,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
+          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
         });
       });
 
@@ -418,7 +418,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
         });
       });
 
@@ -434,7 +434,9 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -450,7 +452,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews }),
+          channel: createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews }),
         });
       });
 
@@ -471,7 +473,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
+        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
