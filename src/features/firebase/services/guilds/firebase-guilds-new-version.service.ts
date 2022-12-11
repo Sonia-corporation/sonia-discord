@@ -19,6 +19,7 @@ import { IDiscordMessageResponse } from '../../../discord/messages/interfaces/di
 import { DiscordMessageCommandReleaseNotesService } from '../../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service';
 import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from '../../../discord/users/constants/discord-github-contributors-id-messages';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerDiscordService } from '../../../logger/services/logger-discord.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-bug-fixes-version-response-messages';
 import { FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-features-version-response-messages';
@@ -138,12 +139,12 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     const guildBasedChannel: GuildBasedChannel | undefined = guild.channels.cache.get(channel.id);
 
     if (_.isNil(guildBasedChannel)) {
-      this._logInValidDiscordGuildChannel(guild, channel);
+      LoggerDiscordService.getInstance().logInValidGuildChannel(this._serviceName, guild.id, channel.id);
 
       return Promise.reject(new Error(`Guild channel not found`));
     }
 
-    this._logValidDiscordGuildChannel(guild, channel);
+    LoggerDiscordService.getInstance().logValidGuildChannel(this._serviceName, guild.id, channel.id);
 
     return this.sendMessageResponse(guildBasedChannel);
   }
@@ -451,28 +452,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         `Firebase guild ${ChalkService.getInstance().value(id)} channel ${ChalkService.getInstance().value(
           guildChannel.id
         )} release notes feature is enabled`
-      ),
-    });
-  }
-
-  private _logInValidDiscordGuildChannel({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Discord guild ${ChalkService.getInstance().value(id)} channel ${ChalkService.getInstance().value(
-          guildChannel.id
-        )} is invalid`
-      ),
-    });
-  }
-
-  private _logValidDiscordGuildChannel({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Discord guild ${ChalkService.getInstance().value(id)} channel ${ChalkService.getInstance().value(
-          guildChannel.id
-        )} is valid`
       ),
     });
   }
