@@ -81,4 +81,56 @@ describe(`LoggerFirebaseService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith(loggerLog);
     });
   });
+
+  describe(`logGuildsToUpdateCount()`, (): void => {
+    let serviceName: ServiceNameEnum;
+    let countFirebaseGuildsUpdated: number;
+
+    let loggerServiceLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new LoggerFirebaseService();
+      serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
+
+      loggerServiceLogSpy = loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+    });
+
+    describe(`when there is one Firebase guild to update`, (): void => {
+      beforeEach((): void => {
+        countFirebaseGuildsUpdated = 1;
+      });
+
+      it(`should log the count of Firebase guilds to update (singular)`, (): void => {
+        expect.assertions(2);
+
+        service.logGuildsToUpdateCount(serviceName, countFirebaseGuildsUpdated);
+
+        const loggerLog: ILoggerLog = {
+          context: `AppConfigCoreService`,
+          message: `text-updating value-1 Firebase guild...`,
+        };
+        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledWith(loggerLog);
+      });
+    });
+
+    describe(`when there is multiple Firebase guilds to update`, (): void => {
+      beforeEach((): void => {
+        countFirebaseGuildsUpdated = 2;
+      });
+
+      it(`should log the count of Firebase guilds to update (plural)`, (): void => {
+        expect.assertions(2);
+
+        service.logGuildsToUpdateCount(serviceName, countFirebaseGuildsUpdated);
+
+        const loggerLog: ILoggerLog = {
+          context: `AppConfigCoreService`,
+          message: `text-updating value-2 Firebase guilds...`,
+        };
+        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledWith(loggerLog);
+      });
+    });
+  });
 });

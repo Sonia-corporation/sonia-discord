@@ -5,6 +5,8 @@ import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { Guild } from 'discord.js';
 import _ from 'lodash';
 
+const ONE = 1;
+
 export class LoggerFirebaseService extends AbstractService {
   private static _instance: LoggerFirebaseService;
 
@@ -24,6 +26,17 @@ export class LoggerFirebaseService extends AbstractService {
     LoggerService.getInstance().debug({
       context: serviceName,
       message: ChalkService.getInstance().text(`fetching Firebase guild ${ChalkService.getInstance().value(guildId)}`),
+    });
+  }
+
+  public logGuildsToUpdateCount(serviceName: ServiceNameEnum, countFirebaseGuildsUpdated: number): void {
+    LoggerService.getInstance().log({
+      context: serviceName,
+      message: ChalkService.getInstance().text(
+        `updating ${ChalkService.getInstance().value(countFirebaseGuildsUpdated)} Firebase guild${
+          _.gt(countFirebaseGuildsUpdated, ONE) ? `s` : ``
+        }...`
+      ),
     });
   }
 }

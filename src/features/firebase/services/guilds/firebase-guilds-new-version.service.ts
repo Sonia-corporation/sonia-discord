@@ -366,14 +366,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
 
     if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
-      LoggerService.getInstance().log({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `updating ${ChalkService.getInstance().value(countFirebaseGuildsUpdated)} Firebase guild${
-            _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
-          }...`
-        ),
-      });
+      LoggerFirebaseService.getInstance().logGuildsToUpdateCount(this._serviceName, countFirebaseGuildsUpdated);
 
       return batch
         .commit()
