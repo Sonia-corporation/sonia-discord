@@ -7,7 +7,7 @@ import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { ChannelType, EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { ChannelType, EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
 
@@ -383,7 +383,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
@@ -416,7 +416,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Wrong channel!`,
           value: `This sub-command is not allowed on text channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -427,7 +427,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Allowed channels`,
           value: `You can use this sub-command only on text channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a report field`, async (): Promise<void> => {
@@ -438,7 +438,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Help me to get better!`,
           value: `If you think that using this sub-command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -450,7 +450,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `I don't allow you!`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -466,7 +466,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -483,7 +483,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -495,7 +495,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -539,7 +539,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
@@ -572,7 +572,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Wrong channel!`,
           value: `This sub-command is not allowed on text channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -583,7 +583,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Allowed channels`,
           value: `You can use this sub-command only on text channels, private messages, and news channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a report field`, async (): Promise<void> => {
@@ -594,7 +594,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Help me to get better!`,
           value: `If you think that using this sub-command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -606,7 +606,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `I don't allow you!`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -622,7 +622,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -639,7 +639,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -651,7 +651,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

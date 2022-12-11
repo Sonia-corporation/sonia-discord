@@ -14,7 +14,7 @@ import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
 import { DiscordMessageErrorService } from '../../../helpers/discord-message-error.service';
 import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -71,7 +71,7 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     });
   }
 
-  private _getMessageEmbed(quote: IQuote): MessageEmbedOptions {
+  private _getMessageEmbed(quote: IQuote): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(quote),
       color: this._getMessageEmbedColor(),
@@ -83,7 +83,7 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedAuthor({ authorName, quoteUrl }: IQuote): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor({ authorName, quoteUrl }: IQuote): EmbedAuthorData {
     return {
       iconURL: QuoteConfigService.getInstance().getAuthorIconUrl(),
       name: authorName,
@@ -99,7 +99,7 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     return quote;
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -108,7 +108,7 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: QuoteConfigService.getInstance().getImageUrl(),
     };

@@ -20,14 +20,13 @@ import {
   ChannelType,
   Client,
   DMChannel,
+  EmbedAssetData,
+  EmbedAuthorData,
   EmbedField,
-  EmbedFieldData,
+  EmbedFooterData,
   Message,
   MessageEditOptions,
   MessageEmbed,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
   NewsChannel,
   TextChannel,
 } from 'discord.js';
@@ -236,7 +235,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
@@ -269,7 +268,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
       expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
         name: `My Websocket heartbeat`,
         value: `1,500 ms`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a roundtrip latency field`, async (): Promise<void> => {
@@ -280,7 +279,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
       expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
         name: `My roundtrip latency`,
         value: `Calculating...`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -300,7 +299,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `My heartbeat`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -316,7 +315,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `My heartbeat`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -333,7 +332,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `My heartbeat`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -345,7 +344,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.HEART_WITH_PULSE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

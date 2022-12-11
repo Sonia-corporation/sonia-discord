@@ -8,7 +8,7 @@ import { DiscordGuildConfigService } from '../../../../../guilds/services/config
 import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
 import { DiscordMessageCommandCliErrorService } from '../../discord-message-command-cli-error.service';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -116,7 +116,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
@@ -149,7 +149,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
       expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
         name: `Empty content`,
         value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a field to report the error`, async (): Promise<void> => {
@@ -164,7 +164,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
       expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
         name: `Help me to help you`,
         value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -176,7 +176,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -192,7 +192,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -209,7 +209,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -221,7 +221,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

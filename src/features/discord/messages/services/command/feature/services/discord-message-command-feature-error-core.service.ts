@@ -6,7 +6,7 @@ import { discordGetCommandAndPrefix } from '../../../../functions/commands/gette
 import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../constants/discord-message-command-feature-names';
-import { EmbedFieldData, MessageEmbedFooter } from 'discord.js';
+import { EmbedField, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 
 /**
@@ -19,7 +19,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     super(serviceName);
   }
 
-  protected _getMessageEmbedFooter(): MessageEmbedFooter {
+  protected _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -32,7 +32,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     return `I can not handle your request.`;
   }
 
-  protected _getMessageEmbedFieldAllFeatures(): EmbedFieldData {
+  protected _getMessageEmbedFieldAllFeatures(): EmbedField {
     return {
       name: `All features`,
       value: DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getAllArgumentsNameWithShortcutsExample(),
@@ -42,7 +42,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
   protected _getMessageEmbedFieldFeatureExample(
     { content }: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[]
-  ): EmbedFieldData {
+  ): EmbedField {
     const randomFeature: string | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getRandomArgumentUsageExample();
     let userCommand: string | null = discordGetCommandAndPrefix({
       commands,

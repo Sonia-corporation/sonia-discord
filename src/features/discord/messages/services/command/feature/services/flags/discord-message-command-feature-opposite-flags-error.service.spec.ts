@@ -9,7 +9,7 @@ import { IDiscordCommandFlagsOpposite } from '../../../../../types/commands/flag
 import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -112,7 +112,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(oppositeFlags);
@@ -159,7 +159,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
           inline: false,
           name: oppositeFlags[0].name,
           value: oppositeFlags[0].description,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<void> => {
@@ -170,7 +170,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `How to solve this?`,
           value: `I am here to help you but do not mess with me!\nTry again but remove the extra opposite flags which makes no sense since you can not combine them!\nAlso you can use the \`--help\` flag if want my help!`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
     });
 
@@ -208,19 +208,19 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
           inline: false,
           name: oppositeFlags[0].name,
           value: oppositeFlags[0].description,
-        } as EmbedFieldData);
+        } as EmbedField);
 
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           inline: false,
           name: oppositeFlags[1].name,
           value: oppositeFlags[1].description,
-        } as EmbedFieldData);
+        } as EmbedField);
 
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           inline: false,
           name: oppositeFlags[2].name,
           value: oppositeFlags[2].description,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<void> => {
@@ -231,7 +231,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
           name: `How to solve this?`,
           value: `I am here to help you but do not mess with me!\nTry again but remove the extra opposite flags which makes no sense since you can not combine them!\nAlso you can use the \`--help\` flag if want my help!`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
     });
 
@@ -244,7 +244,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -260,7 +260,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -277,7 +277,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -289,7 +289,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

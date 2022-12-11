@@ -16,9 +16,9 @@ import { DiscordMessageCommandVerifyChannelRightService } from '../discord-messa
 import {
   ChannelType,
   DMChannel,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
+  EmbedAssetData,
+  EmbedAuthorData,
+  EmbedFooterData,
   NewsChannel,
   TextChannel,
 } from 'discord.js';
@@ -439,7 +439,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
@@ -469,7 +469,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `8 versions since the 24th March 2020`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -487,7 +487,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `8 versions since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -506,7 +506,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `8 versions since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -536,7 +536,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
     });
 
@@ -566,7 +566,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
     });
 
@@ -594,7 +594,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
     });
 
@@ -626,7 +626,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
     });
 
@@ -656,7 +656,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
     });
 

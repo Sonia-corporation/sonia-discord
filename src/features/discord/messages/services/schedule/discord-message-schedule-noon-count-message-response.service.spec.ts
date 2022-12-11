@@ -6,7 +6,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandFeatureNoonConfigService } from '../command/feature/features/noon/services/config/discord-message-command-feature-noon-config.service';
-import { MessageEmbedAuthor } from 'discord.js';
+import { EmbedAuthorData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -99,7 +99,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
     it(`should return a message response with an embed author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);

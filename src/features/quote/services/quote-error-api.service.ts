@@ -3,7 +3,7 @@ import { IDiscordMessageResponse } from '../../discord/messages/interfaces/disco
 import { DiscordMessageCommandCliErrorService } from '../../discord/messages/services/command/discord-message-command-cli-error.service';
 import { DiscordCommandErrorCoreService } from '../../discord/messages/services/helpers/discord-command-error-core.service';
 import { IQuoteErrorApi } from '../interfaces/quote-error-api';
-import { MessageEmbedOptions } from 'discord.js';
+import { EmbedData } from 'discord.js';
 import _ from 'lodash';
 
 export class QuoteErrorApiService extends DiscordCommandErrorCoreService {
@@ -25,7 +25,7 @@ export class QuoteErrorApiService extends DiscordCommandErrorCoreService {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
       .then((messageResponse: IDiscordMessageResponse): IDiscordMessageResponse => {
-        const options: MessageEmbedOptions = {
+        const options: EmbedData = {
           description: this._getMessageEmbedDescription(error),
           title: this._getCustomMessageEmbedTitle(),
         };

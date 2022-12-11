@@ -12,10 +12,10 @@ import {
   CategoryChannel,
   ChannelType,
   DMChannel,
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
+  EmbedAssetData,
+  EmbedAuthorData,
+  EmbedField,
+  EmbedFooterData,
   NewsChannel,
   StageChannel,
   TextChannel,
@@ -488,7 +488,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
@@ -521,7 +521,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Wrong channel!`,
           value: `This command is not allowed on text channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -532,7 +532,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Allowed channels`,
           value: `You can use this command only on text channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a report field`, async (): Promise<void> => {
@@ -543,7 +543,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Help me to get better!`,
           value: `If you think that using this command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -555,7 +555,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `I don't allow you!`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -571,7 +571,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -588,7 +588,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -600,7 +600,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -644,7 +644,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
@@ -677,7 +677,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Wrong channel!`,
           value: `This command is not allowed on text channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -688,7 +688,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Allowed channels`,
           value: `You can use this command only on text channels, private messages, and news channels.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a report field`, async (): Promise<void> => {
@@ -699,7 +699,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Help me to get better!`,
           value: `If you think that using this command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -711,7 +711,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `I don't allow you!`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -727,7 +727,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -744,7 +744,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `I don't allow you!`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -756,7 +756,7 @@ describe(`DiscordMessageCommandVerifyChannelRightService`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

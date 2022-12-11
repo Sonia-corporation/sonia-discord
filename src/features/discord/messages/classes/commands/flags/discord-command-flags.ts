@@ -24,7 +24,7 @@ import { IDiscordCommandFlagsOpposite } from '../../../types/commands/flags/disc
 import { IDiscordCommandFlagsResponse } from '../../../types/commands/flags/discord-command-flags-response';
 import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
 import { DiscordCommandFirstArgument } from '../arguments/discord-command-first-argument';
-import { EmbedFieldData } from 'discord.js';
+import { EmbedField } from 'discord.js';
 import _, { Dictionary } from 'lodash';
 
 const ONE_FLAG = 1;
@@ -305,9 +305,10 @@ export class DiscordCommandFlags<T extends string> {
     return shortcutFlag.executeAction(anyDiscordMessage, undefined, this);
   }
 
-  public getAllFlagsAsEmbedFields(): EmbedFieldData[] {
-    return _.map(this.getOrderedFlags(), (flag: IDiscordCommandFlagTypes<T>): EmbedFieldData => {
+  public getAllFlagsAsEmbedFields(): EmbedField[] {
+    return _.map(this.getOrderedFlags(), (flag: IDiscordCommandFlagTypes<T>): EmbedField => {
       return {
+        inline: false,
         name: flag.getLowerCaseNameAndShortcutsExample(),
         value: flag.getDescription(),
       };

@@ -14,7 +14,7 @@ import { IDiscordCommandFlagsSuccess } from '../../../../../../types/commands/fl
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../../../constants/discord-message-command-feature-names';
 import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -210,7 +210,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
         it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
           expect.assertions(1);
-          const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+          const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
           discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
@@ -252,7 +252,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -264,7 +264,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Noon feature successfully updated`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -280,7 +280,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -297,7 +297,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -309,7 +309,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.ALARM,
-          } as MessageEmbedThumbnail);
+          } as EmbedAssetData);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -386,19 +386,19 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
-          } as EmbedFieldData);
+          } as EmbedField);
 
           expect(result[0].options.embeds?.[0]?.fields?.[1]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
-          } as EmbedFieldData);
+          } as EmbedField);
 
           expect(result[0].options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -410,7 +410,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Noon feature successfully updated`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -426,7 +426,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -443,7 +443,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -455,7 +455,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.ALARM,
-          } as MessageEmbedThumbnail);
+          } as EmbedAssetData);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -608,19 +608,19 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
-          } as EmbedFieldData);
+          } as EmbedField);
 
           expect(result[0].options.embeds?.[0]?.fields?.[1]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
-          } as EmbedFieldData);
+          } as EmbedField);
 
           expect(result[0].options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -632,7 +632,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Noon feature successfully updated`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -648,7 +648,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -665,7 +665,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -677,7 +677,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.ALARM,
-          } as MessageEmbedThumbnail);
+          } as EmbedAssetData);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

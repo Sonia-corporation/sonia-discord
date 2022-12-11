@@ -19,9 +19,9 @@ import { DiscordMessageCommandVerifyChannelRightService } from '../../discord-me
 import {
   ChannelType,
   DMChannel,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
+  EmbedAssetData,
+  EmbedAuthorData,
+  EmbedFooterData,
   NewsChannel,
   TextChannel,
 } from 'discord.js';
@@ -505,7 +505,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
             iconURL: IconEnum.ARTIFICIAL_INTELLIGENCE,
             name: quote.authorName,
             url: quote.quoteUrl,
-          } as MessageEmbedAuthor);
+          } as EmbedAuthorData);
         });
 
         it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -536,7 +536,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `dummy-image-url`,
             text: `Enjoy my wisdom`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -552,7 +552,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
             expect(result.options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: undefined,
               text: `Enjoy my wisdom`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -569,7 +569,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
             expect(result.options.embeds?.[0]?.footer).toStrictEqual({
               iconURL: `image-url`,
               text: `Enjoy my wisdom`,
-            } as MessageEmbedFooter);
+            } as EmbedFooterData);
           });
         });
 
@@ -583,7 +583,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
           expect(quoteConfigServiceGetImageUrlSpy).toHaveBeenCalledWith();
           expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
             url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-          } as MessageEmbedThumbnail);
+          } as EmbedAssetData);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

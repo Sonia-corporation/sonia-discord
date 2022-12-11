@@ -4,7 +4,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IDiscordMessageResponse } from '../../../discord/messages/interfaces/discord-message-response';
 import { DiscordMessageCommandFeatureReleaseNotesConfigService } from '../../../discord/messages/services/command/feature/features/release-notes/services/config/discord-message-command-feature-release-notes-config.service';
 import { DiscordSoniaService } from '../../../discord/users/services/discord-sonia.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -32,7 +32,7 @@ export class FirebaseDmsNewVersionCountMessageResponseService extends AbstractSe
     };
   }
 
-  private _getMessageEmbed(totalDmCount: number, dmCount: number): MessageEmbedOptions {
+  private _getMessageEmbed(totalDmCount: number, dmCount: number): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -44,7 +44,7 @@ export class FirebaseDmsNewVersionCountMessageResponseService extends AbstractSe
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -56,7 +56,7 @@ export class FirebaseDmsNewVersionCountMessageResponseService extends AbstractSe
     return FirebaseDmsNewVersionCountHumanizedService.getInstance().getHumanizedCount(totalDmCount, dmCount);
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -65,7 +65,7 @@ export class FirebaseDmsNewVersionCountMessageResponseService extends AbstractSe
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageUrl(),
     };

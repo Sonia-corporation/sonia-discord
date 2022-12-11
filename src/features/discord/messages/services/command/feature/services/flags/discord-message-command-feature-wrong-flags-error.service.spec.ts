@@ -9,7 +9,7 @@ import { IDiscordCommandFlagsErrors } from '../../../../../types/commands/flags/
 import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -112,7 +112,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(flagsErrors);
@@ -159,7 +159,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
           inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
     });
 
@@ -197,19 +197,19 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
           inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
-        } as EmbedFieldData);
+        } as EmbedField);
 
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           inline: false,
           name: flagsErrors[1].name,
           value: flagsErrors[1].description,
-        } as EmbedFieldData);
+        } as EmbedField);
 
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           inline: false,
           name: flagsErrors[2].name,
           value: flagsErrors[2].description,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
     });
 
@@ -222,7 +222,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -238,7 +238,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -255,7 +255,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -267,7 +267,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

@@ -10,7 +10,7 @@ import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-so
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import { MessageEmbedAuthor } from 'discord.js';
+import { EmbedAuthorData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -167,7 +167,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
     it(`should return a warning message response with an embed author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = service.getWarningMessageResponse(warning);

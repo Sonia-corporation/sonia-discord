@@ -4,7 +4,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IDiscordMessageResponse } from '../../../discord/messages/interfaces/discord-message-response';
 import { DiscordMessageCommandFeatureReleaseNotesConfigService } from '../../../discord/messages/services/command/feature/features/release-notes/services/config/discord-message-command-feature-release-notes-config.service';
 import { DiscordSoniaService } from '../../../discord/users/services/discord-sonia.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -36,7 +36,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
     };
   }
 
-  private _getMessageEmbed(totalGuildCount: number, guildCount: number, channelCount: number): MessageEmbedOptions {
+  private _getMessageEmbed(totalGuildCount: number, guildCount: number, channelCount: number): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -48,7 +48,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -64,7 +64,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
     );
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -73,7 +73,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageUrl(),
     };

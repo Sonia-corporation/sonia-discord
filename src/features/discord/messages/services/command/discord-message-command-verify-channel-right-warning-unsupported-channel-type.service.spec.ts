@@ -8,7 +8,7 @@ import { LoggerService } from '../../../../logger/services/logger.service';
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail, Snowflake } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData, Snowflake } from 'discord.js';
 import moment, { MomentInput } from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
 
@@ -130,7 +130,7 @@ describe(`DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeSe
 
     it(`should send a warning message on the Sonia warnings channel with an author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       service.warn(messageId);
@@ -166,7 +166,7 @@ describe(`DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeSe
 
       service.warn(messageId);
 
-      const embedFieldDate: EmbedFieldData = {
+      const embedFieldDate: EmbedField = {
         name: `Help me to get better!`,
         value: `If you think that using this command on this type of channel should be supported, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
       };
@@ -182,7 +182,7 @@ describe(`DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeSe
 
       service.warn(messageId);
 
-      const messageEmbedFooter: MessageEmbedFooter = {
+      const messageEmbedFooter: EmbedFooterData = {
         iconURL: `dummy-image-url`,
         text: `Discord unsupported command channel type`,
       };
@@ -201,7 +201,7 @@ describe(`DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeSe
 
         service.warn(messageId);
 
-        const messageEmbedFooter: MessageEmbedFooter = {
+        const messageEmbedFooter: EmbedFooterData = {
           iconURL: undefined,
           text: `Discord unsupported command channel type`,
         };
@@ -221,7 +221,7 @@ describe(`DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeSe
 
         service.warn(messageId);
 
-        const messageEmbedFooter: MessageEmbedFooter = {
+        const messageEmbedFooter: EmbedFooterData = {
           iconURL: `image-url`,
           text: `Discord unsupported command channel type`,
         };
@@ -237,7 +237,7 @@ describe(`DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTypeSe
 
       service.warn(messageId);
 
-      const messageEmbedThumbnail: MessageEmbedThumbnail = {
+      const messageEmbedThumbnail: EmbedAssetData = {
         url: IconEnum.WARNING_SHIELD,
       };
       expect(

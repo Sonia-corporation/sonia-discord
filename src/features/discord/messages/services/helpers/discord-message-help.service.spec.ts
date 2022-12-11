@@ -5,7 +5,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -88,7 +88,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
@@ -130,7 +130,7 @@ describe(`DiscordMessageHelpService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `At your service`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -146,7 +146,7 @@ describe(`DiscordMessageHelpService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -163,7 +163,7 @@ describe(`DiscordMessageHelpService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -175,7 +175,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

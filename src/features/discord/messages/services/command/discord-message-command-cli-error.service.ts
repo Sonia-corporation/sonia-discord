@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -38,7 +38,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -48,7 +48,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -56,7 +56,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     return DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageColor();
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -65,7 +65,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageUrl(),
     };

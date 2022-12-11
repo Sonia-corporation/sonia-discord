@@ -4,7 +4,7 @@ import { GithubConfigService } from '../../../../../../github/services/config/gi
 import { DiscordGuildConfigService } from '../../../../../guilds/services/config/discord-guild-config.service';
 import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
 import { DiscordMessageCommandCliErrorService } from '../../discord-message-command-cli-error.service';
-import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import { EmbedData, EmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureEmptyContentErrorService extends DiscordMessageCommandFeatureErrorCoreService {
@@ -37,7 +37,7 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
       });
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       fields: this._getMessageEmbedFields(),
       footer: this._getMessageEmbedFooter(),
@@ -45,18 +45,18 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
     };
   }
 
-  private _getMessageEmbedFields(): EmbedFieldData[] {
+  private _getMessageEmbedFields(): EmbedField[] {
     return [this._getMessageEmbedFieldError(), this._getMessageEmbedFieldErrorReport()];
   }
 
-  private _getMessageEmbedFieldError(): EmbedFieldData {
+  private _getMessageEmbedFieldError(): EmbedField {
     return {
       name: `Empty content`,
       value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
     };
   }
 
-  private _getMessageEmbedFieldErrorReport(): EmbedFieldData {
+  private _getMessageEmbedFieldErrorReport(): EmbedField {
     const githubBugReportUrl: string = GithubConfigService.getInstance().getBugReportUrl();
     const discordSoniaPermanentGuildInviteUrl: string =
       DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();

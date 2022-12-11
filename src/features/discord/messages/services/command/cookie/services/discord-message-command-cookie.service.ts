@@ -8,7 +8,7 @@ import { DiscordMessageConfigService } from '../../../config/discord-message-con
 import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
 import { DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-cookie-description-messages';
 import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from '../constants/discord-message-command-cookie-title-messages';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -52,7 +52,7 @@ export class DiscordMessageCommandCookieService extends DiscordMessageCommandCor
     });
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -64,7 +64,7 @@ export class DiscordMessageCommandCookieService extends DiscordMessageCommandCor
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -76,7 +76,7 @@ export class DiscordMessageCommandCookieService extends DiscordMessageCommandCor
     return DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES.getRandomMessage();
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -85,7 +85,7 @@ export class DiscordMessageCommandCookieService extends DiscordMessageCommandCor
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandCookieImageUrl(),
     };

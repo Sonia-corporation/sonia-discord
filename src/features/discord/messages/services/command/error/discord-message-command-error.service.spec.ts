@@ -10,7 +10,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandVerifyChannelRightService } from '../discord-message-command-verify-channel-right.service';
-import { ChannelType, EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { ChannelType, EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -363,7 +363,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
@@ -398,7 +398,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
         value: `You may have found an issue with my internal core system.
       Please, inform my creator as soon as possible!
       This could lead to a very critical failure for myself and I do not wish to die!!`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -411,7 +411,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
         value: `What do you think you are doing here?
       That is not the way it works!
       Get back to work you peasant.`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -423,7 +423,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Nice try though`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -439,7 +439,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Nice try though`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -456,7 +456,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Nice try though`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -468,7 +468,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

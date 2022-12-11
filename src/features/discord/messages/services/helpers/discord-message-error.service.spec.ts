@@ -14,7 +14,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedFieldData, Message, MessageEmbedAuthor, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, Message } from 'discord.js';
 import faker from 'faker';
 import moment, { MomentInput } from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
@@ -234,7 +234,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       it(`should send a message to this channel with an author`, (): void => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         service.handleError(error, anyDiscordMessage);
@@ -305,7 +305,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].thumbnail).toStrictEqual({
           url: icon,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should send a message to this channel with 3 fields`, (): void => {
@@ -321,7 +321,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        const embedFieldData: EmbedFieldData = {
+        const embedFieldData: EmbedField = {
           name: `The message's id that killed me`,
           value: `dummy-id`,
         };
@@ -333,7 +333,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        const embedFieldData: EmbedFieldData = {
+        const embedFieldData: EmbedField = {
           name: `My blood trace`,
           value: `Error: dummy error`,
         };
@@ -361,7 +361,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        const embedFieldData: EmbedFieldData = {
+        const embedFieldData: EmbedField = {
           name: `Help me to help you`,
           value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
         };
@@ -411,7 +411,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
     it(`should send a message to the Sonia error channel with an author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       service.handleError(error, anyDiscordMessage);
@@ -494,7 +494,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       expect(
         discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].thumbnail
-      ).toStrictEqual({ url: icon } as MessageEmbedThumbnail);
+      ).toStrictEqual({ url: icon } as EmbedAssetData);
     });
 
     it(`should send a message to the Sonia error channel with 3 fields`, (): void => {
@@ -512,7 +512,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      const embedFieldData: EmbedFieldData = {
+      const embedFieldData: EmbedField = {
         name: `The message's id that killed me`,
         value: `dummy-id`,
       };
@@ -526,7 +526,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      const embedFieldData: EmbedFieldData = {
+      const embedFieldData: EmbedField = {
         name: `My blood trace`,
         value: `Error: dummy error`,
       };
@@ -565,7 +565,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      const embedFieldData: EmbedFieldData = {
+      const embedFieldData: EmbedField = {
         name: `Help me to help you`,
         value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
       };

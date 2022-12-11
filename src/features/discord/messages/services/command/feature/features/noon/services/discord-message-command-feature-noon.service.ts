@@ -14,13 +14,7 @@ import { DiscordMessageSubCommandCoreService } from '../../../../discord-message
 import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
 import { IDiscordMessageCommandFeatureNameNoon } from '../types/discord-message-command-feature-name-noon';
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -94,7 +88,7 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     );
   }
 
-  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): MessageEmbedOptions {
+  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -107,7 +101,7 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -127,8 +121,8 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     return _.size(flagsSuccess);
   }
 
-  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedFieldData[] {
-    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): EmbedFieldData => {
+  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedField[] {
+    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): EmbedField => {
       return {
         inline: false,
         name,
@@ -137,7 +131,7 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     });
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -146,7 +140,7 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageCommandFeatureNoonConfigService.getInstance().getNoonConfigImageUrl(),
     };

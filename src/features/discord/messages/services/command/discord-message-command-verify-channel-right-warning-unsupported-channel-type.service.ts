@@ -7,14 +7,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-  Snowflake,
-} from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData, Snowflake } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -61,7 +54,7 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     };
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -74,21 +67,21 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageWarningImageUrl(),
     };
   }
 
-  private _getMessageEmbedFields(): EmbedFieldData[] {
+  private _getMessageEmbedFields(): EmbedField[] {
     return [this._getMessageEmbedFieldReport()];
   }
 
-  private _getMessageEmbedFieldReport(): EmbedFieldData {
+  private _getMessageEmbedFieldReport(): EmbedField {
     const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
 
     return {
@@ -97,7 +90,7 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     };
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {

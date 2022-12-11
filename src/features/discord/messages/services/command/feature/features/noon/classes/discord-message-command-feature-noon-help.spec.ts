@@ -11,7 +11,7 @@ import { DiscordMessageConfigService } from '../../../../../config/discord-messa
 import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -172,7 +172,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -215,7 +215,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `--disabled (or -d)`,
           value: `Disable the noon message on this channel.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with an enabled flag field documentation`, async (): Promise<void> => {
@@ -226,7 +226,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `--enabled (or -e)`,
           value: `Enable the noon message on this channel. The message will be sent on the Europe/Paris timezone.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with an help flag field documentation`, async (): Promise<void> => {
@@ -237,7 +237,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `--help (or -h)`,
           value: `Get some help with the noon command. Display all the flags with an example.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a humanize flag field documentation`, async (): Promise<void> => {
@@ -248,7 +248,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
           name: `--humanize (or -hu)`,
           value: `Display the current noon configuration for this channel.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a status flag field documentation`, async (): Promise<void> => {
@@ -259,7 +259,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
           name: `--status (or -s)`,
           value: `Display either or not the feature is enabled.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<void> => {
@@ -272,51 +272,51 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           {
             name: `Example`,
             value: `\`!feature noon --disabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon --disabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon -d\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon --enabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon --enabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon -e\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon --help\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon -h\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon --humanize\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon -hu\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon --status\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature noon -s\``,
-          } as EmbedFieldData,
+          } as EmbedField,
         ]);
       });
 
@@ -330,51 +330,51 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           {
             name: `Example`,
             value: `\`!f n --disabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n --disabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n -d\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n --enabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n --enabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n -e\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n --help\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n -h\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n --humanize\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n -hu\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n --status\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f n -s\``,
-          } as EmbedFieldData,
+          } as EmbedField,
         ]);
       });
 
@@ -387,7 +387,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -403,7 +403,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -420,7 +420,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -432,7 +432,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

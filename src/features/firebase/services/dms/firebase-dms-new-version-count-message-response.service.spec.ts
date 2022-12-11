@@ -6,7 +6,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { DiscordMessageCommandFeatureReleaseNotesConfigService } from '../../../discord/messages/services/command/feature/features/release-notes/services/config/discord-message-command-feature-release-notes-config.service';
 import { DiscordSoniaService } from '../../../discord/users/services/discord-sonia.service';
-import { MessageEmbedAuthor } from 'discord.js';
+import { EmbedAuthorData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -98,7 +98,7 @@ describe(`FirebaseDmsNewVersionCountMessageResponseService`, (): void => {
 
     it(`should return a message response with an embed author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = service.getMessageResponse(totalDmCount, dmCount);

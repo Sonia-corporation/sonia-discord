@@ -6,13 +6,7 @@ import { discordHasThisCommand } from '../../../functions/commands/checks/discor
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -56,7 +50,7 @@ export class DiscordMessageCommandErrorService extends DiscordMessageCommandCore
     });
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -68,7 +62,7 @@ export class DiscordMessageCommandErrorService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -76,11 +70,11 @@ export class DiscordMessageCommandErrorService extends DiscordMessageCommandCore
     return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
-  private _getMessageEmbedFields(): EmbedFieldData[] {
+  private _getMessageEmbedFields(): EmbedField[] {
     return [this._getMessageEmbedFieldBait(), this._getMessageEmbedFieldHint()];
   }
 
-  private _getMessageEmbedFieldBait(): EmbedFieldData {
+  private _getMessageEmbedFieldBait(): EmbedField {
     return {
       name: `It seems that something went wrong`,
       value: `You may have found an issue with my internal core system.
@@ -89,7 +83,7 @@ export class DiscordMessageCommandErrorService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedFieldHint(): EmbedFieldData {
+  private _getMessageEmbedFieldHint(): EmbedField {
     return {
       name: `Come again?`,
       value: `What do you think you are doing here?
@@ -98,7 +92,7 @@ export class DiscordMessageCommandErrorService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -107,7 +101,7 @@ export class DiscordMessageCommandErrorService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
     };

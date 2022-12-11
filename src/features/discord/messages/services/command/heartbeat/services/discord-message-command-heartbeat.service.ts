@@ -13,16 +13,7 @@ import { DiscordMessageConfigService } from '../../../config/discord-message-con
 import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-heartbeat-description-messages';
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_TITLE_MESSAGES } from '../constants/discord-message-command-heartbeat-title-messages';
-import {
-  Client,
-  EmbedField,
-  EmbedFieldData,
-  Message,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from 'discord.js';
+import { Client, EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData, Message } from 'discord.js';
 import { formatNumber } from 'humanize-plus';
 import _ from 'lodash';
 import moment from 'moment-timezone';
@@ -164,7 +155,7 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     };
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -177,7 +168,7 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -189,11 +180,11 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     return DISCORD_MESSAGE_COMMAND_HEARTBEAT_DESCRIPTION_MESSAGES.getRandomMessage();
   }
 
-  private _getMessageEmbedFields(): EmbedFieldData[] {
+  private _getMessageEmbedFields(): EmbedField[] {
     return [this._getMessageEmbedFieldWebsocketHeartbeat(), this._getMessageEmbedFieldRoundtripLatency()];
   }
 
-  private _getMessageEmbedFieldWebsocketHeartbeat(): EmbedFieldData {
+  private _getMessageEmbedFieldWebsocketHeartbeat(): EmbedField {
     const client: Client = DiscordClientService.getInstance().getClient();
 
     return {
@@ -202,14 +193,14 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     };
   }
 
-  private _getMessageEmbedFieldRoundtripLatency(): EmbedFieldData {
+  private _getMessageEmbedFieldRoundtripLatency(): EmbedField {
     return {
       name: `My roundtrip latency`,
       value: `Calculating...`,
     };
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -218,7 +209,7 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandHeartbeatImageUrl(),
     };

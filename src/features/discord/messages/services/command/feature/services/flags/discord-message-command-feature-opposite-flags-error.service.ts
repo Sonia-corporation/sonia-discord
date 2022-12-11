@@ -5,7 +5,7 @@ import { IDiscordMessageResponse } from '../../../../../interfaces/discord-messa
 import { IDiscordCommandFlagsOpposite } from '../../../../../types/commands/flags/discord-command-flags-opposite';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import { EmbedData, EmbedField } from 'discord.js';
 import _ from 'lodash';
 
 const ONE_FLAG = 1;
@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
       });
   }
 
-  private _getMessageEmbed(oppositeFlags: IDiscordCommandFlagsOpposite): MessageEmbedOptions {
+  private _getMessageEmbed(oppositeFlags: IDiscordCommandFlagsOpposite): EmbedData {
     return {
       description: this._getMessageEmbedDescription(oppositeFlags),
       fields: this._getMessageEmbedFields(oppositeFlags),
@@ -61,9 +61,9 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
     return _.size(oppositeFlags);
   }
 
-  private _getMessageEmbedFields(oppositeFlags: IDiscordCommandFlagsOpposite): EmbedFieldData[] {
+  private _getMessageEmbedFields(oppositeFlags: IDiscordCommandFlagsOpposite): EmbedField[] {
     return _.concat(
-      _.map(oppositeFlags, ({ name, description }: IDiscordCommandFlagOpposite): EmbedFieldData => {
+      _.map(oppositeFlags, ({ name, description }: IDiscordCommandFlagOpposite): EmbedField => {
         return {
           inline: false,
           name,
@@ -74,7 +74,7 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
     );
   }
 
-  private _getMessageEmbedHintField(): EmbedFieldData {
+  private _getMessageEmbedHintField(): EmbedField {
     return {
       name: `How to solve this?`,
       value: `I am here to help you but do not mess with me!\nTry again but remove the extra opposite flags which makes no sense since you can not combine them!\nAlso you can use the \`--help\` flag if want my help!`,

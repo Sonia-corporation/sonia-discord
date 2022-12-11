@@ -9,7 +9,7 @@ import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-me
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
-import { EmbedFieldData, MessageEmbedOptions, Snowflake } from 'discord.js';
+import { EmbedData, EmbedField, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements DiscordCommandFlagActionValueless<T> {
@@ -56,7 +56,7 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
   private _getMessageEmbed(
     anyDiscordMessage: IAnyDiscordMessage,
     discordCommandFlags: DiscordCommandFlags<T>
-  ): MessageEmbedOptions {
+  ): EmbedData {
     return {
       description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(anyDiscordMessage, discordCommandFlags),
@@ -71,7 +71,7 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
   private _getMessageEmbedFields(
     anyDiscordMessage: IAnyDiscordMessage,
     discordCommandFlags: DiscordCommandFlags<T>
-  ): EmbedFieldData[] {
+  ): EmbedField[] {
     return _.concat(
       discordCommandFlags.getAllFlagsAsEmbedFields(),
       this._getMessageEmbedFieldExample(anyDiscordMessage, discordCommandFlags)
@@ -81,7 +81,7 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
   private _getMessageEmbedFieldExample(
     { content }: IAnyDiscordMessage,
     discordCommandFlags: DiscordCommandFlags<T>
-  ): EmbedFieldData {
+  ): EmbedField {
     const randomFlag: string | undefined = discordCommandFlags.getRandomFlagUsageExample();
     let userCommand: string | null = discordGetCommandAndFirstArgument({
       commands: [DiscordMessageCommandEnum.F, DiscordMessageCommandEnum.FEATURE],

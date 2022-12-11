@@ -32,14 +32,7 @@ import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE_ENABLED_MESSAGES
 import { DiscordMessageCommandFeatureReleaseNotesFlagEnum } from '../enums/discord-message-command-feature-release-notes-flag.enum';
 import { DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum } from '../enums/discord-message-command-feature-release-notes-humanize-disabled-messages.enum';
 import { DiscordMessageCommandFeatureReleaseNotesHumanizeEnabledMessagesEnum } from '../enums/discord-message-command-feature-release-notes-humanize-enabled-messages.enum';
-import {
-  DMChannel,
-  Message,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  TextChannel,
-} from 'discord.js';
+import { DMChannel, EmbedAssetData, EmbedAuthorData, EmbedFooterData, Message, TextChannel } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -1099,7 +1092,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse(state, humanizedChannel);
@@ -1212,7 +1205,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -1228,7 +1221,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -1245,7 +1238,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -1257,7 +1250,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

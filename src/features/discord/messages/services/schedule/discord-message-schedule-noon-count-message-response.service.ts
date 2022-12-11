@@ -4,7 +4,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageCommandFeatureNoonConfigService } from '../command/feature/features/noon/services/config/discord-message-command-feature-noon-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -36,7 +36,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
     };
   }
 
-  private _getMessageEmbed(totalGuildCount: number, guildCount: number, channelCount: number): MessageEmbedOptions {
+  private _getMessageEmbed(totalGuildCount: number, guildCount: number, channelCount: number): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -48,7 +48,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -64,7 +64,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
     );
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
@@ -73,7 +73,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageCommandFeatureNoonConfigService.getInstance().getNoonConfigImageUrl(),
     };

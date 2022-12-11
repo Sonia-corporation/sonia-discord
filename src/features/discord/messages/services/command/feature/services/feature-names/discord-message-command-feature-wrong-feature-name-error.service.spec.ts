@@ -9,7 +9,7 @@ import { IAnyDiscordMessage } from '../../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../../constants/discord-message-command-feature-names';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -119,7 +119,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
@@ -152,7 +152,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
       expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
         name: `Wrong feature name`,
         value: `\`dummy-feature-name\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<void> => {
@@ -163,7 +163,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
       expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
         name: `All features`,
         value: `\`noon (or n)\`, \`release-notes (or r)\``,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     describe(`when the given Discord message content is null`, (): void => {
@@ -180,7 +180,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Example`,
           value: `\`!feature noon\``,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
     });
 
@@ -198,7 +198,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Example`,
           value: `\`!feature noon\``,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
     });
 
@@ -221,7 +221,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
           expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`!f noon\``,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
       });
 
@@ -238,7 +238,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
           expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`!feature noon\``,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
       });
     });
@@ -262,7 +262,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
           expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`!feature noon\``,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
       });
 
@@ -279,7 +279,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
           expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`-lunch noon\``,
-          } as EmbedFieldData);
+          } as EmbedField);
         });
       });
     });
@@ -293,7 +293,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -309,7 +309,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -326,7 +326,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -338,7 +338,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

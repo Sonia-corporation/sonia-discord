@@ -6,7 +6,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../helpers/discord-message-help.service';
 import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
-import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import { EmbedData, EmbedField } from 'discord.js';
 import _ from 'lodash';
 
 /**
@@ -58,7 +58,7 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     });
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(),
@@ -70,7 +70,7 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     return `Below is the complete list of commands.\nYou can either use \`-\`, \`!\` or \`$\` as prefix to run a command.`;
   }
 
-  private _getMessageEmbedFields(): EmbedFieldData[] {
+  private _getMessageEmbedFields(): EmbedField[] {
     // Sort the fields by alphabetical order of the commands!
     return [
       this._getMessageEmbedFieldCookie(),
@@ -86,70 +86,70 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     ];
   }
 
-  private _getMessageEmbedFieldCookie(): EmbedFieldData {
+  private _getMessageEmbedFieldCookie(): EmbedField {
     return {
       name: `Cookie (*cookie*, *cookies* or *c*)`,
       value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
     };
   }
 
-  private _getMessageEmbedFieldError(): EmbedFieldData {
+  private _getMessageEmbedFieldError(): EmbedField {
     return {
       name: `Error (*error* or *bug*)`,
       value: `Create a bug in my core system. Do not do this one, of course!`,
     };
   }
 
-  private _getMessageEmbedFieldFeature(): EmbedFieldData {
+  private _getMessageEmbedFieldFeature(): EmbedField {
     return {
       name: `Feature (*feature* or *f*)`,
       value: `Change my behavior on this guild or on this channel. Help me to be better! I have some cool abilities you know!`,
     };
   }
 
-  private _getMessageEmbedFieldHeartbeat(): EmbedFieldData {
+  private _getMessageEmbedFieldHeartbeat(): EmbedField {
     return {
       name: `Heartbeat (*heartbeat* or *hb*)`,
       value: `Display my current heartbeat.`,
     };
   }
 
-  private _getMessageEmbedFieldHelp(): EmbedFieldData {
+  private _getMessageEmbedFieldHelp(): EmbedField {
     return {
       name: `Help (*help* or *h*)`,
       value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
     };
   }
 
-  private _getMessageEmbedFieldLunch(): EmbedFieldData {
+  private _getMessageEmbedFieldLunch(): EmbedField {
     return {
       name: `Lunch (*lunch* or *l*)`,
       value: `There is a time to eat.`,
     };
   }
 
-  private _getMessageEmbedFieldQuote(): EmbedFieldData {
+  private _getMessageEmbedFieldQuote(): EmbedField {
     return {
       name: `Quote (*quote* or *q*)`,
       value: `I quote others only in order to better express myself.`,
     };
   }
 
-  private _getMessageEmbedFieldReleaseNotes(): EmbedFieldData {
+  private _getMessageEmbedFieldReleaseNotes(): EmbedField {
     return {
       name: `Release notes (*release-notes* or *r*)`,
       value: `Display the last version release notes.`,
     };
   }
 
-  private _getMessageEmbedFieldVersion(): EmbedFieldData {
+  private _getMessageEmbedFieldVersion(): EmbedField {
     return {
       name: `Version (*version* or *v*)`,
       value: `Display my current application version.`,
     };
   }
 
-  private _getMessageEmbedFieldMoreHelp(): EmbedFieldData {
+  private _getMessageEmbedFieldMoreHelp(): EmbedField {
     return {
       name: `Further help`,
       value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).

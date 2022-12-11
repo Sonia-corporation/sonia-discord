@@ -6,7 +6,7 @@ import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum
 import { getDiscordHumanizedChannelPluralFromClass } from '../../../channels/functions/get-discord-humanized-channel-plural-from-class';
 import { getDiscordHumanizedChannelsPlural } from '../../../channels/functions/get-discord-humanized-channels-plural';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
-import { EmbedFieldData } from 'discord.js';
+import { EmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandVerifyChannelRightService extends DiscordMessageCommandVerifyChannelRightCoreService {
@@ -41,21 +41,21 @@ export class DiscordMessageCommandVerifyChannelRightService extends DiscordMessa
     return isAllowed;
   }
 
-  protected override _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedFieldData {
+  protected override _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedField {
     return {
       name: `Wrong channel!`,
       value: `This command is not allowed on ${getDiscordHumanizedChannelPluralFromClass(channel)}.`,
     };
   }
 
-  protected override _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedFieldData {
+  protected override _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedField {
     return {
       name: `Allowed channels`,
       value: `You can use this command only on ${getDiscordHumanizedChannelsPlural(Array.from(allowedChannels))}.`,
     };
   }
 
-  protected override _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedFieldData {
+  protected override _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedField {
     const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
 
     return {

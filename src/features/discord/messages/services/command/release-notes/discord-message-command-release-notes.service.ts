@@ -10,7 +10,7 @@ import { discordHasThisCommand } from '../../../functions/commands/checks/discor
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -54,7 +54,7 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     });
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -66,34 +66,34 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
-    const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern<MessageEmbedThumbnail> = {
-      [AppConfigReleaseTypeEnum.BUG_FIXES](): MessageEmbedThumbnail {
+    const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern<EmbedAssetData> = {
+      [AppConfigReleaseTypeEnum.BUG_FIXES](): EmbedAssetData {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesBugFixesImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.FEATURES](): MessageEmbedThumbnail {
+      [AppConfigReleaseTypeEnum.FEATURES](): EmbedAssetData {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesFeaturesImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.MIXED](): MessageEmbedThumbnail {
+      [AppConfigReleaseTypeEnum.MIXED](): EmbedAssetData {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): MessageEmbedThumbnail {
+      [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): EmbedAssetData {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesPerformanceImprovementsImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.UNKNOWN](): MessageEmbedThumbnail {
+      [AppConfigReleaseTypeEnum.UNKNOWN](): EmbedAssetData {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesUnknownImageUrl(),
         };
@@ -103,7 +103,7 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     return responsesFactoryPattern[releaseType]();
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
     const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized();
     const firstReleaseDate: string =

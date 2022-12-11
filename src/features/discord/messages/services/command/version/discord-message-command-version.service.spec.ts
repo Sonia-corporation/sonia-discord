@@ -15,7 +15,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandVerifyChannelRightService } from '../discord-message-command-verify-channel-right.service';
-import { ChannelType, EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { ChannelType, EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -407,7 +407,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
@@ -441,7 +441,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
         name: `My age`,
         value: `[8](https://github.com/Sonia-corporation/sonia-discord/releases/tag/8)`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a release date field`, async (): Promise<void> => {
@@ -454,7 +454,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         inline: false,
         name: `My last birthday`,
         value: `dummy-release-date-humanized`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a initialization date field`, async (): Promise<void> => {
@@ -467,7 +467,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         inline: false,
         name: `The last time I woken up`,
         value: `dummy-initialization-date-humanized`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a release notes field`, async (): Promise<void> => {
@@ -479,7 +479,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
         name: `My birthday card`,
         value: `dummy-release-notes\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a status field`, async (): Promise<void> => {
@@ -492,7 +492,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         inline: false,
         name: `My location`,
         value: `Running in development`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with an emotional state field`, async (): Promise<void> => {
@@ -505,7 +505,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         inline: false,
         name: `My emotional state`,
         value: `Agitated`,
-      } as EmbedFieldData);
+      } as EmbedField);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -519,7 +519,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `8 birthdays since the 24th March 2020`,
-      } as MessageEmbedFooter);
+      } as EmbedFooterData);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -537,7 +537,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `8 birthdays since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -556,7 +556,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `8 birthdays since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
     });
 
@@ -568,7 +568,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as EmbedAssetData);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

@@ -7,7 +7,7 @@ import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-so
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -50,7 +50,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     };
   }
 
-  private _getMessageEmbed(warning: string): MessageEmbedOptions {
+  private _getMessageEmbed(warning: string): EmbedData {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -62,17 +62,17 @@ export class DiscordLoggerWarningService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): EmbedAuthorData {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): EmbedAssetData {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageWarningImageUrl(),
     };
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): EmbedFooterData {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {

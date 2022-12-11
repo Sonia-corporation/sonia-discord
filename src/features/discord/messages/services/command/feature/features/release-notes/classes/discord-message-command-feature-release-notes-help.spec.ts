@@ -11,7 +11,7 @@ import { DiscordMessageConfigService } from '../../../../../config/discord-messa
 import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from '../constants/discord-message-command-feature-release-notes-flags';
 import { DiscordMessageCommandFeatureReleaseNotesFlagEnum } from '../enums/discord-message-command-feature-release-notes-flag.enum';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -172,7 +172,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -215,7 +215,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `--disabled (or -d)`,
           value: `Disable the release notes message on this channel.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with an enabled flag field documentation`, async (): Promise<void> => {
@@ -226,7 +226,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `--enabled (or -e)`,
           value: `Enable the release notes message on this channel. The message will be sent each time a new release is published.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with an help flag field documentation`, async (): Promise<void> => {
@@ -237,7 +237,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `--help (or -h)`,
           value: `Get some help with the release notes command. Display all the flags with an example.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a humanize flag field documentation`, async (): Promise<void> => {
@@ -248,7 +248,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
           name: `--humanize (or -hu)`,
           value: `Display the current release notes configuration for this channel.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a status flag field documentation`, async (): Promise<void> => {
@@ -259,7 +259,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
           name: `--status (or -s)`,
           value: `Display either or not the feature is enabled.`,
-        } as EmbedFieldData);
+        } as EmbedField);
       });
 
       it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<void> => {
@@ -272,51 +272,51 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
           {
             name: `Example`,
             value: `\`!feature release-notes --disabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes --disabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes -d\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes --enabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes --enabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes -e\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes --help\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes -h\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes --humanize\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes -hu\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes --status\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!feature release-notes -s\``,
-          } as EmbedFieldData,
+          } as EmbedField,
         ]);
       });
 
@@ -330,51 +330,51 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
           {
             name: `Example`,
             value: `\`!f r --disabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r --disabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r -d\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r --enabled=true\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r --enabled=false\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r -e\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r --help\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r -h\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r --humanize\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r -hu\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r --status\``,
-          } as EmbedFieldData,
+          } as EmbedField,
           {
             name: `Example`,
             value: `\`!f r -s\``,
-          } as EmbedFieldData,
+          } as EmbedField,
         ]);
       });
 
@@ -387,7 +387,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as EmbedFooterData);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -403,7 +403,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -420,7 +420,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
           expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as EmbedFooterData);
         });
       });
 
@@ -432,7 +432,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as EmbedAssetData);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
