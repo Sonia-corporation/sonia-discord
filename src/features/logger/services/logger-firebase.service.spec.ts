@@ -133,4 +133,32 @@ describe(`LoggerFirebaseService`, (): void => {
       });
     });
   });
+
+  describe(`logGuildFetched()`, (): void => {
+    let serviceName: ServiceNameEnum;
+    let guildId: Guild['id'];
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new LoggerFirebaseService();
+      serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
+      guildId = `dummy-guild-id`;
+
+      loggerServiceDebugSpy = loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+    });
+
+    it(`should log that the given guild was fetched from Firebase`, (): void => {
+      expect.assertions(2);
+
+      service.logGuildFetched(serviceName, guildId);
+
+      const loggerLog: ILoggerLog = {
+        context: `AppConfigCoreService`,
+        message: `text-Firebase guild value-dummy-guild-id fetched`,
+      };
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith(loggerLog);
+    });
+  });
 });

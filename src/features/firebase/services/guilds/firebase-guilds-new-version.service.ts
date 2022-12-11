@@ -243,7 +243,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
       .then((firebaseGuild: IFirebaseGuild | null | undefined): Promise<(Message | null)[]> => {
-        this._logFirebaseGuildFetched(guild);
+        LoggerFirebaseService.getInstance().logGuildFetched(this._serviceName, guild.id);
 
         if (!this.isValidGuild(firebaseGuild)) {
           this._logInvalidFirebaseGuild(guild);
@@ -398,13 +398,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     }
 
     return false;
-  }
-
-  private _logFirebaseGuildFetched({ id }: Guild): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} fetched`),
-    });
   }
 
   private _logInvalidFirebaseGuild({ id }: Guild): void {

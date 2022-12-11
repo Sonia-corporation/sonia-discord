@@ -39,4 +39,11 @@ export class LoggerFirebaseService extends AbstractService {
       ),
     });
   }
+
+  public logGuildFetched(serviceName: ServiceNameEnum, guildId: Guild['id']): void {
+    LoggerService.getInstance().debug({
+      context: serviceName,
+      message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(guildId)} fetched`),
+    });
+  }
 }
