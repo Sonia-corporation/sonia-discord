@@ -1,11 +1,11 @@
 import { isDiscordVoiceChannel } from './is-discord-voice-channel';
 import {
   CategoryChannel,
+  ChannelType,
   DMChannel,
   GuildBasedChannel,
   NewsChannel,
   StageChannel,
-  StoreChannel,
   TextBasedChannel,
   TextChannel,
   ThreadChannel,
@@ -45,7 +45,7 @@ describe(`isDiscordVoiceChannel()`, (): void => {
 
   describe(`when the given value is a "CategoryChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(CategoryChannel.prototype);
+      channel = createInstance(CategoryChannel.prototype, { type: ChannelType.GuildCategory });
     });
 
     it(`should return false`, (): void => {
@@ -59,7 +59,7 @@ describe(`isDiscordVoiceChannel()`, (): void => {
 
   describe(`when the given value is a "DMChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(DMChannel.prototype);
+      channel = createInstance(DMChannel.prototype, { type: ChannelType.DM });
     });
 
     it(`should return false`, (): void => {
@@ -73,7 +73,7 @@ describe(`isDiscordVoiceChannel()`, (): void => {
 
   describe(`when the given value is a "NewsChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(NewsChannel.prototype);
+      channel = createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews });
     });
 
     it(`should return false`, (): void => {
@@ -87,21 +87,7 @@ describe(`isDiscordVoiceChannel()`, (): void => {
 
   describe(`when the given value is a "StageChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(StageChannel.prototype);
-    });
-
-    it(`should return false`, (): void => {
-      expect.assertions(1);
-
-      const result = isDiscordVoiceChannel(channel);
-
-      expect(result).toBe(false);
-    });
-  });
-
-  describe(`when the given value is a "StoreChannel" instance`, (): void => {
-    beforeEach((): void => {
-      channel = createInstance(StoreChannel.prototype);
+      channel = createInstance(StageChannel.prototype, { type: ChannelType.GuildStageVoice });
     });
 
     it(`should return false`, (): void => {
@@ -115,7 +101,7 @@ describe(`isDiscordVoiceChannel()`, (): void => {
 
   describe(`when the given value is a "TextChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(TextChannel.prototype);
+      channel = createInstance(TextChannel.prototype, { type: ChannelType.GuildText });
     });
 
     it(`should return false`, (): void => {
@@ -143,7 +129,7 @@ describe(`isDiscordVoiceChannel()`, (): void => {
 
   describe(`when the given value is a "VoiceChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(VoiceChannel.prototype);
+      channel = createInstance(VoiceChannel.prototype, { type: ChannelType.GuildVoice });
     });
 
     it(`should return true`, (): void => {

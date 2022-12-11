@@ -62,7 +62,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesStatus();
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
         id: `dummy-id`,
       });
 
@@ -95,7 +95,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     describe(`when the message comes from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
           id: `dummy-id`,
         });
       });
@@ -134,7 +134,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createInstance(DMChannel.prototype),
+              channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
               id: `dummy-id`,
             });
 
@@ -222,7 +222,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     describe(`when the message does not come from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
       });
@@ -260,7 +260,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
         describe(`when the Discord message guild is not valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
-              channel: createInstance(TextChannel.prototype),
+              channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
               guild: null,
               id: `dummy-id`,
             });

@@ -127,7 +127,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
           id: `dummy-id`,
         });
       });
@@ -164,7 +164,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createInstance(DMChannel.prototype),
+              channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
               id: `dummy-id`,
             });
 
@@ -580,7 +580,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     describe(`when the message does not come from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
       });

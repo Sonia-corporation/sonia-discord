@@ -114,7 +114,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
     describe(`when the message comes from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
           id: `dummy-id`,
         });
       });
@@ -163,7 +163,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
     describe(`when the message does not come from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
       });
@@ -1274,7 +1274,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
       firebaseDm = createMock<IFirebaseDm>();
       writeResult = createMock<WriteResult>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(DMChannel.prototype),
+        channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
       });
 
       firebaseDmsFeaturesNoonEnabledServiceUpdateStateByDmIdSpy = jest
@@ -1539,7 +1539,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
       });
       writeResult = createMock<WriteResult>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
       });
 
       firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy = jest

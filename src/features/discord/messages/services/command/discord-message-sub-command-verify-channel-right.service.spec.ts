@@ -85,7 +85,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a text channel and the text channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
@@ -103,7 +103,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a text channel and the text channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.TEXT]);
@@ -121,7 +121,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a DM channel and the DM channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
@@ -139,7 +139,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a DM channel and the DM channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.DM]);
@@ -193,7 +193,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a news channel and the news channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
@@ -211,7 +211,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a news channel and the news channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.NEWS]);
@@ -229,7 +229,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a category channel and the category channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(CategoryChannel.prototype),
+          channel: createInstance(CategoryChannel.prototype, { type: ChannelType.GuildCategory }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
@@ -247,7 +247,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a category channel and the category channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(CategoryChannel.prototype),
+          channel: createInstance(CategoryChannel.prototype, { type: ChannelType.GuildCategory }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.CATEGORY]);
@@ -265,7 +265,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a stage channel and the stage channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(StageChannel.prototype),
+          channel: createInstance(StageChannel.prototype, { type: ChannelType.GuildStageVoice }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
@@ -283,7 +283,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a stage channel and the stage channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(StageChannel.prototype),
+          channel: createInstance(StageChannel.prototype, { type: ChannelType.GuildStageVoice }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.STAGE]);
@@ -301,7 +301,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a voice channel and the voice channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(VoiceChannel.prototype),
+          channel: createInstance(VoiceChannel.prototype, { type: ChannelType.GuildVoice }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>();
@@ -319,7 +319,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a voice channel and the voice channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(VoiceChannel.prototype),
+          channel: createInstance(VoiceChannel.prototype, { type: ChannelType.GuildVoice }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.VOICE]);
@@ -383,7 +383,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the channel is a text channel and the allowed channels is containing only a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([DiscordChannelEnum.TEXT]);
@@ -535,7 +535,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the channel is a text channel and the allowed channels is containing a text channel, a DM channel, and a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
           id: `dummy-id`,
         });
         allowedChannels = new Set<DiscordChannelEnum>([

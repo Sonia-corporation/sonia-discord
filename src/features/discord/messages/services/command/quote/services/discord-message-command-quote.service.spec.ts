@@ -108,7 +108,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
         id: `dummy-id`,
       });
 
@@ -223,7 +223,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: createInstance(DMChannel.prototype, { type: ChannelType.DM }),
         });
       });
 
@@ -239,7 +239,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
         });
       });
 
@@ -271,7 +271,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: createInstance(NewsChannel.prototype, { type: ChannelType.GuildNews }),
         });
       });
 
@@ -292,7 +292,7 @@ describe(`DiscordMessageCommandQuoteService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: createInstance(TextChannel.prototype, { type: ChannelType.GuildText }),
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
