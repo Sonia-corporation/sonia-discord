@@ -20,6 +20,7 @@ import { DiscordMessageCommandReleaseNotesService } from '../../../discord/messa
 import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from '../../../discord/users/constants/discord-github-contributors-id-messages';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerDiscordService } from '../../../logger/services/logger-discord.service';
+import { LoggerFirebaseService } from '../../../logger/services/logger-firebase.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-bug-fixes-version-response-messages';
 import { FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-features-version-response-messages';
@@ -237,7 +238,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public sendNewReleaseNotesFromDiscordGuild(guild: Guild): Promise<(Message | null)[]> {
-    this._logFetchingFirebaseGuild(guild);
+    LoggerFirebaseService.getInstance().logFetchingGuild(this._serviceName, guild.id);
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
@@ -404,13 +405,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     }
 
     return false;
-  }
-
-  private _logFetchingFirebaseGuild({ id }: Guild): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`fetching Firebase guild ${ChalkService.getInstance().value(id)}`),
-    });
   }
 
   private _logFirebaseGuildFetched({ id }: Guild): void {

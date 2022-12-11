@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have 147 members`, (): void => {
+  it(`should have 148 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toBe(147);
+    expect(getEnumLength(ServiceNameEnum)).toBe(148);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -874,6 +874,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.LOGGER_DISCORD_SERVICE).toBe(`LoggerDiscordService`);
+  });
+
+  it(`should have a member "LOGGER_FIREBASE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.LOGGER_FIREBASE_SERVICE).toBe(`LoggerFirebaseService`);
   });
 
   it(`should have a member "PROFILE_CONFIG_CORE_SERVICE"`, (): void => {

@@ -10,6 +10,7 @@ import { IFirebaseGuild } from '../../../../firebase/types/guilds/firebase-guild
 import { IFirebaseGuildVFinal } from '../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ChalkService } from '../../../../logger/services/chalk/chalk.service';
 import { LoggerDiscordService } from '../../../../logger/services/logger-discord.service';
+import { LoggerFirebaseService } from '../../../../logger/services/logger-firebase.service';
 import { LoggerService } from '../../../../logger/services/logger.service';
 import { getNextJobDate } from '../../../../schedules/functions/get-next-job-date';
 import { getNextJobDateHumanized } from '../../../../schedules/functions/get-next-job-date-humanized';
@@ -55,7 +56,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
   }
 
   public sendMessage(guild: Guild): Promise<(Message | void)[] | void> {
-    this._logFetchingFirebaseGuild(guild);
+    LoggerFirebaseService.getInstance().logFetchingGuild(this._serviceName, guild.id);
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
@@ -198,13 +199,6 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`could not handle the messages`),
-    });
-  }
-
-  private _logFetchingFirebaseGuild({ id }: Guild): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`fetching Firebase guild ${ChalkService.getInstance().value(id)}`),
     });
   }
 

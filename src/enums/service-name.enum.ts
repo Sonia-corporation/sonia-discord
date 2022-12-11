@@ -131,6 +131,7 @@ export enum ServiceNameEnum {
   LOGGER_CONFIG_SERVICE = `LoggerConfigService`,
   LOGGER_SERVICE = `LoggerService`,
   LOGGER_DISCORD_SERVICE = `LoggerDiscordService`,
+  LOGGER_FIREBASE_SERVICE = `LoggerFirebaseService`,
   PROFILE_CONFIG_CORE_SERVICE = `ProfileConfigCoreService`,
   PROFILE_CONFIG_MUTATOR_SERVICE = `ProfileConfigMutatorService`,
   PROFILE_CONFIG_SERVICE = `ProfileConfigService`,
