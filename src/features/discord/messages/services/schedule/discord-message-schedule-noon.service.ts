@@ -9,6 +9,8 @@ import { IFirebaseGuildChannel } from '../../../../firebase/types/guilds/channel
 import { IFirebaseGuild } from '../../../../firebase/types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ChalkService } from '../../../../logger/services/chalk/chalk.service';
+import { LoggerDiscordService } from '../../../../logger/services/logger-discord.service';
+import { LoggerFirebaseService } from '../../../../logger/services/logger-firebase.service';
 import { LoggerService } from '../../../../logger/services/logger.service';
 import { getNextJobDate } from '../../../../schedules/functions/get-next-job-date';
 import { getNextJobDateHumanized } from '../../../../schedules/functions/get-next-job-date-humanized';
@@ -54,12 +56,12 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
   }
 
   public sendMessage(guild: Guild): Promise<(Message | void)[] | void> {
-    this._logFetchingFirebaseGuild(guild);
+    LoggerFirebaseService.getInstance().logFetchingGuild(this._serviceName, guild.id);
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
       .then((firebaseGuild: IFirebaseGuild | null | undefined): Promise<(Message | void)[]> => {
-        this._logFirebaseGuildFetched(guild);
+        LoggerFirebaseService.getInstance().logGuildFetched(this._serviceName, guild.id);
 
         if (!this._isValidGuild(firebaseGuild)) {
           this._logInvalidFirebaseGuild(guild);
@@ -99,12 +101,12 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     const guildBasedChannel: GuildBasedChannel | undefined = guild.channels.cache.get(channel.id);
 
     if (_.isNil(guildBasedChannel)) {
-      this._logInValidDiscordGuildChannel(guild, channel);
+      LoggerDiscordService.getInstance().logInValidGuildChannel(this._serviceName, guild.id, channel.id);
 
       return Promise.reject(new Error(`Guild channel not found`));
     }
 
-    this._logValidDiscordGuildChannel(guild, channel);
+    LoggerDiscordService.getInstance().logValidGuildChannel(this._serviceName, guild.id, channel.id);
 
     return this.sendMessageResponse(guildBasedChannel);
   }
@@ -200,20 +202,6 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logFetchingFirebaseGuild({ id }: Guild): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`fetching Firebase guild ${ChalkService.getInstance().value(id)}`),
-    });
-  }
-
-  private _logFirebaseGuildFetched({ id }: Guild): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} fetched`),
-    });
-  }
-
   private _logValidFirebaseGuild({ id }: Guild): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -255,28 +243,6 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
         `Firebase guild ${ChalkService.getInstance().value(id)} channel ${ChalkService.getInstance().value(
           guildChannel.id ?? `unknown`
         )} noon feature is disabled`
-      ),
-    });
-  }
-
-  private _logValidDiscordGuildChannel({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Discord guild ${ChalkService.getInstance().value(id)} channel ${ChalkService.getInstance().value(
-          guildChannel.id
-        )} is valid`
-      ),
-    });
-  }
-
-  private _logInValidDiscordGuildChannel({ id }: Guild, guildChannel: IFirebaseGuildChannel): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Discord guild ${ChalkService.getInstance().value(id)} channel ${ChalkService.getInstance().value(
-          guildChannel.id
-        )} is invalid`
       ),
     });
   }

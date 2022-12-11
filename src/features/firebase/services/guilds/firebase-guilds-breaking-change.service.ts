@@ -3,6 +3,7 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerFirebaseService } from '../../../logger/services/logger-firebase.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FIREBASE_GUILD_CURRENT_VERSION } from '../../constants/guilds/firebase-guild-current-version';
 import { handleFirebaseGuildBreakingChange } from '../../functions/guilds/handle-firebase-guild-breaking-change';
@@ -105,14 +106,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     });
 
     if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
-      LoggerService.getInstance().log({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `updating ${ChalkService.getInstance().value(countFirebaseGuildsUpdated)} Firebase guild${
-            _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
-          }...`
-        ),
-      });
+      LoggerFirebaseService.getInstance().logGuildsToUpdateCount(this._serviceName, countFirebaseGuildsUpdated);
 
       return batch.commit();
     }
