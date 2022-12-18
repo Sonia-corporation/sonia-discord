@@ -1,4 +1,5 @@
 import { DiscordMessageCommandFeatureNoonStatus } from './discord-message-command-feature-noon-status';
+import { AppConfigService } from '../../../../../../../../app/services/config/app-config.service';
 import { FirebaseDmVersionEnum } from '../../../../../../../../firebase/enums/dms/firebase-dm-version.enum';
 import { FirebaseGuildVersionEnum } from '../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum';
 import { IFirebaseDmV1 } from '../../../../../../../../firebase/interfaces/dms/firebase-dm-v1';
@@ -29,6 +30,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
   let firebaseDmsStoreService: FirebaseDmsStoreService;
   let discordChannelService: DiscordChannelService;
   let discordMessageErrorService: DiscordMessageErrorService;
+  let appConfigService: AppConfigService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
@@ -36,6 +38,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
     firebaseDmsStoreService = FirebaseDmsStoreService.getInstance();
     discordChannelService = DiscordChannelService.getInstance();
     discordMessageErrorService = DiscordMessageErrorService.getInstance();
+    appConfigService = AppConfigService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -1039,9 +1042,13 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let isEnabled: boolean | undefined;
 
+    let appConfigServiceIsProductionSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonStatus();
       isEnabled = false;
+
+      appConfigServiceIsProductionSpy = jest.spyOn(appConfigService, `isProduction`).mockReturnValue(true);
     });
 
     describe(`when the enabled state is undefined`, (): void => {
@@ -1049,12 +1056,32 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         isEnabled = undefined;
       });
 
-      it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the app is running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
 
-        const result = await service.getMessageResponse(isEnabled);
+        it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<void> => {
+          expect.assertions(1);
 
-        expect(result.content).toBe(`The noon feature is disabled.`);
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`The noon feature is disabled.`);
+        });
+      });
+
+      describe(`when the app is not running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should return a Discord message response with a response telling that the noon feature is disabled and prefix it with the dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`**[dev]** The noon feature is disabled.`);
+        });
       });
     });
 
@@ -1063,12 +1090,32 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         isEnabled = false;
       });
 
-      it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the app is running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
 
-        const result = await service.getMessageResponse(isEnabled);
+        it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<void> => {
+          expect.assertions(1);
 
-        expect(result.content).toBe(`The noon feature is disabled.`);
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`The noon feature is disabled.`);
+        });
+      });
+
+      describe(`when the app is not running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should return a Discord message response with a response telling that the noon feature is disabled and prefix it with the dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`**[dev]** The noon feature is disabled.`);
+        });
       });
     });
 
@@ -1077,12 +1124,32 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         isEnabled = true;
       });
 
-      it(`should return a Discord message response with a response telling that the noon feature is enabled`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the app is running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
 
-        const result = await service.getMessageResponse(isEnabled);
+        it(`should return a Discord message response with a response telling that the noon feature is enabled`, async (): Promise<void> => {
+          expect.assertions(1);
 
-        expect(result.content).toBe(`The noon feature is enabled.`);
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`The noon feature is enabled.`);
+        });
+      });
+
+      describe(`when the app is not running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should return a Discord message response with a response telling that the noon feature is enabled and prefix it with the dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`**[dev]** The noon feature is enabled.`);
+        });
       });
     });
   });
