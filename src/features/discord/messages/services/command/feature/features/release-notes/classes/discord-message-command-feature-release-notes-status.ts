@@ -1,4 +1,5 @@
 import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
+import { AppConfigService } from '../../../../../../../../app/services/config/app-config.service';
 import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
 import { FirebaseDmsFeaturesService } from '../../../../../../../../firebase/services/dms/features/firebase-dms-features.service';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
@@ -11,8 +12,10 @@ import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/ty
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { ProfileConfigService } from '../../../../../../../../profile/services/config/profile-config.service';
 import { isDiscordDmChannel } from '../../../../../../../channels/functions/is-discord-dm-channel';
 import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
+import { addDiscordDevPrefix } from '../../../../../../../functions/dev-prefix/add-discord-dev-prefix';
 import { wrapUserIdIntoMention } from '../../../../../../../mentions/functions/wrap-user-id-into-mention';
 import { DiscordCommandFlagActionValueless } from '../../../../../../classes/commands/flags/discord-command-flag-action-valueless';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
@@ -102,11 +105,20 @@ export class DiscordMessageCommandFeatureReleaseNotesStatus<T extends string>
   }
 
   private _getResponse(isEnabled: boolean | undefined): string {
-    if (_.isEqual(isEnabled, true)) {
-      return `The release notes feature is enabled.`;
+    const content: string = _.isEqual(isEnabled, true)
+      ? `The release notes feature is enabled.`
+      : `The release notes feature is disabled.`;
+
+    if (!AppConfigService.getInstance().isProduction()) {
+      return addDiscordDevPrefix({
+        asMention: true,
+        discordId: ProfileConfigService.getInstance().getDiscordId(),
+        message: content,
+        nickname: ProfileConfigService.getInstance().getNickname(),
+      });
     }
 
-    return `The release notes feature is disabled.`;
+    return content;
   }
 
   private _isReleaseNotesEnabledForThisDm(firebaseDm: IFirebaseDm): boolean | undefined {

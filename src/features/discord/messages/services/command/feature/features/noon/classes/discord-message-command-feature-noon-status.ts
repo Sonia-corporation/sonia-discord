@@ -1,4 +1,5 @@
 import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
+import { AppConfigService } from '../../../../../../../../app/services/config/app-config.service';
 import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
 import { FirebaseDmsStoreService } from '../../../../../../../../firebase/stores/dms/services/firebase-dms-store.service';
 import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
@@ -7,8 +8,10 @@ import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/gu
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { ProfileConfigService } from '../../../../../../../../profile/services/config/profile-config.service';
 import { isDiscordDmChannel } from '../../../../../../../channels/functions/is-discord-dm-channel';
 import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
+import { addDiscordDevPrefix } from '../../../../../../../functions/dev-prefix/add-discord-dev-prefix';
 import { wrapUserIdIntoMention } from '../../../../../../../mentions/functions/wrap-user-id-into-mention';
 import { DiscordCommandFlagActionValueless } from '../../../../../../classes/commands/flags/discord-command-flag-action-valueless';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
@@ -104,11 +107,20 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
   }
 
   private _getResponse(isEnabled: boolean | undefined): string {
-    if (_.isEqual(isEnabled, true)) {
-      return `The noon feature is enabled.`;
+    const content: string = _.isEqual(isEnabled, true)
+      ? `The noon feature is enabled.`
+      : `The noon feature is disabled.`;
+
+    if (!AppConfigService.getInstance().isProduction()) {
+      return addDiscordDevPrefix({
+        asMention: true,
+        discordId: ProfileConfigService.getInstance().getDiscordId(),
+        message: content,
+        nickname: ProfileConfigService.getInstance().getNickname(),
+      });
     }
 
-    return `The noon feature is disabled.`;
+    return content;
   }
 
   private _isNoonEnabledForThisDm(firebaseDm: IFirebaseDm): boolean | undefined {

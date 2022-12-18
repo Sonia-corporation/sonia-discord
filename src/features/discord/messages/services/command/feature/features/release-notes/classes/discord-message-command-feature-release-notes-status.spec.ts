@@ -1,4 +1,5 @@
 import { DiscordMessageCommandFeatureReleaseNotesStatus } from './discord-message-command-feature-release-notes-status';
+import { AppConfigService } from '../../../../../../../../app/services/config/app-config.service';
 import { FirebaseDmFeatureReleaseNotesVersionEnum } from '../../../../../../../../firebase/enums/dms/features/firebase-dm-feature-release-notes-version.enum';
 import { FirebaseDmFeatureVersionEnum } from '../../../../../../../../firebase/enums/dms/features/firebase-dm-feature-version.enum';
 import { FirebaseDmVersionEnum } from '../../../../../../../../firebase/enums/dms/firebase-dm-version.enum';
@@ -39,6 +40,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
   let discordMessageErrorService: DiscordMessageErrorService;
   let firebaseDmsStoreService: FirebaseDmsStoreService;
   let firebaseDmsFeaturesService: FirebaseDmsFeaturesService;
+  let appConfigService: AppConfigService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
@@ -48,6 +50,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     discordMessageErrorService = DiscordMessageErrorService.getInstance();
     firebaseDmsStoreService = FirebaseDmsStoreService.getInstance();
     firebaseDmsFeaturesService = FirebaseDmsFeaturesService.getInstance();
+    appConfigService = AppConfigService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -1039,9 +1042,13 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let isEnabled: boolean | undefined;
 
+    let appConfigServiceIsProductionSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesStatus();
       isEnabled = false;
+
+      appConfigServiceIsProductionSpy = jest.spyOn(appConfigService, `isProduction`).mockReturnValue(true);
     });
 
     describe(`when the enabled state is undefined`, (): void => {
@@ -1049,12 +1056,32 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
         isEnabled = undefined;
       });
 
-      it(`should return a Discord message response with a response telling that the release notes feature is disabled`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the app is running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
 
-        const result = await service.getMessageResponse(isEnabled);
+        it(`should return a Discord message response with a response telling that the release notes feature is disabled`, async (): Promise<void> => {
+          expect.assertions(1);
 
-        expect(result.content).toBe(`The release notes feature is disabled.`);
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`The release notes feature is disabled.`);
+        });
+      });
+
+      describe(`when the app is not running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should return a Discord message response with a response telling that the release notes feature is disabled and prefix it with the dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`**[dev]** The release notes feature is disabled.`);
+        });
       });
     });
 
@@ -1063,12 +1090,32 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
         isEnabled = false;
       });
 
-      it(`should return a Discord message response with a response telling that the release notes feature is disabled`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the app is running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
 
-        const result = await service.getMessageResponse(isEnabled);
+        it(`should return a Discord message response with a response telling that the release notes feature is disabled`, async (): Promise<void> => {
+          expect.assertions(1);
 
-        expect(result.content).toBe(`The release notes feature is disabled.`);
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`The release notes feature is disabled.`);
+        });
+      });
+
+      describe(`when the app is not running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should return a Discord message response with a response telling that the release notes feature is disabled and prefix it with the dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`**[dev]** The release notes feature is disabled.`);
+        });
       });
     });
 
@@ -1077,12 +1124,32 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
         isEnabled = true;
       });
 
-      it(`should return a Discord message response with a response telling that the release notes feature is enabled`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the app is running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
 
-        const result = await service.getMessageResponse(isEnabled);
+        it(`should return a Discord message response with a response telling that the release notes feature is enabled`, async (): Promise<void> => {
+          expect.assertions(1);
 
-        expect(result.content).toBe(`The release notes feature is enabled.`);
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`The release notes feature is enabled.`);
+        });
+      });
+
+      describe(`when the app is not running in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should return a Discord message response with a response telling that the release notes feature is enabled and prefix it with the dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(isEnabled);
+
+          expect(result.content).toBe(`**[dev]** The release notes feature is enabled.`);
+        });
       });
     });
   });
