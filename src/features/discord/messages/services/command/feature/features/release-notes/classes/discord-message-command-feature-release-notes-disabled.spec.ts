@@ -22,7 +22,7 @@ import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-disc
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
-import { DMChannel, Message, TextChannel } from 'discord.js';
+import { ChannelType, DMChannel, Message, TextChannel } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -127,7 +127,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
       });
@@ -164,7 +164,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createInstance(DMChannel.prototype),
+              channel: { type: ChannelType.DM },
               id: `dummy-id`,
             });
 
@@ -196,9 +196,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
               author: {
                 id: `dummy-author-id`,
               },
-              channel: createInstance(DMChannel.prototype, {
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.DM,
+              },
               id: `dummy-id`,
             });
           });
@@ -580,7 +581,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     describe(`when the message does not come from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
       });
@@ -647,9 +648,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
         describe(`when the Discord message guild is valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<Message>({
-              channel: createInstance(TextChannel.prototype, {
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.GuildText,
+              },
               guild: {
                 id: `dummy-guild-id`,
               },
@@ -1733,8 +1735,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
       shouldDisable = false;
       isDisabled = undefined;
       firebaseDm = createMock<IFirebaseDm>();
-      channel = createInstance<DMChannel>(DMChannel.prototype, {
+      channel = createHydratedMock<DMChannel>({
         id: `dummy-channel-id`,
+        type: ChannelType.DM,
       });
       writeResult = createMock<WriteResult>();
 
@@ -1970,8 +1973,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
       shouldDisable = false;
       isDisabled = undefined;
       firebaseGuild = createMock<IFirebaseGuild>();
-      channel = createInstance<DMChannel>(TextChannel.prototype, {
+      channel = createHydratedMock<TextChannel>({
         id: `dummy-channel-id`,
+        type: ChannelType.GuildText,
       });
       writeResult = createMock<WriteResult>();
 

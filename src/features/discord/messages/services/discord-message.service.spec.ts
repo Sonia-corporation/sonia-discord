@@ -18,7 +18,7 @@ import { DiscordSoniaService } from '../../users/services/discord-sonia.service'
 import { ISonia } from '../../users/types/sonia';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
-import { Client, MessageOptions, MessagePayload } from 'discord.js';
+import { BaseMessageOptions, Client, MessagePayload } from 'discord.js';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -817,7 +817,7 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
-                const message: string | MessagePayload | MessageOptions = {
+                const message: string | MessagePayload | BaseMessageOptions = {
                   content: `dummy-response`,
                 };
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
@@ -1032,13 +1032,13 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
-                const messageA: string | MessagePayload | MessageOptions = {
+                const messageA: string | MessagePayload | BaseMessageOptions = {
                   content: `dummy-response-a`,
                 };
-                const messageB: string | MessagePayload | MessageOptions = {
+                const messageB: string | MessagePayload | BaseMessageOptions = {
                   content: `dummy-response-b`,
                 };
-                const messageC: string | MessagePayload | MessageOptions = {
+                const messageC: string | MessagePayload | BaseMessageOptions = {
                   content: `dummy-response-c`,
                 };
                 // TODO should be 3 calls; weird!
@@ -1361,7 +1361,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Fake test error: send`)
             );
 
-            const message: string | MessagePayload | MessageOptions = {
+            const message: string | MessagePayload | BaseMessageOptions = {
               content: `dummy-response`,
             };
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);

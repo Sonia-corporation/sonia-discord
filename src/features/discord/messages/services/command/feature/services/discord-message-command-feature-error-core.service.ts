@@ -6,7 +6,7 @@ import { discordGetCommandAndPrefix } from '../../../../functions/commands/gette
 import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../constants/discord-message-command-feature-names';
-import { EmbedFieldData, MessageEmbedFooter } from 'discord.js';
+import { APIEmbedField, APIEmbedFooter } from 'discord.js';
 import _ from 'lodash';
 
 /**
@@ -19,11 +19,11 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     super(serviceName);
   }
 
-  protected _getMessageEmbedFooter(): MessageEmbedFooter {
+  protected _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Invalid feature command`,
     };
   }
@@ -32,8 +32,9 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     return `I can not handle your request.`;
   }
 
-  protected _getMessageEmbedFieldAllFeatures(): EmbedFieldData {
+  protected _getMessageEmbedFieldAllFeatures(): APIEmbedField {
     return {
+      inline: false,
       name: `All features`,
       value: DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getAllArgumentsNameWithShortcutsExample(),
     };
@@ -42,7 +43,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
   protected _getMessageEmbedFieldFeatureExample(
     { content }: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[]
-  ): EmbedFieldData {
+  ): APIEmbedField {
     const randomFeature: string | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getRandomArgumentUsageExample();
     let userCommand: string | null = discordGetCommandAndPrefix({
       commands,
@@ -55,6 +56,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     }
 
     return {
+      inline: false,
       name: `Example`,
       value: `\`${userCommand} ${_.toString(randomFeature)}\``,
     };

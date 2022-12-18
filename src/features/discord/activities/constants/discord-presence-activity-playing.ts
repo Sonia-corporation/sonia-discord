@@ -1,30 +1,30 @@
 import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
-import { DiscordActivityTypeEnum } from '../enums/discord-activity-type.enum';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
+import { ActivityType } from 'discord.js';
 
 export const DISCORD_PRESENCE_ACTIVITY_PLAYING: IDiscordPresenceActivity[] = [
   {
     name: DiscordActivityNameEnum.GOD,
-    type: DiscordActivityTypeEnum.PLAYING,
+    type: ActivityType.Playing,
   },
   {
     name: DiscordActivityNameEnum.WEB_STORM,
-    type: DiscordActivityTypeEnum.PLAYING,
+    type: ActivityType.Playing,
   },
   {
     name: DiscordActivityNameEnum.GRAND_THEFT_AUTO_V,
-    type: DiscordActivityTypeEnum.PLAYING,
+    type: ActivityType.Playing,
   },
   {
     name: DiscordActivityNameEnum.COUNTER_STRIKE_GLOBAL_OFFENSIVE,
-    type: DiscordActivityTypeEnum.PLAYING,
+    type: ActivityType.Playing,
   },
   {
     name: DiscordActivityNameEnum.MINECRAFT,
-    type: DiscordActivityTypeEnum.PLAYING,
+    type: ActivityType.Playing,
   },
   {
     name: DiscordActivityNameEnum.WORLD_OF_WARCRAFT,
-    type: DiscordActivityTypeEnum.PLAYING,
+    type: ActivityType.Playing,
   },
 ];

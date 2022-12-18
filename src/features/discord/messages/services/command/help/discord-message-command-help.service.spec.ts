@@ -11,16 +11,7 @@ import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../helpers/discord-message-help.service';
 import { DiscordMessageCommandVerifyChannelRightService } from '../discord-message-command-verify-channel-right.service';
-import {
-  DMChannel,
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  NewsChannel,
-  TextChannel,
-  ThreadChannel,
-} from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage, ChannelType } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -98,7 +89,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -213,7 +204,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -229,7 +220,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -245,7 +236,9 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -261,7 +254,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -282,7 +275,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -312,7 +305,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
           embeds: [
             {
               author: {
-                iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                 name: `[dev] Sonia`,
                 url: `https://github.com/Sonia-corporation?type=source`,
               },
@@ -332,7 +325,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
                 },
               ],
               footer: {
-                iconURL: undefined,
+                icon_url: undefined,
                 text: `I don't allow you!`,
               },
               thumbnail: {
@@ -398,12 +391,13 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -412,7 +406,8 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -420,7 +415,8 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.description).toBe(
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.description).toBe(
           `Below is the complete list of commands.\nYou can either use \`-\`, \`!\` or \`$\` as prefix to run a command.`
         );
       });
@@ -430,7 +426,8 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields).toHaveLength(10);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields).toHaveLength(10);
       });
 
       it(`should return a Discord message response embed with a cookie field`, async (): Promise<void> => {
@@ -438,10 +435,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[0]).toStrictEqual({
+          inline: false,
           name: `Cookie (*cookie*, *cookies* or *c*)`,
           value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with an error field`, async (): Promise<void> => {
@@ -449,10 +448,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[1]).toStrictEqual({
+          inline: false,
           name: `Error (*error* or *bug*)`,
           value: `Create a bug in my core system. Do not do this one, of course!`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a feature field`, async (): Promise<void> => {
@@ -460,10 +461,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[2]).toStrictEqual({
+          inline: false,
           name: `Feature (*feature* or *f*)`,
           value: `Change my behavior on this guild or on this channel. Help me to be better! I have some cool abilities you know!`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a heartbeat field`, async (): Promise<void> => {
@@ -471,10 +474,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[3]).toStrictEqual({
+          inline: false,
           name: `Heartbeat (*heartbeat* or *hb*)`,
           value: `Display my current heartbeat.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a help field`, async (): Promise<void> => {
@@ -482,10 +487,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[4]).toStrictEqual({
+          inline: false,
           name: `Help (*help* or *h*)`,
           value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a lunch field`, async (): Promise<void> => {
@@ -493,10 +500,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[5]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[5]).toStrictEqual({
+          inline: false,
           name: `Lunch (*lunch* or *l*)`,
           value: `There is a time to eat.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a quote field`, async (): Promise<void> => {
@@ -504,10 +513,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[6]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[6]).toStrictEqual({
+          inline: false,
           name: `Quote (*quote* or *q*)`,
           value: `I quote others only in order to better express myself.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a release notes field`, async (): Promise<void> => {
@@ -515,10 +526,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[7]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[7]).toStrictEqual({
+          inline: false,
           name: `Release notes (*release-notes* or *r*)`,
           value: `Display the last version release notes.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a version field`, async (): Promise<void> => {
@@ -526,10 +539,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[8]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[8]).toStrictEqual({
+          inline: false,
           name: `Version (*version* or *v*)`,
           value: `Display my current application version.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a more help field`, async (): Promise<void> => {
@@ -537,11 +552,13 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.fields?.[9]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[9]).toStrictEqual({
+          inline: false,
           name: `Further help`,
           value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,
-        } as EmbedFieldData);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -550,10 +567,11 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `dummy-image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `dummy-image-url`,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -566,10 +584,11 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
           const result = await service.getMessageResponse();
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: undefined,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: undefined,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
       });
 
@@ -583,10 +602,11 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
           const result = await service.getMessageResponse();
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `image-url`,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `image-url`,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
       });
 
@@ -596,9 +616,10 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -606,8 +627,9 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(moment(embed?.timestamp).isValid()).toBe(true);
+        expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -615,7 +637,8 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.title).toBe(`So, you need my help? Cool.`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.title).toBe(`So, you need my help? Cool.`);
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {

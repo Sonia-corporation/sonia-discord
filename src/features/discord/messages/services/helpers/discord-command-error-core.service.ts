@@ -2,7 +2,7 @@ import { AbstractService } from '../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import moment from 'moment-timezone';
 
 /**
@@ -15,7 +15,7 @@ export abstract class DiscordCommandErrorCoreService extends AbstractService {
     super(serviceName);
   }
 
-  protected _getMessageEmbed(): MessageEmbedOptions {
+  protected _getMessageEmbed(): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -26,7 +26,7 @@ export abstract class DiscordCommandErrorCoreService extends AbstractService {
     };
   }
 
-  protected _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  protected _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -34,23 +34,23 @@ export abstract class DiscordCommandErrorCoreService extends AbstractService {
     return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
-  protected _getMessageEmbedFooter(): MessageEmbedFooter {
+  protected _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `I am very sorry for that`,
     };
   }
 
-  protected _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  protected _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
     };
   }
 
-  protected _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  protected _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   protected _getMessageEmbedTitle(): string {

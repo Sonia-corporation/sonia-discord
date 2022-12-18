@@ -1,4 +1,4 @@
-import { CategoryChannel, GuildBasedChannel, TextBasedChannel } from 'discord.js';
+import { CategoryChannel, ChannelType, GuildBasedChannel, TextBasedChannel } from 'discord.js';
 
 /**
  * @description
@@ -9,5 +9,5 @@ import { CategoryChannel, GuildBasedChannel, TextBasedChannel } from 'discord.js
 export function isDiscordCategoryChannel(
   channel: GuildBasedChannel | TextBasedChannel | null | undefined
 ): channel is CategoryChannel {
-  return channel instanceof CategoryChannel;
+  return channel?.type === ChannelType.GuildCategory;
 }

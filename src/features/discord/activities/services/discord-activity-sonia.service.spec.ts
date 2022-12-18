@@ -11,11 +11,11 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
 import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
-import { Activity, Client, ClientUser, Presence, PresenceData } from 'discord.js';
+import { Activity, ActivityType, Client, ClientUser, Presence, PresenceData } from 'discord.js';
 import _ from 'lodash';
 import * as NodeScheduleModule from 'node-schedule';
 import { BehaviorSubject, noop } from 'rxjs';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
@@ -531,6 +531,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
   });
 
   describe(`setPresence()`, (): void => {
+    let activity: Activity;
     let presence: Presence;
     let setPresenceMock: jest.Mock;
     let presenceActivity: IDiscordPresenceActivity;
@@ -541,19 +542,19 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
-      presence = {
-        activities: [
-          {
-            name: DiscordActivityNameEnum.APOLLO,
-            type: `PLAYING`,
-            url: `dummy-url`,
-          } as Activity,
-        ],
-      } as Presence;
+      activity = createHydratedMock<Activity>({
+        name: DiscordActivityNameEnum.APOLLO,
+        type: ActivityType.Playing,
+        url: `dummy-url`,
+      });
+      presence = createHydratedMock<Presence>({
+        // @ts-ignore
+        activities: [activity],
+      });
       setPresenceMock = jest.fn().mockReturnValue(presence);
       presenceActivity = createMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
-        type: `PLAYING`,
+        type: ActivityType.Playing,
         url: `dummy-url`,
       });
       client = createMock<Client>({
@@ -605,7 +606,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     describe(`when the Discord client user is valid`, (): void => {
       beforeEach((): void => {
-        client.user = createMock<ClientUser>({
+        client.user = createHydratedMock<ClientUser>({
           setPresence: setPresenceMock,
         });
       });
@@ -615,18 +616,19 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.setPresence(presenceActivity);
 
-        expect(setPresenceMock).toHaveBeenCalledTimes(1);
-        expect(setPresenceMock).toHaveBeenCalledWith({
+        const presenceData: PresenceData = {
           activities: [
             {
               name: DiscordActivityNameEnum.APOLLO,
-              type: `PLAYING`,
+              type: ActivityType.Playing,
               url: `dummy-url`,
             },
           ],
           afk: false,
           status: `online`,
-        } as PresenceData);
+        };
+        expect(setPresenceMock).toHaveBeenCalledTimes(1);
+        expect(setPresenceMock).toHaveBeenCalledWith(presenceData);
       });
 
       it(`should log about the update of the presence`, (): void => {
@@ -634,12 +636,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         const result = service.setPresence(presenceActivity);
 
+        const loggerLog: ILoggerLog = {
+          context: `DiscordActivitySoniaService`,
+          message: `text-Sonia presence updated to: value-playing text-x value-Apollo`,
+        };
         expect(result).toStrictEqual(presence);
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-          context: `DiscordActivitySoniaService`,
-          message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
-        } as ILoggerLog);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith(loggerLog);
       });
     });
   });

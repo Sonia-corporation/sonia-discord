@@ -9,7 +9,7 @@ import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-me
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
-import { EmbedFieldData, MessageEmbedOptions, Snowflake } from 'discord.js';
+import { APIEmbed, APIEmbedField, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
@@ -58,7 +58,7 @@ export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
   private _getMessageEmbed(
     anyDiscordMessage: IAnyDiscordMessage,
     discordCommandFlags: DiscordCommandFlags<T>
-  ): MessageEmbedOptions {
+  ): APIEmbed {
     return {
       description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(anyDiscordMessage, discordCommandFlags),
@@ -73,7 +73,7 @@ export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
   private _getMessageEmbedFields(
     anyDiscordMessage: IAnyDiscordMessage,
     discordCommandFlags: DiscordCommandFlags<T>
-  ): EmbedFieldData[] {
+  ): APIEmbedField[] {
     return _.concat(
       discordCommandFlags.getAllFlagsAsEmbedFields(),
       this._getMessageEmbedFieldExample(anyDiscordMessage, discordCommandFlags)
@@ -83,7 +83,7 @@ export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
   private _getMessageEmbedFieldExample(
     { content }: IAnyDiscordMessage,
     discordCommandFlags: DiscordCommandFlags<T>
-  ): EmbedFieldData {
+  ): APIEmbedField {
     const randomFlag: string | undefined = discordCommandFlags.getRandomFlagUsageExample();
     let userCommand: string | null = discordGetCommandAndFirstArgument({
       commands: [DiscordMessageCommandEnum.F, DiscordMessageCommandEnum.FEATURE],
@@ -96,6 +96,7 @@ export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
     }
 
     return {
+      inline: false,
       name: `Example`,
       value: `\`${userCommand} ${_.toString(randomFlag)}\``,
     };

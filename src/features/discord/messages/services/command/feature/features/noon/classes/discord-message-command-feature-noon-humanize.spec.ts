@@ -31,14 +31,7 @@ import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES } from '
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
 import { DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum } from '../enums/discord-message-command-feature-noon-humanize-disabled-messages.enum';
 import { DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum } from '../enums/discord-message-command-feature-noon-humanize-enabled-messages.enum';
-import {
-  DMChannel,
-  Message,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  TextChannel,
-} from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage, ChannelType, Message } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -79,7 +72,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHumanize();
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -115,7 +108,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     describe(`when the message was sent from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
 
@@ -156,7 +149,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createInstance(DMChannel.prototype),
+              channel: { type: ChannelType.DM },
               id: `dummy-id`,
             });
 
@@ -176,7 +169,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
               author: {
                 id: `dummy-author-id`,
               },
-              channel: createInstance(DMChannel.prototype),
+              channel: { type: ChannelType.DM },
               id: `dummy-id`,
             });
 
@@ -245,7 +238,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     describe(`when the message was not sent from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
 
@@ -304,7 +297,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `GUILD_TEXT`,
+                type: ChannelType.GuildText,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -1014,12 +1007,13 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse(state, humanizedChannel);
 
-        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -1028,7 +1022,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state, humanizedChannel);
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       describe(`when the enabled state is undefined`, (): void => {
@@ -1044,7 +1039,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.title).toStrictEqual(
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.title).toStrictEqual(
             DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -1054,7 +1050,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.description).toBe(
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.description).toBe(
             `I will not send a message at noon since it was never enabled on this text channel.`
           );
         });
@@ -1073,7 +1070,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.title).toStrictEqual(
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.title).toStrictEqual(
             DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -1083,7 +1081,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.description).toBe(
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.description).toBe(
             `I will not send a message at noon since it was disabled on this text channel.`
           );
         });
@@ -1102,9 +1101,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.title).toStrictEqual(
-            DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum.I_LOVE_YOU
-          );
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.title).toStrictEqual(DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum.I_LOVE_YOU);
         });
 
         it(`should return a Discord message response embed with a description about the noon feature being enabled`, async (): Promise<void> => {
@@ -1112,7 +1110,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.description).toBe(
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.description).toBe(
             `I will send a message each day at noon (12 A.M) on Paris timezone on this text channel.`
           );
         });
@@ -1124,10 +1123,11 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state, humanizedChannel);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `dummy-image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `dummy-image-url`,
           text: `At your service`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -1140,10 +1140,11 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: undefined,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: undefined,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
       });
 
@@ -1157,10 +1158,11 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state, humanizedChannel);
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `image-url`,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `image-url`,
             text: `At your service`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
       });
 
@@ -1170,9 +1172,10 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state, humanizedChannel);
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -1180,8 +1183,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state, humanizedChannel);
 
-        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(moment(embed?.timestamp).isValid()).toBe(true);
+        expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {

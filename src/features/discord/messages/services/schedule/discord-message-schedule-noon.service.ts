@@ -22,7 +22,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from '../../../logger/services/discord-logger-error.service';
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
-import { Guild, GuildBasedChannel, GuildChannel, Message, TextChannel, ThreadChannel } from 'discord.js';
+import { AnyThreadChannel, Guild, GuildBasedChannel, GuildChannel, Message, TextChannel } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { Job, scheduleJob } from 'node-schedule';
@@ -317,7 +317,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logGuildChannelNotWritable({ id }: GuildChannel | ThreadChannel): void {
+  private _logGuildChannelNotWritable({ id }: GuildChannel | AnyThreadChannel): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(

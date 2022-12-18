@@ -15,16 +15,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandVerifyChannelRightService } from '../discord-message-command-verify-channel-right.service';
-import {
-  DMChannel,
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  NewsChannel,
-  TextChannel,
-  ThreadChannel,
-} from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage, ChannelType } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -106,7 +97,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -221,7 +212,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -237,7 +228,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -253,7 +244,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -269,7 +262,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -290,7 +283,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -320,7 +313,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
           embeds: [
             {
               author: {
-                iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                 name: `[dev] Sonia`,
                 url: `https://github.com/Sonia-corporation?type=source`,
               },
@@ -340,7 +333,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
                 },
               ],
               footer: {
-                iconURL: undefined,
+                icon_url: undefined,
                 text: `I don't allow you!`,
               },
               thumbnail: {
@@ -414,12 +407,13 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -428,7 +422,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 6 fields`, async (): Promise<void> => {
@@ -436,7 +431,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields).toHaveLength(6);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields).toHaveLength(6);
     });
 
     it(`should return a Discord message response embed with an application version field`, async (): Promise<void> => {
@@ -445,10 +441,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[0]).toStrictEqual({
+        inline: false,
         name: `My age`,
         value: `[8](https://github.com/Sonia-corporation/sonia-discord/releases/tag/8)`,
-      } as EmbedFieldData);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a release date field`, async (): Promise<void> => {
@@ -457,11 +455,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[1]).toStrictEqual({
         inline: false,
         name: `My last birthday`,
         value: `dummy-release-date-humanized`,
-      } as EmbedFieldData);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a initialization date field`, async (): Promise<void> => {
@@ -470,11 +469,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[2]).toStrictEqual({
         inline: false,
         name: `The last time I woken up`,
         value: `dummy-initialization-date-humanized`,
-      } as EmbedFieldData);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a release notes field`, async (): Promise<void> => {
@@ -483,10 +483,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[3]).toStrictEqual({
+        inline: false,
         name: `My birthday card`,
         value: `dummy-release-notes\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`,
-      } as EmbedFieldData);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a status field`, async (): Promise<void> => {
@@ -495,11 +497,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[4]).toStrictEqual({
         inline: false,
         name: `My location`,
         value: `Running in development`,
-      } as EmbedFieldData);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with an emotional state field`, async (): Promise<void> => {
@@ -508,11 +511,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[5]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[5]).toStrictEqual({
         inline: false,
         name: `My emotional state`,
         value: `Agitated`,
-      } as EmbedFieldData);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -523,10 +527,11 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer).toStrictEqual({
+        icon_url: `dummy-image-url`,
         text: `8 birthdays since the 24th March 2020`,
-      } as MessageEmbedFooter);
+      } as APIEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -541,10 +546,11 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: undefined,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: undefined,
           text: `8 birthdays since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
     });
 
@@ -560,10 +566,11 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `image-url`,
           text: `8 birthdays since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
     });
 
@@ -573,9 +580,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as APIEmbedImage);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -583,8 +591,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -593,7 +602,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.title).toBe(`dummy-full-name version`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`dummy-full-name version`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {

@@ -21,7 +21,7 @@ import { DiscordMessageErrorService } from '../../../../../helpers/discord-messa
 import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_DISABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-disabled-messages';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-enabled-messages';
-import { MessageEmbedOptions, Snowflake } from 'discord.js';
+import { APIEmbed, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
@@ -220,7 +220,7 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
   private _getMessageEmbed(
     state: IFirebaseGuildChannelFeatureNoonState | IFirebaseDmFeatureNoonState,
     humanizedChannel: IDiscordHumanizedChannel
-  ): MessageEmbedOptions {
+  ): APIEmbed {
     return {
       description: this._getMessageDescription(state, humanizedChannel),
       title: this._getMessageEmbedTitle(state, humanizedChannel),

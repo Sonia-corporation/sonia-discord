@@ -1,7 +1,7 @@
 import { AbstractService } from '../../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../../enums/service-name.enum';
 import { IDiscordMessageResponse } from '../../../../../interfaces/discord-message-response';
-import { MessageEmbed } from 'discord.js';
+import { APIEmbed } from 'discord.js';
 import _ from 'lodash';
 import { createMock } from 'ts-auto-mock';
 
@@ -27,7 +27,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   public getMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
-        embeds: [createMock<MessageEmbed>()],
+        embeds: [createMock<APIEmbed>()],
       },
     };
   }

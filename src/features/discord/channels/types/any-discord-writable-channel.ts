@@ -1,3 +1,3 @@
-import { NewsChannel, TextChannel, ThreadChannel } from 'discord.js';
+import { AnyThreadChannel, NewsChannel, TextChannel } from 'discord.js';
 
-export type IAnyDiscordWritableChannel = TextChannel | NewsChannel | ThreadChannel;
+export type IAnyDiscordWritableChannel = TextChannel | NewsChannel | AnyThreadChannel;

@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -38,7 +38,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -48,7 +48,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -56,22 +56,22 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     return DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageColor();
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Retry with the right argument`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 }

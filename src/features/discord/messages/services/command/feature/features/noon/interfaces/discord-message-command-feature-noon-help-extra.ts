@@ -1,5 +1,5 @@
-import { EmbedFieldData } from 'discord.js';
+import { APIEmbedField } from 'discord.js';
 
 export interface IDiscordMessageCommandFeatureNoonHelpExtra {
-  embedFields: EmbedFieldData[];
+  embedFields: APIEmbedField[];
 }

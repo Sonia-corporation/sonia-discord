@@ -34,11 +34,11 @@ import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
 import {
+  BaseMessageOptions,
   Guild,
   GuildBasedChannel,
   GuildChannel,
   Message,
-  MessageOptions,
   MessagePayload,
   TextChannel,
   VoiceChannel,
@@ -1678,7 +1678,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          const message: string | MessagePayload | MessageOptions = {
+          const message: string | MessagePayload | BaseMessageOptions = {
             content: `dummy-response`,
           };
           expect(sendMock).toHaveBeenCalledTimes(1);

@@ -25,7 +25,7 @@ import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-me
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
 import { DiscordMessageCommandFeatureReleaseNotesFlagEnum } from '../enums/discord-message-command-feature-release-notes-flag.enum';
-import { DMChannel, Message, TextChannel } from 'discord.js';
+import { ChannelType, Message } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -62,7 +62,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesStatus();
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -95,7 +95,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     describe(`when the message comes from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
       });
@@ -134,7 +134,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createInstance(DMChannel.prototype),
+              channel: { type: ChannelType.DM },
               id: `dummy-id`,
             });
 
@@ -154,9 +154,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
               author: {
                 id: `dummy-author-id`,
               },
-              channel: createInstance(DMChannel.prototype, {
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.DM,
+              },
               id: `dummy-id`,
             });
           });
@@ -222,7 +223,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
     describe(`when the message does not come from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
       });
@@ -260,7 +261,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
         describe(`when the Discord message guild is not valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
-              channel: createInstance(TextChannel.prototype),
+              channel: { type: ChannelType.GuildText },
               guild: null,
               id: `dummy-id`,
             });
@@ -278,9 +279,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
         describe(`when the Discord message guild is valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<Message>({
-              channel: createInstance(TextChannel.prototype, {
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.GuildText,
+              },
               guild: {
                 id: `dummy-guild-id`,
               },

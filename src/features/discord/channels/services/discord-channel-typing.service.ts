@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { getDiscordHumanizedChannelFromClass } from '../functions/get-discord-humanized-channel-from-class';
-import { DMChannel, NewsChannel, TextChannel, ThreadChannel } from 'discord.js';
+import { AnyThreadChannel, DMChannel, NewsChannel, TextChannel } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordChannelTypingService extends AbstractService {
@@ -21,7 +21,7 @@ export class DiscordChannelTypingService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE);
   }
 
-  public sendTyping(channel: TextChannel | DMChannel | NewsChannel | ThreadChannel): Promise<void> {
+  public sendTyping(channel: TextChannel | DMChannel | NewsChannel | AnyThreadChannel): Promise<void> {
     return channel.sendTyping().catch((error: Error): Promise<void> => {
       LoggerService.getInstance().error({
         context: this._serviceName,

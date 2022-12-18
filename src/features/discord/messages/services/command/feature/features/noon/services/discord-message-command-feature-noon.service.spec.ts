@@ -14,7 +14,7 @@ import { IDiscordCommandFlagsSuccess } from '../../../../../../types/commands/fl
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../../../constants/discord-message-command-feature-names';
 import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -210,12 +210,13 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
         it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
           expect.assertions(1);
-          const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+          const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
           discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.author).toStrictEqual(messageEmbedAuthor);
         });
 
         it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -224,7 +225,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.color).toStrictEqual(ColorEnum.DESERT);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.color).toStrictEqual(ColorEnum.DESERT);
         });
 
         it(`should return a Discord message response embed with a description indicating that one flag was successful`, async (): Promise<void> => {
@@ -232,7 +234,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.description).toBe(`**1** noon feature option updated.`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.description).toBe(`**1** noon feature option updated.`);
         });
 
         it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
@@ -240,7 +243,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.fields).toHaveLength(1);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields).toHaveLength(1);
         });
 
         it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<void> => {
@@ -248,11 +252,12 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[0]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
-          } as EmbedFieldData);
+          } as APIEmbedField);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -261,10 +266,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `dummy-image-url`,
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `dummy-image-url`,
             text: `Noon feature successfully updated`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -277,10 +283,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-              iconURL: undefined,
+            const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+            expect(embed?.footer).toStrictEqual({
+              icon_url: undefined,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as APIEmbedFooter);
           });
         });
 
@@ -294,10 +301,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-              iconURL: `image-url`,
+            const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+            expect(embed?.footer).toStrictEqual({
+              icon_url: `image-url`,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as APIEmbedFooter);
           });
         });
 
@@ -307,9 +315,10 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.thumbnail).toStrictEqual({
             url: IconEnum.ALARM,
-          } as MessageEmbedThumbnail);
+          } as APIEmbedImage);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -317,9 +326,9 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-
-          expect(moment(result[0].options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(moment(embed?.timestamp).isValid()).toBe(true);
+          expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -327,7 +336,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.title).toBe(`Noon feature updated.`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.title).toBe(`Noon feature updated.`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -366,7 +376,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.description).toBe(`**3** noon feature options updated.`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.description).toBe(`**3** noon feature options updated.`);
         });
 
         it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -374,7 +385,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.fields).toHaveLength(3);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields).toHaveLength(3);
         });
 
         it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<void> => {
@@ -382,23 +394,22 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[0]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
-          } as EmbedFieldData);
-
-          expect(result[0].options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+          } as APIEmbedField);
+          expect(embed?.fields?.[1]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
-          } as EmbedFieldData);
-
-          expect(result[0].options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+          } as APIEmbedField);
+          expect(embed?.fields?.[2]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
-          } as EmbedFieldData);
+          } as APIEmbedField);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -407,10 +418,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `dummy-image-url`,
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `dummy-image-url`,
             text: `Noon feature successfully updated`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -423,10 +435,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-              iconURL: undefined,
+            const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+            expect(embed?.footer).toStrictEqual({
+              icon_url: undefined,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as APIEmbedFooter);
           });
         });
 
@@ -440,10 +453,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-              iconURL: `image-url`,
+            const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+            expect(embed?.footer).toStrictEqual({
+              icon_url: `image-url`,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as APIEmbedFooter);
           });
         });
 
@@ -453,9 +467,10 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.thumbnail).toStrictEqual({
             url: IconEnum.ALARM,
-          } as MessageEmbedThumbnail);
+          } as APIEmbedImage);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -463,9 +478,9 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-
-          expect(moment(result[0].options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(moment(embed?.timestamp).isValid()).toBe(true);
+          expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -473,7 +488,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.title).toBe(`Noon feature updated.`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.title).toBe(`Noon feature updated.`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -588,7 +604,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.description).toBe(`**3** noon feature options updated.`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.description).toBe(`**3** noon feature options updated.`);
         });
 
         it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -596,7 +613,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.fields).toHaveLength(3);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields).toHaveLength(3);
         });
 
         it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<void> => {
@@ -604,23 +622,22 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[0]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
-          } as EmbedFieldData);
-
-          expect(result[0].options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+          } as APIEmbedField);
+          expect(embed?.fields?.[1]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
-          } as EmbedFieldData);
-
-          expect(result[0].options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+          } as APIEmbedField);
+          expect(embed?.fields?.[2]).toStrictEqual({
             inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
-          } as EmbedFieldData);
+          } as APIEmbedField);
         });
 
         it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -629,10 +646,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `dummy-image-url`,
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `dummy-image-url`,
             text: `Noon feature successfully updated`,
-          } as MessageEmbedFooter);
+          } as APIEmbedFooter);
         });
 
         describe(`when the Sonia image url is null`, (): void => {
@@ -645,10 +663,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-              iconURL: undefined,
+            const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+            expect(embed?.footer).toStrictEqual({
+              icon_url: undefined,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as APIEmbedFooter);
           });
         });
 
@@ -662,10 +681,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
             const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-            expect(result[0].options.embeds?.[0]?.footer).toStrictEqual({
-              iconURL: `image-url`,
+            const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+            expect(embed?.footer).toStrictEqual({
+              icon_url: `image-url`,
               text: `Noon feature successfully updated`,
-            } as MessageEmbedFooter);
+            } as APIEmbedFooter);
           });
         });
 
@@ -675,9 +695,10 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.thumbnail).toStrictEqual({
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.thumbnail).toStrictEqual({
             url: IconEnum.ALARM,
-          } as MessageEmbedThumbnail);
+          } as APIEmbedImage);
         });
 
         it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -685,9 +706,9 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-
-          expect(moment(result[0].options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(moment(embed?.timestamp).isValid()).toBe(true);
+          expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -695,7 +716,8 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embeds?.[0]?.title).toBe(`Noon feature updated.`);
+          const embed: APIEmbed = result[0].options.embeds?.[0] as APIEmbed;
+          expect(embed?.title).toBe(`Noon feature updated.`);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {

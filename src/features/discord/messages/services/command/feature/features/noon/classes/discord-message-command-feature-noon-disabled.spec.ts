@@ -21,7 +21,7 @@ import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/command
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
-import { DMChannel, Message, TextChannel } from 'discord.js';
+import { ChannelType, Message } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
 import _ from 'lodash';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
@@ -114,7 +114,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
     describe(`when the message comes from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
       });
@@ -163,7 +163,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
     describe(`when the message does not come from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
       });
@@ -301,7 +301,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
             },
             channel: {
               id: `dummy-channel-id`,
-              type: `DM`,
+              type: ChannelType.DM,
             },
             id: `dummy-id`,
           });
@@ -542,7 +542,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `GUILD_NEWS`,
+                type: ChannelType.GuildNews,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -1274,7 +1274,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
       firebaseDm = createMock<IFirebaseDm>();
       writeResult = createMock<WriteResult>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(DMChannel.prototype),
+        channel: { type: ChannelType.DM },
       });
 
       firebaseDmsFeaturesNoonEnabledServiceUpdateStateByDmIdSpy = jest
@@ -1539,7 +1539,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
       });
       writeResult = createMock<WriteResult>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
       });
 
       firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy = jest

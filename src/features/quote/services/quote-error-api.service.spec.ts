@@ -4,6 +4,7 @@ import { CoreEventService } from '../../core/services/core-event.service';
 import { IDiscordMessageResponse } from '../../discord/messages/interfaces/discord-message-response';
 import { DiscordMessageCommandCliErrorService } from '../../discord/messages/services/command/discord-message-command-cli-error.service';
 import { IQuoteErrorApi } from '../interfaces/quote-error-api';
+import { APIEmbed } from 'discord.js';
 import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
@@ -117,7 +118,8 @@ describe(`QuoteErrorApiService`, (): void => {
 
         const result = await service.getMessageResponse(error);
 
-        expect(result.options.embeds?.[0]?.description).toStrictEqual(error.message);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.description).toStrictEqual(error.message);
       });
 
       it(`should return an error message response with a specific title`, async (): Promise<void> => {
@@ -125,7 +127,8 @@ describe(`QuoteErrorApiService`, (): void => {
 
         const result = await service.getMessageResponse(error);
 
-        expect(result.options.embeds?.[0]?.title).toBe(`Oops, something went wrong`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.title).toBe(`Oops, something went wrong`);
       });
     });
   });

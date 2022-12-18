@@ -17,7 +17,7 @@ import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-me
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
-import { DMChannel, Message, TextChannel } from 'discord.js';
+import { ChannelType, Message } from 'discord.js';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -71,8 +71,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
     describe(`when the message comes from a DM`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
       });
@@ -120,8 +120,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
     describe(`when the message does not come from a DM`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
       });
@@ -245,7 +245,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
             },
             channel: {
               id: `dummy-channel-id`,
-              type: `DM`,
+              type: ChannelType.DM,
             },
             id: `dummy-id`,
           });
@@ -325,7 +325,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonStatus();
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -375,7 +375,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
       describe(`when the Discord message guild is not valid`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage = createMock<IAnyDiscordMessage>({
-            channel: createInstance(TextChannel.prototype),
+            channel: { type: ChannelType.GuildText },
             guild: null,
             id: `dummy-id`,
           });
@@ -393,9 +393,10 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
       describe(`when the Discord message guild is valid`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage = createMock<IAnyDiscordMessage>({
-            channel: createInstance(TextChannel.prototype, {
+            channel: {
               id: `dummy-channel-id`,
-            }),
+              type: ChannelType.GuildText,
+            },
             guild: {
               id: `dummy-guild-id`,
             },

@@ -1,7 +1,7 @@
 import { DISCORD_PRESENCE_ACTIVITY_PLAYING } from './discord-presence-activity-playing';
 import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
-import { DiscordActivityTypeEnum } from '../enums/discord-activity-type.enum';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
+import { ActivityType } from 'discord.js';
 
 describe(`DISCORD_PRESENCE_ACTIVITY_PLAYING`, (): void => {
   it(`should contains a list of playing activities`, (): void => {
@@ -10,27 +10,27 @@ describe(`DISCORD_PRESENCE_ACTIVITY_PLAYING`, (): void => {
     expect(DISCORD_PRESENCE_ACTIVITY_PLAYING).toStrictEqual([
       {
         name: DiscordActivityNameEnum.GOD,
-        type: DiscordActivityTypeEnum.PLAYING,
+        type: ActivityType.Playing,
       },
       {
         name: DiscordActivityNameEnum.WEB_STORM,
-        type: DiscordActivityTypeEnum.PLAYING,
+        type: ActivityType.Playing,
       },
       {
         name: DiscordActivityNameEnum.GRAND_THEFT_AUTO_V,
-        type: DiscordActivityTypeEnum.PLAYING,
+        type: ActivityType.Playing,
       },
       {
         name: DiscordActivityNameEnum.COUNTER_STRIKE_GLOBAL_OFFENSIVE,
-        type: DiscordActivityTypeEnum.PLAYING,
+        type: ActivityType.Playing,
       },
       {
         name: DiscordActivityNameEnum.MINECRAFT,
-        type: DiscordActivityTypeEnum.PLAYING,
+        type: ActivityType.Playing,
       },
       {
         name: DiscordActivityNameEnum.WORLD_OF_WARCRAFT,
-        type: DiscordActivityTypeEnum.PLAYING,
+        type: ActivityType.Playing,
       },
     ] as IDiscordPresenceActivity[]);
   });

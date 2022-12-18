@@ -14,13 +14,7 @@ import { DiscordMessageSubCommandCoreService } from '../../../../discord-message
 import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from '../constants/discord-message-command-feature-release-notes-flags';
 import { IDiscordMessageCommandFeatureNameReleaseNotes } from '../types/discord-message-command-feature-name-release-notes';
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -94,7 +88,7 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends DiscordMess
     );
   }
 
-  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): MessageEmbedOptions {
+  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -107,7 +101,7 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends DiscordMess
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -127,8 +121,8 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends DiscordMess
     return _.size(flagsSuccess);
   }
 
-  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedFieldData[] {
-    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): EmbedFieldData => {
+  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): APIEmbedField[] {
+    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): APIEmbedField => {
       return {
         inline: false,
         name,
@@ -137,23 +131,23 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends DiscordMess
     });
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Release notes feature successfully updated`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   private _getMessageEmbedTitle(): string {

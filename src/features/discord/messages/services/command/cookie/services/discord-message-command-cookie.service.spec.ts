@@ -14,15 +14,7 @@ import { DiscordMessageConfigService } from '../../../config/discord-message-con
 import { DiscordMessageCommandVerifyChannelRightService } from '../../discord-message-command-verify-channel-right.service';
 import { DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-cookie-description-messages';
 import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from '../constants/discord-message-command-cookie-title-messages';
-import {
-  DMChannel,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  NewsChannel,
-  TextChannel,
-  ThreadChannel,
-} from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage, ChannelType } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -98,7 +90,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -217,12 +209,13 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -231,7 +224,8 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -239,7 +233,8 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.description).toBe(`Chuck Norris can't beat me.`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.description).toBe(`Chuck Norris can't beat me.`);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -248,10 +243,11 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer).toStrictEqual({
+        icon_url: `dummy-image-url`,
         text: `Bon appétit`,
-      } as MessageEmbedFooter);
+      } as APIEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -264,10 +260,11 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: undefined,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: undefined,
           text: `Bon appétit`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
     });
 
@@ -281,10 +278,11 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `image-url`,
           text: `Bon appétit`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
     });
 
@@ -294,9 +292,10 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
+      } as APIEmbedImage);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -304,8 +303,9 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -313,7 +313,8 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.title).toBe(`Cookie delivery!`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`Cookie delivery!`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -353,7 +354,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -369,7 +370,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -385,7 +386,9 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -401,7 +404,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -422,7 +425,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -452,7 +455,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
           embeds: [
             {
               author: {
-                iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                 name: `[dev] Sonia`,
                 url: `https://github.com/Sonia-corporation?type=source`,
               },
@@ -472,7 +475,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
                 },
               ],
               footer: {
-                iconURL: undefined,
+                icon_url: undefined,
                 text: `I don't allow you!`,
               },
               thumbnail: {

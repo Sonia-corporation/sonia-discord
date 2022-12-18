@@ -4,7 +4,7 @@ import { IDiscordMessageResponse } from '../../../../../interfaces/discord-messa
 import { IAnyDiscordMessage } from '../../../../../types/any-discord-message';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends DiscordMessageCommandFeatureErrorCoreService {
@@ -45,7 +45,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
     anyDiscordMessage: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[],
     featureName: string
-  ): MessageEmbedOptions {
+  ): APIEmbed {
     return {
       fields: this._getMessageEmbedFields(anyDiscordMessage, commands, featureName),
       footer: this._getMessageEmbedFooter(),
@@ -57,7 +57,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
     anyDiscordMessage: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[],
     featureName: string
-  ): EmbedFieldData[] {
+  ): APIEmbedField[] {
     return [
       this._getMessageEmbedFieldError(featureName),
       this._getMessageEmbedFieldAllFeatures(),
@@ -65,8 +65,9 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
     ];
   }
 
-  private _getMessageEmbedFieldError(featureName: string): EmbedFieldData {
+  private _getMessageEmbedFieldError(featureName: string): APIEmbedField {
     return {
+      inline: false,
       name: `Wrong feature name`,
       value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,
     };

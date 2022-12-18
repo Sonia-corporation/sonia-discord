@@ -10,7 +10,7 @@ import { DiscordGuildConfigService } from '../../../guilds/services/config/disco
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
-import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
@@ -106,7 +106,7 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
   }
 
   private _getErrorMessageResponse(error: unknown, anyDiscordMessage: IAnyDiscordMessage): IDiscordMessageResponse {
-    const options: MessageEmbedOptions = {
+    const options: APIEmbed = {
       fields: this._getMessageEmbedFields(error, anyDiscordMessage),
       title: this._getCustomMessageEmbedTitle(),
     };
@@ -118,7 +118,7 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     };
   }
 
-  private _getMessageEmbedFields(error: unknown, anyDiscordMessage: IAnyDiscordMessage): EmbedFieldData[] {
+  private _getMessageEmbedFields(error: unknown, anyDiscordMessage: IAnyDiscordMessage): APIEmbedField[] {
     return [
       this._getMessageEmbedFieldMessageId(anyDiscordMessage),
       this._getMessageEmbedFieldError(error),
@@ -126,26 +126,29 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     ];
   }
 
-  private _getMessageEmbedFieldMessageId({ id }: IAnyDiscordMessage): EmbedFieldData {
+  private _getMessageEmbedFieldMessageId({ id }: IAnyDiscordMessage): APIEmbedField {
     return {
+      inline: false,
       name: `The message's id that killed me`,
       value: id,
     };
   }
 
-  private _getMessageEmbedFieldError(error: unknown): EmbedFieldData {
+  private _getMessageEmbedFieldError(error: unknown): APIEmbedField {
     return {
+      inline: false,
       name: `My blood trace`,
       value: ellipsis(_.toString(error)),
     };
   }
 
-  private _getMessageEmbedFieldHint(): EmbedFieldData {
+  private _getMessageEmbedFieldHint(): APIEmbedField {
     const githubBugReportUrl: string = GithubConfigService.getInstance().getBugReportUrl();
     const discordSoniaPermanentGuildInviteUrl: string =
       DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
 
     return {
+      inline: false,
       name: `Help me to help you`,
       value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`,
     };

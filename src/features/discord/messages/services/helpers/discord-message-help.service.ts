@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -32,7 +32,7 @@ export class DiscordMessageHelpService extends AbstractService {
     return Promise.resolve(message);
   }
 
-  private _getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -42,7 +42,7 @@ export class DiscordMessageHelpService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -50,22 +50,22 @@ export class DiscordMessageHelpService extends AbstractService {
     return DiscordMessageConfigService.getInstance().getMessageCommandHelpImageColor();
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `At your service`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandHelpImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 }

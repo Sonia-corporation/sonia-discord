@@ -8,7 +8,7 @@ import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../interfac
 import { DiscordClientService } from '../../services/discord-client.service';
 import { isDiscordClientUser } from '../functions/is-discord-client-user';
 import { ISonia } from '../types/sonia';
-import { MessageEmbedAuthor } from 'discord.js';
+import { APIEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordSoniaService extends AbstractService {
@@ -48,12 +48,12 @@ export class DiscordSoniaService extends AbstractService {
     return isDiscordClientUser(sonia);
   }
 
-  public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
+  public getCorporationMessageEmbedAuthor(): APIEmbedAuthor {
     const discordSoniaCorporationMessageEmbedAuthorConfig: IDiscordSoniaCorporationMessageEmbedAuthorConfig =
       DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthor();
 
     return {
-      iconURL: discordSoniaCorporationMessageEmbedAuthorConfig.iconURL,
+      icon_url: discordSoniaCorporationMessageEmbedAuthorConfig.iconURL,
       name: this.getCorporationMessageEmbedAuthorName(),
       url: discordSoniaCorporationMessageEmbedAuthorConfig.url,
     };

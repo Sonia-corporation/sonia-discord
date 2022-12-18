@@ -4,7 +4,7 @@ import { isDiscordDmChannel } from '../functions/is-discord-dm-channel';
 import { isDiscordTextChannel } from '../functions/is-discord-text-channel';
 import { isDiscordThreadChannel } from '../functions/is-discord-thread-channel';
 import { IAnyDiscordChannel } from '../types/any-discord-channel';
-import { DMChannel, TextBasedChannel, TextChannel, ThreadChannel } from 'discord.js';
+import { AnyThreadChannel, DMChannel, TextBasedChannel, TextChannel } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordChannelService extends AbstractService {
@@ -34,7 +34,7 @@ export class DiscordChannelService extends AbstractService {
     return isDiscordDmChannel(channel);
   }
 
-  public isThread(channel: TextBasedChannel | null | undefined): channel is ThreadChannel {
+  public isThread(channel: TextBasedChannel | null | undefined): channel is AnyThreadChannel {
     return isDiscordThreadChannel(channel);
   }
 }

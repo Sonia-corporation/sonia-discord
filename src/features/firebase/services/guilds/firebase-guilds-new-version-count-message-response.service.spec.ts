@@ -6,8 +6,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { DiscordMessageCommandFeatureReleaseNotesConfigService } from '../../../discord/messages/services/command/feature/features/release-notes/services/config/discord-message-command-feature-release-notes-config.service';
 import { DiscordSoniaService } from '../../../discord/users/services/discord-sonia.service';
-import { MessageEmbedAuthor } from 'discord.js';
-import _ from 'lodash';
+import { APIEmbed, APIEmbedAuthor } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -100,12 +99,13 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
     it(`should return a message response with an embed author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a message response with an embed color using the release notes feature color`, (): void => {
@@ -115,7 +115,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when the Discord Sonia image url is null`, (): void => {
@@ -132,7 +133,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBeUndefined();
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer?.icon_url).toBeUndefined();
       });
     });
 
@@ -150,7 +152,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBe(`dummy-image-url`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer?.icon_url).toBe(`dummy-image-url`);
       });
     });
 
@@ -159,7 +162,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embeds?.[0]?.footer?.text).toBe(`Sonia reporter out`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer?.text).toBe(`Sonia reporter out`);
     });
 
     it(`should return a message response with an embed thumbnail icon`, (): void => {
@@ -169,7 +173,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embeds?.[0]?.thumbnail?.url).toStrictEqual(IconEnum.ALARM);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.thumbnail?.url).toStrictEqual(IconEnum.ALARM);
     });
 
     it(`should return a message response with an embed timestamp set as now`, (): void => {
@@ -177,8 +182,9 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a message response with an embed title`, (): void => {
@@ -186,7 +192,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embeds?.[0]?.title).toBe(`Release notes report`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`Release notes report`);
     });
 
     it(`should return a message response with an embed description`, (): void => {
@@ -195,7 +202,8 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embeds?.[0]?.description).toBe(`dummy-description`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.description).toBe(`dummy-description`);
     });
 
     it(`should return an error message response with an empty response`, (): void => {

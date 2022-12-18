@@ -13,15 +13,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandVerifyChannelRightService } from '../discord-message-command-verify-channel-right.service';
-import {
-  DMChannel,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-  NewsChannel,
-  TextChannel,
-  ThreadChannel,
-} from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage, ChannelType } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
@@ -101,7 +93,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -216,7 +208,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(DMChannel.prototype),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -232,7 +224,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(TextChannel.prototype),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -248,7 +240,9 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     describe(`when the message comes from a thread channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(ThreadChannel.prototype),
+          channel: {
+            type: ChannelType.PublicThread,
+          },
         });
       });
 
@@ -264,7 +258,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createInstance(NewsChannel.prototype),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -285,7 +279,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createInstance(TextChannel.prototype),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -315,7 +309,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
           embeds: [
             {
               author: {
-                iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                 name: `[dev] Sonia`,
                 url: `https://github.com/Sonia-corporation?type=source`,
               },
@@ -335,7 +329,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
                 },
               ],
               footer: {
-                iconURL: undefined,
+                icon_url: undefined,
                 text: `I don't allow you!`,
               },
               thumbnail: {
@@ -437,12 +431,13 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -451,7 +446,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.description).toBe(
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.description).toBe(
         `dummy-release-notes\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`
       );
     });
@@ -464,10 +460,11 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer).toStrictEqual({
+        icon_url: `dummy-image-url`,
         text: `8 versions since the 24th March 2020`,
-      } as MessageEmbedFooter);
+      } as APIEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -482,10 +479,11 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: undefined,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: undefined,
           text: `8 versions since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
     });
 
@@ -501,10 +499,11 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `image-url`,
           text: `8 versions since the 24th March 2020`,
-        } as MessageEmbedFooter);
+        } as APIEmbedFooter);
       });
     });
 
@@ -521,7 +520,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a bug fixes thumbnail`, async (): Promise<void> => {
@@ -532,9 +532,10 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
     });
 
@@ -551,7 +552,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a features thumbnail`, async (): Promise<void> => {
@@ -562,9 +564,10 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
     });
 
@@ -581,7 +584,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a mixed thumbnail`, async (): Promise<void> => {
@@ -590,9 +594,10 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
     });
 
@@ -611,7 +616,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a performance improvements thumbnail`, async (): Promise<void> => {
@@ -622,9 +628,10 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
     });
 
@@ -641,7 +648,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with an unknown thumbnail`, async (): Promise<void> => {
@@ -652,9 +660,10 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
-        } as MessageEmbedThumbnail);
+        } as APIEmbedImage);
       });
     });
 
@@ -663,8 +672,9 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -674,7 +684,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.title).toBe(`**8** release notes - dummy-release-date-humanized`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`**8** release notes - dummy-release-date-humanized`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {

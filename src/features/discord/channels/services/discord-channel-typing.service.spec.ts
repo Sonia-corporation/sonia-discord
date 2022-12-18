@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
-import { DMChannel, NewsChannel, TextChannel, ThreadChannel } from 'discord.js';
+import { AnyThreadChannel, DMChannel, NewsChannel, TextChannel } from 'discord.js';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -58,7 +58,7 @@ describe(`DiscordChannelTypingService`, (): void => {
   });
 
   describe(`sendTyping()`, (): void => {
-    let channel: TextChannel | DMChannel | NewsChannel | ThreadChannel;
+    let channel: TextChannel | DMChannel | NewsChannel | AnyThreadChannel;
 
     let sendTypingMock: jest.Mock;
     let loggerServiceErrorSpy: jest.SpyInstance;

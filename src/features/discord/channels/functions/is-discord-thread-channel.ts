@@ -1,4 +1,5 @@
-import { GuildBasedChannel, TextBasedChannel, ThreadChannel } from 'discord.js';
+import { AnyThreadChannel, ChannelType, GuildBasedChannel, TextBasedChannel } from 'discord.js';
+import _ from 'lodash';
 
 /**
  * @description
@@ -8,6 +9,16 @@ import { GuildBasedChannel, TextBasedChannel, ThreadChannel } from 'discord.js';
  */
 export function isDiscordThreadChannel(
   channel: GuildBasedChannel | TextBasedChannel | null | undefined
-): channel is ThreadChannel {
-  return channel instanceof ThreadChannel;
+): channel is AnyThreadChannel {
+  return _.includes(
+    [
+      ChannelType.PublicThread,
+      ChannelType.PrivateThread,
+      ChannelType.AnnouncementThread,
+      ChannelType.GuildNewsThread,
+      ChannelType.GuildPublicThread,
+      ChannelType.GuildPrivateThread,
+    ],
+    channel?.type
+  );
 }

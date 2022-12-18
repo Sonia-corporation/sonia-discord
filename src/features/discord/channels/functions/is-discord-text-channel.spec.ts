@@ -1,16 +1,19 @@
 import { isDiscordTextChannel } from './is-discord-text-channel';
 import {
+  AnyThreadChannel,
   CategoryChannel,
+  ChannelType,
   DMChannel,
   GuildBasedChannel,
   NewsChannel,
+  PrivateThreadChannel,
+  PublicThreadChannel,
   StageChannel,
-  StoreChannel,
   TextBasedChannel,
   TextChannel,
-  ThreadChannel,
   VoiceChannel,
 } from 'discord.js';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`isDiscordTextChannel()`, (): void => {
   let channel: GuildBasedChannel | TextBasedChannel | null | undefined;
@@ -45,7 +48,9 @@ describe(`isDiscordTextChannel()`, (): void => {
 
   describe(`when the given value is a "CategoryChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(CategoryChannel.prototype);
+      channel = createHydratedMock<CategoryChannel>({
+        type: ChannelType.GuildCategory,
+      });
     });
 
     it(`should return false`, (): void => {
@@ -59,7 +64,7 @@ describe(`isDiscordTextChannel()`, (): void => {
 
   describe(`when the given value is a "DMChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(DMChannel.prototype);
+      channel = createHydratedMock<DMChannel>({ type: ChannelType.DM });
     });
 
     it(`should return false`, (): void => {
@@ -73,7 +78,7 @@ describe(`isDiscordTextChannel()`, (): void => {
 
   describe(`when the given value is a "NewsChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(NewsChannel.prototype);
+      channel = createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews });
     });
 
     it(`should return false`, (): void => {
@@ -87,21 +92,7 @@ describe(`isDiscordTextChannel()`, (): void => {
 
   describe(`when the given value is a "StageChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(StageChannel.prototype);
-    });
-
-    it(`should return false`, (): void => {
-      expect.assertions(1);
-
-      const result = isDiscordTextChannel(channel);
-
-      expect(result).toBe(false);
-    });
-  });
-
-  describe(`when the given value is a "StoreChannel" instance`, (): void => {
-    beforeEach((): void => {
-      channel = createInstance(StoreChannel.prototype);
+      channel = createHydratedMock<StageChannel>({ type: ChannelType.GuildStageVoice });
     });
 
     it(`should return false`, (): void => {
@@ -115,7 +106,7 @@ describe(`isDiscordTextChannel()`, (): void => {
 
   describe(`when the given value is a "TextChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(TextChannel.prototype);
+      channel = createHydratedMock<TextChannel>({ type: ChannelType.GuildText });
     });
 
     it(`should return true`, (): void => {
@@ -127,9 +118,91 @@ describe(`isDiscordTextChannel()`, (): void => {
     });
   });
 
-  describe(`when the given value is a "ThreadChannel" instance`, (): void => {
+  describe(`when the given value is a "PublicThread"`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(ThreadChannel.prototype);
+      channel = createHydratedMock<PublicThreadChannel>({
+        type: ChannelType.PublicThread,
+      });
+    });
+
+    it(`should return false`, (): void => {
+      expect.assertions(1);
+
+      const result = isDiscordTextChannel(channel);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe(`when the given value is a "PrivateThread"`, (): void => {
+    beforeEach((): void => {
+      channel = createHydratedMock<PrivateThreadChannel>({
+        type: ChannelType.PrivateThread,
+      });
+    });
+
+    it(`should return false`, (): void => {
+      expect.assertions(1);
+
+      const result = isDiscordTextChannel(channel);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe(`when the given value is a "AnnouncementThread"`, (): void => {
+    beforeEach((): void => {
+      channel = createHydratedMock<PublicThreadChannel>({
+        type: ChannelType.AnnouncementThread,
+      });
+    });
+
+    it(`should return false`, (): void => {
+      expect.assertions(1);
+
+      const result = isDiscordTextChannel(channel);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe(`when the given value is a "GuildNewsThread"`, (): void => {
+    beforeEach((): void => {
+      channel = createHydratedMock<AnyThreadChannel>({
+        type: ChannelType.GuildNewsThread,
+      });
+    });
+
+    it(`should return false`, (): void => {
+      expect.assertions(1);
+
+      const result = isDiscordTextChannel(channel);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe(`when the given value is a "GuildPublicThread"`, (): void => {
+    beforeEach((): void => {
+      channel = createHydratedMock<AnyThreadChannel>({
+        type: ChannelType.GuildPublicThread,
+      });
+    });
+
+    it(`should return false`, (): void => {
+      expect.assertions(1);
+
+      const result = isDiscordTextChannel(channel);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe(`when the given value is a "GuildPrivateThread"`, (): void => {
+    beforeEach((): void => {
+      channel = createHydratedMock<AnyThreadChannel>({
+        type: ChannelType.GuildPrivateThread,
+      });
     });
 
     it(`should return false`, (): void => {
@@ -143,7 +216,7 @@ describe(`isDiscordTextChannel()`, (): void => {
 
   describe(`when the given value is a "VoiceChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createInstance(VoiceChannel.prototype);
+      channel = createHydratedMock<VoiceChannel>({ type: ChannelType.GuildVoice });
     });
 
     it(`should return false`, (): void => {
