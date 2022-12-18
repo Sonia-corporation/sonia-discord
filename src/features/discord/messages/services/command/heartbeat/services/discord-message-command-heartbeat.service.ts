@@ -13,7 +13,16 @@ import { DiscordMessageConfigService } from '../../../config/discord-message-con
 import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-heartbeat-description-messages';
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_TITLE_MESSAGES } from '../constants/discord-message-command-heartbeat-title-messages';
-import { Client, EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData, Message } from 'discord.js';
+import {
+  APIEmbed,
+  APIEmbedAuthor,
+  APIEmbedField,
+  APIEmbedFooter,
+  APIEmbedImage,
+  Client,
+  EmbedBuilder,
+  Message,
+} from 'discord.js';
 import { formatNumber } from 'humanize-plus';
 import _ from 'lodash';
 import moment from 'moment-timezone';
@@ -83,6 +92,7 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
    */
   public async afterSending(anyDiscordMessage: IAnyDiscordMessage, message: Message): Promise<void> {
     const [previousEmbed] = message.embeds;
+    const previousEmbedBuilder: EmbedBuilder = new EmbedBuilder(previousEmbed.data);
 
     LoggerService.getInstance().log({
       context: this._serviceName,
@@ -93,8 +103,8 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
       ),
     });
 
-    previousEmbed.setFields(
-      previousEmbed.fields.map((field: EmbedField, index: number): EmbedField => {
+    previousEmbedBuilder.setFields(
+      previousEmbed.fields.map((field: APIEmbedField, index: number): APIEmbedField => {
         if (index === ROUNDTRIP_LATENCY_EMBED_FIELD_INDEX) {
           return this.getRoundtripLatencyEmbedField(field, message, anyDiscordMessage);
         }
@@ -128,16 +138,16 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
    * @description
    * Return an embed field with the real calculated roundtrip latency.
    * Log it.
-   * @param   {EmbedField}         embedField        The original embed field for the roundtrip latency.
+   * @param   {APIEmbedField}      embedField        The original embed field for the roundtrip latency.
    * @param   {Message}            message           The message that was sent containing the embed for the heartbeat command.
    * @param   {IAnyDiscordMessage} anyDiscordMessage The original message that trigger the heartbeat command.
-   * @returns {EmbedField}                           Return the up-to-date embed field containing the real roundtrip latency value.
+   * @returns {APIEmbedField}                        Return the up-to-date embed field containing the real roundtrip latency value.
    */
   public getRoundtripLatencyEmbedField(
-    embedField: EmbedField,
+    embedField: APIEmbedField,
     message: Message,
     anyDiscordMessage: IAnyDiscordMessage
-  ): EmbedField {
+  ): APIEmbedField {
     const heartbeat = `${_.toString(formatNumber(message.createdTimestamp - anyDiscordMessage.createdTimestamp))} ms`;
 
     LoggerService.getInstance().log({
@@ -155,7 +165,7 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     };
   }
 
-  private _getMessageEmbed(): EmbedData {
+  private _getMessageEmbed(): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -168,7 +178,7 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     };
   }
 
-  private _getMessageEmbedAuthor(): EmbedAuthorData {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -180,43 +190,45 @@ export class DiscordMessageCommandHeartbeatService extends DiscordMessageCommand
     return DISCORD_MESSAGE_COMMAND_HEARTBEAT_DESCRIPTION_MESSAGES.getRandomMessage();
   }
 
-  private _getMessageEmbedFields(): EmbedField[] {
+  private _getMessageEmbedFields(): APIEmbedField[] {
     return [this._getMessageEmbedFieldWebsocketHeartbeat(), this._getMessageEmbedFieldRoundtripLatency()];
   }
 
-  private _getMessageEmbedFieldWebsocketHeartbeat(): EmbedField {
+  private _getMessageEmbedFieldWebsocketHeartbeat(): APIEmbedField {
     const client: Client = DiscordClientService.getInstance().getClient();
 
     return {
+      inline: false,
       name: `My Websocket heartbeat`,
       value: `${_.toString(formatNumber(client.ws.ping))} ms`,
     };
   }
 
-  private _getMessageEmbedFieldRoundtripLatency(): EmbedField {
+  private _getMessageEmbedFieldRoundtripLatency(): APIEmbedField {
     return {
+      inline: false,
       name: `My roundtrip latency`,
       value: `Calculating...`,
     };
   }
 
-  private _getMessageEmbedFooter(): EmbedFooterData {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `My heartbeat`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): EmbedAssetData {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandHeartbeatImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   private _getMessageEmbedTitle(): string {

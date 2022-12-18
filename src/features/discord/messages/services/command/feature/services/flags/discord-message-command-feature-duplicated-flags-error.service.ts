@@ -5,7 +5,7 @@ import { IDiscordMessageResponse } from '../../../../../interfaces/discord-messa
 import { IDiscordCommandFlagsDuplicated } from '../../../../../types/commands/flags/discord-command-flags-duplicated';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedData, EmbedField } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 const ONE_FLAG_DUPLICATED = 1;
@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
       });
   }
 
-  private _getMessageEmbed(flagsDuplicated: IDiscordCommandFlagsDuplicated): EmbedData {
+  private _getMessageEmbed(flagsDuplicated: IDiscordCommandFlagsDuplicated): APIEmbed {
     return {
       description: this._getMessageEmbedDescription(flagsDuplicated),
       fields: this._getMessageEmbedFields(flagsDuplicated),
@@ -61,9 +61,9 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
     return _.size(flagsDuplicated);
   }
 
-  private _getMessageEmbedFields(flagsDuplicated: IDiscordCommandFlagsDuplicated): EmbedField[] {
+  private _getMessageEmbedFields(flagsDuplicated: IDiscordCommandFlagsDuplicated): APIEmbedField[] {
     return _.concat(
-      _.map(flagsDuplicated, ({ name, description }: IDiscordCommandFlagDuplicated): EmbedField => {
+      _.map(flagsDuplicated, ({ name, description }: IDiscordCommandFlagDuplicated): APIEmbedField => {
         return {
           inline: false,
           name,
@@ -74,8 +74,9 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
     );
   }
 
-  private _getMessageEmbedHintField(): EmbedField {
+  private _getMessageEmbedHintField(): APIEmbedField {
     return {
+      inline: false,
       name: `How to solve this?`,
       value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and then we can talk.`,
     };

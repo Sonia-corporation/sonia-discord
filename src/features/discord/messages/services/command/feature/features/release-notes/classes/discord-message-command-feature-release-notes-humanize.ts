@@ -25,7 +25,7 @@ import { DiscordMessageErrorService } from '../../../../../helpers/discord-messa
 import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE_DISABLED_MESSAGES } from '../constants/discord-message-command-feature-release-notes-humanize-disabled-messages';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE_ENABLED_MESSAGES } from '../constants/discord-message-command-feature-release-notes-humanize-enabled-messages';
-import { EmbedData, Snowflake } from 'discord.js';
+import { APIEmbed, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
@@ -244,7 +244,7 @@ export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
   private _getMessageEmbed(
     state: IFirebaseGuildChannelFeatureReleaseNotesState,
     humanizedChannel: IDiscordHumanizedChannel
-  ): EmbedData {
+  ): APIEmbed {
     return {
       description: this._getMessageDescription(state, humanizedChannel),
       title: this._getMessageEmbedTitle(state, humanizedChannel),

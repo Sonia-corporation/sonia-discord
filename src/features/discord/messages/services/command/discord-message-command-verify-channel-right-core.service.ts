@@ -11,7 +11,7 @@ import { DiscordSoniaService } from '../../../users/services/discord-sonia.servi
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import moment from 'moment-timezone';
 
 export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends AbstractService {
@@ -77,7 +77,7 @@ export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends
   protected _getMessageEmbed(
     anyDiscordMessage: IAnyDiscordMessage,
     allowedChannels: Set<DiscordChannelEnum>
-  ): EmbedData {
+  ): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -89,7 +89,7 @@ export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends
     };
   }
 
-  protected _getMessageEmbedAuthor(): EmbedAuthorData {
+  protected _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -100,7 +100,7 @@ export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends
   protected _getMessageEmbedFields(
     anyDiscordMessage: IAnyDiscordMessage,
     allowedChannels: Set<DiscordChannelEnum>
-  ): EmbedField[] {
+  ): APIEmbedField[] {
     return [
       this._getMessageEmbedFieldWrongChannel(anyDiscordMessage),
       this._getMessageEmbedFieldHint(allowedChannels),
@@ -108,32 +108,32 @@ export abstract class DiscordMessageCommandVerifyChannelRightCoreService extends
     ];
   }
 
-  protected _getMessageEmbedFooter(): EmbedFooterData {
+  protected _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `I don't allow you!`,
     };
   }
 
-  protected _getMessageEmbedThumbnail(): EmbedAssetData {
+  protected _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
     };
   }
 
-  protected _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  protected _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   protected _getMessageEmbedTitle(): string {
     return `I cannot let you do that!`;
   }
 
-  protected abstract _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedField;
+  protected abstract _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): APIEmbedField;
 
-  protected abstract _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedField;
+  protected abstract _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): APIEmbedField;
 
-  protected abstract _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedField;
+  protected abstract _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): APIEmbedField;
 }

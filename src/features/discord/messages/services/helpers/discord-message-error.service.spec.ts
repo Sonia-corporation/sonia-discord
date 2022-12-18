@@ -14,7 +14,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedAssetData, EmbedAuthorData, EmbedField, Message } from 'discord.js';
+import { APIEmbedAuthor, APIEmbedField, APIEmbedImage, Message } from 'discord.js';
 import faker from 'faker';
 import moment, { MomentInput } from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
@@ -103,8 +103,8 @@ describe(`DiscordMessageErrorService`, (): void => {
       error = new Error(`dummy error`);
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         channel: {
-          send(): Promise<Message<boolean>> {
-            return Promise.resolve(createHydratedMock<Message<boolean>>());
+          send(): Promise<Message<true>> {
+            return Promise.resolve(createHydratedMock<Message<true>>());
           },
         },
         id: `dummy-id`,
@@ -234,7 +234,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       it(`should send a message to this channel with an author`, (): void => {
         expect.assertions(1);
-        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
+        const messageEmbedAuthor: APIEmbedAuthor = createHydratedMock<APIEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         service.handleError(error, anyDiscordMessage);
@@ -266,7 +266,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
           service.handleError(error, anyDiscordMessage);
 
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.iconURL).toBeUndefined();
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.icon_url).toBeUndefined();
         });
       });
 
@@ -284,7 +284,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
           service.handleError(error, anyDiscordMessage);
 
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.iconURL).toBe(`dummy-image-url`);
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.icon_url).toBe(`dummy-image-url`);
         });
       });
 
@@ -305,7 +305,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].thumbnail).toStrictEqual({
           url: icon,
-        } as EmbedAssetData);
+        } as APIEmbedImage);
       });
 
       it(`should send a message to this channel with 3 fields`, (): void => {
@@ -321,7 +321,8 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        const embedFieldData: EmbedField = {
+        const embedFieldData: APIEmbedField = {
+          inline: false,
           name: `The message's id that killed me`,
           value: `dummy-id`,
         };
@@ -333,7 +334,8 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        const embedFieldData: EmbedField = {
+        const embedFieldData: APIEmbedField = {
+          inline: false,
           name: `My blood trace`,
           value: `Error: dummy error`,
         };
@@ -361,7 +363,8 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        const embedFieldData: EmbedField = {
+        const embedFieldData: APIEmbedField = {
+          inline: false,
           name: `Help me to help you`,
           value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
         };
@@ -411,7 +414,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
     it(`should send a message to the Sonia error channel with an author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
+      const messageEmbedAuthor: APIEmbedAuthor = createHydratedMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       service.handleError(error, anyDiscordMessage);
@@ -449,7 +452,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         expect(
           discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].footer
-            .iconURL
+            .icon_url
         ).toBeUndefined();
       });
     });
@@ -470,7 +473,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         expect(
           discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].footer
-            .iconURL
+            .icon_url
         ).toBe(`dummy-image-url`);
       });
     });
@@ -494,7 +497,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       expect(
         discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].thumbnail
-      ).toStrictEqual({ url: icon } as EmbedAssetData);
+      ).toStrictEqual({ url: icon } as APIEmbedImage);
     });
 
     it(`should send a message to the Sonia error channel with 3 fields`, (): void => {
@@ -512,7 +515,8 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      const embedFieldData: EmbedField = {
+      const embedFieldData: APIEmbedField = {
+        inline: false,
         name: `The message's id that killed me`,
         value: `dummy-id`,
       };
@@ -526,7 +530,8 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      const embedFieldData: EmbedField = {
+      const embedFieldData: APIEmbedField = {
+        inline: false,
         name: `My blood trace`,
         value: `Error: dummy error`,
       };
@@ -565,7 +570,8 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      const embedFieldData: EmbedField = {
+      const embedFieldData: APIEmbedField = {
+        inline: false,
         name: `Help me to help you`,
         value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
       };

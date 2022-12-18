@@ -10,7 +10,7 @@ import { discordHasThisCommand } from '../../../functions/commands/checks/discor
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
-import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -54,7 +54,7 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     });
   }
 
-  private _getMessageEmbed(): EmbedData {
+  private _getMessageEmbed(): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -66,34 +66,34 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     };
   }
 
-  private _getMessageEmbedAuthor(): EmbedAuthorData {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): EmbedAssetData {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
-    const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern<EmbedAssetData> = {
-      [AppConfigReleaseTypeEnum.BUG_FIXES](): EmbedAssetData {
+    const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern<APIEmbedImage> = {
+      [AppConfigReleaseTypeEnum.BUG_FIXES](): APIEmbedImage {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesBugFixesImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.FEATURES](): EmbedAssetData {
+      [AppConfigReleaseTypeEnum.FEATURES](): APIEmbedImage {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesFeaturesImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.MIXED](): EmbedAssetData {
+      [AppConfigReleaseTypeEnum.MIXED](): APIEmbedImage {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): EmbedAssetData {
+      [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): APIEmbedImage {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesPerformanceImprovementsImageUrl(),
         };
       },
-      [AppConfigReleaseTypeEnum.UNKNOWN](): EmbedAssetData {
+      [AppConfigReleaseTypeEnum.UNKNOWN](): APIEmbedImage {
         return {
           url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesUnknownImageUrl(),
         };
@@ -103,14 +103,14 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     return responsesFactoryPattern[releaseType]();
   }
 
-  private _getMessageEmbedFooter(): EmbedFooterData {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
     const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized();
     const firstReleaseDate: string =
       AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(`[the ]Do MMMM YYYY`);
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `${totalReleaseCountHumanized} since ${firstReleaseDate}`,
     };
   }
@@ -138,8 +138,8 @@ export class DiscordMessageCommandReleaseNotesService extends DiscordMessageComm
     return responsesFactoryPattern[releaseType]();
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   private _getMessageEmbedTitle(): string {

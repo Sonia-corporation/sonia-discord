@@ -5,7 +5,7 @@ import { IDiscordMessageResponse } from '../../../../../interfaces/discord-messa
 import { IDiscordCommandFlagsErrors } from '../../../../../types/commands/flags/discord-command-flags-errors';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedData, EmbedField } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 const ONE_FLAG_ERROR = 1;
@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
       });
   }
 
-  private _getMessageEmbed(flagsErrors: IDiscordCommandFlagsErrors): EmbedData {
+  private _getMessageEmbed(flagsErrors: IDiscordCommandFlagsErrors): APIEmbed {
     return {
       description: this._getMessageEmbedDescription(flagsErrors),
       fields: this._getMessageEmbedFields(flagsErrors),
@@ -55,8 +55,8 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
     return `${wrapInBold(flagsErrorsCount)} error${_.gt(flagsErrorsCount, ONE_FLAG_ERROR) ? `s` : ``} found.`;
   }
 
-  private _getMessageEmbedFields(flagsErrors: IDiscordCommandFlagsErrors): EmbedField[] {
-    return _.map(flagsErrors, ({ name, description }: IDiscordCommandFlagError): EmbedField => {
+  private _getMessageEmbedFields(flagsErrors: IDiscordCommandFlagsErrors): APIEmbedField[] {
+    return _.map(flagsErrors, ({ name, description }: IDiscordCommandFlagError): APIEmbedField => {
       return {
         inline: false,
         name,

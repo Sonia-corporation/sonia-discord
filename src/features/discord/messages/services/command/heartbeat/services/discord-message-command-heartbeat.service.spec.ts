@@ -17,18 +17,16 @@ import { DiscordMessageCommandVerifyChannelRightService } from '../../discord-me
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-heartbeat-description-messages';
 import { DISCORD_MESSAGE_COMMAND_HEARTBEAT_TITLE_MESSAGES } from '../constants/discord-message-command-heartbeat-title-messages';
 import {
+  APIEmbed,
+  APIEmbedAuthor,
+  APIEmbedField,
+  APIEmbedFooter,
+  APIEmbedImage,
   ChannelType,
   Client,
-  DMChannel,
-  EmbedAssetData,
-  EmbedAuthorData,
-  EmbedField,
-  EmbedFooterData,
+  Embed,
   Message,
   MessageEditOptions,
-  MessageEmbed,
-  NewsChannel,
-  TextChannel,
 } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock, createMock } from 'ts-auto-mock';
@@ -109,7 +107,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -235,12 +233,13 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -249,7 +248,8 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 2 fields`, async (): Promise<void> => {
@@ -257,7 +257,8 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields).toHaveLength(2);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields).toHaveLength(2);
     });
 
     it(`should return a Discord message response embed with a websocket heartbeat field`, async (): Promise<void> => {
@@ -265,10 +266,12 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[0]).toStrictEqual({
+        inline: false,
         name: `My Websocket heartbeat`,
         value: `1,500 ms`,
-      } as EmbedField);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a roundtrip latency field`, async (): Promise<void> => {
@@ -276,10 +279,12 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[1]).toStrictEqual({
+        inline: false,
         name: `My roundtrip latency`,
         value: `Calculating...`,
-      } as EmbedField);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -287,7 +292,8 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.description).toBe(`Is it good?`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.description).toBe(`Is it good?`);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -296,10 +302,11 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer).toStrictEqual({
+        icon_url: `dummy-image-url`,
         text: `My heartbeat`,
-      } as EmbedFooterData);
+      } as APIEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -312,10 +319,11 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: undefined,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: undefined,
           text: `My heartbeat`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
     });
 
@@ -329,10 +337,11 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `image-url`,
           text: `My heartbeat`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
     });
 
@@ -342,9 +351,10 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.thumbnail).toStrictEqual({
         url: IconEnum.HEART_WITH_PULSE,
-      } as EmbedAssetData);
+      } as APIEmbedImage);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -352,8 +362,9 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -361,7 +372,8 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embeds?.[0]?.title).toBe(`This is my ping.`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`This is my ping.`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -401,7 +413,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -417,7 +429,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -451,7 +463,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews }),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -472,7 +484,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -502,7 +514,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
           embeds: [
             {
               author: {
-                iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                 name: `[dev] Sonia`,
                 url: `https://github.com/Sonia-corporation?type=source`,
               },
@@ -522,7 +534,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
                 },
               ],
               footer: {
-                iconURL: undefined,
+                icon_url: undefined,
                 text: `I don't allow you!`,
               },
               thumbnail: {
@@ -1547,14 +1559,12 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
   describe(`afterSending()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let message: Message;
-    let messageEmbed: MessageEmbed;
+    let messageEmbed: Embed;
 
     let loggerServiceLogSpy: jest.SpyInstance;
     let loggerServiceSuccessSpy: jest.SpyInstance;
     let discordMessageCommandHeartbeatUpdateErrorServiceHandleErrorSpy: jest.SpyInstance;
     let editMock: jest.Mock;
-    let setFieldsMock: jest.Mock;
-    let mapMock: jest.Mock;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandHeartbeatService();
@@ -1562,14 +1572,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
         id: `dummy-id`,
       });
       editMock = jest.fn().mockRejectedValue(createHydratedMock<Message>());
-      setFieldsMock = jest.fn();
-      mapMock = jest.fn();
-      messageEmbed = createHydratedMock<MessageEmbed>({
-        fields: {
-          map: mapMock,
-        },
-        setFields: setFieldsMock,
-      });
+      messageEmbed = createHydratedMock<Embed>();
       message = createHydratedMock<Message>({
         edit: editMock,
         embeds: [messageEmbed],
@@ -1597,7 +1600,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
     });
 
     it(`should edit the embed message to calculate the roundtrip latency`, async (): Promise<void> => {
-      expect.assertions(4);
+      expect.assertions(2);
 
       await service.afterSending(anyDiscordMessage, message);
 
@@ -1605,8 +1608,6 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
       const messageEditOptions: MessageEditOptions = {
         embeds: [messageEmbed],
       };
-      expect(mapMock).toHaveBeenCalledTimes(1);
-      expect(setFieldsMock).toHaveBeenCalledTimes(1);
       expect(editMock).toHaveBeenCalledTimes(1);
       expect(editMock).toHaveBeenCalledWith(messageEditOptions);
     });
@@ -1667,7 +1668,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
   });
 
   describe(`getRoundtripLatencyEmbedField()`, (): void => {
-    let field: EmbedField;
+    let field: APIEmbedField;
     let message: Message;
     let anyDiscordMessage: IAnyDiscordMessage;
 
@@ -1675,7 +1676,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandHeartbeatService();
-      field = createHydratedMock<EmbedField>({
+      field = createHydratedMock<APIEmbedField>({
         inline: false,
         name: `dummy-name`,
         value: `dummy-value`,
@@ -1710,7 +1711,7 @@ describe(`DiscordMessageCommandHeartbeatService`, (): void => {
 
       const result = service.getRoundtripLatencyEmbedField(field, message, anyDiscordMessage);
 
-      const resultEmbedField: EmbedField = {
+      const resultEmbedField: APIEmbedField = {
         inline: false,
         name: `dummy-name`,
         value: `1,500 ms`,

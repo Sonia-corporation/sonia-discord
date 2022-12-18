@@ -22,9 +22,9 @@ import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-disc
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageErrorService } from '../../../../../helpers/discord-message-error.service';
-import { DMChannel, Message, TextChannel } from 'discord.js';
+import { ChannelType, DMChannel, Message, TextChannel } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -123,7 +123,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
     describe(`when the messages comes from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
       });
@@ -160,7 +160,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
+              channel: { type: ChannelType.DM },
               id: `dummy-id`,
             });
 
@@ -192,9 +192,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
               author: {
                 id: `dummy-author-id`,
               },
-              channel: createHydratedMock<DMChannel>({
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.DM,
+              },
               id: `dummy-id`,
             });
           });
@@ -576,7 +577,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
     describe(`when the messages does not come from a DM`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
       });
@@ -614,7 +615,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
         describe(`when the Discord message guild is not valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
-              channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+              channel: { type: ChannelType.GuildText },
               guild: null,
               id: `dummy-id`,
             });
@@ -644,9 +645,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
         describe(`when the Discord message guild is valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
-              channel: createHydratedMock<TextChannel>({
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.GuildText,
+              },
               guild: {
                 id: `dummy-guild-id`,
               },
@@ -1708,6 +1710,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
       firebaseDm = createMock<IFirebaseDm>();
       channel = createHydratedMock<DMChannel>({
         id: `dummy-channel-id`,
+        type: ChannelType.DM,
       });
       writeResult = createMock<WriteResult>();
 
@@ -1945,6 +1948,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
       firebaseGuild = createMock<IFirebaseGuild>();
       channel = createHydratedMock<TextChannel>({
         id: `dummy-channel-id`,
+        type: ChannelType.GuildText,
       });
       writeResult = createMock<WriteResult>();
 

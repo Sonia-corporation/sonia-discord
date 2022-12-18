@@ -1,7 +1,7 @@
 import { DISCORD_PRESENCE_ACTIVITY_LISTENING } from './discord-presence-activity-listening';
 import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
-import { DiscordActivityTypeEnum } from '../enums/discord-activity-type.enum';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
+import { ActivityType } from 'discord.js';
 
 describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
   it(`should contains a list of listening activities`, (): void => {
@@ -10,531 +10,531 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
     expect(DISCORD_PRESENCE_ACTIVITY_LISTENING).toStrictEqual([
       {
         name: DiscordActivityNameEnum.SPOTIFY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MOM,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MOMMY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DAD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DADDY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DEEZER,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DEMPSEY_ROLL_BOY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.APPLE_MUSIC,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TWELVE_AM,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TWENTY_FOUR_KGOLDN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TWENTY_SEVEN_CLUB,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.VINNIE_PAZ,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ABSTRACT,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ADRIAN_STRESOW,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ALEX_JORDAHL,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ANTHONY_RUSSO,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.APOLLO,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.APOLLO_BROWN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ARIZONA_ZERVAS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ARMY_OF_THE_PHARAOHS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.AZAD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.BASIC,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.BLACKBEAR,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.BAZANJI,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.BIGFLO_AND_OLI,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.BUGUS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.C_DOT_CASTRO,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CALL_ME_KARIZMA,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CAM_MEEKINS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CARTER,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CHRIS_YONGE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CJ_TRILLO,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CROOSH,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.C_TROX,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.CYRUS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DJ_KHALED,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DOOBIE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DRAKE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.D_WHY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.DA_BABY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.EMINEM,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.EVIDENCE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.G_EAZY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.GRITS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.GUNNA,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.HENDERSIN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.HIPPIE_SABOTAGE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.HI_REZ,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.HUEY_MACK,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.INDII_G,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.IVAN_B,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JAIDEN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JAY_PORTAL,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JAY_ZOLE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JEROME,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JEZ_DIOR,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JOHN_WOLF,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JOSH_A,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JUICE_WRLD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JUSTIN_STONE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JUTES,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.J_WRIGHT,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.JACK_HARLOW,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.K_A_A_N,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.KANYE_WEST,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.KEVIN_GATES,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.LIL_REVIVE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MIGOS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.POST_MALONE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.THE_KID_LAROI,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TRAVIS_SCOTT,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TREVOR_DANIEL,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ZOLE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.KID_INK,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.KID_QUILL,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.LIL_BABY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.THE_KINGS_DEAD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.LIL_PEEP,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.LOGIC,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.LUKE_CHRISTOPHER,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MAC_MILLER,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MACHINE_GUN_KELLY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MACKLEMORE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MARC_GOONE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MATT_EASTON,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MIKE_JOEY_AND_MIZZY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MILES_WESLEY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MIRA_HATTER,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.MOBY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.NATE_GOOD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.NF,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.NICK_BONIN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.NOAH_NORTH,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.NOTHING_NOWHERE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.NOTIME,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.OCD_MOOSH_AND_TWIST,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.OLLIE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ON_CUE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ORELSAN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.OUSE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.P_MO,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.PACKY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.PHORA,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.POLO_G,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.POWFU,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.QUINN_XCII,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.RAH_C,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.RAZ_SIMONE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.REMA,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ROWLAN,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.ROY_JONES,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.RUSS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.RXSEBOY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.RYAN_CARAVEO,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.RYAN_OAKES,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SAD_BOY_PROLIFIC,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SAMMY_PHARAOH,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SHELTON_HARRIS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SIK_WORLD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SLEEPY_HALLOW,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SNOW,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.SOL,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TDOT_ILLDUDE,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TEQKOI,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TOBILLA,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TRAY_JACK,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.TRIPPZ_MICHAUD,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.WILLIS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.WITT_LOWRY,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.WIZ_KHALIFA,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.XXXTENTACION,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
       {
         name: DiscordActivityNameEnum.YONAS,
-        type: DiscordActivityTypeEnum.LISTENING,
+        type: ActivityType.Listening,
       },
     ] as IDiscordPresenceActivity[]);
   });

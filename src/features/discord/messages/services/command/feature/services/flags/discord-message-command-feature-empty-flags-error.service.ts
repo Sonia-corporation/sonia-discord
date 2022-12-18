@@ -8,7 +8,7 @@ import { DiscordMessageCommandCliErrorService } from '../../../discord-message-c
 import { DiscordMessageCommandFeatureNameEnum } from '../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedData, EmbedField } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordMessageCommandFeatureErrorCoreService {
@@ -49,7 +49,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     anyDiscordMessage: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[],
     featureName: DiscordMessageCommandFeatureNameEnum
-  ): EmbedData {
+  ): APIEmbed {
     return {
       fields: this._getMessageEmbedFields(anyDiscordMessage, commands, featureName),
       footer: this._getMessageEmbedFooter(),
@@ -61,7 +61,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     anyDiscordMessage: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[],
     featureName: DiscordMessageCommandFeatureNameEnum
-  ): EmbedField[] {
+  ): APIEmbedField[] {
     return [
       this._getMessageEmbedFieldError(featureName),
       this._getMessageEmbedFieldAllFlags(),
@@ -69,8 +69,9 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     ];
   }
 
-  private _getMessageEmbedFieldError(featureName: DiscordMessageCommandFeatureNameEnum): EmbedField {
+  private _getMessageEmbedFieldError(featureName: DiscordMessageCommandFeatureNameEnum): APIEmbedField {
     return {
+      inline: false,
       name: `No flags specified`,
       value: `You did not specify a flag to configure the ${_.lowerCase(
         featureName
@@ -80,8 +81,9 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     };
   }
 
-  private _getMessageEmbedFieldAllFlags(): EmbedField {
+  private _getMessageEmbedFieldAllFlags(): APIEmbedField {
     return {
+      inline: false,
       name: `All flags`,
       value: DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getAllFlagsNameWithShortcutsExample(),
     };
@@ -90,7 +92,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
   private _getMessageEmbedFieldExample(
     { content }: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[]
-  ): EmbedField {
+  ): APIEmbedField {
     const randomFlag: string | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getRandomFlagUsageExample();
     let userCommand: string | null = discordGetCommandAndFirstArgument({
       commands,
@@ -103,6 +105,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     }
 
     return {
+      inline: false,
       name: `Example`,
       value: `\`${userCommand} ${_.toString(randomFlag)}\``,
     };

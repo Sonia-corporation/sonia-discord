@@ -7,7 +7,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData, Snowflake } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage, Snowflake } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -54,7 +54,7 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     };
   }
 
-  private _getMessageEmbed(): EmbedData {
+  private _getMessageEmbed(): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -67,34 +67,35 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     };
   }
 
-  private _getMessageEmbedAuthor(): EmbedAuthorData {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): EmbedAssetData {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageWarningImageUrl(),
     };
   }
 
-  private _getMessageEmbedFields(): EmbedField[] {
+  private _getMessageEmbedFields(): APIEmbedField[] {
     return [this._getMessageEmbedFieldReport()];
   }
 
-  private _getMessageEmbedFieldReport(): EmbedField {
+  private _getMessageEmbedFieldReport(): APIEmbedField {
     const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
 
     return {
+      inline: false,
       name: `Help me to get better!`,
       value: `If you think that using this command on this type of channel should be supported, do not hesitate to submit a [feature request](${githubFeatureRequestUrl}).`,
     };
   }
 
-  private _getMessageEmbedFooter(): EmbedFooterData {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Discord unsupported command channel type`,
     };
   }
@@ -103,8 +104,8 @@ export class DiscordMessageCommandVerifyChannelRightWarningUnsupportedChannelTyp
     return DiscordMessageConfigService.getInstance().getMessageWarningImageColor();
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   private _getMessageEmbedTitle(): string {

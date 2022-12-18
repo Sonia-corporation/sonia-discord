@@ -1,3 +1,3 @@
-import { MessageOptions } from 'discord.js';
+import { BaseMessageOptions } from 'discord.js';
 
-export type IDiscordMessageOptions = MessageOptions;
+export type IDiscordMessageOptions = BaseMessageOptions;

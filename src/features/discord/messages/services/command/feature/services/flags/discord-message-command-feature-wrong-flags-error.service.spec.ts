@@ -9,7 +9,7 @@ import { IDiscordCommandFlagsErrors } from '../../../../../types/commands/flags/
 import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
-import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -112,12 +112,13 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -126,7 +127,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when there is one given flag error`, (): void => {
@@ -139,7 +141,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.description).toBe(`**1** error found.`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.description).toBe(`**1** error found.`);
       });
 
       it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
@@ -147,7 +150,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.fields).toHaveLength(1);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields).toHaveLength(1);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<void> => {
@@ -155,11 +159,12 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[0]).toStrictEqual({
           inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
-        } as EmbedField);
+        } as APIEmbedField);
       });
     });
 
@@ -177,7 +182,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.description).toBe(`**3** errors found.`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.description).toBe(`**3** errors found.`);
       });
 
       it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -185,7 +191,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.fields).toHaveLength(3);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields).toHaveLength(3);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<void> => {
@@ -193,23 +200,22 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[0]).toStrictEqual({
           inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
-        } as EmbedField);
-
-        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+        } as APIEmbedField);
+        expect(embed?.fields?.[1]).toStrictEqual({
           inline: false,
           name: flagsErrors[1].name,
           value: flagsErrors[1].description,
-        } as EmbedField);
-
-        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+        } as APIEmbedField);
+        expect(embed?.fields?.[2]).toStrictEqual({
           inline: false,
           name: flagsErrors[2].name,
           value: flagsErrors[2].description,
-        } as EmbedField);
+        } as APIEmbedField);
       });
     });
 
@@ -219,10 +225,11 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer).toStrictEqual({
+        icon_url: `dummy-image-url`,
         text: `Invalid feature command`,
-      } as EmbedFooterData);
+      } as APIEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -235,10 +242,11 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: undefined,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: undefined,
           text: `Invalid feature command`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
     });
 
@@ -252,10 +260,11 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `image-url`,
           text: `Invalid feature command`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
     });
 
@@ -265,9 +274,10 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as EmbedAssetData);
+      } as APIEmbedImage);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -275,8 +285,9 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -284,7 +295,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embeds?.[0]?.title).toBe(`I can not handle your request.`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {

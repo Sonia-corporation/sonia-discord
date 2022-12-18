@@ -130,7 +130,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       errorDiscordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+        channel: { type: ChannelType.GuildText },
         id: `dummy-id`,
       });
 
@@ -245,7 +245,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
+          channel: { type: ChannelType.DM },
         });
       });
 
@@ -261,7 +261,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a text channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+          channel: { type: ChannelType.GuildText },
         });
       });
 
@@ -295,7 +295,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     describe(`when the message comes from a news channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<NewsChannel>({ type: ChannelType.GuildNews }),
+          channel: { type: ChannelType.GuildNews },
         });
       });
 
@@ -316,7 +316,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     beforeEach((): void => {
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-        channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+        channel: { type: ChannelType.GuildText },
       });
       discordMessageCommandVerifyChannelRightServiceGetErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandVerifyChannelRightService,
@@ -346,7 +346,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           embeds: [
             {
               author: {
-                iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                 name: `[dev] Sonia`,
                 url: `https://github.com/Sonia-corporation?type=source`,
               },
@@ -366,7 +366,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 },
               ],
               footer: {
-                iconURL: undefined,
+                icon_url: undefined,
                 text: `I don't allow you!`,
               },
               thumbnail: {
@@ -1688,7 +1688,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                     embeds: [
                       {
                         author: {
-                          iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                          icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                           name: `[dev] Sonia`,
                           url: `https://github.com/Sonia-corporation?type=source`,
                         },
@@ -2694,7 +2694,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                     embeds: [
                       {
                         author: {
-                          iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+                          icon_url: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
                           name: `[dev] Sonia`,
                           url: `https://github.com/Sonia-corporation?type=source`,
                         },

@@ -123,12 +123,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
@@ -139,12 +139,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
@@ -155,12 +155,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
@@ -171,12 +171,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
@@ -187,12 +187,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 
@@ -203,12 +203,12 @@ describe(`isDiscordWritableChannel()`, (): void => {
       });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordWritableChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBe(true);
     });
   });
 

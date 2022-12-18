@@ -7,7 +7,7 @@ import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { ChannelType, EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage, ChannelType } from 'discord.js';
 import moment from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
 
@@ -221,6 +221,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a category channel and the category channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          // @ts-ignore
           channel: { type: ChannelType.GuildCategory },
           id: `dummy-id`,
         });
@@ -239,6 +240,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a category channel and the category channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          // @ts-ignore
           channel: { type: ChannelType.GuildCategory },
           id: `dummy-id`,
         });
@@ -257,6 +259,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a stage channel and the stage channel is not allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          // @ts-ignore
           channel: { type: ChannelType.GuildStageVoice },
           id: `dummy-id`,
         });
@@ -275,6 +278,7 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
     describe(`when the message is from a stage channel and the stage channel is allowed`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+          // @ts-ignore
           channel: { type: ChannelType.GuildStageVoice },
           id: `dummy-id`,
         });
@@ -383,12 +387,13 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
+        const messageEmbedAuthor: APIEmbedAuthor = createHydratedMock<APIEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -397,7 +402,8 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -405,7 +411,8 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields).toHaveLength(3);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields).toHaveLength(3);
       });
 
       it(`should return a Discord message response embed with a wrong channel field`, async (): Promise<void> => {
@@ -413,10 +420,12 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[0]).toStrictEqual({
+          inline: false,
           name: `Wrong channel!`,
           value: `This sub-command is not allowed on text channels.`,
-        } as EmbedField);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -424,10 +433,12 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[1]).toStrictEqual({
+          inline: false,
           name: `Allowed channels`,
           value: `You can use this sub-command only on text channels.`,
-        } as EmbedField);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a report field`, async (): Promise<void> => {
@@ -435,10 +446,12 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[2]).toStrictEqual({
+          inline: false,
           name: `Help me to get better!`,
           value: `If you think that using this sub-command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
-        } as EmbedField);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -447,10 +460,11 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `dummy-image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `dummy-image-url`,
           text: `I don't allow you!`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -463,10 +477,11 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
           const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: undefined,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: undefined,
             text: `I don't allow you!`,
-          } as EmbedFooterData);
+          } as APIEmbedFooter);
         });
       });
 
@@ -480,10 +495,11 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
           const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `image-url`,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `image-url`,
             text: `I don't allow you!`,
-          } as EmbedFooterData);
+          } as APIEmbedFooter);
         });
       });
 
@@ -493,9 +509,10 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as EmbedAssetData);
+        } as APIEmbedImage);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -503,8 +520,9 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(moment(embed?.timestamp).isValid()).toBe(true);
+        expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -512,7 +530,8 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.title).toBe(`I cannot let you do that!`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.title).toBe(`I cannot let you do that!`);
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -539,12 +558,13 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: EmbedAuthorData = createHydratedMock<EmbedAuthorData>();
+        const messageEmbedAuthor: APIEmbedAuthor = createHydratedMock<APIEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -553,7 +573,8 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -561,7 +582,8 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields).toHaveLength(3);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields).toHaveLength(3);
       });
 
       it(`should return a Discord message response embed with a wrong channel field`, async (): Promise<void> => {
@@ -569,10 +591,12 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[0]).toStrictEqual({
+          inline: false,
           name: `Wrong channel!`,
           value: `This sub-command is not allowed on text channels.`,
-        } as EmbedField);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a hint field`, async (): Promise<void> => {
@@ -580,10 +604,12 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[1]).toStrictEqual({
+          inline: false,
           name: `Allowed channels`,
           value: `You can use this sub-command only on text channels, private messages, and news channels.`,
-        } as EmbedField);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a report field`, async (): Promise<void> => {
@@ -591,10 +617,12 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[2]).toStrictEqual({
+          inline: false,
           name: `Help me to get better!`,
           value: `If you think that using this sub-command on text channels should be allowed, do not hesitate to submit a [feature request](https://github.com/Sonia-corporation/sonia-discord/issues/new?labels=feature-request&template=feature_request.md&projects=sonia-corporation/sonia-discord/1&title=%5BFEATURE%5D+).`,
-        } as EmbedField);
+        } as APIEmbedField);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -603,10 +631,11 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `dummy-image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `dummy-image-url`,
           text: `I don't allow you!`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
 
       describe(`when the Sonia image url is null`, (): void => {
@@ -619,10 +648,11 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
           const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: undefined,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: undefined,
             text: `I don't allow you!`,
-          } as EmbedFooterData);
+          } as APIEmbedFooter);
         });
       });
 
@@ -636,10 +666,11 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
           const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-            iconURL: `image-url`,
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.footer).toStrictEqual({
+            icon_url: `image-url`,
             text: `I don't allow you!`,
-          } as EmbedFooterData);
+          } as APIEmbedFooter);
         });
       });
 
@@ -649,9 +680,10 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-        } as EmbedAssetData);
+        } as APIEmbedImage);
       });
 
       it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -659,8 +691,9 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(moment(embed?.timestamp).isValid()).toBe(true);
+        expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -668,7 +701,8 @@ describe(`DiscordMessageSubCommandVerifyChannelRightService`, (): void => {
 
         const result = await service.getErrorMessageResponse(anyDiscordMessage, allowedChannels);
 
-        expect(result.options.embeds?.[0]?.title).toBe(`I cannot let you do that!`);
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.title).toBe(`I cannot let you do that!`);
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {

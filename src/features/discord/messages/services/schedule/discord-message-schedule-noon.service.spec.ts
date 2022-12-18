@@ -26,13 +26,13 @@ import { DiscordLoggerErrorService } from '../../../logger/services/discord-logg
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import {
+  BaseMessageOptions,
   Client,
   Collection,
   Guild,
   GuildBasedChannel,
   GuildChannel,
   Message,
-  MessageOptions,
   MessagePayload,
   TextChannel,
   VoiceChannel,
@@ -1229,7 +1229,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-        const message: string | MessagePayload | MessageOptions = {
+        const message: string | MessagePayload | BaseMessageOptions = {
           content: `Il est midi!`,
         };
         expect(sendMock).toHaveBeenCalledTimes(1);

@@ -29,7 +29,7 @@ import { IFirebaseDmV1 } from '../../interfaces/dms/firebase-dm-v1';
 import { IFirebaseDm } from '../../types/dms/firebase-dm';
 import { IFirebaseDmVFinal } from '../../types/dms/firebase-dm-v-final';
 import { IUpdatedFirebaseDmLastReleaseNotesVersion } from '../../types/dms/updated-firebase-dm-last-release-notes-version';
-import { Message, MessageOptions, MessagePayload, User } from 'discord.js';
+import { BaseMessageOptions, Message, MessagePayload, User } from 'discord.js';
 import { QueryDocumentSnapshot, QuerySnapshot, WriteBatch, WriteResult } from 'firebase-admin/firestore';
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -1543,7 +1543,7 @@ describe(`FirebaseDmsNewVersionService`, (): void => {
 
         await expect(service.sendMessageResponse(user)).rejects.toThrow(new Error(`send error`));
 
-        const message: string | MessagePayload | MessageOptions = {
+        const message: string | MessagePayload | BaseMessageOptions = {
           content: `dummy-response`,
         };
         expect(sendMock).toHaveBeenCalledTimes(1);

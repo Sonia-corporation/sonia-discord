@@ -10,8 +10,9 @@ import { getNextJobDate } from '../../../schedules/functions/get-next-job-date';
 import { getNextJobDateHumanized } from '../../../schedules/functions/get-next-job-date-humanized';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
+import { getDiscordHumanizedPresenceActivityType } from '../functions/get-discord-humanized-presence-activity-type';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
-import { ClientUser, Presence } from 'discord.js';
+import { ActivityType, ClientUser, Presence } from 'discord.js';
 import _ from 'lodash';
 import { Job, scheduleJob } from 'node-schedule';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -61,12 +62,13 @@ export class DiscordActivitySoniaService extends AbstractService {
       afk: false,
       status: `online`,
     });
+    const activityType: ActivityType | undefined = _.head(presence.activities)?.type;
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Sonia presence updated to: ${ChalkService.getInstance().value(
-          _.head(presence.activities)?.type
+          _.isUndefined(activityType) ? `unknown` : getDiscordHumanizedPresenceActivityType(activityType)
         )} ${ChalkService.getInstance().text(`x`)} ${ChalkService.getInstance().value(
           _.head(presence.activities)?.name
         )}`

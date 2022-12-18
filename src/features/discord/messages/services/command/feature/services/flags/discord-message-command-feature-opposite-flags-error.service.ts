@@ -5,7 +5,7 @@ import { IDiscordMessageResponse } from '../../../../../interfaces/discord-messa
 import { IDiscordCommandFlagsOpposite } from '../../../../../types/commands/flags/discord-command-flags-opposite';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedData, EmbedField } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 const ONE_FLAG = 1;
@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
       });
   }
 
-  private _getMessageEmbed(oppositeFlags: IDiscordCommandFlagsOpposite): EmbedData {
+  private _getMessageEmbed(oppositeFlags: IDiscordCommandFlagsOpposite): APIEmbed {
     return {
       description: this._getMessageEmbedDescription(oppositeFlags),
       fields: this._getMessageEmbedFields(oppositeFlags),
@@ -61,9 +61,9 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
     return _.size(oppositeFlags);
   }
 
-  private _getMessageEmbedFields(oppositeFlags: IDiscordCommandFlagsOpposite): EmbedField[] {
+  private _getMessageEmbedFields(oppositeFlags: IDiscordCommandFlagsOpposite): APIEmbedField[] {
     return _.concat(
-      _.map(oppositeFlags, ({ name, description }: IDiscordCommandFlagOpposite): EmbedField => {
+      _.map(oppositeFlags, ({ name, description }: IDiscordCommandFlagOpposite): APIEmbedField => {
         return {
           inline: false,
           name,
@@ -74,8 +74,9 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
     );
   }
 
-  private _getMessageEmbedHintField(): EmbedField {
+  private _getMessageEmbedHintField(): APIEmbedField {
     return {
+      inline: false,
       name: `How to solve this?`,
       value: `I am here to help you but do not mess with me!\nTry again but remove the extra opposite flags which makes no sense since you can not combine them!\nAlso you can use the \`--help\` flag if want my help!`,
     };

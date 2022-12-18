@@ -1,7 +1,0 @@
-export enum DiscordActivityTypeEnum {
-  CUSTOM = `CUSTOM`,
-  LISTENING = `LISTENING`,
-  PLAYING = `PLAYING`,
-  STREAMING = `STREAMING`,
-  WATCHING = `WATCHING`,
-}

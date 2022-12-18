@@ -6,7 +6,7 @@ import { DiscordChannelEnum } from '../../../channels/enums/discord-channel.enum
 import { getDiscordHumanizedChannelPluralFromClass } from '../../../channels/functions/get-discord-humanized-channel-plural-from-class';
 import { getDiscordHumanizedChannelsPlural } from '../../../channels/functions/get-discord-humanized-channels-plural';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
-import { EmbedField } from 'discord.js';
+import { APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandVerifyChannelRightService extends DiscordMessageCommandVerifyChannelRightCoreService {
@@ -41,24 +41,27 @@ export class DiscordMessageCommandVerifyChannelRightService extends DiscordMessa
     return isAllowed;
   }
 
-  protected override _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): EmbedField {
+  protected override _getMessageEmbedFieldWrongChannel({ channel }: IAnyDiscordMessage): APIEmbedField {
     return {
+      inline: false,
       name: `Wrong channel!`,
       value: `This command is not allowed on ${getDiscordHumanizedChannelPluralFromClass(channel)}.`,
     };
   }
 
-  protected override _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): EmbedField {
+  protected override _getMessageEmbedFieldHint(allowedChannels: Set<DiscordChannelEnum>): APIEmbedField {
     return {
+      inline: false,
       name: `Allowed channels`,
       value: `You can use this command only on ${getDiscordHumanizedChannelsPlural(Array.from(allowedChannels))}.`,
     };
   }
 
-  protected override _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): EmbedField {
+  protected override _getMessageEmbedFieldReport({ channel }: IAnyDiscordMessage): APIEmbedField {
     const githubFeatureRequestUrl: string = GithubConfigService.getInstance().getFeatureRequestUrl();
 
     return {
+      inline: false,
       name: `Help me to get better!`,
       value: `If you think that using this command on ${getDiscordHumanizedChannelPluralFromClass(
         channel

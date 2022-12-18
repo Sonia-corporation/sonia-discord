@@ -6,7 +6,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../helpers/discord-message-help.service';
 import { DiscordMessageCommandCoreService } from '../discord-message-command-core.service';
-import { EmbedData, EmbedField } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 /**
@@ -58,7 +58,7 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     });
   }
 
-  private _getMessageEmbed(): EmbedData {
+  private _getMessageEmbed(): APIEmbed {
     return {
       description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(),
@@ -70,7 +70,7 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     return `Below is the complete list of commands.\nYou can either use \`-\`, \`!\` or \`$\` as prefix to run a command.`;
   }
 
-  private _getMessageEmbedFields(): EmbedField[] {
+  private _getMessageEmbedFields(): APIEmbedField[] {
     // Sort the fields by alphabetical order of the commands!
     return [
       this._getMessageEmbedFieldCookie(),
@@ -86,71 +86,81 @@ export class DiscordMessageCommandHelpService extends DiscordMessageCommandCoreS
     ];
   }
 
-  private _getMessageEmbedFieldCookie(): EmbedField {
+  private _getMessageEmbedFieldCookie(): APIEmbedField {
     return {
+      inline: false,
       name: `Cookie (*cookie*, *cookies* or *c*)`,
       value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
     };
   }
 
-  private _getMessageEmbedFieldError(): EmbedField {
+  private _getMessageEmbedFieldError(): APIEmbedField {
     return {
+      inline: false,
       name: `Error (*error* or *bug*)`,
       value: `Create a bug in my core system. Do not do this one, of course!`,
     };
   }
 
-  private _getMessageEmbedFieldFeature(): EmbedField {
+  private _getMessageEmbedFieldFeature(): APIEmbedField {
     return {
+      inline: false,
       name: `Feature (*feature* or *f*)`,
       value: `Change my behavior on this guild or on this channel. Help me to be better! I have some cool abilities you know!`,
     };
   }
 
-  private _getMessageEmbedFieldHeartbeat(): EmbedField {
+  private _getMessageEmbedFieldHeartbeat(): APIEmbedField {
     return {
+      inline: false,
       name: `Heartbeat (*heartbeat* or *hb*)`,
       value: `Display my current heartbeat.`,
     };
   }
 
-  private _getMessageEmbedFieldHelp(): EmbedField {
+  private _getMessageEmbedFieldHelp(): APIEmbedField {
     return {
+      inline: false,
       name: `Help (*help* or *h*)`,
       value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
     };
   }
 
-  private _getMessageEmbedFieldLunch(): EmbedField {
+  private _getMessageEmbedFieldLunch(): APIEmbedField {
     return {
+      inline: false,
       name: `Lunch (*lunch* or *l*)`,
       value: `There is a time to eat.`,
     };
   }
 
-  private _getMessageEmbedFieldQuote(): EmbedField {
+  private _getMessageEmbedFieldQuote(): APIEmbedField {
     return {
+      inline: false,
       name: `Quote (*quote* or *q*)`,
       value: `I quote others only in order to better express myself.`,
     };
   }
 
-  private _getMessageEmbedFieldReleaseNotes(): EmbedField {
+  private _getMessageEmbedFieldReleaseNotes(): APIEmbedField {
     return {
+      inline: false,
       name: `Release notes (*release-notes* or *r*)`,
       value: `Display the last version release notes.`,
     };
   }
 
-  private _getMessageEmbedFieldVersion(): EmbedField {
+  private _getMessageEmbedFieldVersion(): APIEmbedField {
     return {
+      inline: false,
       name: `Version (*version* or *v*)`,
       value: `Display my current application version.`,
     };
   }
 
-  private _getMessageEmbedFieldMoreHelp(): EmbedField {
+  private _getMessageEmbedFieldMoreHelp(): APIEmbedField {
     return {
+      inline: false,
       name: `Further help`,
       value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,

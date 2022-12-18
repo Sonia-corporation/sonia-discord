@@ -8,7 +8,7 @@ import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-so
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -51,8 +51,8 @@ export class DiscordLoggerErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbed(error: Error | string): EmbedData {
-    const messageEmbedOptions: EmbedData = {
+  private _getMessageEmbed(error: Error | string): APIEmbed {
+    const messageEmbedOptions: APIEmbed = {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
       footer: this._getMessageEmbedFooter(),
@@ -69,7 +69,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     return messageEmbedOptions;
   }
 
-  private _getMessageEmbedAuthor(): EmbedAuthorData {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -77,23 +77,23 @@ export class DiscordLoggerErrorService extends AbstractService {
     return DiscordMessageConfigService.getInstance().getMessageErrorImageColor();
   }
 
-  private _getMessageEmbedFooter(): EmbedFooterData {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Discord error`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): EmbedAssetData {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageErrorImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   private _getMessageEmbedTitle(error: Error | string): string {
@@ -108,7 +108,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     return message;
   }
 
-  private _getMessageEmbedFields({ stack }: Error): EmbedField[] | undefined {
+  private _getMessageEmbedFields({ stack }: Error): APIEmbedField[] | undefined {
     if (_.isNil(stack)) {
       return undefined;
     }
@@ -116,7 +116,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     return [this._getMessageEmbedFieldError(stack)];
   }
 
-  private _getMessageEmbedFieldError(stack: string): EmbedField {
+  private _getMessageEmbedFieldError(stack: string): APIEmbedField {
     return {
       inline: false,
       name: `My blood trace`,

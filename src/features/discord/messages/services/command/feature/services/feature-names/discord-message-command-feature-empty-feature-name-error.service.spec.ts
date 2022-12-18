@@ -9,7 +9,7 @@ import { IAnyDiscordMessage } from '../../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../../constants/discord-message-command-feature-names';
-import { EmbedAssetData, EmbedAuthorData, EmbedField, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -117,12 +117,13 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: EmbedAuthorData = createMock<EmbedAuthorData>();
+      const messageEmbedAuthor: APIEmbedAuthor = createMock<APIEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -131,7 +132,8 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -139,7 +141,8 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.fields).toHaveLength(3);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields).toHaveLength(3);
     });
 
     it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<void> => {
@@ -147,10 +150,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[0]).toStrictEqual({
+        inline: false,
         name: `Empty feature name`,
         value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
-      } as EmbedField);
+      } as APIEmbedField);
     });
 
     it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<void> => {
@@ -158,10 +163,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.fields?.[1]).toStrictEqual({
+        inline: false,
         name: `All features`,
         value: `\`noon (or n)\`, \`release-notes (or r)\``,
-      } as EmbedField);
+      } as APIEmbedField);
     });
 
     describe(`when the given Discord message content is null`, (): void => {
@@ -175,10 +182,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[2]).toStrictEqual({
+          inline: false,
           name: `Example`,
           value: `\`!feature noon\``,
-        } as EmbedField);
+        } as APIEmbedField);
       });
     });
 
@@ -193,10 +202,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.fields?.[2]).toStrictEqual({
+          inline: false,
           name: `Example`,
           value: `\`!feature noon\``,
-        } as EmbedField);
+        } as APIEmbedField);
       });
     });
 
@@ -216,10 +227,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-          expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[2]).toStrictEqual({
+            inline: false,
             name: `Example`,
             value: `\`!f noon\``,
-          } as EmbedField);
+          } as APIEmbedField);
         });
       });
 
@@ -233,10 +246,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-          expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[2]).toStrictEqual({
+            inline: false,
             name: `Example`,
             value: `\`!feature noon\``,
-          } as EmbedField);
+          } as APIEmbedField);
         });
       });
     });
@@ -257,10 +272,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-          expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[2]).toStrictEqual({
+            inline: false,
             name: `Example`,
             value: `\`!feature noon\``,
-          } as EmbedField);
+          } as APIEmbedField);
         });
       });
 
@@ -274,10 +291,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-          expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
+          const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+          expect(embed?.fields?.[2]).toStrictEqual({
+            inline: false,
             name: `Example`,
             value: `\`-lunch noon\``,
-          } as EmbedField);
+          } as APIEmbedField);
         });
       });
     });
@@ -288,10 +307,11 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.footer).toStrictEqual({
+        icon_url: `dummy-image-url`,
         text: `Invalid feature command`,
-      } as EmbedFooterData);
+      } as APIEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
@@ -304,10 +324,11 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: undefined,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: undefined,
           text: `Invalid feature command`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
     });
 
@@ -321,10 +342,11 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
-          iconURL: `image-url`,
+        const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+        expect(embed?.footer).toStrictEqual({
+          icon_url: `image-url`,
           text: `Invalid feature command`,
-        } as EmbedFooterData);
+        } as APIEmbedFooter);
       });
     });
 
@@ -334,9 +356,10 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as EmbedAssetData);
+      } as APIEmbedImage);
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
@@ -344,8 +367,9 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(moment(embed?.timestamp).isValid()).toBe(true);
+      expect(moment(embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -353,7 +377,8 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.options.embeds?.[0]?.title).toBe(`I can not handle your request.`);
+      const embed: APIEmbed = result.options.embeds?.[0] as APIEmbed;
+      expect(embed?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {

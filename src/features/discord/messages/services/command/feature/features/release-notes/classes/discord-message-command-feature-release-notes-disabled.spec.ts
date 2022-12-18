@@ -127,7 +127,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     describe(`when the message comes from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
+          channel: { type: ChannelType.DM },
           id: `dummy-id`,
         });
       });
@@ -164,7 +164,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               author: null,
-              channel: createHydratedMock<DMChannel>({ type: ChannelType.DM }),
+              channel: { type: ChannelType.DM },
               id: `dummy-id`,
             });
 
@@ -196,9 +196,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
               author: {
                 id: `dummy-author-id`,
               },
-              channel: createHydratedMock<DMChannel>({
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.DM,
+              },
               id: `dummy-id`,
             });
           });
@@ -580,7 +581,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     describe(`when the message does not come from a DM channel`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
-          channel: createHydratedMock<TextChannel>({ type: ChannelType.GuildText }),
+          channel: { type: ChannelType.GuildText },
           id: `dummy-id`,
         });
       });
@@ -647,9 +648,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
         describe(`when the Discord message guild is valid`, (): void => {
           beforeEach((): void => {
             anyDiscordMessage = createMock<Message>({
-              channel: createHydratedMock<TextChannel>({
+              channel: {
                 id: `dummy-channel-id`,
-              }),
+                type: ChannelType.GuildText,
+              },
               guild: {
                 id: `dummy-guild-id`,
               },
@@ -1734,8 +1736,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
       isDisabled = undefined;
       firebaseDm = createMock<IFirebaseDm>();
       channel = createHydratedMock<DMChannel>({
-        type: ChannelType.DM,
         id: `dummy-channel-id`,
+        type: ChannelType.DM,
       });
       writeResult = createMock<WriteResult>();
 
@@ -1972,8 +1974,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
       isDisabled = undefined;
       firebaseGuild = createMock<IFirebaseGuild>();
       channel = createHydratedMock<TextChannel>({
-        type: ChannelType.GuildText,
         id: `dummy-channel-id`,
+        type: ChannelType.GuildText,
       });
       writeResult = createMock<WriteResult>();
 

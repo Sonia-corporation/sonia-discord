@@ -4,7 +4,7 @@ import { IDiscordMessageResponse } from '../../../../../interfaces/discord-messa
 import { IAnyDiscordMessage } from '../../../../../types/any-discord-message';
 import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
 import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
-import { EmbedData, EmbedField } from 'discord.js';
+import { APIEmbed, APIEmbedField } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends DiscordMessageCommandFeatureErrorCoreService {
@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
       });
   }
 
-  private _getMessageEmbed(anyDiscordMessage: IAnyDiscordMessage, commands: DiscordMessageCommandEnum[]): EmbedData {
+  private _getMessageEmbed(anyDiscordMessage: IAnyDiscordMessage, commands: DiscordMessageCommandEnum[]): APIEmbed {
     return {
       fields: this._getMessageEmbedFields(anyDiscordMessage, commands),
       footer: this._getMessageEmbedFooter(),
@@ -51,7 +51,7 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
   private _getMessageEmbedFields(
     anyDiscordMessage: IAnyDiscordMessage,
     commands: DiscordMessageCommandEnum[]
-  ): EmbedField[] {
+  ): APIEmbedField[] {
     return [
       this._getMessageEmbedFieldError(),
       this._getMessageEmbedFieldAllFeatures(),
@@ -59,8 +59,9 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
     ];
   }
 
-  private _getMessageEmbedFieldError(): EmbedField {
+  private _getMessageEmbedFieldError(): APIEmbedField {
     return {
+      inline: false,
       name: `Empty feature name`,
       value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
     };

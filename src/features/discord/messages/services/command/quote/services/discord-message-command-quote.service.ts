@@ -14,7 +14,7 @@ import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
 import { DiscordMessageErrorService } from '../../../helpers/discord-message-error.service';
 import { DiscordMessageCommandCoreService } from '../../discord-message-command-core.service';
-import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -71,7 +71,7 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     });
   }
 
-  private _getMessageEmbed(quote: IQuote): EmbedData {
+  private _getMessageEmbed(quote: IQuote): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(quote),
       color: this._getMessageEmbedColor(),
@@ -83,9 +83,9 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     };
   }
 
-  private _getMessageEmbedAuthor({ authorName, quoteUrl }: IQuote): EmbedAuthorData {
+  private _getMessageEmbedAuthor({ authorName, quoteUrl }: IQuote): APIEmbedAuthor {
     return {
-      iconURL: QuoteConfigService.getInstance().getAuthorIconUrl(),
+      icon_url: QuoteConfigService.getInstance().getAuthorIconUrl(),
       name: authorName,
       url: quoteUrl,
     };
@@ -99,23 +99,23 @@ export class DiscordMessageCommandQuoteService extends DiscordMessageCommandCore
     return quote;
   }
 
-  private _getMessageEmbedFooter(): EmbedFooterData {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Enjoy my wisdom`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): EmbedAssetData {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: QuoteConfigService.getInstance().getImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp({ date }: IQuote): Date {
-    return moment(date).toDate();
+  private _getMessageEmbedTimestamp({ date }: IQuote): string {
+    return moment(date).toISOString();
   }
 
   private _getMessageEmbedTitle(): string {

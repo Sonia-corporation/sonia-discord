@@ -17,17 +17,17 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
 import {
+  BaseMessageOptions,
   ChannelType,
   Client,
   Guild,
   Message,
-  MessageOptions,
   MessagePayload,
-  NewsChannel,
   TextChannel,
+  VoiceChannel,
 } from 'discord.js';
 import { WriteResult } from 'firebase-admin/firestore';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`./discord-guild-sonia.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -402,15 +402,18 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       describe(`when the primary guild channel was found`, (): void => {
         beforeEach((): void => {
-          primaryGuildChannel = createMock<TextChannel>();
+          primaryGuildChannel = createHydratedMock<TextChannel>({
+            type: ChannelType.GuildText,
+          });
 
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
         });
 
         describe(`when the primary guild channel is not a text channel`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<NewsChannel>({
-              type: ChannelType.GuildNews,
+            // @ts-ignore
+            primaryGuildChannel = createHydratedMock<VoiceChannel>({
+              type: ChannelType.GuildVoice,
             });
 
             isDiscordTextChannelSpy.mockReturnValue(false);
@@ -440,7 +443,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         describe(`when the primary guild channel is a text channel`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<TextChannel>({
+            primaryGuildChannel = createHydratedMock<TextChannel>({
               send: guildChannelSendMock,
               type: ChannelType.GuildText,
             });
@@ -475,7 +478,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-            const message: string | MessagePayload | MessageOptions = {
+            const message: string | MessagePayload | BaseMessageOptions = {
               content: discordMessageResponse.content,
             };
             expect(guildChannelSendMock).toHaveBeenCalledTimes(1);

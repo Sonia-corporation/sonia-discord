@@ -14,7 +14,7 @@ import { DiscordMessageSubCommandCoreService } from '../../../../discord-message
 import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
 import { IDiscordMessageCommandFeatureNameNoon } from '../types/discord-message-command-feature-name-noon';
-import { EmbedAssetData, EmbedAuthorData, EmbedData, EmbedField, EmbedFooterData } from 'discord.js';
+import { APIEmbed, APIEmbedAuthor, APIEmbedField, APIEmbedFooter, APIEmbedImage } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -88,7 +88,7 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     );
   }
 
-  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedData {
+  private _getMessageEmbed(flagsSuccess: IDiscordCommandFlagsSuccess): APIEmbed {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -101,7 +101,7 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     };
   }
 
-  private _getMessageEmbedAuthor(): EmbedAuthorData {
+  private _getMessageEmbedAuthor(): APIEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
@@ -121,8 +121,8 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     return _.size(flagsSuccess);
   }
 
-  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): EmbedField[] {
-    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): EmbedField => {
+  private _getMessageEmbedFields(flagsSuccess: IDiscordCommandFlagsSuccess): APIEmbedField[] {
+    return _.map(flagsSuccess, ({ name, description }: IDiscordCommandFlagSuccess): APIEmbedField => {
       return {
         inline: false,
         name,
@@ -131,23 +131,23 @@ export class DiscordMessageCommandFeatureNoonService extends DiscordMessageSubCo
     });
   }
 
-  private _getMessageEmbedFooter(): EmbedFooterData {
+  private _getMessageEmbedFooter(): APIEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl ?? undefined,
+      icon_url: soniaImageUrl ?? undefined,
       text: `Noon feature successfully updated`,
     };
   }
 
-  private _getMessageEmbedThumbnail(): EmbedAssetData {
+  private _getMessageEmbedThumbnail(): APIEmbedImage {
     return {
       url: DiscordMessageCommandFeatureNoonConfigService.getInstance().getNoonConfigImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
+  private _getMessageEmbedTimestamp(): string {
+    return moment().toISOString();
   }
 
   private _getMessageEmbedTitle(): string {
