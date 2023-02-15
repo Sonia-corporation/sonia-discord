@@ -197,7 +197,7 @@
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "all-contributors-cli": "6.24.0",
-    "commitizen": "4.2.6",
+    "commitizen": "4.3.0",
     "concurrently": "7.6.0",
     "cross-env": "7.0.3",
     "cz-customizable": "7.0.0",
