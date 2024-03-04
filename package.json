@@ -75,7 +75,7 @@
   },
   "engines": {
     "node": "16.19.0",
-    "npm": "8.19.3"
+    "npm": "9.9.3"
   },
   "private": false,
   "files": [
