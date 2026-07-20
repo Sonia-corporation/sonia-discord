@@ -10,7 +10,7 @@ jobs:
       CURRENT_TAG: ${{ steps.save-current-tag.outputs.CURRENT_TAG }}
     steps:
       - name: Checkout develop
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
         with:
           ref: develop
       - name: Reset branch
@@ -30,7 +30,7 @@ jobs:
     needs: [CurrentTag]
     steps:
       - name: Checkout
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
       - name: Use Node.js
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
@@ -68,7 +68,7 @@ jobs:
     needs: [CurrentTag, Release]
     steps:
       - name: Checkout develop
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
         with:
           ref: develop
       - name: Reset branch
